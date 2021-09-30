@@ -1,0 +1,31 @@
+[33m[nodemon] 2.0.7[39m
+[33m[nodemon] to restart at any time, enter `rs`[39m
+[33m[nodemon] or send SIGHUP to 19 to restart[39m
+[33m[nodemon] watching path(s): webapp/**/*[39m
+[33m[nodemon] watching extensions: js,html,css,ts,vue,json[39m
+[32m[nodemon] starting `/usr/local/bin/exec-node.sh /webapp/index.js`[39m
+[33m[nodemon] spawning[39m
+[33m[nodemon] child pid: 32[39m
+[33m[nodemon] watching 17 files[39m
+(node:40) Warning: Accessing non-existent property 'MongoError' of module exports inside circular dependency
+(Use `node --trace-warnings ...` to show where the warning was created)
+App listening on port 8000 started 8/6/2021, 2:14:17 PM
+(node:40) DeprecationWarning: current Server Discovery and Monitoring engine is deprecated, and will be removed in a future version. To use the new Server Discover and Monitoring engine, pass option { useUnifiedTopology: true } to the MongoClient constructor.
+[33m[nodemon] files triggering change check: webapp/index.js[39m
+[33m[nodemon] matched rule: /webapp/**/*[39m
+[33m[nodemon] changes after filters (before/after): 1/1[39m
+[33m[nodemon] delaying restart for 1000ms[39m
+[33m[nodemon] files triggering change check: webapp/index.js[39m
+[33m[nodemon] matched rule: /webapp/**/*[39m
+[33m[nodemon] changes after filters (before/after): 1/1[39m
+[33m[nodemon] delaying restart for 1000ms[39m
+[32m[nodemon] restarting due to changes...[39m
+[33m[nodemon] webapp/index.js[39m
+
+[32m[nodemon] starting `/usr/local/bin/exec-node.sh /webapp/index.js`[39m
+[33m[nodemon] spawning[39m
+[33m[nodemon] child pid: 57[39m
+(node:66) Warning: Accessing non-existent property 'MongoError' of module exports inside circular dependency
+(Use `node --trace-warnings ...` to show where the warning was created)
+App listening on port 8000 started 8/6/2021, 2:22:47 PM
+(node:66) DeprecationWarning: current Server Discovery and Monitoring engine is deprecated, and will be removed in a future version. To use the new Server Discover and Monitoring engine, pass option { useUnifiedTopology: true } to the MongoClient constructor.
