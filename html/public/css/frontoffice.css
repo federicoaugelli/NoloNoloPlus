@@ -1,15 +1,7 @@
-.nav-item{
+#menu-title{
 
-    margin: auto;
-
+    color:rgb(245, 221, 179);
+    letter-spacing: 3px;
 }
 
-#header-nav{
 
-    border-style: outset;
-}
-
-.menu-title{
-
-    color: brown;
-}
