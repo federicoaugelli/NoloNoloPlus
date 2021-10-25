@@ -8,14 +8,5 @@ td {
     text-align: center;
 }
 
-th{
 
-    text-align: left;
-
-}
-
-th.sticky {
-    position: -webkit-sticky; /* Safari */
-    position: sticky;
-    top: 0;
-  }
+ 
