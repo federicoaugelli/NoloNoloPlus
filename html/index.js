@@ -36,6 +36,7 @@ const template = require(global.rootDir + '/scripts/tpl.js') ;
 const mymongo = require(global.rootDir + '/scripts/mongo.js') ; 
 const express = require('express') ;
 const cors = require('cors')
+const passport = require('passport');
 
 
 
@@ -55,8 +56,10 @@ app.use('/css' , express.static(global.rootDir +'/public/css'));
 app.use('/data', express.static(global.rootDir +'/public/data'));
 app.use('/docs', express.static(global.rootDir +'/public/html'));
 app.use('/img' , express.static(global.rootDir +'/public/media'));
-app.use(express.urlencoded({ extended: true })) 
-app.use(cors())
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
+app.use(passport.initialize());
+app.use(passport.session()); //controllare i ;
 
 // https://stackoverflow.com/questions/40459511/in-express-js-req-protocol-is-not-picking-up-https-for-my-secure-link-it-alwa
 app.enable('trust proxy');
