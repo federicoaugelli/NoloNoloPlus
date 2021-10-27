@@ -12,4 +12,14 @@ td {
 .table-responsive{
 
     width: 110%;   
+
+    text-align: left;
+
 }
+
+th.sticky {
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0;
+  }
+
