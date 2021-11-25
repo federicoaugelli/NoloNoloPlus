@@ -113,6 +113,42 @@ exports.search = async function(q,credentials) {
 	}
 }
 
+
+exports.createObject = async function(newObject){
+
+     const mongouri = "mongodb://127.0.0.1:27017'writeConern=majority";
+	 console.log(newObject);
+	 let debug = [];
+	 try{
+
+		debug.push("tryng to connect to MongoDB");
+		const mongo = new MongoClient(mongouri);
+		await mongo.connect();
+		debug.push("... managed to connect to mongoDB.");
+		let added = await mongo
+		.db(dbname)
+		.collection(oggetti)
+		.insertOne({
+
+			modello: newObject.modello,
+			marca: newObject.marca,
+			anno: parseInt(newObject.anno),
+			categoria: newObject.categoria,
+			condizioni: newObject.condizioni,
+			prezzo: parseInt(newObject.prezzo),
+			disponibilita: "",
+			img: newObject.img
+		});
+     await mongo.close();
+	
+	}
+	catch (e) {
+		e.debug = debug
+		return e
+	}
+}
+
+
 /* Untested */
 // https://stackoverflow.com/questions/39599063/check-if-mongodb-is-connected/39602781
 exports.isConnected = async function() {
