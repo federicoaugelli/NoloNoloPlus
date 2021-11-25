@@ -32,7 +32,8 @@ const fs = require('fs').promises ;
 const template = require(global.rootDir + '/scripts/tpl.js') ; 
 
 exports.create = async function(credentials) {
-	const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+	const mongouri = "mongodb://127.0.0.1:27017?writeConern=majority";
+	//`mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
 
 	let debug = []
 	try {
@@ -73,7 +74,8 @@ exports.create = async function(credentials) {
 
 
 exports.search = async function(q,credentials) {
-	const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+	const mongouri = "mongodb://127.0.0.1:27017?writeConern=majority";
+	//`mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
 
 	let query =  {}
 	let debug = []
@@ -116,7 +118,7 @@ exports.search = async function(q,credentials) {
 
 exports.createObject = async function(newObject){
 
-     const mongouri = "mongodb://127.0.0.1:27017'writeConern=majority";
+     const mongouri = "mongodb://127.0.0.1:27017?writeConern=majority";
 	 console.log(newObject);
 	 let debug = [];
 	 try{
