@@ -75,6 +75,29 @@
   </div>
 <!-- Fine The Modal -->
 
+  <!-- Modal cards -->
+  <div class="modal fade" id="card-modal" tabindex="-1" aria-labelledby="card-modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{ selectitem.title }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img class="card-img-top" src="/img/prova1.png" alt="Card image1">
+          <div class="card-body">
+            <p class="card-text">{{ selectitem.message }}</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <p class="me-auto">costo: ${{ selectitem.price }}</p>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+          <button type="button" class="btn btn-primary">Richiedi noleggio</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
 
   <!-- NAVBAR  -->
@@ -95,7 +118,6 @@
     </nav>
 
   <!--  TABELLA VEICOLI A DUE RUOTE-->
-      
   <div class="container mt-5">
     <div class="table-responsive">
         <table class="card-table table-borderless myTable"> 
@@ -113,8 +135,8 @@
                        <div class="card-body">
                          <h4 class="card-title">{{ item.title }}</h4>
                          <p class="card-text">{{ item.message }}</p>
-                         <a v-if="item.disponibile === 'True'" href="#" class="btn btn-primary">Prenota</a>
-                         <a v-else-if="item.disponibile === 'False'" href="#" class="btn btn-primary disabled">Non disponibile</a>
+                         <a v-if="item.disponibile === 'True'" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#card-modal">Vedi</a>
+                         <a v-else-if="item.disponibile === 'False'" class="btn btn-primary disabled">Non disponibile</a>
                        </div>
                        <div class="card-footer">
                         <small class="text-muted">Last updated 3 mins ago</small>
@@ -147,8 +169,8 @@
                        <div class="card-body">
                          <h4 class="card-title">{{ item.title }}</h4>
                          <p class="card-text">{{ item.message }}</p>
-                         <a v-if="item.disponibile === 'True'" href="#" class="btn btn-primary">Prenota</a>
-                         <a v-else-if="item.disponibile === 'False'" href="#" class="btn btn-primary disabled">Non disponibile</a>
+                         <a v-if="item.disponibile === 'True'" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#card-modal" user="'item'" @click="sendInfo(item)">Vedi</a>
+                         <a v-else-if="item.disponibile === 'False'" class="btn btn-primary disabled">Non disponibile</a>
                        </div>
                        <div class="card-footer">
                         <small class="text-muted">Last updated 3 mins ago</small>
@@ -181,8 +203,8 @@
                        <div class="card-body">
                          <h4 class="card-title">{{ item.title }}</h4>
                          <p class="card-text">{{ item.message }}</p>
-                         <a v-if="item.disponibile === 'True'" href="#" class="btn btn-primary">Prenota</a>
-                         <a v-else-if="item.disponibile === 'False'" href="#" class="btn btn-primary disabled">Non disponibile</a>
+                         <a v-if="item.disponibile === 'True'" class="btn btn-primary">Vedi</a>
+                         <a v-else-if="item.disponibile === 'False'" class="btn btn-primary disabled">Non disponibile</a>
                        </div>
                        <div class="card-footer">
                         <small class="text-muted">Last updated 3 mins ago</small>
@@ -218,14 +240,14 @@
       }
     })
 
-    var list = new Vue({
+    var list1 = new Vue({
       el: '#list-1',
       data: {
         items: [
-          {title: 'bicicletta', message: 'Coso 1', disponibile: 'False'},
-          {title: 'moto', message: 'Coso 2', disponibile: 'True'},
-          {title: 'moto ma è drill', message: 'Coso 3', disponibile: 'True'},
-          {title: 'lesssgoo', message: 'Coso 4', disponibile: 'False'}
+          {title: 'bicicletta', message: 'Coso 1', disponibile: 'False', price: '5'},
+          {title: 'moto', message: 'Coso 2', disponibile: 'True', price: '20'},
+          {title: 'moto ma è drill', message: 'Coso 3', disponibile: 'True', price: '30'},
+          {title: 'lesssgoo', message: 'Coso 4', disponibile: 'False', price: '100'}
 
         ]
       }
@@ -235,12 +257,18 @@
       el: '#list-2',
       data: {
         items: [
-          {title: 'Non esistono', message: 'Coso 1', disponibile: 'True'},
-          {title: 'i veicoli', message: 'Coso 2', disponibile: 'True' },
-          {title: 'a tre', message: 'Coso 3', disponibile: 'False' },
-          {title: 'ruote', message: 'Coso 4', disponibile: 'True' }
+          {title: 'Non esistono', message: 'Coso 1', disponibile: 'True', price: '15'},
+          {title: 'i veicoli', message: 'Coso 2', disponibile: 'True', price: '33'},
+          {title: 'a tre', message: 'Coso 3', disponibile: 'False', price: '69'},
+          {title: 'ruote', message: 'Coso 4', disponibile: 'True', price: '420'}
 
-        ]
+        ],
+        selectitem: '',
+      },
+      methods: {
+        sendInfo(item) {
+          this.selectitem = item;
+        }
       }
     })
 
@@ -248,11 +276,32 @@
       el: '#list-3',
       data: {
         items: [
+          {title: 'veicolo figo', message: 'Coso 1', disponibile: 'True', price: '5'},
+          {title: 'veicolo brutto', message: 'Coso 2', disponibile: 'False', price: '225'},
+          {title: 'veicolo shish', message: 'Coso 3', disponibile: 'False', price: '35'},
+          {title: 'veicolo siuuum', message: 'Coso 4', disponibile: 'True', price: '21'}
+
+        ]
+      }
+    })
+
+    //per unire tutte le card dopo...
+    var list = new Vue({
+      el: '#item-list',
+      data: {
+        items: [
+          {title: 'bicicletta', message: 'Coso 1', disponibile: 'False'},
+          {title: 'moto', message: 'Coso 2', disponibile: 'True'},
+          {title: 'moto ma è drill', message: 'Coso 3', disponibile: 'True'},
+          {title: 'lesssgoo', message: 'Coso 4', disponibile: 'False'},
+          {title: 'Non esistono', message: 'Coso 1', disponibile: 'True'},
+          {title: 'i veicoli', message: 'Coso 2', disponibile: 'True' },
+          {title: 'a tre', message: 'Coso 3', disponibile: 'False' },
+          {title: 'ruote', message: 'Coso 4', disponibile: 'True' },
           {title: 'veicolo figo', message: 'Coso 1', disponibile: 'True'},
           {title: 'veicolo brutto', message: 'Coso 2', disponibile: 'False'},
           {title: 'veicolo shish', message: 'Coso 3', disponibile: 'False'},
-          {title: 'veicolo siuuum', message: 'Coso 4', disponibile: 'True' }
-
+          {title: 'veicolo siuuum', message: 'Coso 4', disponibile: 'True' }      
         ]
       }
     })
