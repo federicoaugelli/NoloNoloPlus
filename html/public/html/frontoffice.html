@@ -25,18 +25,18 @@
 
   <!-- The Modal -->
   <div class="modal fade" id="myModal">
-     <div class="modal-dialog modal-dialog-centered modal-lg">
+     <div class="modal-dialog modal-dialog-centered">
        <div class="modal-content">
-  <!-- Modal Header -->
+  <!-- Modal Header 
        <div class="modal-header">
          <h4 class="modal-title">Log in</h4>
            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-       </div>
+       </div> -->
   <!-- Modal body -->
-       <div class="modal-body">
+       <div class="modal-body p-0">
         
         <div class="row">
-          <div class="col-md-6 mx-auto p-0">
+          <div class="">
             <div class="card">
               <div class="login-box">
                 <div class="login-snip"> 
@@ -66,13 +66,13 @@
           </div>
         </div>
        </div>
-  <!-- Modal footer -->
+  <!-- Modal footer
        <div class="modal-footer">
          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+       </div> -->
        </div>
-       </div>
-     </div>
-  </div>
+     </div> 
+  </div> 
 <!-- Fine The Modal -->
 
   <!-- Modal cards -->
@@ -91,7 +91,7 @@
         </div>
         <div class="modal-footer">
           <p class="me-auto">costo: ${{ selectitem.price }}</p>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+          <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button> -->
           <button type="button" class="btn btn-primary">Richiedi noleggio</button>
         </div>
       </div>
@@ -117,7 +117,7 @@
       </div>
     </nav>
 
-  <!--  TABELLA VEICOLI A DUE RUOTE-->
+  <!--  TABELLA VEICOLI A DUE RUOTE
   <div class="container mt-5">
     <div class="table-responsive">
         <table class="card-table table-borderless myTable"> 
@@ -148,75 +148,32 @@
           </tbody>
        </table>
     </div>
-  </div>
+  </div> -->
 
-  <!--  TABELLA VEICOLI A TRE RUOTE-->
+  <!-- TABELLA FINALE -->
+  <div class="album py-5 bg-light">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="item-list">
 
-  <div class="container mt-5">
-    <div class="table-responsive">
-        <table class="card-table table-borderless">
-          <thead>
-            <tr>
-              <th colspan ="10">Veicoli a 3 ruote</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr id="list-2">
-              <td v-for="item in items" :key="item.message">
-               <div class="col-sm-4">
-                 <div class="card" style="width:500px">
-                     <img class="card-img-top" src="/img/prova1.png" alt="Card image1">
-                       <div class="card-body">
-                         <h4 class="card-title">{{ item.title }}</h4>
-                         <p class="card-text">{{ item.message }}</p>
-                         <a v-if="item.disponibile === 'True'" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#card-modal" user="'item'" @click="sendInfo(item)">Vedi</a>
-                         <a v-else-if="item.disponibile === 'False'" class="btn btn-primary disabled">Non disponibile</a>
-                       </div>
-                       <div class="card-footer">
-                        <small class="text-muted">Last updated 3 mins ago</small>
-                      </div>
-                 </div>
-               </div>
-              </td>
-            </tr>
-          </tbody>
-       </table>
+        <div class="col" v-for="item in items" :key="item.message">
+          <div class="card shadow-sm" style="text-align: center;">
+            <img class="card-img-top" src="/img/prova1.png" alt="Card image1">
+            <div class="card-body">
+              <h4 class="card-title">{{ item.title }}</h4>
+              <p class="card-text">{{ item.message }}</p>
+              <a v-if="item.quantità > '0'" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#card-modal">Vedi</a>
+              <a v-else-if="item.quantità <= '0'" class="btn btn-primary disabled">Non disponibile</a>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">Disponibilità: {{ item.quantità }} unità</small>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 
-  <!--  TABELLA VEICOLI A QUATTRO RUOTE-->
-
-  <div class="container mt-5">
-    <div class="table-responsive">
-        <table class="card-table table-borderless ">
-          <thead>
-            <tr>
-              <th colspan ="10">Veicoli a 4 ruote</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr id="list-3">
-              <td v-for="item in items" :key="item.message">
-               <div class="col-sm-4">
-                 <div class="card" style="width:500px">
-                     <img class="card-img-top" src="/img/prova1.png" alt="Card image1">
-                       <div class="card-body">
-                         <h4 class="card-title">{{ item.title }}</h4>
-                         <p class="card-text">{{ item.message }}</p>
-                         <a v-if="item.disponibile === 'True'" class="btn btn-primary">Vedi</a>
-                         <a v-else-if="item.disponibile === 'False'" class="btn btn-primary disabled">Non disponibile</a>
-                       </div>
-                       <div class="card-footer">
-                        <small class="text-muted">Last updated 3 mins ago</small>
-                      </div>
-                 </div>
-               </div>
-              </td>
-            </tr>
-          </tbody>
-       </table>
-    </div>
-  </div>
 
     <!--  LISTA PAGINE  -->
     <nav aria-labelledby="lista-pagine" class="my-5">
@@ -290,18 +247,18 @@
       el: '#item-list',
       data: {
         items: [
-          {title: 'bicicletta', message: 'Coso 1', disponibile: 'False'},
-          {title: 'moto', message: 'Coso 2', disponibile: 'True'},
-          {title: 'moto ma è drill', message: 'Coso 3', disponibile: 'True'},
-          {title: 'lesssgoo', message: 'Coso 4', disponibile: 'False'},
-          {title: 'Non esistono', message: 'Coso 1', disponibile: 'True'},
-          {title: 'i veicoli', message: 'Coso 2', disponibile: 'True' },
-          {title: 'a tre', message: 'Coso 3', disponibile: 'False' },
-          {title: 'ruote', message: 'Coso 4', disponibile: 'True' },
-          {title: 'veicolo figo', message: 'Coso 1', disponibile: 'True'},
-          {title: 'veicolo brutto', message: 'Coso 2', disponibile: 'False'},
-          {title: 'veicolo shish', message: 'Coso 3', disponibile: 'False'},
-          {title: 'veicolo siuuum', message: 'Coso 4', disponibile: 'True' }      
+          {title: 'bicicletta', message: 'Bellissima bicicletta con il sellino', disponibile: 'False', price: '5', quantità: '0'},
+          {title: 'moto', message: 'Motooooo', disponibile: 'True', price: '20', quantità: '4'},
+          {title: 'moto ma è drill', message: 'Rwondoooo', disponibile: 'True', price: '30', quantità: '3'},
+          {title: 'lesssgoo', message: 'Okkkeeeyyy', disponibile: 'False', price: '100', quantità: '0'},
+          {title: 'Non esistono', message: 'Coso 1', disponibile: 'True', price: '15', quantità: '10'},
+          {title: 'i veicoli', message: 'Coso 2', disponibile: 'True', price: '33', quantità: '8'},
+          {title: 'a tre', message: 'Coso 3', disponibile: 'False', price: '69', quantità: '0'},
+          {title: 'ruote', message: 'Coso 4', disponibile: 'True', price: '420', quantità: '1'},
+          {title: 'veicolo figo', message: 'Coso 1', disponibile: 'True', price: '5', quantità: '4'},
+          {title: 'veicolo brutto', message: 'Coso 2', disponibile: 'False', price: '225', quantità: '0'},
+          {title: 'veicolo shish', message: 'Coso 3', disponibile: 'False', price: '35', quantità: '0'},
+          {title: 'veicolo siuuum', message: 'Coso 4', disponibile: 'True', price: '21', quantità: '3'}     
         ]
       }
     })
