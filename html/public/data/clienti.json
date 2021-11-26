@@ -1,0 +1,55 @@
+[
+    {
+        "username": "MarioRossi",
+        "password": "MarioRossiPwd",
+        "indirizzo": [{
+  
+          "nazione":"Italia",
+          "citta":"Milano, Lombardia",
+          "via":"MarioRossiIndirizzo"
+         }]
+     },
+     {
+      "username": "MarioRossi1",
+      "password": "MarioRossi1Pwd",
+      "indirizzo": [{
+  
+        "nazione":"Italia",
+        "citta":"Milano, Lombardia",
+        "via":"MarioRossi1Indirizzo"
+       }]
+     },
+     {
+      "username": "MarioRossi2",
+      "password": "MarioRossi2Pwd",
+      "indirizzo": [{
+  
+        "nazione":"Italia",
+        "citta":"Milano, Lombardia",
+        "via":"MarioRossi2Indirizzo"
+       }]
+     },
+     {
+      "username": "HarryHumbug",
+      "password": "HarryHumbugPwd",
+      "indirizzo": [{
+  
+        "nazione":"America",
+        "citta":"Miami, Florida",
+        "via":"HarryHumbugIndirizzo"
+       }]
+     },
+     {
+      "username": "LoriFields",
+      "password": "LoriFields1Pwd",
+      "indirizzo": [{
+  
+        "nazione":"America",
+        "citta":"New York, aaa",
+        "via":"LoriFields1Indirizzo"
+       }]
+     }
+]
+
+
+

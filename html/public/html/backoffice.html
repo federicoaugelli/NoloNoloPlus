@@ -13,32 +13,30 @@
 
   <body>
 
-  <!-- The Modal -->
+                                     <!-- MODAL LOGIN-->
   <div class="modal fade" id="myModal">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
- <!-- Modal Header -->
+ <!-- Modal Header 
       <div class="modal-header">
         <h4 class="modal-title">Log in</h4>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
+      </div> -->
  <!-- Modal body -->
-      <div class="modal-body">
+      <div class="modal-body p-0">
        
        <div class="row">
-         <div class="col-md-6 mx-auto p-0">
+         <div class="">
            <div class="card">
              <div class="login-box">
                <div class="login-snip"> 
                  <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Login</label> <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
                  <div class="login-space">
                    <div class="login">
-                     <div class="group"> <label for="user" class="label">Username</label> <input id="user" type="text" class="input" placeholder="Enter your username"> </div>
-                     <div class="group"> <label for="pass" class="label">Password</label> <input id="pass" type="password" class="input" data-type="password" placeholder="Enter your password"> </div>
-                     <div class="group"> <input id="check" type="checkbox" class="check" checked> <label for="check"><span class="icon"></span> Keep me Signed in</label> </div>
-                     <div class="group"> <input type="submit" class="button" value="Sign In"> </div>
+                     <div class="group"> <label for="user" class="label">Username</label> <input id="user" type="text" class="input" placeholder="Enter your username" required> </div>
+                     <div class="group"> <label for="pass" class="label">Password</label> <input id="pass" type="password" class="input" data-type="password" placeholder="Enter your password" required> </div>
+                     <div class="group"> <input type="submit" class="button" value="Sign In" > </div>
                      <div class="hr"></div>
-                     <div class="foot"> <a href="#">Forgot Password?</a> </div>
                    </div>
                    <div class="sign-up-form">
                      <div class="group"> <label for="user" class="label">Username</label> <input id="user" type="text" class="input" placeholder="Create your Username"> </div>
@@ -56,51 +54,52 @@
          </div>
        </div>
       </div>
- <!-- Modal footer -->
+ <!-- Modal footer
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+      </div> -->
       </div>
+    </div> 
+ </div> 
+                            <!-- FINE MODAL LOGIN -->
+
+                                <!-- NAVBAR -->
+
+<nav class="navbar navbar-dark bg-dark">
+  <div class="container-fluid">
+    <div class="navbar-brand ml-auto">      
+      <div class="btn-group">
+        <button class="btn btn-dark btn-lg" type="button"> NOLO-NOLO BACKOFFICE </button>
+        <button type="button" class="btn btn-outline-light btn-lg btn-dark dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+          <span class="visually-hidden">Toggle Dropdown</span>
+        </button>
+          <ul class="dropdown-menu">
+             <li class="nav-item">
+                <a href="#" class="nav-link link-dark">Anagrafica clienti</a>
+             </li>
+             <li class="nav-item">
+                <a href="#" class="nav-link link-dark">Modifica inventario</a>
+             </li>
+             <li class="nav-item">
+                <a href="#" class="nav-link link-dark">Fai Qualcosaltro</a>
+             </li>
+          </ul>
       </div>
     </div>
- </div>
-<!-- Fine The Modal -->
-
-     <!-- NAVBAR  -->
-    <nav class="navbar navbar-dark bg-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand ml-auto">Nolo-Nolo Backoffice</a>
-          <form class="d-flex w-50 bottom-0 my-auto">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-light" type="submit">Search</button>
-          </form>
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item">            
-              <!-- Modal button-->
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal"> Accedi</button>  
-            </li>
-          </ul> 
-      </div>
-    </nav>
-
-
-    <div class="row">
-
-      <div class="h-100 col-2 bg-light p-2 border d-flex flex-column flex-shrink-0">
-        Nome dipendente
-        <ul class="nav nav-pills flex-column mb-auto">
-          <hr>
-          <li class="nav-item">
-            <a href="#" class="nav-link link-dark">Modifica dati Utente</a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link link-dark">Aggiungi oggetto all'inventario</a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link link-dark">Fai Qualcosaltro</a>
-          </li>
-        </ul>
-      </div>
-
+      <form class="d-flex w-50 bottom-0 my-auto">
+        <input class="form-control me-2" type="search" placeholder="Cerca" aria-label="Search">
+        <button class="btn btn-outline-light" type="submit">Cerca</button>
+      </form>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">                      
+          <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#myModal"> Accedi</button>  
+        </li>
+      </ul> 
+  </div>
+</nav>
+ 
+                        <!-- FINE NAVBAR -->
+ 
       <div class="col">
         <div class="mx-auto">
           <div class="card">

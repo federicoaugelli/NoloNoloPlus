@@ -36,7 +36,14 @@ const template = require(global.rootDir + '/scripts/tpl.js') ;
 const mymongo = require(global.rootDir + '/scripts/mongo.js') ; 
 const express = require('express') ;
 const cors = require('cors')
-const passport = require('passport');
+
+//login
+const session = require('express-session');  // session middleware
+const exphbs = require('expres-handlebars');
+const mongoose = require('mongoose');
+const passport = require('passport');  // authentication
+const localStrategy	= require('passport-local').Strategy;
+const bcrypt = require('bcrypt');
 
 
 /* ========================== */
@@ -53,8 +60,56 @@ app.use('/docs', express.static(global.rootDir +'/public/html'));
 app.use('/img' , express.static(global.rootDir +'/public/media'));
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-app.use(passport.initialize());
-app.use(passport.session()); //controllare i ;
+
+//login
+app.use(session({
+	secret: 'r8q,+&1LM3)CD*zAGpx1xm{NeQhc;#',
+	resave: false,
+	saveUninitialized: true,
+	cookie: { maxAge: 60 * 60 * 1000 } // 1 hour
+  }));
+
+app.use(bodyParser.urlencoded({ extended: false }));  // We are parsing URL-encoded data from the body
+app.use(passport.initialize());  // Middleware to use Passport with Express
+app.use(passport.session());  // Needed to use express-session with passport
+passport.use(User.createStrategy());
+
+// To use with sessions
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+app.get('/', (req, res) => {
+	res.sendFile(__dirname + '/static/frontoffice.html');
+})
+
+app.get('/login', (req, res) => {
+    res.sendFile(__dirname + '/static/login.html');
+});
+
+app.get('/dashboard', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
+	res.send(`Hello ${req.user.username}. Your session ID is ${req.sessionID} 
+	 and your session expires in ${req.session.cookie.maxAge} 
+	 milliseconds.<br><br>
+	 <a href="/logout">Log Out</a><br><br>
+	 <a href="/secret">Members Only</a>`);
+  });
+
+  app.get('/secret', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
+	res.sendFile(__dirname + '/static/secret-page.html');
+  });
+
+  app.get('/logout', function(req, res) {
+	req.logout();
+	res.redirect('/login');
+  });
+
+  app.post('/login', passport.authenticate('local', { failureRedirect: '/' }),  function(req, res) {
+	console.log(req.user)
+	res.redirect('/dashboard');
+});
+
+//fine login
+
 
 // https://stackoverflow.com/questions/40459511/in-express-js-req-protocol-is-not-picking-up-https-for-my-secure-link-it-alwa
 app.enable('trust proxy');
@@ -108,6 +163,11 @@ app.post('/info', info )
 
 
 
+/* ========================== */
+/*                            */
+/*       PASSPORT CONFIG      */
+/*                            */
+/* ========================== */
 
 
 /* ========================== */
