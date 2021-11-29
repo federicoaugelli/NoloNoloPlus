@@ -22,10 +22,10 @@ Copyright (c) 2021 by Fabio Vitali
 */
 
 /* Dati di prova */
-let fn = "/public/data/country-by-capital-city.json"
-let dbname = "countries"
-let collection ="capitals"
-let fieldname = "country"
+let fn = "/public/data/persone.json"
+let dbname = "site202127"
+let collection ="persone"
+let fieldname = "persone_reg"
 
 const { MongoClient } = require("mongodb");
 const fs = require('fs').promises ;
@@ -148,6 +148,36 @@ exports.createObject = async function(newObject){
 		e.debug = debug
 		return e
 	}
+}
+
+exports.createUser = async function(newObject){
+
+	const mongouri = "mongodb://127.0.0.1:27017?writeConern=majority";
+	console.log(newObject);
+	let debug = [];
+	try{
+
+	   debug.push("tryng to connect to MongoDB");
+	   const mongo = new MongoClient(mongouri);
+	   await mongo.connect();
+	   debug.push("... managed to connect to mongoDB.");
+	   let added = await mongo
+	   .db(dbname)
+	   .collection(oggetti)
+	   .insertOne({
+
+		   username: newObject.username,
+		   password: newObject.password,
+		   ruolo: newObject.ruolo,
+		   indirizzo: newObject.indirizzo
+	   });
+	await mongo.close();
+   
+   }
+   catch (e) {
+	   e.debug = debug
+	   return e
+   }
 }
 
 

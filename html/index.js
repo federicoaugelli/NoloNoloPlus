@@ -43,7 +43,7 @@ const cors = require('cors')
 /*                            */
 /* ========================== */
 
-let app= express(); 
+let app  = express(); 
 app.use('/js'  , express.static(global.rootDir +'/public/js'));
 app.use('/css' , express.static(global.rootDir +'/public/css'));
 app.use('/data', express.static(global.rootDir +'/public/data'));
@@ -113,6 +113,86 @@ app.post('/info', info )
 /*                            */
 /* ========================== */
 
+var mongoose = require("mongoose");
+var passport = require("passport");
+var bodyParser = require("body-parser");
+var LocalStrategy = require("passport-local");
+var passportLocalMongoose = require("passport-local-mongoose");
+var User = require("./js/userModel");
+
+app.set("view engine", "ejs");
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(require("express-session")({
+secret: "node js mongodb",
+resave: false,
+saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+//=====================
+// ROUTES
+//=====================
+
+// Showing secret page
+app.get("/home", isLoggedIn, function (req, res) {
+res.render("home");
+});
+// Showing register form
+app.get("/register", function (req, res) {
+res.render('register', {
+title: 'Registration Page',
+name: '',
+email: '',
+password: ''    
+})
+});
+// Handling user signup
+app.post("/register", function (req, res) {
+var email = req.body.email
+var password = req.body.password
+User.register(new User({ email: email }),
+password, function (err, user) {
+if (err) {
+console.log(err);
+return res.render("register");
+}
+passport.authenticate("local")(
+req, res, function () {
+req.flash('success', 'You have logged in')
+res.render("home");
+});
+});
+});
+//Showing login form
+app.get("/login", function (req, res) {
+res.render('login', {
+title: 'Login',
+email: '',
+password: ''     
+})
+});
+//Handling user login
+app.post("/login", passport.authenticate("local", {
+successRedirect: "/home",
+failureRedirect: "/login"
+}), function (req, res) {
+});
+//Handling user logout
+app.get("/logout", function (req, res) {
+req.logout();
+res.redirect("/");
+});
+function isLoggedIn(req, res, next) {
+if (req.isAuthenticated()) return next();
+res.redirect("/login");
+}
+
+
+
+
 
 /* ========================== */
 /*                            */
@@ -132,6 +212,12 @@ app.get('/db/create', async function(req, res) {
 	res.send(await mymongo.create(mongoCredentials))
 });
 app.get('/db/search', async function(req, res) { 
+	res.send(await mymongo.search(req.query, mongoCredentials))
+});
+app.get('/db/createObject', async function(req, res) { 
+	res.send(await mymongo.search(req.query, mongoCredentials))
+});
+app.get('/db/createUser', async function(req, res) { 
 	res.send(await mymongo.search(req.query, mongoCredentials))
 });
 
