@@ -112,7 +112,7 @@ app.post('/info', info )
 /*       PASSPORT CONFIG      */
 /*                            */
 /* ========================== */
-
+/*
 var mongoose = require("mongoose");
 var passport = require("passport");
 var bodyParser = require("body-parser");
@@ -190,8 +190,7 @@ if (req.isAuthenticated()) return next();
 res.redirect("/login");
 }
 
-
-
+*/
 
 
 /* ========================== */
