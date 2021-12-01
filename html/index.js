@@ -35,7 +35,7 @@ global.startDate = null;
 const template = require(global.rootDir + '/scripts/tpl.js') ; 
 const mymongo = require(global.rootDir + '/scripts/mongo.js') ; 
 const express = require('express') ;
-const cors = require('cors');
+const cors = require('cors')
 
 
 /* ========================== */
@@ -51,7 +51,7 @@ app.use('/data', express.static(global.rootDir +'/public/data'));
 app.use('/docs', express.static(global.rootDir +'/public/html'));
 app.use('/img' , express.static(global.rootDir +'/public/media'));
 app.use(express.urlencoded({ extended: true }));
-app.use(cors())
+app.use(cors());
 
 
 
@@ -59,7 +59,7 @@ app.use(cors())
 // https://stackoverflow.com/questions/40459511/in-express-js-req-protocol-is-not-picking-up-https-for-my-secure-link-it-alwa
 app.enable('trust proxy');
 
-
+/*
 app.get('/', async function (req, res) { 
 	let sitename = req.hostname.split('.')[0]
 	res.send(await template.generate('index.html', {
@@ -67,6 +67,8 @@ app.get('/', async function (req, res) {
 			site: sitename
 	}));
 })
+*/
+
 
 app.get('/hw', async function(req, res) { 
 	var text = "Hello world as a Node service";
@@ -103,8 +105,8 @@ const info = async function(req, res) {
 	res.send( await template.generate('info.html', data));
 }
 
-app.get('/info', info )
-app.post('/info', info )
+app.get('/info', info );
+app.post('/info', info );
 
 
 
@@ -114,23 +116,21 @@ app.post('/info', info )
 /*                            */
 /* ========================== */
 
-app.use(express.static(__dirname));
-const bodyParser = require('body-parser'); //  per leggere i dati POST HTTP, dobbiamo usare il modulo del nodo "body-parser". body-parser è un middleware espresso che legge l'input di un modulo e lo memorizza come oggetto javascript accessibile attraversoreq.body 
-const expressSession = require('express-session')({
-  secret: 'secret', //session ID cookie
-  resave: false,
-  saveUninitialized: false
-});
+/*
+let path = require('path');
+let    cors = require('cors');
+let    logger = require('morgan');
+let cookieParser = require('cookie-parser');
+let bodyParser = require('body-parser');
+let morgan = require('morgan');
+let mongoose = require('mongoose');
+let passport = require('passport');
+let config = require('./config/database');
+*/
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(expressSession);
 
-/* configurazione passport */ 
-const passport = require('passport');
 
-app.use(passport.initialize());
-app.use(passport.session());
+
 
 /* ========================== */
 /*                            */
