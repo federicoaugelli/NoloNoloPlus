@@ -35,7 +35,8 @@ global.startDate = null;
 const template = require(global.rootDir + '/scripts/tpl.js') ; 
 const mymongo = require(global.rootDir + '/scripts/mongo.js') ; 
 const express = require('express') ;
-const cors = require('cors')
+const cors = require('cors');
+var router = express.Router()
 
 /* ========================== */
 /*                            */
@@ -112,86 +113,43 @@ app.post('/info', info )
 /*       PASSPORT CONFIG      */
 /*                            */
 /* ========================== */
-/*
-var mongoose = require("mongoose");
-var passport = require("passport");
-var bodyParser = require("body-parser");
-var LocalStrategy = require("passport-local");
-var passportLocalMongoose = require("passport-local-mongoose");
-var User = require("./js/userModel");
 
-app.set("view engine", "ejs");
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(require("express-session")({
-secret: "node js mongodb",
-resave: false,
-saveUninitialized: false
-}));
-app.use(passport.initialize());
-app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-//=====================
-// ROUTES
-//=====================
+const session = require('express-session')
+const MongoStore = require('connect-mongo')(session)
+const passport = require('passport')
 
-// Showing secret page
-app.get("/home", isLoggedIn, function (req, res) {
-res.render("home");
-});
-// Showing register form
-app.get("/register", function (req, res) {
-res.render('register', {
-title: 'Registration Page',
-name: '',
-email: '',
-password: ''    
-})
-});
-// Handling user signup
-app.post("/register", function (req, res) {
-var email = req.body.email
-var password = req.body.password
-User.register(new User({ email: email }),
-password, function (err, user) {
-if (err) {
-console.log(err);
-return res.render("register");
-}
-passport.authenticate("local")(
-req, res, function () {
-req.flash('success', 'You have logged in')
-res.render("home");
-});
-});
-});
-//Showing login form
-app.get("/login", function (req, res) {
-res.render('login', {
-title: 'Login',
-email: '',
-password: ''     
-})
-});
-//Handling user login
-app.post("/login", passport.authenticate("local", {
-successRedirect: "/home",
-failureRedirect: "/login"
-}), function (req, res) {
-});
-//Handling user logout
-app.get("/logout", function (req, res) {
-req.logout();
-res.redirect("/");
-});
-function isLoggedIn(req, res, next) {
-if (req.isAuthenticated()) return next();
-res.redirect("/login");
-}
+app.use(session({
+	secret: process.env.SESSION_SECRET,
+	resave: false,
+	saveUninitialized: true,
+	store: new MongoStore({
+	  mongooseConnection: mongoose.connection,
+	  collection: 'sessions'
+	}),
+	cookie: {
+	  secure: false
+	}
+  }))
 
-*/
+const bcrypt = require('bcrypt')
+const saltRounds = 10
 
+userSchema.pre('save', async function(next){
+	if (this.isNew) this.password = await bcrypt.hash(this.password, saltRounds)
+	next()
+  })
+  userSchema.static('userExists', async function({username, email}){
+	let user = await this.findOne({ username })
+	if (user) return { username: 'This username is already in use' }
+	user = await this.findOne({ email })
+	if (user) return { email: 'This email address is already in use' }
+	return false
+  })
+  userSchema.static('authenticate', async function(username, plainTextPassword){
+	const user = await this.findOne({ $or: [ {email: username}, {username} ] })
+	if (user && await bcrypt.compare(plainTextPassword, user.password)) return user
+	return false
+  })
 
 /* ========================== */
 /*                            */
