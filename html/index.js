@@ -36,7 +36,7 @@ const template = require(global.rootDir + '/scripts/tpl.js') ;
 const mymongo = require(global.rootDir + '/scripts/mongo.js') ; 
 const express = require('express') ;
 const cors = require('cors');
-var router = express.Router()
+
 
 /* ========================== */
 /*                            */
@@ -114,42 +114,23 @@ app.post('/info', info )
 /*                            */
 /* ========================== */
 
-const session = require('express-session')
-const MongoStore = require('connect-mongo')(session)
-const passport = require('passport')
+app.use(express.static(__dirname));
+const bodyParser = require('body-parser'); //  per leggere i dati POST HTTP, dobbiamo usare il modulo del nodo "body-parser". body-parser è un middleware espresso che legge l'input di un modulo e lo memorizza come oggetto javascript accessibile attraversoreq.body 
+const expressSession = require('express-session')({
+  secret: 'secret', //session ID cookie
+  resave: false,
+  saveUninitialized: false
+});
 
-app.use(session({
-	secret: process.env.SESSION_SECRET,
-	resave: false,
-	saveUninitialized: true,
-	store: new MongoStore({
-	  mongooseConnection: mongoose.connection,
-	  collection: 'sessions'
-	}),
-	cookie: {
-	  secure: false
-	}
-  }))
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(expressSession);
 
-const bcrypt = require('bcrypt')
-const saltRounds = 10
+/* configurazione passport */ 
+const passport = require('passport');
 
-userSchema.pre('save', async function(next){
-	if (this.isNew) this.password = await bcrypt.hash(this.password, saltRounds)
-	next()
-  })
-  userSchema.static('userExists', async function({username, email}){
-	let user = await this.findOne({ username })
-	if (user) return { username: 'This username is already in use' }
-	user = await this.findOne({ email })
-	if (user) return { email: 'This email address is already in use' }
-	return false
-  })
-  userSchema.static('authenticate', async function(username, plainTextPassword){
-	const user = await this.findOne({ $or: [ {email: username}, {username} ] })
-	if (user && await bcrypt.compare(plainTextPassword, user.password)) return user
-	return false
-  })
+app.use(passport.initialize());
+app.use(passport.session());
 
 /* ========================== */
 /*                            */
