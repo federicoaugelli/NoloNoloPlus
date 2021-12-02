@@ -23,16 +23,30 @@ Copyright (c) 2021 by Fabio Vitali
 
 /* Dati di prova */
 let fn = "/public/data/persone.json"
-let dbname = "site202127"
-let collection ="persone"
-let fieldname = "persone_reg"
+let dbname = "Utenti"
+let collection ="registroUtenti"
+let fieldname = "UtentiRegistrati"
 
 const { MongoClient } = require("mongodb");
+const mongouri = "mongodb://localhost:27017/Utenti";
+const mongoClient = new MongoClient(mongouri, {useUnifiedTopology : true}); 
+
 const fs = require('fs').promises ;
 const template = require(global.rootDir + '/scripts/tpl.js') ; 
+/*
+
+
+const connect = async function(){
+
+	await MongoClient.connect();
+	console.log('connessione a mongodb avvenuta');
+}
+
+connect().catch(err => console.log('err'));
+*/
 
 exports.create = async function(credentials) {
-	const mongouri = "mongodb://127.0.0.1:27017?writeConern=majority";
+	//const mongouri = "mongodb://localhost:27017/Utenti";
 	//`mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
 
 	let debug = []
@@ -74,7 +88,7 @@ exports.create = async function(credentials) {
 
 
 exports.search = async function(q,credentials) {
-	const mongouri = "mongodb://127.0.0.1:27017?writeConern=majority";
+	const mongouri = "mongodb://localhost:27017/myDb";
 	//`mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
 
 	let query =  {}
@@ -118,7 +132,7 @@ exports.search = async function(q,credentials) {
 
 exports.createObject = async function(newObject){
 
-     const mongouri = "mongodb://127.0.0.1:27017?writeConern=majority";
+     //const mongouri = "mongodb://127.0.0.1:27017?writeConern=majority";
 	 console.log(newObject);
 	 let debug = [];
 	 try{
@@ -152,7 +166,7 @@ exports.createObject = async function(newObject){
 
 exports.createUser = async function(newObject){
 
-	const mongouri = "mongodb://127.0.0.1:27017?writeConern=majority";
+	//const mongouri = "mongodb://127.0.0.1:27017?writeConern=majority";
 	console.log(newObject);
 	let debug = [];
 	try{
@@ -183,9 +197,14 @@ exports.createUser = async function(newObject){
 
 /* Untested */
 // https://stackoverflow.com/questions/39599063/check-if-mongodb-is-connected/39602781
+
+
 exports.isConnected = async function() {
-	let client = await MongoClient.connect(mongouri) ;
-	return !!client && !!client.topology && client.topology.isConnected()
+	
+	let client = await MongoClient.connect(mongouri);
+	return !!client && !!client.topology && client.topology.isConnected()	
 }
+
+
 
 

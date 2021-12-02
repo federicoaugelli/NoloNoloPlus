@@ -62,7 +62,7 @@
 
         "nazione":"Italia",
         "citta":"Milano",
-        "indirizzo":"MarioBianchiIndirizzo"
+        "via":"MarioBianchiIndirizzo"
        }]
    },
    {
@@ -73,7 +73,7 @@
 
       "nazione":"Italia",
       "citta":"Milano",
-      "indirizzo":"MarioBianchi1Indirizzo"
+      "via":"MarioBianchi1Indirizzo"
      }]
    },
    {
@@ -84,7 +84,7 @@
 
       "nazione":"Italia",
       "citta":"Milano",
-      "indirizzo":"MarioBianchi2Indirizzo"
+      "via":"MarioBianchi2Indirizzo"
      }]
    }
 ]
