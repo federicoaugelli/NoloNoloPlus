@@ -20,35 +20,49 @@ Copyright (c) 2021 by Fabio Vitali
    CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 */
-
-/* Dati di prova */
-let fn = "/public/data/persone.json"
-let dbname = "Utenti"
-let collection ="registroUtenti"
-let fieldname = "UtentiRegistrati"
-
-const { MongoClient } = require("mongodb");
-const mongouri = "mongodb://localhost:27017/Utenti";
-const mongoClient = new MongoClient(mongouri, {useUnifiedTopology : true}); 
-
-const fs = require('fs').promises ;
-const template = require(global.rootDir + '/scripts/tpl.js') ; 
 /*
-
-
-const connect = async function(){
-
-	await MongoClient.connect();
-	console.log('connessione a mongodb avvenuta');
-}
-
-connect().catch(err => console.log('err'));
+let fn = "/public/data/country-by-capital-city.json"
+let dbname = "countries"
+let collection ="capitals"
+let fieldname = "country"
 */
 
-exports.create = async function(credentials) {
-	//const mongouri = "mongodb://localhost:27017/Utenti";
-	//`mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
 
+
+let fn = "/public/data/persone.json"
+let dbname = "site202127"
+let collection ="registroUtenti"
+let fieldname = "persone"
+
+
+
+const { MongoClient } = require("mongodb");
+const fs = require('fs').promises ;
+const template = require(global.rootDir + '/scripts/tpl.js') ; 
+
+
+const mongouri = "mongodb://127.0.0.1:27017";
+
+MongoClient.connect(mongouri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}, (err, client) => {
+    if (err) {
+        return console.log(err);
+    }
+    // Specify database you want to access
+    console.log(`MongoDB Connected: ${mongouri} to dbname: ${dbname} and collection: ${collection}`);
+});
+
+
+
+
+exports.create = async function(credentials) {
+	
+	//const mongouri = "mongodb://127.0.0.1:27017";
+	//const mongouri = "mongodb://127.0.0.1:27017?writeConern=majority";
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+	
 	let debug = []
 	try {
 		debug.push(`Trying to connect to MongoDB with user: '${credentials.user}' and site: '${credentials.site}' and a ${credentials.pwd.length}-character long password...`)
@@ -65,19 +79,19 @@ exports.create = async function(credentials) {
 		let cleared = await mongo.db(dbname)
 					.collection(collection)
 					.deleteMany()
-		debug.push(`... ${cleared?.result?.n || 0} records deleted.`)
+		debug.push(`... ${cleared?.deletedCount || 0 } records deleted.`)
 					
 		debug.push(`Trying to add ${data.length} new records... `)
 		let added = await mongo.db(dbname)
 					.collection(collection)
 		 			.insertMany(data);	
-		debug.push(`... ${added?.result?.n || 0} records added.`)
+		debug.push(`... ${added?.insertedCount || 0} records added.`)
 
 		await mongo.close();
 		debug.push("Managed to close connection to MongoDB.")
 
 		return {
-			message: `<h1>Removed ${cleared?.result?.n || 0} records, added ${added?.result?.n || 0} records</h1>`, 
+			message: `<h1>Removed ${cleared?.deletedCount || 0} records, added ${added?.insertedCount || 0} records</h1>`, 
 			debug: debug
 		}
 	} catch (e) {
@@ -88,8 +102,7 @@ exports.create = async function(credentials) {
 
 
 exports.search = async function(q,credentials) {
-	const mongouri = "mongodb://localhost:27017/myDb";
-	//`mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
 
 	let query =  {}
 	let debug = []
@@ -128,7 +141,6 @@ exports.search = async function(q,credentials) {
 		return data
 	}
 }
-
 
 exports.createObject = async function(newObject){
 
