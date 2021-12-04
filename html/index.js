@@ -109,9 +109,6 @@ app.get('/info', info )
 app.post('/info', info )
 
 
-
-
-
 /* ========================== */
 /*                            */
 /*           MONGODB          */
@@ -134,8 +131,36 @@ app.get('/db/search', async function(req, res) {
 });
 
 
+/* ========================== */
+/*                            */
+/*         SESSIONI           */
+/*                            */
+/* ========================== */
 
 
+const mongoose = require("mongoose"),
+bodyParser = require("body-parser"),
+User = require("./models/user"),
+passport = require("passport"),
+LocalStrategy = require("passport-local"),
+passportLocalMongoose = require("passport-local-mongoose");
+
+mongoose.connect("mongodb://127.0.0.1:27017/", { useNewUrlParser: true });
+
+app.set("view engine","ejs");
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(require("express-session")({
+    secret:"Miss white is my cat",
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 
 
