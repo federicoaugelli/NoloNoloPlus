@@ -35,8 +35,8 @@ global.startDate = null;
 const template = require(global.rootDir + '/scripts/tpl.js') ; 
 const mymongo = require(global.rootDir + '/scripts/mongo.js') ; 
 const express = require('express') ;
-const cors = require('cors')
-
+const cors = require('cors');
+const path= require('path')
 
 
 
@@ -107,6 +107,16 @@ const info = async function(req, res) {
 
 app.get('/info', info )
 app.post('/info', info )
+
+
+app.get('/frontend', async function(req, res) { 
+	res.sendFile(path.join(__dirname+'/public/html/frontoffice.html'));
+});
+
+app.get('/backend', async function(req, res) { 
+	res.sendFile(path.join(__dirname+'/public/html/backoffice.html'));
+});
+
 
 
 /* ========================== */
