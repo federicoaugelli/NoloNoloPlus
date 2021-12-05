@@ -147,33 +147,33 @@ app.get('/db/search', async function(req, res) {
 /*                            */
 /* ========================== */
 
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
+require('dotenv').config();
 
-const mongoose = require("mongoose"),
-bodyParser = require("body-parser"),
-User = require("./models/user"),
-passport = require("passport"),
-LocalStrategy = require("passport-local"),
-passportLocalMongoose = require("passport-local-mongoose");
+app.use(cookieParser());
 
-mongoose.connect("mongodb://127.0.0.1:27017/", { useNewUrlParser: true });
+app.get('/login', (req,res) => {
 
-app.set("view engine","ejs");
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(require("express-session")({
-    secret:"Miss white is my cat",
-    resave: false,
-    saveUninitialized: false
-}));
+	const payload = { id: 1, isLogged: true};
+    const options = {expiresIn: '100s'};
+	const cookieSetting = {
+		expire: new Date(Date.now() + 1e5),
+		httpOnly: true,
+		secure: false
+	};
+    const token = jwt.sign(payload, process.env.JWT_KEY, options);
+	res.cookie('token', token, cookieSetting).send();
+})
 
-app.use(passport.initialize());
-app.use(passport.session());
-
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
-
-
+app.get('/user/profile', (req,res) => {
+    
+	const token = req.cookies.token;
+	if(!token) return res.status(401).send('Nessun token fornito');
+	const payload = jwt.verify(token, process.env.JWT_KET);
+	console.log(payload);
+	res.send('Il token è valido');
+})
 
 
 /* ========================== */
