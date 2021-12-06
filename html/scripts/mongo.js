@@ -55,6 +55,41 @@ MongoClient.connect(mongouri, {
 });
 
 
+/*
+const { MongoClient } = require("mongodb");
+const { EventEmitter } = require('events');
+
+class DbConnection extends EventEmitter{
+
+	mongoClient = new MongoClient(
+		'mongodb://127.0.0.1:27017',{
+			useNewUrlParser: true, useUnifiedTopology: true
+		}
+	); 
+
+	getConnection(){
+		this.mongoClient.connect((err,mongodb) => {
+			if(err) throw err;
+			this.emit('dbConnection', {
+				db: this.mongoClient.db('passport')
+			});
+            DbConnection.setInstance(mongodb);
+		})
+	}
+	static setInstance(mongodb){
+		DbConnection.db = mongodb.db('passport');
+		DbConnection.userCollection = DbConnection.db.collection('user');
+	}
+}
+
+module.exports = DbConnection;
+*/
+
+
+
+
+
+
 
 
 exports.create = async function(credentials) {

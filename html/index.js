@@ -147,34 +147,36 @@ app.get('/db/search', async function(req, res) {
 /*                            */
 /* ========================== */
 
-const jwt = require('jsonwebtoken');
-const cookieParser = require('cookie-parser');
-require('dotenv').config();
+const session = require('express-session');
+const passport = require('passport');
+const DbConnection = require('./scripts/mongo.js');
+const checkUserLogin = require('./app/middleware/check-user-login');
 
-app.use(cookieParser());
+//const conn = new DbConnection();
 
-app.get('/login', (req,res) => {
+//router
 
-	const payload = { id: 1, isLogged: true};
-    const options = {expiresIn: '100s'};
-	const cookieSetting = {
-		expire: new Date(Date.now() + 1e5),
-		httpOnly: true,
-		secure: false
-	};
-    const token = jwt.sign(payload, process.env.JWT_KEY, options);
-	res.cookie('token', token, cookieSetting).send();
-})
+const loginRouter = require('./app/routes/login.js');
+const userRouter = require('./app/routes/user.js');
+/*
+conn.on('dbConnection', conn => {
+	app.listen(() => console.log('Server in ascolto sulla porta 8000'))
+});
+conn.getConnection();
+*/
+app.set('views', './app/views');
+app.set('view engine', 'ejs');
 
-app.get('/user/profile', (req,res) => {
-    
-	const token = req.cookies.token;
-	if(!token) return res.status(401).send('Nessun token fornito');
-	const payload = jwt.verify(token, process.env.JWT_KET);
-	console.log(payload);
-	res.send('Il token è valido');
-})
+app.use(session({
+	secret: 'chiaveSegreta123',
+	saveUninitialized: false,
+	resave: false
+}));
 
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(loginRouter);
+app.use('/user', checkUserLogin(), userRouter);
 
 /* ========================== */
 /*                            */
