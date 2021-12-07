@@ -141,15 +141,27 @@ app.get('/db/search', async function(req, res) {
 });
 
 
+app.get('/db/createObject', async function(req, res) { 
+	res.send(await mymongo.create(mongoCredentials))
+});
+
+const User = require("./app/model/userModel.js");
+
+app.get('/db/createUser', async function(req, res) { 
+	res.send(await mymongo.search(User))
+});
+
+
+
 /* ========================== */
 /*                            */
-/*         SESSIONI           */
+/*         PASSPORT           */
 /*                            */
 /* ========================== */
 
 const session = require('express-session');
 const passport = require('passport');
-const DbConnection = require('./scripts/mongo.js');
+//const DbConnection = require('./scripts/mongo.js');
 const checkUserLogin = require('./app/middleware/check-user-login');
 
 //const conn = new DbConnection();
@@ -158,14 +170,21 @@ const checkUserLogin = require('./app/middleware/check-user-login');
 
 const loginRouter = require('./app/routes/login.js');
 const userRouter = require('./app/routes/user.js');
+
 /*
 conn.on('dbConnection', conn => {
 	app.listen(() => console.log('Server in ascolto sulla porta 8000'))
 });
 conn.getConnection();
 */
-app.set('views', './app/views');
-app.set('view engine', 'ejs');
+
+// view engine setup html
+app.set('views', path.join(__dirname, './app/views'));
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
+
+
+
 
 app.use(session({
 	secret: 'chiaveSegreta123',
@@ -177,6 +196,21 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(loginRouter);
 app.use('/user', checkUserLogin(), userRouter);
+
+
+
+/* ========================== */
+/*                            */
+/*         MONGOOSE           */
+/*                            */
+/* ========================== */
+
+//const mongoose = require("mongoose");
+//const LocalStrategy = require("passport-local");
+//const passportLocalMongoose = require("passport-local-mongoose");
+//const User = require("./app/model/userModel.js");
+
+
 
 /* ========================== */
 /*                            */

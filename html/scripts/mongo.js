@@ -40,19 +40,8 @@ const { MongoClient } = require("mongodb");
 const fs = require('fs').promises ;
 const template = require(global.rootDir + '/scripts/tpl.js') ; 
 
-
 const mongouri = "mongodb://127.0.0.1:27017";
 
-MongoClient.connect(mongouri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}, (err, client) => {
-    if (err) {
-        return console.log(err);
-    }
-    // Specify database you want to access
-    console.log(`MongoDB Connected: ${mongouri} to dbname: ${dbname} and collection: ${collection}`);
-});
 
 
 /*
@@ -85,17 +74,35 @@ class DbConnection extends EventEmitter{
 module.exports = DbConnection;
 */
 
+MongoClient.connect(mongouri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}, (err, client) => {
+    if (err) {
+        return console.log(err);
+    }
+    // Specify database you want to access
+    console.log(`MongoDB Connected: ${mongouri} to dbname: ${dbname} and collection: ${collection}`);
+});
 
-
-
-
-
+/*
+//  MONGOOSE CONNECT
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/node-mongodb', {useNewUrlParser: true});
+var conn = mongoose.connection;
+conn.on('connected', function() {
+    //console.log('database is connected successfully');
+});
+conn.on('disconnected',function(){
+    console.log('database is disconnected successfully');
+})
+conn.on('error', console.error.bind(console, 'connection error:'));
+module.exports = conn;
+*/
 
 
 exports.create = async function(credentials) {
 	
-	//const mongouri = "mongodb://127.0.0.1:27017";
-	//const mongouri = "mongodb://127.0.0.1:27017?writeConern=majority";
 	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
 	
 	let debug = []
@@ -229,8 +236,8 @@ exports.createUser = async function(newObject){
 
 		   username: newObject.username,
 		   password: newObject.password,
-		   ruolo: newObject.ruolo,
-		   indirizzo: newObject.indirizzo
+		   ruolo: newObject.ruolo
+		   //indirizzo: newObject.indirizzo
 	   });
 	await mongo.close();
    

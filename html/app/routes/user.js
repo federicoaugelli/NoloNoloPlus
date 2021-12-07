@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-//rotte protette
+// ROTTE PROTETTE ACCESSIBILI SOLO DOPO LOGIN
  
 router.get('/dashboard', (req,res) => {
     const html = '<h3><a href=/logout> Effettua il logout</a></h3>';
