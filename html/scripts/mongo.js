@@ -31,48 +31,16 @@ let fieldname = "country"
 
 let fn = "/public/data/persone.json"
 let dbname = "site202127"
-let collection ="registroUtenti"
+let collection ="registroutenti"
 let fieldname = "persone"
-
-
 
 const { MongoClient } = require("mongodb");
 const fs = require('fs').promises ;
 const template = require(global.rootDir + '/scripts/tpl.js') ; 
 
+
 const mongouri = "mongodb://127.0.0.1:27017";
 
-
-
-/*
-const { MongoClient } = require("mongodb");
-const { EventEmitter } = require('events');
-
-class DbConnection extends EventEmitter{
-
-	mongoClient = new MongoClient(
-		'mongodb://127.0.0.1:27017',{
-			useNewUrlParser: true, useUnifiedTopology: true
-		}
-	); 
-
-	getConnection(){
-		this.mongoClient.connect((err,mongodb) => {
-			if(err) throw err;
-			this.emit('dbConnection', {
-				db: this.mongoClient.db('passport')
-			});
-            DbConnection.setInstance(mongodb);
-		})
-	}
-	static setInstance(mongodb){
-		DbConnection.db = mongodb.db('passport');
-		DbConnection.userCollection = DbConnection.db.collection('user');
-	}
-}
-
-module.exports = DbConnection;
-*/
 
 MongoClient.connect(mongouri, {
     useNewUrlParser: true,
@@ -85,20 +53,6 @@ MongoClient.connect(mongouri, {
     console.log(`MongoDB Connected: ${mongouri} to dbname: ${dbname} and collection: ${collection}`);
 });
 
-/*
-//  MONGOOSE CONNECT
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://127.0.0.1:27017', {useNewUrlParser: true});
-var conn = mongoose.connection;
-conn.on('connected', function() {
-    console.log('MOGOOSE database is connected successfully');
-});
-conn.on('disconnected',function(){
-    console.log('database is disconnected successfully');
-})
-conn.on('error', console.error.bind(console, 'connection error:'));
-module.exports = conn;
-*/
 
 
 exports.create = async function(credentials) {

@@ -140,7 +140,7 @@ app.get('/db/search', async function(req, res) {
 	res.send(await mymongo.search(req.query, mongoCredentials))
 });
 
-
+/*
 app.get('/db/createObject', async function(req, res) { 
 	res.send(await mymongo.createObject(mongoCredentials))
 });
@@ -150,7 +150,7 @@ app.get('/db/createObject', async function(req, res) {
 app.get('/db/createUser', async function(req, res) { 
 	res.send(await mymongo.createUser(User))
 });
-
+*/
 
 
 /* ========================== */
@@ -161,32 +161,19 @@ app.get('/db/createUser', async function(req, res) {
 
 const session = require('express-session');
 const passport = require('passport');
-//const DbConnection = require('./scripts/mongo.js');
 const checkUserLogin = require('./app/middleware/check-user-login');
 
-//const conn = new DbConnection();
-
-//router
-
+//    router
 const loginRouter = require('./app/routes/login.js');
 const userRouter = require('./app/routes/user.js');
 const registerRouter = require('./app/routes/register.js');
 
-/*
-conn.on('dbConnection', conn => {
-	app.listen(() => console.log('Server in ascolto sulla porta 8000'))
-});
-conn.getConnection();
-*/
-
-// view engine setup html
+//    view engine setup html
 app.set('views', path.join(__dirname, './app/views'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
-
-
-
+//   app.use
 app.use(session({
 	secret: 'chiaveSegreta123',
 	saveUninitialized: false,
@@ -198,6 +185,7 @@ app.use(passport.session());
 app.use(loginRouter);
 app.use(registerRouter);
 app.use('/user', checkUserLogin(), userRouter);
+//app.use('/user', registerRouter);
 
 
 
@@ -213,11 +201,12 @@ app.use('/user', checkUserLogin(), userRouter);
 //const passportLocalMongoose = require("passport-local-mongoose");
 //const User = require("./app/model/userModel.js");
 
+
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://127.0.0.1:27017', {useNewUrlParser: true});
+mongoose.connect('mongodb://127.0.0.1:27017/site202127', {useNewUrlParser: true, useUnifiedTopology: true});
 var conn = mongoose.connection;
 conn.on('connected', function() {
-    console.log('MOGOOSE database is connected successfully');
+    console.log('MONGOOSE database is connected successfully');
 });
 conn.on('disconnected',function(){
     console.log('database is disconnected successfully');
@@ -232,15 +221,18 @@ const userSchema = {
     ruolo : {type: String, required:true, unique:false}
 };
 
- const user = mongoose.model('user', userSchema);
+var collectionName = 'registroutenti';
+ const registroutenti = mongoose.model('registroUtenti', userSchema, collectionName);
 
  app.post("/register", function(req, res){
-	 let newUser = new user({
+	 let newUser = new registroutenti({
 		 username: req.body.username,
 		 password: req.body.password,
 		 ruolo: req.body.ruolo
 	 });
 	 newUser.save();
+	 res.redirect('/user/dashboard-2');
+	 
  })
 
 /* ========================== */

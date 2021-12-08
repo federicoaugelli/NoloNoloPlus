@@ -12,7 +12,7 @@ router.get('/login', (req,res) => {
 // SE SONO AUTENTICATO VADO ALLA DASBOARD SENNO MI RIMANDA AL LOGIN
 router.post('/login', passport.authenticate('local-login', {
     successRedirect: '/user/dashboard',
-    failureRedirect: '/frontend'
+    failureRedirect: '/login'
 })); 
 
 // IL LOGOUT MI RIMANDA AL LOGIN
