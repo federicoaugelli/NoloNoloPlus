@@ -142,13 +142,13 @@ app.get('/db/search', async function(req, res) {
 
 
 app.get('/db/createObject', async function(req, res) { 
-	res.send(await mymongo.create(mongoCredentials))
+	res.send(await mymongo.createObject(mongoCredentials))
 });
 
-const User = require("./app/model/userModel.js");
+//const User = require("./app/model/userModel.js");
 
 app.get('/db/createUser', async function(req, res) { 
-	res.send(await mymongo.search(User))
+	res.send(await mymongo.createUser(User))
 });
 
 
@@ -170,6 +170,7 @@ const checkUserLogin = require('./app/middleware/check-user-login');
 
 const loginRouter = require('./app/routes/login.js');
 const userRouter = require('./app/routes/user.js');
+const registerRouter = require('./app/routes/register.js');
 
 /*
 conn.on('dbConnection', conn => {
@@ -195,6 +196,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(loginRouter);
+app.use(registerRouter);
 app.use('/user', checkUserLogin(), userRouter);
 
 
@@ -206,11 +208,40 @@ app.use('/user', checkUserLogin(), userRouter);
 /* ========================== */
 
 //const mongoose = require("mongoose");
+//const { networkInterfaces } = require('os');
 //const LocalStrategy = require("passport-local");
 //const passportLocalMongoose = require("passport-local-mongoose");
 //const User = require("./app/model/userModel.js");
 
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://127.0.0.1:27017', {useNewUrlParser: true});
+var conn = mongoose.connection;
+conn.on('connected', function() {
+    console.log('MOGOOSE database is connected successfully');
+});
+conn.on('disconnected',function(){
+    console.log('database is disconnected successfully');
+})
+conn.on('error', console.error.bind(console, 'connection error:'));
+module.exports = conn;
 
+
+const userSchema = {   
+    username : {type: String, required:true, unique:true},
+    password: {type: String, required:true, unique:true},
+    ruolo : {type: String, required:true, unique:false}
+};
+
+ const user = mongoose.model('user', userSchema);
+
+ app.post("/register", function(req, res){
+	 let newUser = new user({
+		 username: req.body.username,
+		 password: req.body.password,
+		 ruolo: req.body.ruolo
+	 });
+	 newUser.save();
+ })
 
 /* ========================== */
 /*                            */

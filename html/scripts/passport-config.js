@@ -14,17 +14,6 @@ passport.use(
     })
 );
 
-passport.use(
-    'local-register', 
-    new LocalStrategy((password, password2, done) =>{
-        if(password === password2) {
-            const user = { id: 1, username: 'gianluca' };
-            return done(null, user);
-        }        
-        return done(null, false);            
-    })
-);
-
 passport.serializeUser((user, done) => {
      done(null, user.id);
 });

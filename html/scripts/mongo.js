@@ -88,10 +88,10 @@ MongoClient.connect(mongouri, {
 /*
 //  MONGOOSE CONNECT
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/node-mongodb', {useNewUrlParser: true});
+mongoose.connect('mongodb://127.0.0.1:27017', {useNewUrlParser: true});
 var conn = mongoose.connection;
 conn.on('connected', function() {
-    //console.log('database is connected successfully');
+    console.log('MOGOOSE database is connected successfully');
 });
 conn.on('disconnected',function(){
     console.log('database is disconnected successfully');
@@ -218,10 +218,10 @@ exports.createObject = async function(newObject){
 	}
 }
 
-exports.createUser = async function(newObject){
+exports.createUser = async function(newUser){
 
 	//const mongouri = "mongodb://127.0.0.1:27017?writeConern=majority";
-	console.log(newObject);
+	console.log(newUser);
 	let debug = [];
 	try{
 
@@ -234,9 +234,9 @@ exports.createUser = async function(newObject){
 	   .collection(oggetti)
 	   .insertOne({
 
-		   username: newObject.username,
-		   password: newObject.password,
-		   ruolo: newObject.ruolo
+		   username: newUser.username,
+		   password: newUser.password,
+		   ruolo: newUser.ruolo
 		   //indirizzo: newObject.indirizzo
 	   });
 	await mongo.close();
