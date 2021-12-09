@@ -117,6 +117,11 @@ app.get('/backend', async function(req, res) {
 	res.sendFile(path.join(__dirname+'/public/html/backoffice.html'));
 });
 
+app.get('/backendlogged', async function(req, res) { 
+	res.sendFile(path.join(__dirname+'/public/html/backofficelogged.html'));
+});
+
+
 
 
 /* ========================== */
@@ -187,53 +192,6 @@ app.use(registerRouter);
 app.use('/user', checkUserLogin(), userRouter);
 //app.use('/user', registerRouter);
 
-
-
-/* ========================== */
-/*                            */
-/*         MONGOOSE           */
-/*                            */
-/* ========================== */
-
-//const mongoose = require("mongoose");
-//const { networkInterfaces } = require('os');
-//const LocalStrategy = require("passport-local");
-//const passportLocalMongoose = require("passport-local-mongoose");
-//const User = require("./app/model/userModel.js");
-
-
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://127.0.0.1:27017/site202127', {useNewUrlParser: true, useUnifiedTopology: true});
-var conn = mongoose.connection;
-conn.on('connected', function() {
-    console.log('MONGOOSE database is connected successfully');
-});
-conn.on('disconnected',function(){
-    console.log('database is disconnected successfully');
-})
-conn.on('error', console.error.bind(console, 'connection error:'));
-module.exports = conn;
-
-
-const userSchema = {   
-    username : {type: String, required:true, unique:true},
-    password: {type: String, required:true, unique:true},
-    ruolo : {type: String, required:true, unique:false}
-};
-
-var collectionName = 'registroutenti';
- const registroutenti = mongoose.model('registroUtenti', userSchema, collectionName);
-
- app.post("/register", function(req, res){
-	 let newUser = new registroutenti({
-		 username: req.body.username,
-		 password: req.body.password,
-		 ruolo: req.body.ruolo
-	 });
-	 newUser.save();
-	 res.redirect('/user/dashboard-2');
-	 
- })
 
 /* ========================== */
 /*                            */

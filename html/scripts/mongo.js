@@ -54,7 +54,6 @@ MongoClient.connect(mongouri, {
 });
 
 
-
 exports.create = async function(credentials) {
 	
 	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;

@@ -1,19 +1,19 @@
-// importing modules
-/*
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var passportLocalMongoose = require('passport-local-mongoose');
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const passportLocalMongoose = require('passport-local-mongoose');
+const conn = require('../../scripts/mongoose.js');
   
-  
-var UserSchema = new Schema({   
+const userSchema = new Schema({   
     username : {type: String, required:true, unique:true},
     password: {type: String, required:true, unique:true},
     ruolo : {type: String, required:true, unique:false},
 });
   
 // plugin for passport-local-mongoose
-UserSchema.plugin(passportLocalMongoose);
+userSchema.plugin(passportLocalMongoose);
   
 // export userschema
- module.exports = mongoose.model("User", UserSchema);
- */
+const collectionName = 'registroutenti';
+
+module.exports = mongoose.model('registroUtenti', userSchema, collectionName);
+ 
