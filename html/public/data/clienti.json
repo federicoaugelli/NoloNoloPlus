@@ -2,7 +2,6 @@
     {
         "username": "MarioRossi",
         "password": "MarioRossiPwd",
-        "ruolo": "dipendente",
         "indirizzo": [{
   
           "nazione":"Italia",
@@ -13,7 +12,6 @@
      {
       "username": "MarioRossi1",
       "password": "MarioRossi1Pwd",
-      "ruolo": "dipendente",
       "indirizzo": [{
   
         "nazione":"Italia",
@@ -24,7 +22,6 @@
      {
       "username": "MarioRossi2",
       "password": "MarioRossi2Pwd",
-      "ruolo": "dipendente",
       "indirizzo": [{
   
         "nazione":"Italia",
@@ -35,7 +32,6 @@
      {
       "username": "HarryHumbug",
       "password": "HarryHumbugPwd",
-      "ruolo": "cliente",
       "indirizzo": [{
   
         "nazione":"America",
@@ -46,7 +42,6 @@
      {
       "username": "LoriFields",
       "password": "LoriFields1Pwd",
-      "ruolo": "cliente",
       "indirizzo": [{
   
         "nazione":"America",
@@ -57,7 +52,6 @@
      {
       "username": "MarioBianchi",
       "password": "MarioBianchiPwd",
-      "ruolo": "manager",
       "indirizzo": [{
 
         "nazione":"Italia",
@@ -68,7 +62,6 @@
    {
     "username": "MarioBianchi1",
     "password": "MarioBianchi1Pwd",
-    "ruolo": "dipendente",
     "indirizzo": [{
 
       "nazione":"Italia",
@@ -79,7 +72,6 @@
    {
     "username": "MarioBianchi2",
     "password": "MarioBianchi2Pwd",
-    "ruolo": "dipendente",
     "indirizzo": [{
 
       "nazione":"Italia",

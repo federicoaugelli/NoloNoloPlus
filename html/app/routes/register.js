@@ -1,37 +1,53 @@
 const express = require('express');
 const router = express.Router();
-//const passport = require('../../scripts/passport-config');
-const mongoose = require("mongoose");
-const conn = require('../../scripts/mongoose.js');
+const passport = require('../../scripts/passport-config');
+//const mongoose = require("mongoose");
+//const conn = require('../../scripts/mongoose.js');
 //const LocalStrategy = require("passport-local");
 //const passportLocalMongoose = require("passport-local-mongoose");
 
+// REGISTRAZIONE NUOVO DIPENDENTE IN MONGO
+const registrodipendenti = require('../model/dipendentiModel.js');
 
-// POSSO ACCEDERE ALLA ROTTA USER/DASHBOARD SOLO SE SONO AUTENTICATO
-router.get('/register', (req,res) => {
-    if(req.isAuthenticated()) return res.redirect('/backendlogged');
-    res.render('register');
-});
-
-const registroutenti = require('../model/userModel.js');
-
-router.post("/register", function(req, res){
-    let newUser = new registroutenti({
+router.post("/backendregister", function(req, res){
+    let newUser = new registrodipendenti({
         username: req.body.username,
         password: req.body.password,
         ruolo: req.body.ruolo
     });
     newUser.save();
-    res.redirect('/user/dashboard-2');	 
-})
+    res.redirect('/backend');	 
+}, 
+    passport.authenticate('local-register', {
+      
+        successRedirect: '/user/backendlogged',
+        failureRedirect: '/backend'
+}));
+
+// REGISTRAZIONE NUOVO CLIENTE IN MONGO
+const registroclienti = require('../model/clientiModel.js');
+
+router.post("/frontendregister", function(req, res){
+    let newUser = new registroclienti({
+        username: req.body.username,
+        password: req.body.password,
+        email: req.body.email
+    });
+    newUser.save();
+    res.redirect('/frontend');	 
+}, 
+    passport.authenticate('local-register', {
+      
+        successRedirect: '/user/dashboard-2',
+        failureRedirect: '/frontend'
+}));
+
 
 /*
-// SE SONO AUTENTICATO VADO ALLA DASBOARD SENNO MI RIMANDA AL LOGIN
-router.post('/login', passport.authenticate('local-login', {
-    successRedirect: '/user/dashboard',
-    failureRedirect: '/frontend'
+router.post('/backend', passport.authenticate('local-login', {
+    successRedirect: '/user/backendlogged',
+    failureRedirect: '/backend'
 })); 
-
 
 
 // IL LOGOUT MI RIMANDA AL LOGIN

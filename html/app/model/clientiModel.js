@@ -6,14 +6,14 @@ const conn = require('../../scripts/mongoose.js');
 const userSchema = new Schema({   
     username : {type: String, required:true, unique:true},
     password: {type: String, required:true, unique:true},
-    ruolo : {type: String, required:true, unique:false},
+    email : {type: String, required:true, unique:true},
 });
   
 // plugin for passport-local-mongoose
 userSchema.plugin(passportLocalMongoose);
   
 // export userschema
-const collectionName = 'registroutenti';
+const collectionName = 'registroclienti';
 
-module.exports = mongoose.model('registroUtenti', userSchema, collectionName);
+module.exports = mongoose.model('registroClienti', userSchema, collectionName);
  

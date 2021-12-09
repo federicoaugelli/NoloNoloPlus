@@ -29,9 +29,9 @@ let fieldname = "country"
 
 
 
-let fn = "/public/data/persone.json"
+let fn = "/public/data/clienti.json"
 let dbname = "site202127"
-let collection ="registroutenti"
+let collection ="registroclienti"
 let fieldname = "persone"
 
 const { MongoClient } = require("mongodb");
@@ -39,7 +39,7 @@ const fs = require('fs').promises ;
 const template = require(global.rootDir + '/scripts/tpl.js') ; 
 
 
-const mongouri = "mongodb://127.0.0.1:27017";
+const mongouri = "mongodb://127.0.0.1:27017/site202127";
 
 
 MongoClient.connect(mongouri, {
