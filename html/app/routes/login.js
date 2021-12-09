@@ -24,21 +24,21 @@ router.get('/logout', (req,res) => {
 */
 
 // POSSO ACCEDERE ALLA ROTTA USER/DASHBOARD SOLO SE SONO AUTENTICATO
-router.get('/backendlogin', (req,res) => {
-    if(req.isAuthenticated()) return res.redirect('/backendlogged');
-    res.render('/backendlogin');
+router.get('/backend', (req,res) => {
+    if(req.isAuthenticated()) return res.redirect('/user/backendlogged');
+    res.render('/backend');
 });
 
 // SE SONO AUTENTICATO VADO ALLA DASBOARD SENNO MI RIMANDA AL LOGIN
-router.post('/backendlogin', passport.authenticate('local-login', {
-    successRedirect: '/backendlogged',
-    failureRedirect: '/backendlogin'
+router.post('/backend', passport.authenticate('local-login', {
+    successRedirect: '/user/dashboard',
+    failureRedirect: '/backend'
 })); 
 
 // IL LOGOUT MI RIMANDA AL LOGIN
 router.get('/logout', (req,res) => {
     req.logOut();
-    res.redirect('/backendlogin');
+    res.redirect('/backend');
 })
 
 

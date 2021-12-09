@@ -15,4 +15,12 @@ router.get('/dashboard-2', (req,res) => {
     res.send('dashboard-2');
 });
 
+
+router.get('/backendlogged', (req, res) => { 
+
+    res.render('/backendlogged');
+    //res.send('backendlogged');
+	//res.sendFile(path.join(__dirname+'../../public/html/backofficelogged.html'));
+});
+
 module.exports = router;

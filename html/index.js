@@ -117,10 +117,11 @@ app.get('/backend', async function(req, res) {
 	res.sendFile(path.join(__dirname+'/public/html/backoffice.html'));
 });
 
+/*
 app.get('/backendlogged', async function(req, res) { 
 	res.sendFile(path.join(__dirname+'/public/html/backofficelogged.html'));
 });
-
+*/
 
 
 
@@ -175,6 +176,7 @@ const registerRouter = require('./app/routes/register.js');
 
 //    view engine setup html
 app.set('views', path.join(__dirname, './app/views'));
+//app.set('html', path.join(__dirname, '/public/html'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
