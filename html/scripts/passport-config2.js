@@ -1,8 +1,8 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require("bcryptjs");
-const User = require('../app/model/clientiModel.js');
-const User2 = require('../app/model/dipendentiModel.js');
+//const User = require('../app/model/clientiModel.js');
+const User = require('../app/model/dipendentiModel.js');
 
 
 passport.serializeUser((user, done) => {
@@ -17,32 +17,10 @@ passport.deserializeUser((id, done) => {
 });
 
 
-/*
-passport.deserializeUser((id, done) => {
-   //recupero dell'utente nel database
-   const user = { id: 1, username: 'gianluca'};
-   done(null, user);
-})
-
-
+// CREO LA MIA STRATEGIA DI AUTENTICAZIONE CON I VARI CONTROLLI SU USERNAME E PASSWORD DIPENDENTI
 
 passport.use(
-    'local-login', 
-    new LocalStrategy((username, password, done) =>{
-        if(username === 'gianluca' && password === '123') {
-            const user = { id: 1, username: 'gianluca' };
-            return done(null, user);
-        }        
-        return done(null, false);            
-    })
-);
-*/
-
-
-// CREO LA MIA STRATEGIA DI AUTENTICAZIONE CON I VARI CONTROLLI SU USERNAME E PASSWORD CLIENTI
-
-passport.use(
-    'local-login', 
+    'local-login2', 
     new LocalStrategy({ usernameField: "username" }, (username, password, done) =>{
         // MATCH USER
         User.findOne({ username: username })

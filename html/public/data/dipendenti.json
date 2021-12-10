@@ -1,0 +1,25 @@
+[
+   {
+    "username": "Simone",
+    "password": "$2a$10$K5ODS.UQYV0WDNFR.xFV3.4sbO5PgIw0yh/rqG811nBeSYyvL0tdO",
+    "ruolo" : "manager"
+   },
+   {
+    "username": "Elia",
+    "password": "$2a$10$mCEGCNpuksw1V4/hPOgFKeeMfqf82nCp5uRVpeE9BHpSKjQz6Drp6",
+    "ruolo" : "funzionario"
+   },
+   {
+    "username": "Federico",
+    "password": "$2a$10$I3DEhQ0zp9.AsH9TVPiJLO5vprxE2RnMBUHxe2t3cQMNlBJJnngGS",
+    "ruolo" : "funzionario"
+   },
+   {
+    "username": "Antonio",
+    "password": "$2a$10$Ulme5oX5uG/WuCz6B1sevuhnVnOWqv.pt79v9CjFd8ibr1SjlTPly",
+    "ruolo" : "funzionario"
+   }
+]
+
+
+

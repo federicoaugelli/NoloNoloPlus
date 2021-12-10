@@ -29,9 +29,9 @@ let fieldname = "country"
 
 
 
-let fn = "/public/data/clienti.json"
+let fn = "/public/data/dipendenti.json"
 let dbname = "site202127"
-let collection ="registroclienti"
+let collection ="registrodipendenti"
 let fieldname = "persone"
 
 const { MongoClient } = require("mongodb");
@@ -189,7 +189,7 @@ exports.createUser = async function(newUser){
 
 		   username: newUser.username,
 		   password: newUser.password,
-		   ruolo: newUser.ruolo
+		   //ruolo: newUser.ruolo
 		   //indirizzo: newObject.indirizzo
 	   });
 	await mongo.close();
