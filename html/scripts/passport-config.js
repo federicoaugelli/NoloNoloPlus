@@ -1,5 +1,8 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const Bcrypt = require("bcryptjs");
+const cliente = require('../app/model/clientiModel.js');
+const dipendente = require('../app/model/clientiModel.js');
 
 // CREO LA MIA STRATEGIA DI AUTENTICAZIONE CON I VARI CONTROLLI SU USERNAME E PASSWORD
 
@@ -13,6 +16,23 @@ passport.use(
         return done(null, false);            
     })
 );
+
+
+/*
+passport.use(
+    'local-login', 
+    new LocalStrategy((username, password, done) =>{
+        
+        cliente.findOne({username: username}, function(err, user){
+            if(err){ return done(err); }
+            if(!username) {return done(null, false, {message: "User not found"}); }
+            if(!Bcrypt.compareSync(req.body.password, user.password)) { return done(null, false, {message: "Invalid password"}); }
+            
+            return done(null, user);
+        })
+    })
+);
+*/
 
 passport.use(
     'local-register', 

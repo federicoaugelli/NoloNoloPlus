@@ -1,22 +1,26 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('../../scripts/passport-config');
-//const mongoose = require("mongoose");
-//const conn = require('../../scripts/mongoose.js');
-//const LocalStrategy = require("passport-local");
-//const passportLocalMongoose = require("passport-local-mongoose");
+const Bcrypt = require("bcryptjs");
+
 
 // REGISTRAZIONE NUOVO DIPENDENTE IN MONGO
 const registrodipendenti = require('../model/dipendentiModel.js');
 
 router.post("/backendregister", function(req, res){
-    let newUser = new registrodipendenti({
-        username: req.body.username,
-        password: req.body.password,
-        ruolo: req.body.ruolo
-    });
-    newUser.save();
-    res.redirect('/backend');	 
+    try{
+        let newUser = new registrodipendenti({
+            username: req.body.username,
+            password: Bcrypt.hashSync(req.body.password, 10),
+            ruolo: req.body.ruolo
+        });
+        newUser.save();
+        res.redirect('/backend');	
+    }
+    catch(error){
+        res.status(500).send(error);
+    }
+     
 }, 
     passport.authenticate('local-register', {
       
@@ -28,14 +32,19 @@ router.post("/backendregister", function(req, res){
 const registroclienti = require('../model/clientiModel.js');
 
 router.post("/frontendregister", function(req, res){
-    let newUser = new registroclienti({
-        username: req.body.username,
-        password: req.body.password,
-        email: req.body.email
+    try{
+        let newUser = new registroclienti({
+            username: req.body.username,
+            password: Bcrypt.hashSync(req.body.password, 10),
+            email: req.body.email    
     });
-    newUser.save();
-    res.redirect('/frontend');	 
-}, 
+        newUser.save();
+        res.redirect('/frontend');	 
+    }
+    catch(error){
+        res.status(500).send(error);
+    }
+},
     passport.authenticate('local-register', {
       
         successRedirect: '/user/dashboard-2',
