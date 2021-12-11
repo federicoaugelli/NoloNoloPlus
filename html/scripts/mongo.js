@@ -20,14 +20,6 @@ Copyright (c) 2021 by Fabio Vitali
    CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 */
-/*
-let fn = "/public/data/country-by-capital-city.json"
-let dbname = "countries"
-let collection ="capitals"
-let fieldname = "country"
-*/
-
-
 
 let fn = "/public/data/dipendenti.json"
 let dbname = "site202127"
