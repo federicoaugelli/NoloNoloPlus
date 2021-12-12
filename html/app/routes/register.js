@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const passport = require('../../scripts/passport-config');
+//const passport = require('../../scripts/passport-config');
 const Bcrypt = require("bcryptjs");
 
 

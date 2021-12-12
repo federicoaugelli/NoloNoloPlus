@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const path= require('path');
+global.rootDir = __dirname ;
 
 // ROTTE PROTETTE ACCESSIBILI SOLO DOPO LOGIN
 
@@ -18,8 +19,8 @@ router.get('/dashboard-2', (req,res) => {
 
 
 router.get('/backendlogged', (req, res) => { 
-
-	res.sendFile(path.join(__dirname+'/../../public/html/backofficelogged.html'));
+     
+	res.sendFile(path.join(__dirname+'/../../public/views/backofficelogged.html'));
 });
 
 module.exports = router;

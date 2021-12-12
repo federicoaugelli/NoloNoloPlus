@@ -14,17 +14,17 @@ passport.deserializeUser((id, done) => {
         done(err, user);
     });
 });
-
-
 /*
+
+
 passport.deserializeUser((id, done) => {
    //recupero dell'utente nel database
    const user = { id: 1, username: 'gianluca'};
    done(null, user);
 })
+*/
 
-
-
+/*
 passport.use(
     'local-login', 
     new LocalStrategy((username, password, done) =>{
@@ -66,6 +66,7 @@ passport.use(
             });;
     })
 );
+
 
 
 module.exports = passport;

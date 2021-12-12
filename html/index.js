@@ -50,7 +50,7 @@ let app= express();
 app.use('/js'  , express.static(global.rootDir +'/public/js'));
 app.use('/css' , express.static(global.rootDir +'/public/css'));
 app.use('/data', express.static(global.rootDir +'/public/data'));
-app.use('/docs', express.static(global.rootDir +'/public/html'));
+app.use('/docs', express.static(global.rootDir +'/public/views'));
 app.use('/img' , express.static(global.rootDir +'/public/media'));
 app.use(express.urlencoded({ extended: true })) 
 app.use(cors())
@@ -107,11 +107,11 @@ app.post('/info', info )
 
 
 app.get('/frontend', async function(req, res) { 
-	res.sendFile(path.join(__dirname+'/public/html/frontoffice.html'));
+	res.sendFile(path.join(__dirname+'/public/views/frontoffice.html'));
 });
 
 app.get('/backend', async function(req, res) { 
-	res.sendFile(path.join(__dirname+'/public/html/backoffice.html'));
+	res.sendFile(path.join(__dirname+'/public/views/backoffice.html'));
 });
 
 
@@ -136,18 +136,6 @@ app.get('/db/search', async function(req, res) {
 	res.send(await mymongo.search(req.query, mongoCredentials))
 });
 
-/*
-app.get('/db/createObject', async function(req, res) { 
-	res.send(await mymongo.createObject(mongoCredentials))
-});
-
-//const User = require("./app/model/userModel.js");
-
-app.get('/db/createUser', async function(req, res) { 
-	res.send(await mymongo.createUser(User))
-});
-*/
-
 
 /* ========================== */
 /*                            */
@@ -165,7 +153,10 @@ const userRouter = require('./app/routes/user.js');
 const registerRouter = require('./app/routes/register.js');
 
 //    view engine setup html
-app.set('views', path.join(__dirname, './app/views'));
+//app.use(express.static(path.join(__dirname, 'public')));
+//app.set('views', path.join(__dirname, './app/views'));
+
+app.set('views', path.join(__dirname, './public/views'))
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
@@ -181,7 +172,6 @@ app.use(passport.session());
 app.use(loginRouter);
 app.use(registerRouter);
 app.use('/user', checkUserLogin(), userRouter);
-//app.use('/user', registerRouter);
 
 
 /* ========================== */
