@@ -11,12 +11,13 @@ router.get('/dashboard', (req,res) => {
     res.send('dashboard');
 });
 
+/*
 router.get('/dashboard-2', (req,res) => {
     const html = '<h3><a href=/frontendlogout> Ti sei registrato come nuovo  utente. Effettua il logout</a></h3>';
     res.send(html);
     res.send('dashboard-2');
 });
-
+*/
 
 router.get('/backendlogged', (req, res) => { 
      

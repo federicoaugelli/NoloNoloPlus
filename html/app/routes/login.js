@@ -46,7 +46,19 @@ router.get('/backend', (req,res) => {
 
 
 //                SE SONO AUTENTICATO VADO AL BACKENDLOGGED SENNO MI RIMANDA AL LOGIN
-router.post('/backend', passport.authenticate('local-login-dipendente', {
+router.post('/backend'  /*, (req, res) => {
+    if (!req.body.username) {
+      return res.status(400).json({
+        status: 'error',
+        error: 'req body cannot be empty',
+      });
+    }
+  
+    res.status(200).json({
+      status: 'succes',
+      data: req.body,
+    })
+  }*/, passport.authenticate('local-login-dipendente', {
     successRedirect: '/user/backendlogged',
     failureRedirect: '/backend'
 })); 
@@ -127,8 +139,20 @@ router.get('/frontend', (req,res) => {
 
 
 // SE SONO AUTENTICATO VADO A USER/DASHBOARD SENNO MI RIMANDA AL LOGIN
-router.post('/frontend', passport.authenticate('local-login-cliente', {
-    successRedirect: '/user/dashboard',
+router.post('/frontend' /*, (req, res) => {
+    if (!req.body.username) {
+      return res.status(400).json({
+        status: 'error',
+        error: 'req body cannot be empty',
+      });
+    }
+  
+    res.status(200).json({
+      status: 'succes',
+      data: req.body,
+    })
+  }  */, passport.authenticate('local-login-cliente', {
+    successRedirect: '/user/backendlogged',
     failureRedirect: '/frontend'
 })); 
 
@@ -165,6 +189,7 @@ router.get('/frontendlogout', (req,res) => {
     req.logOut();
     res.redirect('/frontend');
 })
+
 
 
 module.exports = router;
