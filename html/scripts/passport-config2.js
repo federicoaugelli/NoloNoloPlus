@@ -4,8 +4,9 @@ const bcrypt = require("bcryptjs");
 const User = require('../app/model/dipendentiModel.js');
 
 
-passport.serializeUser((user, done) => {
-    done(null, user.id);
+
+passport.serializeUser((User, done) => {
+    done(null, User.id);
 });
 
 
@@ -19,7 +20,7 @@ passport.deserializeUser((id, done) => {
 // CREO LA MIA STRATEGIA DI AUTENTICAZIONE CON I VARI CONTROLLI SU USERNAME E PASSWORD DIPENDENTI
 
 passport.use(
-    'local-login2', 
+    'local-login-dipendente', 
     new LocalStrategy({ usernameField: "username" }, (username, password, done) =>{
         // MATCH USER
         User.findOne({ username: username })

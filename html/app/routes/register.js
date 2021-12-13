@@ -10,6 +10,7 @@ const Bcrypt = require("bcryptjs");
 
 const registroclienti = require('../model/clientiModel.js');
 
+
 router.post("/frontendregister", function(req, res){
     try{
         let newUser = new registroclienti({
@@ -24,12 +25,7 @@ router.post("/frontendregister", function(req, res){
         res.status(500).send(error);
     }
 },
-    /*passport.authenticate('local-register', {
-      
-        successRedirect: '/user/dashboard-2',
-        failureRedirect: '/frontend'
-})*/);
-
+);
 
 
 

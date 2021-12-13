@@ -1,9 +1,14 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 const passportConfig = require('../../scripts/passport-config');
 const passportConfig2 = require('../../scripts/passport-config2');
-const path= require('path');
 
+/*
+const LocalStrategy = require('passport-local').Strategy;
+passport.use('local-login-dipendente', myLocalStrategy1)
+passport.use('local-login-dipendente', new LocalStrategy(passportConfig2.authenticate()));
+*/
                                                     
 //                                                                                 PROVA DASHBOARD
 /*
@@ -39,22 +44,23 @@ router.get('/backend', (req,res) => {
     res.render('/backend');
 });
 
-/*
+
 //                SE SONO AUTENTICATO VADO AL BACKENDLOGGED SENNO MI RIMANDA AL LOGIN
-router.post('/backend', passportConfig2.authenticate('local-login2', {
+router.post('/backend', passport.authenticate('local-login-dipendente', {
     successRedirect: '/user/backendlogged',
     failureRedirect: '/backend'
 })); 
-*/
 
 
+/*
 router.post("/backend", (req, res, next) => {
-    passportConfig2.authenticate('local-login2', function(err, user, info) {
+    passportConfig2.authenticate('local-login-cliente', function(err, user, info) {
         if(err) {
             return res.status(400).json({ errors: err });
         }
         if(!user) {
-            return res.render('/backend');
+            //return res.render('/backend');
+            res.redirect('/backend');
             //return res.status(400).json({ errors: "No user found" });
         }
         req.logIn(user, function(err) {
@@ -62,21 +68,21 @@ router.post("/backend", (req, res, next) => {
                 
                 return res.status(400).json({ errors: err });
             }
-            return res.status(200).json({ success: 'logged in ${user.id}'});
-            //res.redirect('/user/backendlogged');
+            //return res.status(200).json({ success: 'logged in ${user.id}'});
+            return res.redirect('/user/backendlogged');
             //res.sendFile(path.join('../../public/views/backofficelogged.html'))
             
         });
     })(req, res, next);
 });
-
+*/
 
            
 //                SE SONO AUTENTICATO VADO AL BACKENDLOGGED SENNO MI RIMANDA AL BACKEND
 
 /*
 router.post("/backend", (req, res, next) => {
-    passportConfig2.authenticate('local-login2', {
+    passportConfig2.authenticate('local-login', {
         successRedirect: '/user/backendlogged',
         failureRedirect: '/backend',
     }, function(err, user, info) {
@@ -118,17 +124,20 @@ router.get('/frontend', (req,res) => {
     res.render('/frontend');
 });
 
+
+
 // SE SONO AUTENTICATO VADO A USER/DASHBOARD SENNO MI RIMANDA AL LOGIN
-router.post('/frontend', passportConfig.authenticate('local-login', {
+router.post('/frontend', passport.authenticate('local-login-cliente', {
     successRedirect: '/user/dashboard',
     failureRedirect: '/frontend'
 })); 
+
 
 /*
 //           SE SONO AUTENTICATO VADO A USER/DASHBOARD SENNO MI RIMANDA AL FRONTEND
 
 router.post("/frontend", (req, res, next) => {
-    passportConfig.authenticate('local-login', {
+    passportConfig.authenticate('local-login-cliente', {
         successRedirect: '/user/dashboard',
         failureRedirect: '/frontend',
     }, function(err, user, info) {
@@ -143,7 +152,8 @@ router.post("/frontend", (req, res, next) => {
                 
                 return res.status(400).json({ errors: err });
             }
-            return res.status(200).json({ success: 'logged in ${user.id}'});
+            return res.redirect('/user/backendlogged');
+        //return res.status(200).json({ success: 'logged in ${user.id}'});
         });
     })(req, res, next);
 });

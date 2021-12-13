@@ -2,10 +2,16 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require("bcryptjs");
 const User = require('../app/model/clientiModel.js');
+//const User2 = require('../app/model/dipendentiModel.js');
+
+/*
+passport.serializeUser(User.serializeUser()); 
+passport.deserializeUser(User.deserializeUser());
+*/
 
 
-passport.serializeUser((user, done) => {
-    done(null, user.id);
+passport.serializeUser((User, done) => {
+    done(null, User.id);
 });
 
 
@@ -14,6 +20,21 @@ passport.deserializeUser((id, done) => {
         done(err, user);
     });
 });
+
+
+/*
+passport.serializeUser((User2, done) => {
+    done(null, User2.id);
+});
+
+
+passport.deserializeUser((id, done) => {
+    User2.findById(id, (err, user) => {
+        done(err, user);
+    });
+});
+*/
+
 /*
 
 
@@ -40,8 +61,61 @@ passport.use(
 
 // CREO LA MIA STRATEGIA DI AUTENTICAZIONE CON I VARI CONTROLLI SU USERNAME E PASSWORD CLIENTI
 
+
+/*
 passport.use(
-    'local-login', 
+    'local-login-cliente', 
+    new LocalStrategy({ usernameField: "username" }, (username, password, done) =>{
+        // MATCH USER
+        User.findOne({ username: username })
+            .then(user => {
+                if(!user){
+                    return done(null, false, { message: "username sbagliato"});
+                } else {
+                    //match password
+                    bcrypt.compare(password, user.password, (err, isMatch) => {
+                        if (err) throw err;
+
+                        if (isMatch){
+                            return done(null, user);
+                        } else {
+                            return done(null, false, { message: "password sbagliata"});
+                        }
+                    });
+                }
+            })
+            .catch(err => {
+               
+                User2.findOne({ username: username })
+                .then(user => {
+                    if(!user){
+                        return done(null, false, { message: "username sbagliato"});
+                    } else {
+                        //match password
+                        bcrypt.compare(password, user.password, (err, isMatch) => {
+                            if (err) throw err;
+    
+                            if (isMatch){
+                                return done(null, user);
+                            } else {
+                                return done(null, false, { message: "password sbagliata"});
+                            }
+                        });
+                    }
+                })
+                .catch(err => {
+                    return done(null, false, {message: err});
+                });;
+            });;
+    })
+);
+*/
+
+
+
+
+passport.use(
+    'local-login-cliente', 
     new LocalStrategy({ usernameField: "username" }, (username, password, done) =>{
         // MATCH USER
         User.findOne({ username: username })
@@ -66,7 +140,6 @@ passport.use(
             });;
     })
 );
-
 
 
 module.exports = passport;

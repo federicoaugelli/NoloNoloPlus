@@ -151,6 +151,7 @@ const checkUserLogin = require('./app/middleware/check-user-login');
 const loginRouter = require('./app/routes/login.js');
 const userRouter = require('./app/routes/user.js');
 const registerRouter = require('./app/routes/register.js');
+const conn = require('./scripts/mongoose');
 
 //    view engine setup html
 //app.use(express.static(path.join(__dirname, 'public')));
@@ -159,6 +160,8 @@ const registerRouter = require('./app/routes/register.js');
 app.set('views', path.join(__dirname, './public/views'))
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
+
+//const MongoStore = require('connect-mongo')(session);
 
 //   app.use
 app.use(session({
@@ -169,6 +172,7 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+
 app.use(loginRouter);
 app.use(registerRouter);
 app.use('/user', checkUserLogin(), userRouter);
