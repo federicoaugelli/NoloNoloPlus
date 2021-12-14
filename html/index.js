@@ -168,6 +168,7 @@ app.use(session({
 	secret: 'chiaveSegreta123',
 	saveUninitialized: false,
 	resave: false
+	//cookie: { maxAge: 600000 }
 }));
 
 app.use(passport.initialize());

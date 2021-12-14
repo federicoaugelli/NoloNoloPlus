@@ -41,7 +41,7 @@ router.get('/logout', (req,res) => {
 // POSSO ACCEDERE ALLA ROTTA USER/BACKENDLOGGED SOLO SE SONO AUTENTICATO
 router.get('/backend', (req,res) => {
     if(req.isAuthenticated()) return res.redirect('/user/backendlogged');
-    res.render('/backend');
+    else return res.render('/backend');
 });
 
 
@@ -61,6 +61,7 @@ router.post('/backend'  /*, (req, res) => {
   }*/, passport.authenticate('local-login-dipendente', {
     successRedirect: '/user/backendlogged',
     failureRedirect: '/backend'
+    //successFlash: 'Welcome!'
 })); 
 
 
