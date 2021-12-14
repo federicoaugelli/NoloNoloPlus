@@ -19,6 +19,7 @@ router.get('/dashboard-2', (req,res) => {
 });
 */
 
+
 router.get('/backendlogged', (req, res) => { 
      
 	res.sendFile(path.join(__dirname+'/../../public/views/backofficelogged.html'));

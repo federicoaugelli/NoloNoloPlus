@@ -152,7 +152,7 @@ router.post('/frontend' /*, (req, res) => {
       data: req.body,
     })
   }  */, passport.authenticate('local-login-cliente', {
-    successRedirect: '/user/backendlogged',
+    successRedirect: '/frontend',
     failureRedirect: '/frontend'
 })); 
 
