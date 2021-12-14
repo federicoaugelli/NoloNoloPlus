@@ -31,7 +31,7 @@ const fs = require('fs').promises ;
 const template = require(global.rootDir + '/scripts/tpl.js') ; 
 
 
-const mongouri = "mongodb://127.0.0.1:27017/site202127";
+const mongouri = "mongodb://127.0.0.1:27017";
 
 
 MongoClient.connect(mongouri, {
