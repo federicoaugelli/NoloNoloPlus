@@ -15,8 +15,8 @@ router.post("/frontendregister", function(req, res){
     try{
         let newUser = new registroclienti({
             username: req.body.username,
-            password: Bcrypt.hashSync(req.body.password, 10)
-            //email: req.body.email    
+            password: Bcrypt.hashSync(req.body.password, 10),
+            indirizzo: req.body.indirizzo    
     });
         newUser.save();
         res.redirect('/frontend');	 
