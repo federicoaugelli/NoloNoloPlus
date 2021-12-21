@@ -5,7 +5,7 @@ const conn = require('../../scripts/mongoose.js');
   
 const userSchema = new Schema({   
     username : { type: String, required:true, unique:true },
-    password: { type: String, required:true, unique:true },
+    password: { type: String, required:true, unique:false },
     ruolo : { type: String }
 });
   
@@ -17,3 +17,4 @@ const collectionName = 'registrodipendenti';
 
 module.exports = mongoose.model('registroDipendenti', userSchema, collectionName);
  
+

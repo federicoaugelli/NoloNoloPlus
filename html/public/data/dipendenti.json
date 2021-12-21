@@ -18,7 +18,12 @@
     "username": "Antonio",
     "password": "$2a$10$Ulme5oX5uG/WuCz6B1sevuhnVnOWqv.pt79v9CjFd8ibr1SjlTPly",
     "ruolo" : "funzionario"
-   }
+   },
+   {
+      "username": "Gaia",
+      "password": "$2a$10$GY.EZgLXdlNJ9e0quyRx4enFFIIiHCl7zV4lzPuIX9WsorEBFhYca",
+      "ruolo" : "funzionario"
+     }
 ]
 
 

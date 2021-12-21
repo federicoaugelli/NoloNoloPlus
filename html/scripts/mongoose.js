@@ -1,5 +1,5 @@
-
 var mongoose = require('mongoose');
+
 
 mongoose.connect('mongodb://127.0.0.1:27017/site202127', {useNewUrlParser: true, useUnifiedTopology: true});
 var conn = mongoose.connection;
@@ -10,5 +10,7 @@ conn.on('disconnected',function(){
     console.log('database is disconnected successfully');
 })
 conn.on('error', console.error.bind(console, 'connection error:'));
-module.exports = conn;
 
+
+
+module.exports = conn;

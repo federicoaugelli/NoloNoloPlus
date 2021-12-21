@@ -22,6 +22,7 @@ Copyright (c) 2021 by Fabio Vitali
 */
 
 let fn = "/public/data/dipendenti.json"
+//let fn = require("../public/data/dipendenti.json");
 let dbname = "site202127"
 let collection ="registrodipendenti"
 let fieldname = "persone"
@@ -29,6 +30,7 @@ let fieldname = "persone"
 const { MongoClient } = require("mongodb");
 const fs = require('fs').promises ;
 const template = require(global.rootDir + '/scripts/tpl.js') ; 
+
 
 
 const mongouri = "mongodb://127.0.0.1:27017";
@@ -58,7 +60,8 @@ exports.create = async function(credentials) {
 		debug.push("... managed to connect to MongoDB.")
 
 		debug.push(`Trying to read file '${fn}'... `)
-		let doc = await fs.readFile(rootDir + fn, 'utf8')
+		let doc = await fs.readFile('C:/Users/matte/Documents/GitHub/site202127/html/public/data/dipendenti.json', 'utf8')
+		//let doc = await fs.readFile(rootDir + fn, 'utf8')
 		let data = JSON.parse(doc)
 		debug.push(`... read ${data.length} records successfully. `)
 
@@ -162,37 +165,6 @@ exports.createObject = async function(newObject){
 		return e
 	}
 }
-
-exports.createUser = async function(newUser){
-
-	//const mongouri = "mongodb://127.0.0.1:27017?writeConern=majority";
-	console.log(newUser);
-	let debug = [];
-	try{
-
-	   debug.push("tryng to connect to MongoDB");
-	   const mongo = new MongoClient(mongouri);
-	   await mongo.connect();
-	   debug.push("... managed to connect to mongoDB.");
-	   let added = await mongo
-	   .db(dbname)
-	   .collection(oggetti)
-	   .insertOne({
-
-		   username: newUser.username,
-		   password: newUser.password,
-		   //ruolo: newUser.ruolo
-		   //indirizzo: newObject.indirizzo
-	   });
-	await mongo.close();
-   
-   }
-   catch (e) {
-	   e.debug = debug
-	   return e
-   }
-}
-
 
 /* Untested */
 // https://stackoverflow.com/questions/39599063/check-if-mongodb-is-connected/39602781

@@ -4,7 +4,6 @@ const router = express.Router();
 const Bcrypt = require("bcryptjs");
 
 
-
 //                      REGISTRAZIONE NUOVO CLIENTE IN MONGO
 
 
@@ -19,13 +18,15 @@ router.post("/frontendregister", function(req, res){
             indirizzo: req.body.indirizzo    
     });
         newUser.save();
-        res.redirect('/frontend');	 
+        res.redirect('/docs/frontend');	 
     }
     catch(error){
         res.status(500).send(error);
     }
 },
 );
+
+
 
 
 

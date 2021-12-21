@@ -106,12 +106,19 @@ app.get('/info', info )
 app.post('/info', info )
 
 
-app.get('/frontend', async function(req, res) { 
+app.get('/docs/frontend', async function(req, res) { 
 	res.sendFile(path.join(__dirname+'/public/views/frontoffice.html'));
 });
 
-app.get('/backend', async function(req, res) { 
+app.get('/docs/backend', async function(req, res) { 
 	res.sendFile(path.join(__dirname+'/public/views/backoffice.html'));
+});
+
+
+app.get('/dashboard-2', (req,res) => {
+    const html = '<h3><a href=/backendendlogout> Ti sei registrato come nuovo  utente. Effettua il logout</a></h3>';
+    res.send(html);
+    res.send('dashboard-2');
 });
 
 
@@ -128,6 +135,7 @@ const mongoCredentials = {
 	site: "mongo_site202127"
 }  
 /* end */
+
 
 app.get('/db/create', async function(req, res) { 
 	res.send(await mymongo.create(mongoCredentials))
@@ -151,7 +159,8 @@ const checkUserLogin = require('./app/middleware/check-user-login');
 const loginRouter = require('./app/routes/login.js');
 const userRouter = require('./app/routes/user.js');
 const registerRouter = require('./app/routes/register.js');
-const conn = require('./scripts/mongoose');
+//const crudRouter = require('./app/routes/crud.js');
+//const conn = require('./scripts/mongoose');
 
 //    view engine setup html
 //app.use(express.static(path.join(__dirname, 'public')));
@@ -176,14 +185,10 @@ app.use(passport.session());
 
 app.use(loginRouter);
 app.use(registerRouter);
+//app.use(crudRouter);
 app.use('/user', checkUserLogin(), userRouter);
 
 
-app.get('/dashboard-2', (req,res) => {
-    const html = '<h3><a href=/backendendlogout> Ti sei registrato come nuovo  utente. Effettua il logout</a></h3>';
-    res.send(html);
-    res.send('dashboard-2');
-});
 
 /* ========================== */
 /*                            */
