@@ -47,6 +47,7 @@ MongoClient.connect(mongouri, {
     console.log(`MongoDB Connected: ${mongouri} to dbname: ${dbname} and collection: ${collection}`);
 });
 
+const path= require('path');
 
 exports.create = async function(credentials) {
 	
