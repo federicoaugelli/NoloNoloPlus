@@ -22,7 +22,6 @@ Copyright (c) 2021 by Fabio Vitali
 */
 
 let fn = "/public/data/dipendenti.json"
-//let fn = require("../public/data/dipendenti.json");
 let dbname = "site202127"
 let collection ="registrodipendenti"
 let fieldname = "persone"

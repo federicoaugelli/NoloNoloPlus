@@ -4,9 +4,12 @@ const passportLocalMongoose = require('passport-local-mongoose');
 const conn = require('../../scripts/mongoose.js');
   
 const userSchema = new Schema({   
+    nome : { type: String, required:true, unique:false },
+    cognome : { type: String, required:true, unique:false },
     username : { type: String, required:true, unique:true },
     password : { type: String, required:true, unique:false },
     indirizzo : { type: String, required:false },
+    punti  : { type: String, required:false },
 });
   
 // plugin for passport-local-mongoose
