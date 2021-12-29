@@ -179,7 +179,7 @@ module.exports = function(passport) {
     })
  );
 
-
+/*
 
  passport.use(
     'local-login-dipendente', 
@@ -209,7 +209,7 @@ module.exports = function(passport) {
  );
 
 
-
+*/
 
 
 

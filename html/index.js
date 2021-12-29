@@ -140,8 +140,16 @@ const mongoCredentials = {
 app.get('/db/create', async function(req, res) { 
 	res.send(await mymongo.create(mongoCredentials))
 });
+
 app.get('/db/search', async function(req, res) { 
 	res.send(await mymongo.search(req.query, mongoCredentials))
+});
+
+app.post('/db/clientiLOG', async function(req, res) { 
+	let name = req.body.cookie
+	if (session[name].logged) {
+		res.send(await mymongo.clientiLOG(mongoCredentials))
+	}
 });
 
 

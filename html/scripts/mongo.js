@@ -46,7 +46,6 @@ MongoClient.connect(mongouri, {
     console.log(`MongoDB Connected: ${mongouri} to dbname: ${dbname} and collection: ${collection}`);
 });
 
-const path= require('path');
 
 exports.create = async function(credentials) {
 	
@@ -165,6 +164,43 @@ exports.createObject = async function(newObject){
 		return e
 	}
 }
+
+
+
+exports.clientiLOG = async function (credentials) {
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+  
+	let debug = [];
+	let data = { result: null };
+	try {
+	  debug.push(`Trying to connect to MongoDB`);
+	  //console.log(debug)
+	  const mongo = new MongoClient(mongouri);
+	  await mongo.connect();
+	  let result = [];
+	  debug.push("... managed to connect to MongoDB.");
+	  //console.log(debug)
+	  await mongo
+		.db(dbname)
+		.collection(utenti)
+		.find()
+		.sort({ nome: 1 })
+		.forEach((r) => {
+		  result.push(r);
+		});
+  
+	  data.result = result;
+  
+	  await mongo.close();
+  
+	  debug.push("Managed to close connection to MongoDB.");
+	  return data;
+	} catch (e) {
+	  return data;
+	}
+  };
+  
+
 
 /* Untested */
 // https://stackoverflow.com/questions/39599063/check-if-mongodb-is-connected/39602781
