@@ -64,64 +64,6 @@ function clientiLOG() {
  }
  
 
- /*
- function tableCustomer(d) {
- 
-   
- document.getElementById("anagraficaClientiBody").innerHTML = "";
- let tbody = document.getElementById("anagraficaClientiBody");
- for (let i in d.result) {
- let nome = d.result[i].nome.toLowerCase();
- let cognome = d.result[i].cognome.toLowerCase();
- let username = d.result[i].username.toLowerCase();
- console.log(nome)
- 
- 
- 
- const tr = document.createElement("tr");
- tr.innerHTML =
- '<th scope="row" style="text-transform: capitalize" class="titleRowCustomer">' + nome + ' ' + cognome + '</th>'
- '<td class="tdCustomer">' + username + '</td>'
- tbody.appendChild(tr);
- }
- 
- console.log(d.result)
- }
- */
- 
- 
-
-/*
- function visualizzaClienti() {
-     
-     var div = document.getElementById("content");
-     div.style.visibility = "visible";
-     div.innerHTML = `
-               
-               <div class="row d-flex align-items-center" style="padding: 2rem; height: 80%; position: relative;" id="anagraficaClienti">
-                 <table class="table" tabIndex="0" aria-label = "tabella clienti" style="position: absolute; top: 0; width: 95%">
-                   <thead>
-                     <tr>
-                       <th scope="col">Nome e Cognome</th>
-                       <th scope="col">Username</th>
-                       <th scope="col">Indirizzo di Fatturazione</th>
-                       <th scope="col">Punti Fedeltà</th>
-                       <th scope="col">ID cliente</th>
-                       <th scope="col">Modifica</th>
-                     </tr>
-                   </thead>
-                   <tbody id="anagraficaClientiBody">
-                   </tbody>
-                 </table>
-                 <div class="row align-items-center" id="buttons" >
-                 <div id = "rightButton" class ="text-center">
-                   <button id="addUserBtn" type="button" aria-label="Bottone aggiunta clienti" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal"> Aggiungi Utente
-                   </button>
-                 </div>
-               </div>
-               </div>`;
-   }
- */
  
  
  
@@ -146,8 +88,22 @@ function visualizzaClienti() {
     <tbody id="anagraficaClientiBody">  
     </tbody>
   </table>      
-    
-    
-    
     `;
   }
+
+
+
+function closeModal1(){
+
+
+var modal = document.getElementById('anagraficaClientiModal');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+}
+  
