@@ -145,11 +145,13 @@ app.get('/db/search', async function(req, res) {
 	res.send(await mymongo.search(req.query, mongoCredentials))
 });
 
-app.post('/db/clientiLOG', async function(req, res) { 
-	let name = req.body.cookie
+app.get('/db/clientiLOG', async function(req, res) { 
+	/*let name = req.body.cookie
 	if (session[name].logged) {
 		res.send(await mymongo.clientiLOG(mongoCredentials))
 	}
+	*/
+	res.send(await mymongo.clientiLOG(mongoCredentials))
 });
 
 

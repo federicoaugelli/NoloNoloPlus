@@ -25,6 +25,7 @@ let fn = "/public/data/dipendenti.json"
 let dbname = "site202127"
 let collection ="registrodipendenti"
 let fieldname = "persone"
+let collection1 = "registroclienti"
 
 const { MongoClient } = require("mongodb");
 const fs = require('fs').promises ;
@@ -59,7 +60,8 @@ exports.create = async function(credentials) {
 		debug.push("... managed to connect to MongoDB.")
 
 		debug.push(`Trying to read file '${fn}'... `)
-		let doc = await fs.readFile('C:/Users/matte/Documents/GitHub/site202127/html/public/data/dipendenti.json', 'utf8')
+		//let doc = await fs.readFile('C:/Users/matte/Documents/GitHub/site202127/html/public/data/dipendenti.json', 'utf8')
+		let doc = await fs.readFile('/Users/frederick/Documents/IT/Web Programming/site202127/html/public/data/dipendenti.json', 'utf8')
 		//let doc = await fs.readFile(rootDir + fn, 'utf8')
 		let data = JSON.parse(doc)
 		debug.push(`... read ${data.length} records successfully. `)
@@ -174,7 +176,7 @@ exports.clientiLOG = async function (credentials) {
 	let data = { result: null };
 	try {
 	  debug.push(`Trying to connect to MongoDB`);
-	  //console.log(debug)
+	  console.log(debug)
 	  const mongo = new MongoClient(mongouri);
 	  await mongo.connect();
 	  let result = [];
@@ -182,7 +184,7 @@ exports.clientiLOG = async function (credentials) {
 	  //console.log(debug)
 	  await mongo
 		.db(dbname)
-		.collection(utenti)
+		.collection(collection1)
 		.find()
 		.sort({ nome: 1 })
 		.forEach((r) => {
