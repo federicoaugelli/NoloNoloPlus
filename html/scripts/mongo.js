@@ -29,7 +29,6 @@ let fieldname = "persone"
 let collection1 = "registroclienti"
 let collection2 = "oggetti"
 
-
 const { MongoClient } = require("mongodb");
 const fs = require('fs').promises ;
 const template = require(global.rootDir + '/scripts/tpl.js') ; 
@@ -208,8 +207,8 @@ exports.clientiLOG = async function (credentials) {
 	let debug = [];
 	let data = { result: null };
 	try {
-	  //debug.push(`Trying to connect to MongoDB`);
-	  //console.log(debug)
+	  debug.push(`Trying to connect to MongoDB`);
+	  console.log(debug)
 	  const mongo = new MongoClient(mongouri);
 	  await mongo.connect();
 	  let result = [];

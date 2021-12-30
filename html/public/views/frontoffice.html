@@ -117,7 +117,6 @@
           <form class="d-flex w-50 bottom-0 my-auto">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-light" type="submit">Search</button>
-            <button onclick="getGames()">sium</button>
           </form>
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">            
@@ -164,19 +163,21 @@
   <!-- TABELLA FINALE -->
   <div class="album py-5 bg-light">
     <div class="container">
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="item-list">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="games-list">
 
-        <div class="col" v-for="item in items" :key="item.message">
+        <div class="col" v-for="item in items" :key="item.game">
           <div class="card shadow-sm" style="text-align: center;">
             <img class="card-img-top" src="/img/prova1.png" alt="Card image1">
             <div class="card-body">
-              <h4 class="card-title">{{ item.title }}</h4>
-              <p class="card-text">{{ item.message }}</p>
+              <h4 class="card-title">{{ item.game }}</h4>
+              <p class="card-text">{{ item.peso }}</p>
+              <!--
               <a v-if="item.quantità > '0'" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#card-modal">Vedi</a>
               <a v-else-if="item.quantità <= '0'" class="btn btn-primary disabled">Non disponibile</a>
+              -->
             </div>
             <div class="card-footer">
-              <small class="text-muted">Disponibilità: {{ item.quantità }} unità</small>
+              <small class="text-muted">Disponibilità: {{ item.numGiocatori }} unità</small>
             </div>
           </div>
         </div>
@@ -207,6 +208,18 @@
         message: 'Veicoli a 2 ruote'
       }
     })
+/*
+    function createData() {
+      axios.get('/db/getGames')
+        .then(function (response) {
+          const games = response.data.result;
+          console.log(games)
+          return (games);
+      })
+    }
+*/
+
+    
 /*
     var list1 = new Vue({
       el: '#list-1',
@@ -253,6 +266,22 @@
       }
     })
 */
+      
+    var gamesVue = new Vue({
+      el: "#games-list",
+      data () {
+        return {
+          items: null
+        }
+      },
+      mounted () {
+        axios
+          .get('/db/getGames')
+          .then(response => (this.items = response.data.result))
+      }
+    })
+
+/*
     //per unire tutte le card dopo...
     var list = new Vue({
       el: '#item-list',
@@ -273,10 +302,7 @@
         ]
       }
     })
-
-
-    const response = axios.get('/db/getGames');
-        console.log(response);    
+*/
 
   </script>
       
