@@ -38,7 +38,7 @@ function clientiLOG() {
   
   `<td class="tdCustomer">` +
  nome +
-  `</td>'
+  `</td>
   <td class="tdCustomer">` +
  cognome +
   `</td>
@@ -51,7 +51,7 @@ function clientiLOG() {
   <td class="tdCustomer">` +
  punti +
   `</td> 
-  <td class="tdCustomer" style="display:none">` +
+  <td class="tdCustomer">` +
  idCliente +
   `</td> 
   <td class="tdCustomer"><button data-bs-toggle="modal" data-bs-target="#modUserModal" class="btn btn-secondary" aria-label="bottone di modifica cliente" type="button" onclick="getUser(this)"><i class="bi bi-pencil-square"></i></button>
