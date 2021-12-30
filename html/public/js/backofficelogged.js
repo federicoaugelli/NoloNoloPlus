@@ -13,6 +13,20 @@ function clientiLOG() {
        },
      });
 }
+
+function getGames() {
+  $.ajax({
+    url: "/db/getGames",
+    type: "GET",
+    data: '',
+    dataType: "json",
+    contentType: "application/x-www-form-urlencoded",
+    success: function (g) {
+         //tableCustomer(g);
+         console.log(g.result);
+    },
+  });
+}
    
  
  

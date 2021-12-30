@@ -22,10 +22,12 @@ Copyright (c) 2021 by Fabio Vitali
 */
 
 let fn = "/public/data/dipendenti.json"
+//let fn = "/public/data/oggetti.json"
 let dbname = "site202127"
 let collection ="registrodipendenti"
 let fieldname = "persone"
 let collection1 = "registroclienti"
+let collection2 = "oggetti"
 
 
 const { MongoClient } = require("mongodb");
@@ -61,8 +63,8 @@ exports.create = async function(credentials) {
 		debug.push("... managed to connect to MongoDB.")
 
 		debug.push(`Trying to read file '${fn}'... `)
-		let doc = await fs.readFile('C:/Users/matte/Documents/GitHub/site202127/html/public/data/dipendenti.json', 'utf8')
-		//let doc = await fs.readFile('/Users/frederick/Documents/IT/Web Programming/site202127/html/public/data/dipendenti.json', 'utf8')
+		//let doc = await fs.readFile('C:/Users/matte/Documents/GitHub/site202127/html/public/data/dipendenti.json', 'utf8')
+		let doc = await fs.readFile('/Users/frederick/Documents/IT/Web Programming/site202127/html/public/data/oggetti.json', 'utf8')
 		//let doc = await fs.readFile(rootDir + fn, 'utf8')
 		let data = JSON.parse(doc)
 		debug.push(`... read ${data.length} records successfully. `)
@@ -147,7 +149,7 @@ exports.createObject = async function(newObject){
 		debug.push("... managed to connect to mongoDB.");
 		let added = await mongo
 		.db(dbname)
-		.collection(oggetti)
+		.collection(collection2)
 		.insertOne({
 
 			modello: newObject.modello,
@@ -167,6 +169,36 @@ exports.createObject = async function(newObject){
 		return e
 	}
 }
+
+
+exports.getGames = async function (credentials) {
+
+	//let debug = [];
+	let data = { result: null };
+	try{
+		const mongo = new MongoClient(mongouri);
+		await mongo.connect();
+		let result = [];
+		await mongo
+		.db(dbname)
+		.collection(collection2)
+		.find()
+		.sort({ nome: 1 })
+		.forEach((r) => {
+			result.push(r);
+		});
+
+		data.result = result;
+
+		await mongo.close();
+
+		return data;
+	}
+
+	catch (e) {
+		return data;
+	}
+};
 
 
 

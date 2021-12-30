@@ -1,0 +1,38 @@
+[
+	{
+		"game": "Fortnite",
+		"platform": "ps4",
+		"annoUscita": "2017",
+		"condizioni": "pessime",
+		"etaMinima": "3",
+		"peso": "10gb",
+		"numGiocatori": "1"
+	},
+	{
+		"game": "Call Of Duty Vanguaard",
+		"platform": "ps5",
+		"annoUscita": "2020",
+		"condizioni": "ottime",
+		"etaMinima": "18",
+		"peso": "8000gb",
+		"numGiocatori": "2"
+	},
+	{
+		"game": "Minecraft",
+		"platform": "Xbox one X",
+		"annoUscita": "2010",
+		"condizioni": "buone",
+		"etaMinima": "1",
+		"peso": "100mb",
+		"numGiocatori": "4"
+	},
+	{
+		"game": "Grand Theft Auto",
+		"platform": "pc",
+		"annoUscita": "2013",
+		"condizioni": "buone",
+		"etaMinima": "18",
+		"peso": "70gb",
+		"numGiocatori": "1"
+	}
+]

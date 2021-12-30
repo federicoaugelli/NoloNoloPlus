@@ -154,6 +154,10 @@ app.get('/db/clientiLOG', async function(req, res) {
 	res.send(await mymongo.clientiLOG(mongoCredentials))
 });
 
+app.get('/db/getGames', async function(req, res) {
+	res.send(await mymongo.getGames(mongoCredentials))
+});
+
 
 /* ========================== */
 /*                            */
