@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const path= require('path');
-global.rootDir = __dirname ;
+//global.rootDir = __dirname ;
 
 // ROTTE PROTETTE ACCESSIBILI SOLO DOPO LOGIN
 

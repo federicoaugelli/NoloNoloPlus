@@ -145,13 +145,13 @@ app.get('/db/search', async function(req, res) {
 	res.send(await mymongo.search(req.query, mongoCredentials))
 });
 
-app.get('/db/clientiLOG', async function(req, res) { 
+app.get('/db/findClienti', async function(req, res) { 
 	/*let name = req.body.cookie
 	if (session[name].logged) {
-		res.send(await mymongo.clientiLOG(mongoCredentials))
+		res.send(await mymongo.findClienti(mongoCredentials))
 	}
 	*/
-	res.send(await mymongo.clientiLOG(mongoCredentials))
+	res.send(await mymongo.findClienti(mongoCredentials))
 });
 
 app.get('/db/getGames', async function(req, res) {

@@ -1,15 +1,15 @@
 
-function clientiLOG() {
+function findClienti() {
     // let cookie = getCookie("SessionCookie")
      //let data = {cookie: cookie}
      $.ajax({
-       url: "/db/clientiLOG",
+       url: "/db/findClienti",
        type: "GET",
        data: '',
        dataType: "json",
        contentType: "application/x-www-form-urlencoded",
        success: function (d) {
-         tableCustomer(d);
+        creaTabellaClienti(d);
        },
      });
 }
@@ -30,7 +30,7 @@ function getGames() {
    
  
  
- function tableCustomer(d) {
+ function creaTabellaClienti(d) {
  
     document.getElementById("anagraficaClientiBody").innerHTML = "";
     //usernameSet.clear();
@@ -68,7 +68,7 @@ function getGames() {
   <td class="tdCustomer">` +
  idCliente +
   `</td> 
-  <td class="tdCustomer"><button data-bs-toggle="modal" data-bs-target="#modUserModal" class="btn btn-secondary" aria-label="bottone di modifica cliente" type="button" onclick="getUser(this)"><i class="bi bi-pencil-square"></i></button>
+  <td class="tdCustomer"><button data-bs-toggle="modal" data-bs-target="#modificaClienteModal" class="btn btn-secondary" aria-label="bottone di modifica cliente" type="button" onclick="getUser(this)"><i class="bi bi-pencil-square"></i></button>
   </td>`;
  
  tbody.appendChild(tr);
