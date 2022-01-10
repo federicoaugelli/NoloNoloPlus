@@ -33,16 +33,21 @@ function getGames() {
      let numGiocatori = d.result[i].numGiocatori;
      let disponibilita = d.result[i].disponibilita;
      let prezzo = d.result[i].prezzo;
+     let quantita = d.result[i].quantita;
+     let img = d.result[i].img;
      //usernameSet.add(username.toLowerCase());
      //let tbody = document.getElementById("anagraficaClientiBody");
      const tr = document.createElement("tr");
      tr.innerHTML =
   
   `<td class="tdCustomer">` +
- idGame +
+ img +
   `</td>
   <td class="tdCustomer">` +
  game +
+  `</td>
+  <td class="tdCustomer">` +
+ idGame +
   `</td>
   <td class="tdCustomer">` +
  platform +
@@ -68,6 +73,9 @@ function getGames() {
   <td class="tdCustomer">` +
  disponibilita +
   `</td>
+  <td class="tdCustomer">` +
+ quantita +
+  `</td>
   <td class="tdCustomer"><button data-bs-toggle="modal" data-bs-target="#modificaClienteModal" class="btn btn-secondary" aria-label="bottone di modifica cliente" type="button" onclick="getUser(this)"><i class="bi bi-pencil-square"></i></button>
   </td>`;
  
@@ -90,8 +98,9 @@ function visualizzaInventario() {
     <table border="1px" class="table table-striped table-bordered table-sm" cellspacing="2" width="100%">
     <thead>
       <tr>
-      <th th class="th-sm" scope="col">ID</th>
+      <th th class="th-sm" scope="col">Immagine</th>
       <th th class="th-sm" scope="col">Titolo</th>
+      <th th class="th-sm" scope="col">ID</th>
       <th th class="th-sm" scope="col">Piattaforma</th>
       <th th class="th-sm" scope="col">Anno di uscita</th>
       <th th class="th-sm" scope="col">Condizioni</th>
@@ -100,6 +109,8 @@ function visualizzaInventario() {
       <th th class="th-sm" scope="col">N° giocatori</th>
       <th th class="th-sm" scope="col">Prezzo</th>
       <th th class="th-sm" scope="col">Disponibilità</th>
+      <th th class="th-sm" scope="col">Quantità</th>
+      <th th class="th-sm" scope="col">Modifica</th>
       </tr>
     </thead>
     <tbody id="inventarioBody">  

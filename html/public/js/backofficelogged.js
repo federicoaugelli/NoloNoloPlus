@@ -68,19 +68,16 @@ function getGames() {
   <td class="tdCustomer">` +
  idCliente +
   `</td> 
-  <td class="tdCustomer"><button data-bs-toggle="modal" data-bs-target="#modificaClienteModal" class="btn btn-secondary" aria-label="bottone di modifica cliente" type="button" onclick="getUser(this)"><i class="bi bi-pencil-square"></i></button>
+  <td class="tdCustomer"><button data-bs-toggle="modal" data-bs-target="#modificaClienteModal" class="btn btn-secondary" aria-label="bottone di modifica cliente" type="button" onclick="getUser(d.result[i])"><i class="bi bi-pencil-square"></i></button>
   </td>`;
  
- tbody.appendChild(tr);
- console.log(d.result)
+      tbody.appendChild(tr);
+      console.log(d.result)
  }
-  
- }
+}
  
 
- 
- 
- 
+
 function visualizzaClienti() {
      
     var div = document.getElementById("content");
@@ -105,3 +102,23 @@ function visualizzaClienti() {
     `;
   }
 
+
+
+  function getUser(result){
+
+    var div = document.getElementById("content-2");
+    div.style.visibility = "visible";
+    div.innerHTML = `
+              
+    <div class="mb-3">
+      <label for="formFile" class="form-label">Default file input example </label>
+        <input class="form-control" type="file" id="formFile">
+    </div>
+    `;
+
+
+    document.getElementsByClassName("bar")[i].value = result.nome;
+      
+
+
+  }
