@@ -35,8 +35,8 @@ const template = require(global.rootDir + '/scripts/tpl.js') ;
 
 
 
-     //const mongouri = "mongodb://127.0.0.1:27017";
-     const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+     const mongouri = "mongodb://127.0.0.1:27017";
+     //const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
 
 MongoClient.connect(mongouri, {
     useNewUrlParser: true,

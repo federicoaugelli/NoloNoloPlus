@@ -3,36 +3,45 @@
 		"game": "Fortnite",
 		"platform": "ps4",
 		"annoUscita": "2017",
-		"condizioni": "pessime",
+		"condizioni": "nuovo",
 		"etaMinima": "3",
 		"peso": "10gb",
-		"numGiocatori": "1"
+		"numGiocatori": "1",
+		"prezzo": "Gratis",
+		"disponibilità":" "
+
 	},
 	{
 		"game": "Call Of Duty Vanguaard",
 		"platform": "ps5",
 		"annoUscita": "2020",
-		"condizioni": "ottime",
+		"condizioni": "usato",
 		"etaMinima": "18",
 		"peso": "8000gb",
-		"numGiocatori": "2"
+		"numGiocatori": "1-4",
+		"prezzo": "69,99$",
+		"disponibilità":" "
 	},
 	{
 		"game": "Minecraft",
 		"platform": "Xbox one X",
 		"annoUscita": "2010",
-		"condizioni": "buone",
+		"condizioni": "usato",
 		"etaMinima": "1",
 		"peso": "100mb",
-		"numGiocatori": "4"
+		"numGiocatori": "1",
+		"prezzo": "9,99$",
+		"disponibilità":" "
 	},
 	{
 		"game": "Grand Theft Auto",
 		"platform": "pc",
 		"annoUscita": "2013",
-		"condizioni": "buone",
+		"condizioni": "nuovo",
 		"etaMinima": "18",
 		"peso": "70gb",
-		"numGiocatori": "1"
+		"numGiocatori": "1",
+		"prezzo": "29,99$",
+		"disponibilità":" "
 	}
 ]
