@@ -199,7 +199,6 @@ app.use(passport.session());
 
 app.use(loginRouter);
 app.use(registerRouter);
-//app.use(crudRouter);
 app.use('/user', checkUserLogin(), userRouter);
 
 

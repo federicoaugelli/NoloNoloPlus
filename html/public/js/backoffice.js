@@ -41,9 +41,6 @@ function getGames() {
      tr.innerHTML =
   
   `<td class="tdCustomer">` +
- img +
-  `</td>
-  <td class="tdCustomer">` +
  game +
   `</td>
   <td class="tdCustomer">` +
@@ -53,14 +50,14 @@ function getGames() {
  platform +
   `</td>
   <td class="tdCustomer">` +
- annoUscita + 
-  `</td> 
+ annoUscita +
+  `</td>
   <td class="tdCustomer">` +
- condizioni +
+ condizioni + 
   `</td> 
   <td class="tdCustomer">` +
  etaMinima +
-  `</td>
+  `</td> 
   <td class="tdCustomer">` +
  peso +
   `</td>
@@ -71,12 +68,9 @@ function getGames() {
  prezzo +
   `</td>
   <td class="tdCustomer">` +
- disponibilita +
-  `</td>
-  <td class="tdCustomer">` +
  quantita +
   `</td>
-  <td class="tdCustomer"><button data-bs-toggle="modal" data-bs-target="#modificaClienteModal" class="btn btn-secondary" aria-label="bottone di modifica cliente" type="button" onclick="getUser(this)"><i class="bi bi-pencil-square"></i></button>
+  <td class="tdCustomer"><button data-bs-toggle="modal" data-bs-target="#vediOggetto" class="btn btn-secondary" aria-label="bottone di modifica cliente" type="button" onclick="getUser(this)"><i class="bi bi-pencil-square"></i></button>
   </td>`;
  
  tbody.appendChild(tr);
@@ -98,7 +92,6 @@ function visualizzaInventario() {
     <table border="1px" class="table table-striped table-bordered table-sm" cellspacing="2" width="100%">
     <thead>
       <tr>
-      <th th class="th-sm" scope="col">Immagine</th>
       <th th class="th-sm" scope="col">Titolo</th>
       <th th class="th-sm" scope="col">ID</th>
       <th th class="th-sm" scope="col">Piattaforma</th>
@@ -108,9 +101,8 @@ function visualizzaInventario() {
       <th th class="th-sm" scope="col">Peso</th>
       <th th class="th-sm" scope="col">N° giocatori</th>
       <th th class="th-sm" scope="col">Prezzo</th>
-      <th th class="th-sm" scope="col">Disponibilità</th>
       <th th class="th-sm" scope="col">Quantità</th>
-      <th th class="th-sm" scope="col">Modifica</th>
+      <th th class="th-sm" scope="col">Visualizza</th>
       </tr>
     </thead>
     <tbody id="inventarioBody">  

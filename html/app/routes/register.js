@@ -29,6 +29,39 @@ router.post("/frontendregister", function(req, res){
 );
 
 
+//                      REGISTRAZIONE NUOVO OGGETTO
+
+
+const oggetto = require('../model/objectModel.js');
+
+
+router.post("/objectregister", function(req, res){
+    try{
+        let newObject = new oggetto({
+            game: req.body.game,
+            platform: req.body.platform,
+            annoUscita: req.body.annoUscita,
+            stato: req.body.stato,
+            condizione: req.body.condizione,
+            etaMinima: req.body.etaMinima,
+            peso: req.body.peso,
+            numGiocatori: req.body.numGiocatori,
+            prezzo: req.body.prezzo,
+            disponibilita: req.body.disponibilita,
+            quantita: req.body.quantita,
+            img: req.body.img,    
+    });
+        newObject.save();
+        res.redirect('/user/backendlogged');	
+        
+    }
+    catch(error){
+        res.status(500).send(error);
+    }
+},
+);
+
+
 
 
 

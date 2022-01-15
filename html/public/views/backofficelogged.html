@@ -63,7 +63,7 @@
       
       </div>   
       <div class="modal-footer">  
-        <button type="button" id="closeModal1" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#anagraficaClientiModal" onclick="visualizzaClienti(); findClienti()"> Chiudi </button>
+        <button type="button" id="closeModal1" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#anagraficaClientiModal" onclick="visualizzaClienti(); findClienti()"> Chiudi </button>    
         <button type="button" class="btn btn-primary">Salva</button>     
       </div>  
     </div>   
@@ -71,6 +71,132 @@
 </div>
 
                                                  <!-- FINE MODAL ANAGRAFICA CLIENTI -->
+
+
+
+                                             <!-- MODAL INVENTARIO -->
+
+
+<div class="modal fade" id="vediInventarioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog  modal-fullscreen" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">INVENTARIO</h5>
+      </div>
+      <div class="modal-body">
+        <div id="inventarioContent">
+          <div id="inventarioBody">
+
+
+          </div>
+        </div>
+      </div>   
+      <div class="modal-footer">  
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#aggiungiOggetto">Aggiungi oggetto</button>    
+        <button type="button" id="closeModal1" class="btn btn-danger" data-bs-dismiss="modal">Chiudi</button>  
+      </div>  
+    </div>   
+  </div>
+</div>
+
+                                                   <!-- FINE MODAL INVENTARIO -->
+
+                                                   <!-- MODAL AGGIUNGI OGGETTO-->
+
+
+
+
+                                                   
+<div class="modal fade" id="aggiungiOggetto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog  modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addObject">AGGIUNGI OGGETTO</h5>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <form action="/objectregister" method="POST">
+          <label for="game" class="form-label">NOME</label>
+          <input type="text" class="form-control" id="game" name="game" placeholder="nome del gioco">
+        </div>
+        <div class="mb-3">
+          <label class="formGroupExampleInput" for="platform">PIATTAFORMA</label>
+            <select class="form-select" id="platoform">
+                  <option selected>Scegli...</option>
+                  <option value="1">PC</option>
+                  <option value="2">Xbox One</option>
+                  <option value="3">Xbox Serie X/S</option>
+                  <option value="4">PS4</option>
+                  <option value="5">PS5</option>
+           </select>
+        </div>
+        <div class="mb-3">
+          <label for="annoUscita" class="form-label">ANNO DI USCITA</label>
+          <input type="text" class="form-control" id="annoUscita" name="annoUscita" placeholder="anno di uscita ...">
+        </div>
+        <div class="mb-3">
+          <label class="formGroupExampleInput" for="stato">STATO</label>
+            <select class="form-select" id="stato">
+                  <option selected>Scegli...</option>
+                  <option value="1">Nuovo</option>
+                  <option value="2">Usato</option>
+           </select>
+        </div>
+        <div class="mb-3">
+          <label class="formGroupExampleInput" for="condizione">CONDIZIONE</label>
+            <select class="form-select" id="condizione" name="condizione">
+                  <option selected>Scegli...</option>
+                  <option value="1">Ottima</option>
+                  <option value="2">Buona</option>
+                  <option value="3">Discreta</option>
+           </select>
+        </div>
+        <div class="mb-3">
+          <label for="etaMinima" class="form-label">ET&Agrave; MINIMA</label>
+          <input type="text" class="form-control" id="etaMinima" name="etaMinima" placeholder="et&agrave; minima ...">
+        </div>
+        <div class="mb-3">
+          <label for="peso" class="form-label">PESO</label>
+          <input type="text" class="form-control" id="peso" name="peso" placeholder="GB ...">
+        </div>
+        <div class="mb-3">
+          <label for="numGiocatori" class="form-label">NUMERO GIOCATORI</label>
+          <input type="text" class="form-control" id="numGiocatori" name="numGiocatori" placeholder="numero giocatori ...">
+        </div>
+        <div class="mb-3">
+          <label for="prezzo" class="form-label">PREZZO</label>
+          <input type="text" class="form-control" id="prezzo" name="prezzo" placeholder=" ... euro">
+        </div>
+        <div class="mb-3">
+          <label for="disponibilita" class="form-label">DISPONIBILIT&Agrave;</label>
+          <input type="text" class="form-control" id="disponibilita" name="disponibilita" placeholder="disponibilit&agrave; ...">
+        </div>
+        <div class="mb-3">
+          <label for="quantita" class="form-label">QUANTIT&Agrave;</label>
+          <input type="text" class="form-control" id="quantita" name="quantita" placeholder="quantit&agrave; ...">
+        </div>
+        <div class="mb-3">
+          <div class="input-group mb-3">
+            <label class="input-group-text" for="img">IMMAGINE</label>
+            <input type="file" class="form-control" id="img" name="img">
+          </div>
+        </div>
+        <div class="mb-3">
+          <input type="submit" class="btn btn-primary" value="Aggiungi oggetto"> 
+        </div>
+      </form>
+    </div>   
+      <div class="modal-footer">  
+        <button type="button" id="closeModal2" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#vediInventarioModal" onclick="visualizzaInventario(); getGames()"> Chiudi </button>      
+      </div>  
+    </div>   
+  </div>
+</div>
+
+
+                                                 <!-- FINE MODAL AGGIUNGI OGGETTO-->
+
+
 
                                                  <!-- NAVBAR -->
 
@@ -89,7 +215,7 @@
               </button>
              </li>
              <li class="nav-item">
-              <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#exampleModalLong">
+              <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#vediInventarioModal" onclick="visualizzaInventario(); getGames()">
                 Modifica inventario
                </button>
              </li>
@@ -156,14 +282,6 @@
 
       <p><a href="javascript:history.back()">Go back</a></p>
 
-
-    <button type="button" class="btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Aggiungi utenti">
-      <div style="position: absolute; bottom: 16px; right: 16px; font-size: 18px;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="3em" height="3em" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
-        </svg>
-      </div>
-    </button>
 
 
 
