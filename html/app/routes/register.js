@@ -42,7 +42,7 @@ router.post("/objectregister", function(req, res){
             platform: req.body.platform,
             annoUscita: req.body.annoUscita,
             stato: req.body.stato,
-            condizione: req.body.condizione,
+            condizioni: req.body.condizioni,
             etaMinima: req.body.etaMinima,
             peso: req.body.peso,
             numGiocatori: req.body.numGiocatori,

@@ -152,6 +152,7 @@ function visualizzaClienti() {
        let game = d.result[i].game;
        let platform = d.result[i].platform;
        let annoUscita = d.result[i].annoUscita;
+       let stato = d.result[i].stato;
        let condizioni = d.result[i].condizioni;
        let etaMinima = d.result[i].etaMinima;
        let peso = d.result[i].peso;
@@ -179,6 +180,9 @@ function visualizzaClienti() {
    annoUscita + 
     `</td> 
     <td class="tdCustomer">` +
+   stato +
+    `</td> 
+    <td class="tdCustomer">` +
    condizioni +
     `</td> 
     <td class="tdCustomer">` +
@@ -192,9 +196,6 @@ function visualizzaClienti() {
     `</td>
     <td class="tdCustomer">` +
    prezzo +
-    `</td>
-    <td class="tdCustomer">` +
-   disponibilita +
     `</td>
     <td class="tdCustomer">` +
    quantita +
@@ -225,12 +226,12 @@ function visualizzaClienti() {
       <th th class="th-sm" scope="col">ID</th>
       <th th class="th-sm" scope="col">Piattaforma</th>
       <th th class="th-sm" scope="col">Anno di uscita</th>
+      <th th class="th-sm" scope="col">Stato</th>
       <th th class="th-sm" scope="col">Condizioni</th>
       <th th class="th-sm" scope="col">Etàminima</th>
       <th th class="th-sm" scope="col">Peso</th>
       <th th class="th-sm" scope="col">N° giocatori</th>
       <th th class="th-sm" scope="col">Prezzo</th>
-      <th th class="th-sm" scope="col">Disponibilità</th>
       <th th class="th-sm" scope="col">Quantità</th>
       <th th class="th-sm" scope="col">Modifica</th>
       </tr>

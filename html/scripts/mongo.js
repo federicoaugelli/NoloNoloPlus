@@ -182,7 +182,7 @@ exports.getGames = async function (credentials) {
 		.db(dbname)
 		.collection(collection2)
 		.find()
-		.sort({ nome: 1 })
+		.sort({ game: 1 })
 		.forEach((r) => {
 			result.push(r);
 		});

@@ -75,13 +75,10 @@ function getGames() {
  
  tbody.appendChild(tr);
  console.log(d.result)
- }
-  
- }
+ } 
+}
  
 
- 
- 
  
 function visualizzaInventario() {
      
@@ -111,3 +108,10 @@ function visualizzaInventario() {
     `;
   }
 
+
+  function viewGame(a){
+
+    
+
+
+  }
