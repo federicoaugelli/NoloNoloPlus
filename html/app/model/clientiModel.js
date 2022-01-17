@@ -8,7 +8,8 @@ const userSchema = new Schema({
     cognome : { type: String, required:true, unique:false },
     username : { type: String, required:true, unique:true },
     password : { type: String, required:true, unique:false },
-    indirizzo : { type: String, required:false },
+    citta : { type: String, required:false },
+    via : { type: String, required:false },
     punti  : { type: String, required:false }
 });
   

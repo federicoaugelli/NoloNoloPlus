@@ -16,7 +16,8 @@ router.post("/frontendregister", function(req, res){
             cognome: req.body.cognome,
             username: req.body.username,
             password: Bcrypt.hashSync(req.body.password, 10),
-            indirizzo: req.body.indirizzo,
+            citta: req.body.citta,
+            via: req.body.via,
             punti: 0    
     });
         newUser.save();
@@ -47,7 +48,6 @@ router.post("/objectregister", function(req, res){
             peso: req.body.peso,
             numGiocatori: req.body.numGiocatori,
             prezzo: req.body.prezzo,
-            disponibilita: req.body.disponibilita,
             quantita: req.body.quantita,
             img: req.body.img,    
     });

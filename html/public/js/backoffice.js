@@ -31,7 +31,6 @@ function getGames() {
      let etaMinima = d.result[i].etaMinima;
      let peso = d.result[i].peso;
      let numGiocatori = d.result[i].numGiocatori;
-     let disponibilita = d.result[i].disponibilita;
      let prezzo = d.result[i].prezzo;
      let quantita = d.result[i].quantita;
      let img = d.result[i].img;
@@ -106,12 +105,4 @@ function visualizzaInventario() {
     </tbody>
   </table>      
     `;
-  }
-
-
-  function viewGame(a){
-
-    
-
-
   }

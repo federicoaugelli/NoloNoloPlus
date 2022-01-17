@@ -9,7 +9,6 @@
 		"peso": "10gb",
 		"numGiocatori": "1",
 		"prezzo": "Gratis",
-		"disponibilità":" ",
 		"quantita": "5",
 		"img":""
 
@@ -24,7 +23,6 @@
 		"peso": "10gb",
 		"numGiocatori": "1",
 		"prezzo": "Gratis",
-		"disponibilità":" ",
 		"quantita": "3",
 		"img":""
 
@@ -39,7 +37,6 @@
 		"peso": "8000gb",
 		"numGiocatori": "1-4",
 		"prezzo": "69,99$",
-		"disponibilità":" ",
 		"quantita": "14",
 		"img":""
 	},
@@ -53,7 +50,6 @@
 		"peso": "8000gb",
 		"numGiocatori": "1-4",
 		"prezzo": "29,99$",
-		"disponibilità":" ",
 		"quantita": "1",
 		"img":""
 	},
@@ -67,7 +63,6 @@
 		"peso": "100mb",
 		"numGiocatori": "1",
 		"prezzo": "2,99$",
-		"disponibilità":" ",
 		"quantita": "3",
 		"img":""
 	},
@@ -81,7 +76,6 @@
 		"peso": "100mb",
 		"numGiocatori": "1",
 		"prezzo": "9,99$",
-		"disponibilità":" ",
 		"quantita": "12",
 		"img":""
 	},
@@ -95,7 +89,6 @@
 		"peso": "70gb",
 		"numGiocatori": "1",
 		"prezzo": "29,99$",
-		"disponibilità":" ",
 		"quantita": "10",
 		"img":""
 	},
@@ -109,7 +102,6 @@
 		"peso": "70gb",
 		"numGiocatori": "1",
 		"prezzo": "9,99$",
-		"disponibilità":" ",
 		"quantita": "20",
 		"img":""
 	}

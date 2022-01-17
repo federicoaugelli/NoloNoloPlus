@@ -159,6 +159,16 @@ app.get('/db/getGames', async function(req, res) {
 });
 
 
+app.get('/db/deleteUser', async function(req, res) {
+	res.send(await mymongo.deleteUser(oldUser,mongoCredentials))
+});
+
+
+app.get('/db/updateUser', async function(req, res) {
+	res.send(await mymongo.deleteUser(oldUser,newUser,mongoCredentials))
+});
+
+
 /* ========================== */
 /*                            */
 /*         PASSPORT           */

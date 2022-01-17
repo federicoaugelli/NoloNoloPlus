@@ -1,4 +1,4 @@
-
+                                                // CHIAMATA AJAX RITORNA TUTTI I CLIENTI
 function findClienti() {
     // let cookie = getCookie("SessionCookie")
      //let data = {cookie: cookie}
@@ -14,22 +14,7 @@ function findClienti() {
      });
 }
 
-function getGames() {
-  $.ajax({
-    url: "/db/getGames",
-    type: "GET",
-    data: '',
-    dataType: "json",
-    contentType: "application/x-www-form-urlencoded",
-    success: function (g) {
-         //tableCustomer(g);
-         console.log(g.result);
-    },
-  });
-}
-   
- 
- 
+                                                // CREA LA TABELLA CON TUTTI I CLIENTI
  function creaTabellaClienti(d) {
  
     document.getElementById("anagraficaClientiBody").innerHTML = "";
@@ -44,7 +29,8 @@ function getGames() {
      let cognome = d.result[i].cognome;
      let username = d.result[i].username;
      let punti = d.result[i].punti;
-     let indirizzo = d.result[i].indirizzo
+     let citta = d.result[i].citta;
+     let via = d.result[i].via
      //usernameSet.add(username.toLowerCase());
      //let tbody = document.getElementById("anagraficaClientiBody");
      const tr = document.createElement("tr");
@@ -60,15 +46,15 @@ function getGames() {
  username +
   `</td>
   <td class="tdCustomer">` +
- indirizzo + 
-  `</td> 
+ citta + ', ' + via +
+  `</td>  
   <td class="tdCustomer">` +
  punti +
   `</td> 
   <td class="tdCustomer">` +
  idCliente +
   `</td> 
-  <td class="tdCustomer"><button data-bs-toggle="modal" data-bs-target="#modificaClienteModal" class="btn btn-secondary" aria-label="bottone di modifica cliente" type="button" onclick="getUser(d.result[i])"><i class="bi bi-pencil-square"></i></button>
+  <td class="tdCustomer"><button data-bs-toggle="modal" data-bs-target="#modificaClienteModal" class="btn btn-secondary" aria-label="bottone di modifica cliente" type="button" onclick="getUser(this)"><i class="bi bi-pencil-square"></i></button>
   </td>`;
  
       tbody.appendChild(tr);
@@ -76,7 +62,7 @@ function getGames() {
  }
 }
  
-
+                                                // VISUALIZZA LA TABELLA CON TUTTI I CLIENTI
 
 function visualizzaClienti() {
      
@@ -103,23 +89,138 @@ function visualizzaClienti() {
   }
 
 
+                                                // RITORNA IL SINGOLO CLIENTE
 
-  function getUser(result){
+  function getUser(e){
 
-    var div = document.getElementById("content-2");
-    div.style.visibility = "visible";
-    div.innerHTML = `
-              
-    <div class="mb-3">
-      <label for="formFile" class="form-label">Default file input example </label>
-        <input class="form-control" type="file" id="formFile">
-    </div>
-    `;
-
-
-    document.getElementsByClassName("bar")[i].value = result.nome;
-      
+    let current = e.parentNode.parentNode;
+    let nome = current.getElementsByClassName("tdCustomer")[0].textContent;
+    let cognome = current.getElementsByClassName("tdCustomer")[1].textContent;
+    let username = current.getElementsByClassName("tdCustomer")[2].textContent;
+    let string = current.getElementsByClassName("tdCustomer")[3].textContent;
+    let cittaVia = string.split(", ");
+    let citta = cittaVia[0];
+    let via = cittaVia[1];
+    let punti = current.getElementsByClassName("tdCustomer")[4].textContent;
+    let modal = document.getElementById("modificaClienteModal");
+    let data = modal.getElementsByClassName("form-control");
+    data[0].value = nome;
+    data[1].value = cognome;
+    data[2].value = username;
+    data[3].value = citta;
+    data[4].value = via;
+    data[5].value = punti;
+    oldUser = current.getElementsByClassName("tdCustomer")[5].textContent;
   }
+
+
+                                                // MODIFICA IL SINGOLO CLIENTE
+
+  function modUser(){
+
+    var formData = $("#modUserForm").serializeArray();
+
+    if(
+      formData[0].value != " " &&
+      formData[1].value != " " &&
+      formData[2].value != " " &&
+      formData[3].value != " " &&
+      formData[4].value != " " &&
+      formData[5].value != " "
+    ){
+          
+      $.ajax({
+
+        url: "/db/updateUser",
+        type: "POST",
+        data: {oldUser, formData},
+        dataType: "json",
+        contentType: "application/x-www-form-urlencoded",
+        success: function(data){
+
+          if(data){
+
+            document.getElementById("alert-body").textContent = "Utente modificato con successo"
+            $("#alertModal").modal("show");
+            $("#modUserForm").trigger("reset");
+            $("#modificaClienteModal").modal("hide");
+            console.log("Utente modificato");
+            findClienti();
+          }
+          else{
+
+            document.getElementsById("alertContent").textContent = "Errore. non è possibile modificare l'utente"
+            $("alertmodal").modal("show");
+          }
+        }
+      });
+    }
+    else{
+
+      document.getElementById("alertContent").textContent = "Compilare tutti i campi"
+      $("alertmodal").modal("show");
+    }
+  }
+
+                                                //ELIMINA IL SINGOLO CLIENTE
+
+  function delUser(){
+
+    //let user = document.getElementsById("usernameModUser").value;
+    //let formData = {type: "username", rent: [user]};
+    let countPrenotati = 0;
+    /*$.ajax({
+      url: "/db/searchRent/",
+      type:"POST",
+      data: formData,
+      dataType: "json",
+      contentType: "application/x-www-form-urlencoded",
+      success: function(data) {
+
+        for(let i = 0; i < data.result.length; i++){
+
+          if(data.result[i].stato == "prenotato" || data.result[i].stato == "in corso"){
+
+          countPrenotati++;
+        }
+      }
+    */
+      console.log(countPrenotati);
+      if(countPrenotati == 0){
+
+        $.ajax({
+          url: "/db/deleteUser",
+          type: "DELETE",
+          data: {oldUser},
+          dataType: "json",
+          contentType: "application/x-www-form-urlencoded",
+          success: function(data){
+          },
+        });
+
+        document.getElementsById("alertContent").textContent = "Utente rimosso con successo"
+        $("alertmodal").modal("show");
+        $("#modUserForm").trigger("reset");
+        $("#modUserModal").modal("hide");
+        console.log("Utente rimosso");
+      }
+      else{
+
+        document.getElementsById("alertContent").textContent = "Errore. non è possibile rimuovere l'utente"
+        $("alertmodal").modal("show");
+        $("#modUserForm").trigger("reset");
+        $("#modUserModal").modal("hide");
+      }
+      findClienti();
+    //}
+    //});
+  }
+
+
+
+
+
+
 
 
 
@@ -157,7 +258,6 @@ function visualizzaClienti() {
        let etaMinima = d.result[i].etaMinima;
        let peso = d.result[i].peso;
        let numGiocatori = d.result[i].numGiocatori;
-       let disponibilita = d.result[i].disponibilita;
        let prezzo = d.result[i].prezzo;
        let quantita = d.result[i].quantita;
        let img = d.result[i].img;
@@ -205,8 +305,7 @@ function visualizzaClienti() {
    
    tbody.appendChild(tr);
    console.log(d.result)
-   }
-    
+   }    
    }
 
 
@@ -241,3 +340,4 @@ function visualizzaClienti() {
   </table>      
     `;
   }
+
