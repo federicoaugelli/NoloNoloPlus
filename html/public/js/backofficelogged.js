@@ -114,11 +114,14 @@ function visualizzaClienti() {
   }
 
 
+
+
                                                 // MODIFICA IL SINGOLO CLIENTE
 
   function modUser(){
 
-    var formData = $("#modUserForm").serializeArray();
+    var formData = $("form").serializeArray();
+  
 
     if(
       formData[0].value != " " &&
@@ -133,7 +136,7 @@ function visualizzaClienti() {
 
         url: "/db/updateUser",
         type: "POST",
-        data: {oldUser, formData},
+        data: { oldUser, formData },
         dataType: "json",
         contentType: "application/x-www-form-urlencoded",
         success: function(data){
@@ -150,7 +153,8 @@ function visualizzaClienti() {
           else{
 
             document.getElementsById("alertContent").textContent = "Errore. non è possibile modificare l'utente"
-            $("alertmodal").modal("show");
+            $("alertmodal1").modal("show");
+            console.log("errore");
           }
         }
       });
@@ -160,6 +164,8 @@ function visualizzaClienti() {
       document.getElementById("alertContent").textContent = "Compilare tutti i campi"
       $("alertmodal").modal("show");
     }
+
+    console.log(formData);
   }
 
                                                 //ELIMINA IL SINGOLO CLIENTE

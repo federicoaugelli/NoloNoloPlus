@@ -20,7 +20,7 @@
 
   <body>                       
 
-                                            <!-- MODAL-FLASH -->
+                                            <!-- MODAL-FLASH SUCCESS-->
 
 <div class="alert alert-success d-flex align-items-center" role="alert" id="alertModal">
   <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
@@ -30,7 +30,18 @@
 </div>
                                              <!-- FINE MODAL-FLASH -->
 
+                                             
+                                            <!-- MODAL-FLASH WARNING-->
 
+<div class="alert alert-warning d-flex align-items-center" role="alert" id="alertModal1">
+  <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+  <div id="alertContent">
+
+   
+  </div>
+</div>
+
+                                             <!-- FINE MODAL-FLASH -->
 
                                                  <!-- MODAL ANAGRAFICA CLIENTI -->
 
@@ -97,14 +108,16 @@
               <label for="punti" class="form-label">PUNTI</label>
               <input type="text" class="form-control" id="punti" name="punti" placeholder="punti">
             </div>
-          
+            <button type="button" class="btn btn-primary">Salva modifiche</button>
+          </form>
           </div>
         </div>      
       </div>   
       <div class="modal-footer">  
+        
+        
         <button type="button" id="closeModal1" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#anagraficaClientiModal" onclick="visualizzaClienti(); findClienti()"> Chiudi </button>    
-        <button type="button" class="btn btn-primary" >Salva modifiche</button>
-      </form>    
+       
       </div>  
     </div>   
   </div>
