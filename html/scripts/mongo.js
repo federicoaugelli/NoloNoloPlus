@@ -135,6 +135,7 @@ exports.search = async function(q,credentials) {
 	}
 }
 
+/*
 exports.createObject = async function(newObject){
 
      //const mongouri = "mongodb://127.0.0.1:27017?writeConern=majority";
@@ -168,7 +169,7 @@ exports.createObject = async function(newObject){
 		return e
 	}
 }
-
+*/
 
 exports.getGames = async function (credentials) {
 
@@ -264,6 +265,63 @@ exports.findClienti = async function (credentials) {
   };
 
 
+  exports.updateObject = async function(oldObject, newObject, credentials){
+
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+
+	let debug = [];
+    try{
+
+		debug.push('trying to connect MongoDB');
+		const mongo = new MongoClient(mongouri);
+		await mongo.connect();
+		debug.push("Managed to close connection to MongoDB.");
+		let ObjectId = require('mongodb').ObjectId;
+		var myquery = {
+
+			_id: ObjectId(oldObject)
+			
+		};
+
+		var newValues = {
+			$set:{
+
+			game: newObject[0].value,
+			platform: newObject[1].value,
+			annoUscita: newObject[2].value,
+			stato: newObject[3].value,
+			condizioni: newObject[4].value,
+			etaMinima: newObject[5].value,
+			peso: newObject[6].value,
+			numGiocatori: newObject[7].value,
+			prezzo: newObject[8].value,
+			quantita: newObject[9].value,
+			img: newObject[10].value
+		},
+	};
+	let updated = mongo
+	                .db(dbname)
+					.collection(collection2)
+					.updateOne(myquery, newValues);
+	
+	let updatedFlag = false
+	if(updated.result.ok > 0) {
+
+		updatedFlag = true
+		
+	}
+	debug.push("Managed to close connection to MongoDB.");
+	await mongo.close();
+	return(updatedFlag);
+    }
+	catch(e){
+
+		return e;
+	}  
+  };
+
+
+  
   exports.updateUser = async function(oldUser, newUser, credentials){
 
 	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
@@ -278,7 +336,8 @@ exports.findClienti = async function (credentials) {
 		let ObjectId = require('mongodb').ObjectId;
 		var myquery = {
 
-			id: ObjectId(oldUser)
+			_id: ObjectId(oldUser)
+			
 		};
 
 		var newValues = {
@@ -292,17 +351,19 @@ exports.findClienti = async function (credentials) {
 			punti: newUser[5].value
 		},
 	};
-	let updated = await mongo
+	let updated = mongo
 	                .db(dbname)
 					.collection(collection1)
-					updateOne(myquery, newValues);
-	await mongo.close();
-	let updatedFlag = false;
+					.updateOne(myquery, newValues);
+	
+	let updatedFlag = false
 	if(updated.result.ok > 0) {
 
 		updatedFlag = true
+		
 	}
 	debug.push("Managed to close connection to MongoDB.");
+	await mongo.close();
 	return(updatedFlag);
     }
 	catch(e){

@@ -158,19 +158,28 @@ app.get('/db/getGames', async function(req, res) {
 	res.send(await mymongo.getGames(mongoCredentials))
 });
 
+app.post('/db/updateUser', async function(req, res) {
+
+	let oldUser = req.body.oldUser
+	let newUser = req.body.formData
+
+	res.send(await mymongo.updateUser(oldUser,newUser,mongoCredentials))
+});
+
+
+app.post('/db/updateObject', async function(req, res) {
+
+	let oldObject = req.body.oldObject
+	let newObject = req.body.formData
+
+	res.send(await mymongo.updateObject(oldObject,newObject,mongoCredentials))
+});
+
 
 app.delete('/db/deleteUser', async function(req, res) {
 
 	let oldUser = req.body.oldUser	
 	res.send(await mymongo.deleteUser(oldUser,mongoCredentials))
-});
-
-
-app.post('/db/updateUser', async function(req, res) {
-
-	let oldUser = req.body.oldUser
-	let newUser = req.body.formData
-	res.send(await mymongo.deleteUser(oldUser,newUser,mongoCredentials))
 });
 
 
