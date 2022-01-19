@@ -4,6 +4,11 @@
     letter-spacing: 3px;
 }
 
+.filterBar {
+  text-align: center;
+  margin-top: 10px;
+}
+
 td {
     text-align: center;
 }
@@ -23,4 +28,112 @@ th.sticky {
     top: 0;
 }
 
+.platform-logo {
+    margin: 10px;
+    height: 30px;
+    right: 0;
+    position: absolute;
+}
+
+.xbox {
+    color: green;
+}
+
+.nintendo {
+  color: #bfc7d9;
+}
+
+.pegi {
+    margin: 10px;
+    height: 50px;
+    left: 0;
+    position: absolute;
+    color: #a5acc4;
+}
+
+.gameCard {
+    background-color: #031321;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: consolas, sans-serif;
+}
+
+:root {
+  --bg-color: #031321;
+  --primary-color: #2196f3;
+  --secondary-color: #255784;
+}
+
+.rentbtn {
+  position: relative;
+  display: block;
+  padding: 10px 4px;
+  color: var(--primary-color);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-decoration: none;
+  font-size: 20px;
+  overflow: hidden;
+  transition: 0.2s;
+}
+.rentbtn:hover {
+  color: var(--secondary-color);
+  background: var(--primary-color);
+  box-shadow: 0 0 20px var(--primary-color), 0 0 80px var(--primary-color),
+    0 0 80px var(--primary-color), 0 0 160px var(--primary-color);
+  transition-delay: 1s;
+}
+
+.rentbtn span {
+  position: absolute;
+  display: block;
+}
+.rentbtn span:nth-child(1) {
+  top: 0;
+  transform: translateX(-115%);
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, var(--primary-color));
+}
+.rentbtn:hover span:nth-child(1) {
+  transform: translateX(100%);
+  transition: 1s;
+}
+.rentbtn span:nth-child(3) {
+  bottom: 0;
+  transform: translateX(100%);
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(270deg, transparent, var(--primary-color));
+}
+.rentbtn:hover span:nth-child(3) {
+  transform: translateX(-115%);
+  transition: 1s 0.5s;
+}
+.rentbtn span:nth-child(2) {
+  right: 0;
+  transform: translateY(-130%);
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, transparent, var(--primary-color));
+}
+.rentbtn:hover span:nth-child(2) {
+  transform: translateY(100%);
+  transition: 1s 0.25s;
+}
+.rentbtn span:nth-child(4) {
+  left: 0;
+  transform: translateY(100%);
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(360deg, transparent, var(--primary-color));
+}
+.rentbtn:hover span:nth-child(4) {
+  transform: translateY(-130%);
+  transition: 1s 0.75s;
+}
 

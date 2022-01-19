@@ -21,8 +21,8 @@ Copyright (c) 2021 by Fabio Vitali
 
 */
 
-let fn = "/public/data/dipendenti.json"
-//let fn = "/public/data/oggetti.json"
+//let fn = "/public/data/dipendenti.json"
+let fn = "/public/data/oggetti.json"
 let dbname = "site202127"
 let collection ="registrodipendenti"
 let fieldname = "persone"
@@ -63,20 +63,20 @@ exports.create = async function(credentials) {
 
 		debug.push(`Trying to read file '${fn}'... `)
 		//let doc = await fs.readFile('C:/Users/matte/Documents/GitHub/site202127/html/public/data/dipendenti.json', 'utf8')
-		//let doc = await fs.readFile('/Users/frederick/Documents/IT/Web Programming/site202127/html/public/data/oggetti.json', 'utf8')
-		let doc = await fs.readFile(global.rootDir + fn, 'utf8')
+		let doc = await fs.readFile('/Users/frederick/Documents/IT/Web Programming/site202127/html/public/data/oggetti.json', 'utf8')
+		//let doc = await fs.readFile(global.rootDir + fn, 'utf8')
 		let data = JSON.parse(doc)
 		debug.push(`... read ${data.length} records successfully. `)
 
 		debug.push(`Trying to remove all records in table '${dbname}'... `)
 		let cleared = await mongo.db(dbname)
-					.collection(collection)
+					.collection(collection2)
 					.deleteMany()
 		debug.push(`... ${cleared?.deletedCount || 0 } records deleted.`)
 					
 		debug.push(`Trying to add ${data.length} new records... `)
 		let added = await mongo.db(dbname)
-					.collection(collection)
+					.collection(collection2)
 		 			.insertMany(data);	
 		debug.push(`... ${added?.insertedCount || 0} records added.`)
 

@@ -17,25 +17,27 @@
 
       <!-- vue.js -->
       <script type="text/javascript" src="/js/vue.min.js"></script>
-      
       <link rel="stylesheet" type="text/css" href="/css/frontoffice.css">
       <link rel="stylesheet" type="text/css" href="/css/login.css">
+      <script type="text/javascript" src="/js/frontoffice.js"></script>
 
 
 </head>
 
-<body>
-                                                             <!-- MODAL LOGIN-->
+<body style="background-color: #031336;">
+  <div id="app">
+
+
   <!-- The Modal -->
   <div class="modal fade" id="myModal">
      <div class="modal-dialog modal-dialog-centered">
        <div class="modal-content">
-  <!-- Modal Header 
+    <!-- Modal Header 
        <div class="modal-header">
          <h4 class="modal-title">Log in</h4>
            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
        </div> -->
-  <!-- Modal body -->
+    <!-- Modal body -->
        <div class="modal-body p-0">
         
         <div class="row">
@@ -61,14 +63,7 @@
                       <div class="group"> <label for="cognome" class="label">Cognome</label> <input id="cognome" type="text" name="cognome" class="input" placeholder="Inserisci il tuo cognome"> </div>
                       <div class="group"> <label for="username" class="label">Username</label> <input id="username" type="text" name="username" class="input" placeholder="Crea il tuo Username"> </div>
                       <div class="group"> <label for="password" class="label">Password</label> <input id="password" type="password" name="password" class="input" data-type="password" placeholder="Crea nuova password"> </div>
-                      <div class="row g-3">
-                        <div class="col-sm-8">
-                      <div class="group"><label for="via" class="label">Via</label> <input id="via" type="text" name="via" class="input" placeholder=" Via, Numero "> </div>
-                        </div>
-                        <div class="col-sm-4">
-                          <div class="group"><label for="citta" class="label"> Citt&agrave;</label> <input id="citta" type="text" name="citta" class="input" placeholder=" Città "> </div>
-                        </div>
-                      </div>
+                      <div class="group"> <label for="indirizzo" class="label">Indirizzo</label> <input id="indirizzo" type="text" name="indirizzo" class="input" placeholder="Città,  Via,  Numero"> </div>
                       <div class="group"> <input type="submit" class="button" value="Registrati"> </div>
                       <div class="hr"></div>
                       <div class="foot"> <label for="tab-1">Already Member?</label> </div>
@@ -81,43 +76,41 @@
           </div>
         </div>
        </div>
-  <!-- Modal footer
+    <!-- Modal footer
        <div class="modal-footer">
          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
        </div> -->
        </div>
      </div> 
   </div> 
-<!-- Fine The Modal -->
+  <!-- Fine The Modal -->
 
-                                                             <!-- FINE MODAL LOGIN-->
 
-                                                             <!-- CARDS -->
-
-  <!-- Modal cards -->
+  <!-- Modal cards 
   <div class="modal fade" id="card-modal" tabindex="-1" aria-labelledby="card-modalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">{{ selectitem.title }}</h5>
+          <h5 class="modal-title" id="exampleModalLabel">{{ item.game }} per {{ item.platform }}</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <img class="card-img-top" src="/img/prova1.png" alt="Card image1">
           <div class="card-body">
-            <p class="card-text">{{ selectitem.message }}</p>
+            <label for="startRent">Da:</label>
+            <input type="date" id="startRent" name="startRent">
+
+            <label for="finishRent">A:</label>
+            <input type="date" id="finishRent" name="finishRent">
           </div>
         </div>
         <div class="modal-footer">
-          <p class="me-auto">costo: ${{ selectitem.price }}</p>
-          <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button> -->
-          <button type="button" class="btn btn-primary">Richiedi noleggio</button>
+          <p class="me-auto">costo: $</p>
+          <button type="button" class="btn btn-primary" disabled>Noleggia</button>
         </div>
       </div>
     </div>
   </div>
-
-
+  -->
 
   <!-- NAVBAR -->
     <nav class="navbar navbar-dark navbar-expand-md bg-primary sticky-top py-4">
@@ -127,70 +120,84 @@
           <span class="navbar-toggler-icon"></span>
         </button>
           <form class="d-flex w-50 bottom-0 my-auto">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-light" type="submit">Search</button>
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" v-model="searchQuery">
           </form>
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">            
               <!-- Modal button-->
-              <button type="button" class="btn btn-primary me-3" data-bs-toggle="modal" data-bs-target="#myModal">Accedi</button>  
+              <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#myModal">Accedi</button>  
             </li>
           </ul> 
       </div>
     </nav>
 
-  <!--  TABELLA VEICOLI A DUE RUOTE
-  <div class="container mt-5">
-    <div class="table-responsive">
-        <table class="card-table table-borderless myTable"> 
-          <thead>
-            <tr>
-              <th colspan ="10" id="app">{{ message }}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr id="list-1">
-              <td v-for="item in items" :key="item.message">
-               <div class="col-sm-4">
-                 <div class="card" style="width:500px">
-                     <img class="card-img-top" src="/img/prova1.png" alt="Card image1">
-                       <div class="card-body">
-                         <h4 class="card-title">{{ item.title }}</h4>
-                         <p class="card-text">{{ item.message }}</p>
-                         <a v-if="item.disponibile === 'True'" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#card-modal">Vedi</a>
-                         <a v-else-if="item.disponibile === 'False'" class="btn btn-primary disabled">Non disponibile</a>
-                       </div>
-                       <div class="card-footer">
-                        <small class="text-muted">Last updated 3 mins ago</small>
-                      </div>
-                 </div>
-               </div>
-              </td>
-            </tr>
-          </tbody>
-       </table>
+    <div class="filterBar">
+      <button class="btn btn-light" type="button" @click="filterPrice()">Gratis</button>
+      <button class="btn btn-light" type="button" @click="">ps5</button>
+      <button class="btn btn-light" type="button" @click="">ps4</button>
+      <button class="btn btn-light" type="button" @click="">Xbox</button>
+      <button class="btn btn-light" type="button" @click="">Pc</button>
     </div>
-  </div> -->
 
   <!-- TABELLA FINALE -->
-  <div class="album py-5 bg-light">
+  <div class="album py-5">
     <div class="container">
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="games-list">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
-        <div class="col" v-for="item in items" :key="item.game">
-          <div class="card shadow-sm" style="text-align: center;">
+        <div class="col" v-for="item in resultQuery" :key="item.game">
+          <div class="card shadow-sm gameCard" style="text-align: center;">
+            <div class="pegi">PEGI {{ item.etaMinima }}</div>
+            <img v-if="item.platform == 'ps4'" class="platform-logo playstation" src="/img/playstation-brands.svg" alt="Card image1">
+            <img v-else-if="item.platform == 'Xbox one X'" class="platform-logo xbox" src="/img/xbox-brands.svg" alt="Card image1">
+            <img v-else-if="item.platform == 'pc'" class="platform-logo pc" src="/img/laptop-solid.svg" alt="Card image1">
+            <div v-else class="platform-logo nintendo">Nintendo</div>
             <img class="card-img-top" src="/img/prova1.png" alt="Card image1">
             <div class="card-body">
-              <h4 class="card-title">{{ item.game }}</h4>
-              <p class="card-text">{{ item.peso }}</p>
+              <h4 class="card-title" style="color: white;">{{ item.game }}</h4>
               <!--
-              <a v-if="item.quantità > '0'" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#card-modal">Vedi</a>
-              <a v-else-if="item.quantità <= '0'" class="btn btn-primary disabled">Non disponibile</a>
-              -->
+              <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#card-modal">Noleggia</a>-->
+              <a data-bs-toggle="modal" data-bs-target="#card-modal" class="rentbtn">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                Noleggia
+              </a>
+              <h6 v-if="item.prezzo != 'Gratis'" style="color: white; margin-top: 10px;">{{ item.prezzo }}€ al giorno</h6>
+              <h6 v-else style="color: white; margin-top: 10px;">{{ item.prezzo }}</h6>
             </div>
             <div class="card-footer">
-              <small class="text-muted">Disponibilità: {{ item.numGiocatori }} unità</small>
+              <small class="text-muted" style="position: absolute; right: 0; margin-right: 10px;">{{ item.annoUscita }}</small>
+              <small class="text-muted">in {{ item.condizioni }} condizioni</small>
             </div>
+
+
+  <div class="modal fade" id="card-modal" tabindex="-1" aria-labelledby="card-modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{ item.game }} per {{ item.platform }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="card-body">
+            <label for="startRent">Da:</label>
+            <input type="date" id="startRent" name="startRent">
+
+            <label for="finishRent">A:</label>
+            <input type="date" id="finishRent" name="finishRent">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <p class="me-auto">costo: $</p>
+          <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button> -->
+          <button type="button" class="btn btn-primary" disabled>Noleggia</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
           </div>
         </div>
 
@@ -210,118 +217,57 @@
      </ul>
    </nav>
 
-
+ </div>
 
   <script type="text/javascript">
-
-    var app = new Vue({
-      el: '#app',
-      data: {
-        message: 'Veicoli a 2 ruote'
-      }
-    })
-/*
-    function createData() {
-      axios.get('/db/getGames')
-        .then(function (response) {
-          const games = response.data.result;
-          console.log(games)
-          return (games);
-      })
-    }
-*/
-
-    
-/*
-    var list1 = new Vue({
-      el: '#list-1',
-      data: {
-        items: [
-          {title: 'bicicletta', message: 'Coso 1', disponibile: 'False', price: '5'},
-          {title: 'moto', message: 'Coso 2', disponibile: 'True', price: '20'},
-          {title: 'moto ma è drill', message: 'Coso 3', disponibile: 'True', price: '30'},
-          {title: 'lesssgoo', message: 'Coso 4', disponibile: 'False', price: '100'}
-
-        ]
-      }
-    })
-
-    var list2 = new Vue({
-      el: '#list-2',
-      data: {
-        items: [
-          {title: 'Non esistono', message: 'Coso 1', disponibile: 'True', price: '15'},
-          {title: 'i veicoli', message: 'Coso 2', disponibile: 'True', price: '33'},
-          {title: 'a tre', message: 'Coso 3', disponibile: 'False', price: '69'},
-          {title: 'ruote', message: 'Coso 4', disponibile: 'True', price: '420'}
-
-        ],
-        selectitem: '',
-      },
-      methods: {
-        sendInfo(item) {
-          this.selectitem = item;
-        }
-      }
-    })
-
-    var list3 = new Vue({
-      el: '#list-3',
-      data: {
-        items: [
-          {title: 'veicolo figo', message: 'Coso 1', disponibile: 'True', price: '5'},
-          {title: 'veicolo brutto', message: 'Coso 2', disponibile: 'False', price: '225'},
-          {title: 'veicolo shish', message: 'Coso 3', disponibile: 'False', price: '35'},
-          {title: 'veicolo siuuum', message: 'Coso 4', disponibile: 'True', price: '21'}
-
-        ]
-      }
-    })
-*/
       
-    var gamesVue = new Vue({
-      el: "#games-list",
+    new Vue({
+      el: "#app",
       data () {
         return {
-          items: null
+          searchQuery: '',
+          items: ''
         }
       },
+
       mounted () {
         axios
           .get('/db/getGames')
           .then(response => (this.items = response.data.result))
+/*
+        const it = this.items;
+        console.log([...new Set(this.items.map(i=>i.game))])
+*/
+      },
+
+      computed: {
+        resultQuery(){
+          if(this.searchQuery){
+            return this.items.filter((gg)=>{
+              return this.searchQuery.toLowerCase().split(' ').every(v => gg.game.toLowerCase().includes(v))
+            })
+          }else{
+            return this.items;
+          }
+        }
+      },
+
+      methods: {
+        /*
+        filterPrice(){
+          return this.items.filter(x => x.prezzo == 'Gratis')
+        }
+        */
       }
     })
 
 /*
-    //per unire tutte le card dopo...
-    var list = new Vue({
-      el: '#item-list',
-      data: {
-        items: [
-          {title: 'bicicletta', message: 'Bellissima bicicletta con il sellino', disponibile: 'False', price: '5', quantità: '0'},
-          {title: 'moto', message: 'Motooooo', disponibile: 'True', price: '20', quantità: '4'},
-          {title: 'moto ma è drill', message: 'Rwondoooo', disponibile: 'True', price: '30', quantità: '3'},
-          {title: 'lesssgoo', message: 'Okkkeeeyyy', disponibile: 'False', price: '100', quantità: '0'},
-          {title: 'Non esistono', message: 'Coso 1', disponibile: 'True', price: '15', quantità: '10'},
-          {title: 'i veicoli', message: 'Coso 2', disponibile: 'True', price: '33', quantità: '8'},
-          {title: 'a tre', message: 'Coso 3', disponibile: 'False', price: '69', quantità: '0'},
-          {title: 'ruote', message: 'Coso 4', disponibile: 'True', price: '420', quantità: '1'},
-          {title: 'veicolo figo', message: 'Coso 1', disponibile: 'True', price: '5', quantità: '4'},
-          {title: 'veicolo brutto', message: 'Coso 2', disponibile: 'False', price: '225', quantità: '0'},
-          {title: 'veicolo shish', message: 'Coso 3', disponibile: 'False', price: '35', quantità: '0'},
-          {title: 'veicolo siuuum', message: 'Coso 4', disponibile: 'True', price: '21', quantità: '3'}     
-        ]
-      }
-    })
+  Implementare il modal con il prezzo moltiplicato per i giorni (non loggati)
+  implementare i filtri per i loggati
+  implementare le altre cose per i loggati
 */
 
   </script>
-      
-
+</div>
 </body>
-
-
-
-
 </html>
