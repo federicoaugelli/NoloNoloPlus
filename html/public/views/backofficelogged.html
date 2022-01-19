@@ -77,9 +77,7 @@
                                                    <!-- FINE MODAL ANAGRAFICA CLIENTI -->
 
 
-
-
-                                                   <!-- MODAL MODIFICA ANAGRAFICA CLIENTI -->
+                                                   <!-- MODAL MODIFICA ED ELIMINA CLIENTE -->
 
 
 <div class="modal fade" id="modificaClienteModal" tabindex="-1" role="dialog" aria-labelledby="modificaClienteModal" aria-hidden="true">
@@ -93,6 +91,7 @@
           <div id="modificaClientiBody">
             
             <form method="POST" action="/db/updateUser"  id="modUserForm">
+              
             <div class="mb-3">
               <label for="nome" class="form-label">NOME</label>
               <input type="text" class="form-control" id="nome" name="nome" placeholder="nome">
@@ -118,7 +117,11 @@
               <input type="text" class="form-control" id="punti" name="punti" placeholder="punti">
             </div>
             <button type="button" class="btn btn-primary" onclick="modUser()">Salva modifiche</button>
+            <form action="POST" method="/db/deleteUser">
+            <button type="button" class="btn btn-primary" onclick="delUser()">Elimina cliente</button>
+            </form>
           </form>
+          </div>
           </div>
         </div>      
       </div>   
@@ -186,10 +189,10 @@
             <select class="form-select" id="platform" name="platform">
                   <option selected>Scegli...</option>
                   <option value="PC">PC</option>
-                  <option value="Xbox One">Xbox One</option>
-                  <option value="Xbox Serie X/S">Xbox Serie X/S</option>
-                  <option value="Playstation 4">Playstation 4</option>
-                  <option value="Playstation 5">Playstation 5</option>
+                  <option value="Xbox_One">Xbox One</option>
+                  <option value="Xbox_Serie_X/S">Xbox Serie X/S</option>
+                  <option value="Playstation_4">Playstation 4</option>
+                  <option value="Playstation_5">Playstation 5</option>
            </select>
         </div>
         <div class="mb-3">
@@ -230,10 +233,6 @@
           <input type="text" class="form-control" id="prezzo" name="prezzo" placeholder=" ... euro">
         </div>
         <div class="mb-3">
-          <label for="disponibilita" class="form-label">DISPONIBILIT&Agrave;</label>
-          <input type="text" class="form-control" id="disponibilita" name="disponibilita" placeholder="disponibilit&agrave; ...">
-        </div>
-        <div class="mb-3">
           <label for="quantita" class="form-label">QUANTIT&Agrave;</label>
           <input type="text" class="form-control" id="quantita" name="quantita" placeholder="quantit&agrave; ...">
         </div>
@@ -260,8 +259,7 @@
 
 
 
-
-                                                 <!-- MODAL MODIFICA OGGETTO INVENTARIO -->
+                                                 <!-- MODAL MODIFICA ED ELIMINA OGGETTO INVENTARIO -->
 
 <div class="modal fade" id="modificaOggettoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
   <div class="modal-dialog  modal-lg" role="document">
@@ -274,11 +272,15 @@
           <div id="modificaOggettiBody">
 
         <form method="POST" action="/db/updateObject" id="modObjectForm">
-        <div class="mb-3">
+     <!--   <div class="mb-3">
           <div class="input-group mb-3">
             <label class="input-group-text" for="img">IMMAGINE</label>
             <input type="file" class="form-control" id="img" name="img">
           </div>
+        </div>-->
+        <div class="mb-3">
+          <label for="img" class="form-label">IMMAGINE</label>
+          <input type="text" class="form-control" id="img" name="img" placeholder="img del gioco">
         </div>
         <div class="mb-3">
           <label for="game" class="form-label">TITOLO</label>
@@ -289,10 +291,10 @@
             <select class="form-control" id="platform" name="platform">
       
                   <option value="PC">PC</option>
-                  <option value="Xbox One">Xbox One</option>
-                  <option value="Xbox Serie X/S">Xbox Serie X/S</option>
-                  <option value="Playstation 4">Playstation 4</option>
-                  <option value="Playstation 5">Playstation 5</option>
+                  <option value="Xbox_One">Xbox One</option>
+                  <option value="Xbox_Serie_X/S">Xbox Serie X/S</option>
+                  <option value="Playstation_4">Playstation 4</option>
+                  <option value="Playstation_5">Playstation 5</option>
            </select>
         </div>
         <div class="mb-3">
@@ -337,7 +339,10 @@
           <input type="text" class="form-control" id="quantita" name="quantita" placeholder="quantit&agrave; ...">
         </div>      
         <div class="mb-3">
-          <input type="submit" class="btn btn-primary" value="Modifica oggetto" onclick="modObject()"> 
+          <button type="button" class="btn btn-primary" onclick="modObject()">Salva modifiche</button> 
+          <form action="POST" method="/db/deleteObject">
+            <button type="button" class="btn btn-primary" onclick="delObject()">Elimina titolo</button>
+            </form>
         </div>
       </form>
     </div>   

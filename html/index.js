@@ -183,6 +183,13 @@ app.delete('/db/deleteUser', async function(req, res) {
 });
 
 
+app.delete('/db/deleteObject', async function(req, res) {
+
+	let oldObject = req.body.oldObject	
+	res.send(await mymongo.deleteObject(oldObject,mongoCredentials))
+});
+
+
 /* ========================== */
 /*                            */
 /*         PASSPORT           */

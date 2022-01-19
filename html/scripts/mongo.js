@@ -310,17 +310,18 @@ exports.findClienti = async function (credentials) {
 		var newValues = {
 			$set:{
 
-			game: newObject[0].value,
-			platform: newObject[1].value,
-			annoUscita: newObject[2].value,
-			stato: newObject[3].value,
-			condizioni: newObject[4].value,
-			etaMinima: newObject[5].value,
-			peso: newObject[6].value,
-			numGiocatori: newObject[7].value,
-			prezzo: newObject[8].value,
-			quantita: newObject[9].value,
-			img: newObject[10].value
+			img: newObject[0].value,	
+			game: newObject[1].value,
+			platform: newObject[2].value,
+			annoUscita: newObject[3].value,
+			stato: newObject[4].value,
+			condizioni: newObject[5].value,
+			etaMinima: newObject[6].value,
+			peso: newObject[7].value,
+			numGiocatori: newObject[8].value,
+			prezzo: newObject[9].value,
+			quantita: newObject[10].value,
+			
 		},
 	};
 	let updated = mongo
@@ -361,11 +362,12 @@ exports.findClienti = async function (credentials) {
 		let ObjectId = require('mongodb').ObjectId;
 		var myquery = {
 
-			id: ObjectId(oldUser)
+			_id: ObjectId(oldUser)
 		};
 		let removed = await mongo
 		                .db(dbname)
 						.collection(collection1)
+						.deleteOne(myquery)
 	    await mongo.close();
 		debug.push("Managed to close connection to MongoDB.");
 	}
@@ -374,6 +376,38 @@ exports.findClienti = async function (credentials) {
 		return e;
 	}
   };
+
+
+
+  exports.deleteObject = async function(oldObject, credentials){
+
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+
+	let debug = [];
+	try{
+
+		debug.push('trying to connect MongoDB');
+		const mongo = new MongoClient(mongouri);
+		await mongo.connect();
+		debug.push("Managed to close connection to MongoDB.");
+		let ObjectId = require('mongodb').ObjectId;
+		var myquery = {
+
+			_id: ObjectId(oldObject)
+		};
+		let removed = await mongo
+		                .db(dbname)
+						.collection(collection2)
+						.deleteOne(myquery)
+	    await mongo.close();
+		debug.push("Managed to close connection to MongoDB.");
+	}
+	catch(e){
+
+		return e;
+	}
+  };
+  
   
 
 

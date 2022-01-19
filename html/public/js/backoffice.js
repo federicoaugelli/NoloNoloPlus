@@ -68,9 +68,7 @@ function getGames() {
   `</td>
   <td class="tdCustomer">` +
  quantita +
-  `</td>
-  <td class="tdCustomer"><button data-bs-toggle="modal" data-bs-target="#vediOggetto" class="btn btn-secondary" aria-label="bottone di modifica cliente" type="button" onclick="getUser(this)"><i class="bi bi-pencil-square"></i></button>
-  </td>`;
+  `</td>`;
  
  tbody.appendChild(tr);
  console.log(d.result)
@@ -98,7 +96,6 @@ function visualizzaInventario() {
       <th th class="th-sm" scope="col">N° giocatori</th>
       <th th class="th-sm" scope="col">Prezzo</th>
       <th th class="th-sm" scope="col">Quantità</th>
-      <th th class="th-sm" scope="col">Visualizza</th>
       </tr>
     </thead>
     <tbody id="inventarioBody">  

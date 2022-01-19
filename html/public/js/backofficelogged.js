@@ -158,7 +158,7 @@ var oldUser = NULL;
 
             document.getElementById("alert-body").textContent = "Utente modificato con successo"
             $("#flash-modal").modal("show");
-            //$("#modUserForm").trigger("reset");
+            $("#modUserForm").trigger("reset");
             $("#modificaClienteModal").modal("hide");
             console.log("Utente modificato");
             findClienti();
@@ -286,43 +286,43 @@ var oldUser = NULL;
        const tr = document.createElement("tr");
        tr.innerHTML =
     
-    `<td class="tdCustomer">` +
+    `<td class="tdCustomer1">` +
    img +
     `</td>
-   <td class="tdCustomer">` +
+   <td class="tdCustomer1">` +
    game +
     `</td>
-    <td class="tdCustomer">` +
-   idGame +
-    `</td>
-    <td class="tdCustomer">` +
+    <td class="tdCustomer1">` +
    platform +
     `</td>
-    <td class="tdCustomer">` +
+    <td class="tdCustomer1">` +
    annoUscita + 
     `</td> 
-    <td class="tdCustomer">` +
+    <td class="tdCustomer1">` +
    stato +
     `</td> 
-    <td class="tdCustomer">` +
+    <td class="tdCustomer1">` +
    condizioni +
     `</td> 
-    <td class="tdCustomer">` +
+    <td class="tdCustomer1">` +
    etaMinima +
     `</td>
-    <td class="tdCustomer">` +
+    <td class="tdCustomer1">` +
    peso +
     `</td>
-    <td class="tdCustomer">` +
+    <td class="tdCustomer1">` +
    numGiocatori +
     `</td>
-    <td class="tdCustomer">` +
+    <td class="tdCustomer1">` +
    prezzo +
     `</td>
-    <td class="tdCustomer">` +
+    <td class="tdCustomer1">` +
    quantita +
     `</td>
-    <td class="tdCustomer"><button data-bs-toggle="modal" data-bs-target="#modificaOggettoModal" class="btn btn-secondary" aria-label="bottone di modifica cliente" type="button" onclick="getObject(this)"><i class="bi bi-pencil-square"></i></button>
+    <td class="tdCustomer1">` +
+   idGame +
+     `</td>
+    <td class="tdCustomer1"><button data-bs-toggle="modal" data-bs-target="#modificaOggettoModal" class="btn btn-secondary" aria-label="bottone di modifica cliente" type="button" onclick="getObject(this)"><i class="bi bi-pencil-square"></i></button>
     </td>`;
    
    tbody.appendChild(tr);
@@ -331,7 +331,7 @@ var oldUser = NULL;
    }
 
 
-   var oldObject = NULL;
+  
                                                                           //VISUALIZZA L'INVENTARIO
 
   function visualizzaInventario() {
@@ -345,7 +345,6 @@ var oldUser = NULL;
       <tr>
       <th th class="th-sm" scope="col">Immagine</th>
       <th th class="th-sm" scope="col">Titolo</th>
-      <th th class="th-sm" scope="col">ID</th>
       <th th class="th-sm" scope="col">Piattaforma</th>
       <th th class="th-sm" scope="col">Anno di uscita</th>
       <th th class="th-sm" scope="col">Stato</th>
@@ -355,6 +354,7 @@ var oldUser = NULL;
       <th th class="th-sm" scope="col">N° giocatori</th>
       <th th class="th-sm" scope="col">Prezzo</th>
       <th th class="th-sm" scope="col">Quantità</th>
+      <th th class="th-sm" scope="col">ID</th>
       <th th class="th-sm" scope="col">Modifica</th>
       </tr>
     </thead>
@@ -364,23 +364,23 @@ var oldUser = NULL;
     `;
   }
 
-
+  var oldObject = NULL;
                                                // RITORNA IL SINGOLO OGGETTO
   
   function getObject(e){
 
     let current = e.parentNode.parentNode;
-    let img = current.getElementsByClassName("tdCustomer")[0].textContent;
-    let game = current.getElementsByClassName("tdCustomer")[1].textContent;
-    let platform = current.getElementsByClassName("tdCustomer")[3].textContent;
-    let annoUscita = current.getElementsByClassName("tdCustomer")[4].textContent;
-    let stato = current.getElementsByClassName("tdCustomer")[5].textContent;
-    let condizioni = current.getElementsByClassName("tdCustomer")[6].textContent;
-    let etaMinima = current.getElementsByClassName("tdCustomer")[7].textContent;
-    let peso = current.getElementsByClassName("tdCustomer")[8].textContent;
-    let numGiocatori = current.getElementsByClassName("tdCustomer")[9].textContent;
-    let prezzo = current.getElementsByClassName("tdCustomer")[10].textContent;
-    let quantita = current.getElementsByClassName("tdCustomer")[11].textContent;
+    let img = current.getElementsByClassName("tdCustomer1")[0].textContent;
+    let game = current.getElementsByClassName("tdCustomer1")[1].textContent;
+    let platform = current.getElementsByClassName("tdCustomer1")[2].textContent;
+    let annoUscita = current.getElementsByClassName("tdCustomer1")[3].textContent;
+    let stato = current.getElementsByClassName("tdCustomer1")[4].textContent;
+    let condizioni = current.getElementsByClassName("tdCustomer1")[5].textContent;
+    let etaMinima = current.getElementsByClassName("tdCustomer1")[6].textContent;
+    let peso = current.getElementsByClassName("tdCustomer1")[7].textContent;
+    let numGiocatori = current.getElementsByClassName("tdCustomer1")[8].textContent;
+    let prezzo = current.getElementsByClassName("tdCustomer1")[9].textContent;
+    let quantita = current.getElementsByClassName("tdCustomer1")[10].textContent;
     let modal = document.getElementById("modificaOggettoModal");
     let data = modal.getElementsByClassName("form-control");
     data[0].value = img;
@@ -394,7 +394,7 @@ var oldUser = NULL;
     data[8].value = numGiocatori;
     data[9].value = prezzo;
     data[10].value = quantita;
-    oldObject = current.getElementsByClassName("tdCustomer")[2].textContent;
+    oldObject = current.getElementsByClassName("tdCustomer1")[11].textContent;
     
     //console.log(current.getElementsByClassName("tdCustomer")[2].textContent);
     //console.log(oldObject)
@@ -413,7 +413,7 @@ var oldUser = NULL;
      console.log(oldObject)
 
     if(
-      //formData[0].value != " " &&
+      formData[0].value != " " &&
       formData[1].value != " " &&
       formData[2].value != " " &&
       formData[3].value != " " &&
@@ -436,18 +436,13 @@ var oldUser = NULL;
         contentType: "application/x-www-form-urlencoded",
         success: function(data){
 
-         
-         
-          console.log(data)
-
           if(data){
-
             document.getElementById("alert-body").textContent = "Titolo modificato con successo"
             $("#flash-modal").modal("show");
             $("#modObjectForm").trigger("reset");
             $("#modificaOggettoModal").modal("hide");
-            console.log("Titolo modificato");
-            findClienti();
+            console.log("Utente modificato");
+            getGames();
           }
           else{
 
@@ -464,4 +459,28 @@ var oldUser = NULL;
       $("#flash-modal").modal("show");
       console.log("err")
     }
+  }
+
+
+                                              // RIMUOVE IL SINGOLO OGGETTO
+
+  function delObject(){ 
+
+        $.ajax({
+          url: "/db/deleteObject",
+          type: "DELETE",
+          data: { oldObject },
+          dataType: "json",
+          contentType: "application/x-www-form-urlencoded",
+          success: function(data){
+          },
+        });
+
+        document.getElementById("alert-body").textContent = "Titolo rimosso con successo"
+        $("#flash-modal").modal("show");
+        $("#modObjectForm").trigger("reset");
+        $("#modificaOggettoModal").modal("hide");
+        console.log("Utente modificato");
+        getGames();
+    
   }
