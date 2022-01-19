@@ -188,8 +188,8 @@
                   <option value="PC">PC</option>
                   <option value="Xbox One">Xbox One</option>
                   <option value="Xbox Serie X/S">Xbox Serie X/S</option>
-                  <option value="Playstation 4">PS4</option>
-                  <option value="Playstation 5">PS5</option>
+                  <option value="Playstation 4">Playstation 4</option>
+                  <option value="Playstation 5">Playstation 5</option>
            </select>
         </div>
         <div class="mb-3">
@@ -270,7 +270,10 @@
         <h5 class="modal-title" id="addObject">MODIFICA TITOLO</h5>
       </div>
       <div class="modal-body">
-        <form  method="POST" action="/db/updateObject" id="modObjectForm">
+        <div id="content-3">
+          <div id="modificaOggettiBody">
+
+        <form method="POST" action="/db/updateObject" id="modObjectForm">
         <div class="mb-3">
           <div class="input-group mb-3">
             <label class="input-group-text" for="img">IMMAGINE</label>
@@ -283,13 +286,13 @@
         </div>
         <div class="mb-3">
           <label class="formGroupExampleInput" for="platform">PIATTAFORMA</label>
-            <select class="form-select" id="platform" name="platform">
-                  <option selected>Scegli...</option>
+            <select class="form-control" id="platform" name="platform">
+      
                   <option value="PC">PC</option>
                   <option value="Xbox One">Xbox One</option>
                   <option value="Xbox Serie X/S">Xbox Serie X/S</option>
-                  <option value="Playstation 4">PS4</option>
-                  <option value="Playstation 5">PS5</option>
+                  <option value="Playstation 4">Playstation 4</option>
+                  <option value="Playstation 5">Playstation 5</option>
            </select>
         </div>
         <div class="mb-3">
@@ -298,16 +301,16 @@
         </div>
         <div class="mb-3">
           <label class="formGroupExampleInput" for="stato">STATO</label>
-            <select class="form-select" id="stato" name="stato">
-                  <option selected>Scegli...</option>
+            <select class="form-control" id="stato" name="stato">
+                 
                   <option value="Nuovo">Nuovo</option>
                   <option value="Usato">Usato</option>
            </select>
         </div>
         <div class="mb-3">
           <label class="formGroupExampleInput" for="condizioni">CONDIZIONI</label>
-            <select class="form-select" id="condizioni" name="condizioni">
-                  <option selected>Scegli...</option>
+            <select class="form-control" id="condizioni" name="condizioni">
+                 
                   <option value="Ottima">Ottima</option>
                   <option value="Buona">Buona</option>
                   <option value="Discreta">Discreta</option>
@@ -332,13 +335,14 @@
         <div class="mb-3">
           <label for="quantita" class="form-label">QUANTIT&Agrave;</label>
           <input type="text" class="form-control" id="quantita" name="quantita" placeholder="quantit&agrave; ...">
-        </div>
-        
+        </div>      
         <div class="mb-3">
           <input type="submit" class="btn btn-primary" value="Modifica oggetto" onclick="modObject()"> 
         </div>
       </form>
     </div>   
+        </div>
+      </div>
       <div class="modal-footer">  
         <button type="button" id="closeModal2" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#vediInventarioModal" onclick="visualizzaInventario(); getGames()"> Chiudi </button>      
       </div>  

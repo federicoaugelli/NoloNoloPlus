@@ -13,7 +13,6 @@ const gameSchema = new Schema({
     peso  : { type: String, required:false },
     numGiocatori  : { type: String, required:false },
     prezzo  : { type: String, required:false },
-    disponibilita  : { type: String, required:false },
     quantita  : { type: String, required:false },
     img  : { type: String, required:false }
 });

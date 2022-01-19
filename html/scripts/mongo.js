@@ -21,8 +21,8 @@ Copyright (c) 2021 by Fabio Vitali
 
 */
 
-//let fn = "/public/data/dipendenti.json"
-let fn = "/public/data/oggetti.json"
+let fn = "/public/data/dipendenti.json"
+//let fn = "/public/data/oggetti.json"
 let dbname = "site202127"
 let collection ="registrodipendenti"
 let fieldname = "persone"
@@ -63,20 +63,20 @@ exports.create = async function(credentials) {
 
 		debug.push(`Trying to read file '${fn}'... `)
 		//let doc = await fs.readFile('C:/Users/matte/Documents/GitHub/site202127/html/public/data/dipendenti.json', 'utf8')
-		let doc = await fs.readFile('/Users/frederick/Documents/IT/Web Programming/site202127/html/public/data/oggetti.json', 'utf8')
-		//let doc = await fs.readFile(global.rootDir + fn, 'utf8')
+		//let doc = await fs.readFile('/Users/frederick/Documents/IT/Web Programming/site202127/html/public/data/oggetti.json', 'utf8')
+		let doc = await fs.readFile(global.rootDir + fn, 'utf8')
 		let data = JSON.parse(doc)
 		debug.push(`... read ${data.length} records successfully. `)
 
 		debug.push(`Trying to remove all records in table '${dbname}'... `)
 		let cleared = await mongo.db(dbname)
-					.collection(collection2)
+					.collection(collection)
 					.deleteMany()
 		debug.push(`... ${cleared?.deletedCount || 0 } records deleted.`)
 					
 		debug.push(`Trying to add ${data.length} new records... `)
 		let added = await mongo.db(dbname)
-					.collection(collection2)
+					.collection(collection)
 		 			.insertMany(data);	
 		debug.push(`... ${added?.insertedCount || 0} records added.`)
 
@@ -236,12 +236,13 @@ exports.findClienti = async function (credentials) {
   };
 
 
-  exports.deleteUser = async function(oldUser, credentials){
+
+  exports.updateUser = async function(oldUser, newUser, credentials){
 
 	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
 
 	let debug = [];
-	try{
+    try{
 
 		debug.push('trying to connect MongoDB');
 		const mongo = new MongoClient(mongouri);
@@ -250,21 +251,44 @@ exports.findClienti = async function (credentials) {
 		let ObjectId = require('mongodb').ObjectId;
 		var myquery = {
 
-			id: ObjectId(oldUser)
+			_id: ObjectId(oldUser)
+			
 		};
-		let removed = await mongo
-		                .db(dbname)
-						.collection(collection1)
-	    await mongo.close();
-		debug.push("Managed to close connection to MongoDB.");
+
+		var newValues = {
+			$set:{
+
+			nome: newUser[0].value,
+			cognome: newUser[1].value,
+			username: newUser[2].value,
+			citta: newUser[3].value,
+			via: newUser[4].value,
+			punti: newUser[5].value
+		},
+	};
+	let updated = mongo
+	                .db(dbname)
+					.collection(collection1)
+					.updateOne(myquery, newValues);
+	
+	let updatedFlag = false
+	if(updated.result.ok > 0) {
+
+		updatedFlag = true
+		
 	}
+	debug.push("Managed to close connection to MongoDB.");
+	await mongo.close();
+	return(updatedFlag);
+    }
 	catch(e){
 
 		return e;
-	}
+	}  
   };
 
 
+  
   exports.updateObject = async function(oldObject, newObject, credentials){
 
 	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
@@ -322,12 +346,13 @@ exports.findClienti = async function (credentials) {
 
 
   
-  exports.updateUser = async function(oldUser, newUser, credentials){
+
+  exports.deleteUser = async function(oldUser, credentials){
 
 	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
 
 	let debug = [];
-    try{
+	try{
 
 		debug.push('trying to connect MongoDB');
 		const mongo = new MongoClient(mongouri);
@@ -336,40 +361,18 @@ exports.findClienti = async function (credentials) {
 		let ObjectId = require('mongodb').ObjectId;
 		var myquery = {
 
-			_id: ObjectId(oldUser)
-			
+			id: ObjectId(oldUser)
 		};
-
-		var newValues = {
-			$set:{
-
-			nome: newUser[0].value,
-			cognome: newUser[1].value,
-			username: newUser[2].value,
-			citta: newUser[3].value,
-			via: newUser[4].value,
-			punti: newUser[5].value
-		},
-	};
-	let updated = mongo
-	                .db(dbname)
-					.collection(collection1)
-					.updateOne(myquery, newValues);
-	
-	let updatedFlag = false
-	if(updated.result.ok > 0) {
-
-		updatedFlag = true
-		
+		let removed = await mongo
+		                .db(dbname)
+						.collection(collection1)
+	    await mongo.close();
+		debug.push("Managed to close connection to MongoDB.");
 	}
-	debug.push("Managed to close connection to MongoDB.");
-	await mongo.close();
-	return(updatedFlag);
-    }
 	catch(e){
 
 		return e;
-	}  
+	}
   };
   
 

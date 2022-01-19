@@ -3,7 +3,7 @@ const router = express.Router();
 const Bcrypt = require("bcryptjs");
 
 
-//                      REGISTRAZIONE NUOVO CLIENTE IN MONGO
+//                      REGISTRAZIONE NUOVO CLIENTE
 
 
 const registroclienti = require('../model/clientiModel.js');

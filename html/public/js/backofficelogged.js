@@ -253,7 +253,7 @@ var oldUser = NULL;
       contentType: "application/x-www-form-urlencoded",
       success: function (g) {
            creaTabellaInventario(g);
-           console.log(g.result);
+           //console.log(g.result);
       },
     });
   }
@@ -326,7 +326,7 @@ var oldUser = NULL;
     </td>`;
    
    tbody.appendChild(tr);
-   console.log(d.result)
+   console.log(d.result[i])
    }    
    }
 
@@ -395,6 +395,9 @@ var oldUser = NULL;
     data[9].value = prezzo;
     data[10].value = quantita;
     oldObject = current.getElementsByClassName("tdCustomer")[2].textContent;
+    
+    //console.log(current.getElementsByClassName("tdCustomer")[2].textContent);
+    //console.log(oldObject)
   }
 
 
@@ -406,8 +409,11 @@ var oldUser = NULL;
 
     var formData = $("#modObjectForm").serializeArray();
 
+     console.log(formData)
+     console.log(oldObject)
+
     if(
-      formData[0].value != " " &&
+      //formData[0].value != " " &&
       formData[1].value != " " &&
       formData[2].value != " " &&
       formData[3].value != " " &&
@@ -430,8 +436,8 @@ var oldUser = NULL;
         contentType: "application/x-www-form-urlencoded",
         success: function(data){
 
-          console.log(oldObject)
-          console.log(formData)
+         
+         
           console.log(data)
 
           if(data){
