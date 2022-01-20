@@ -138,12 +138,15 @@
       </div>
     </nav>
 
-    <div class="filterBar">
-      <button class="btn btn-light" type="button" @click="filterPrice()">Gratis</button>
-      <button class="btn btn-light" type="button" @click="">ps5</button>
-      <button class="btn btn-light" type="button" @click="">ps4</button>
-      <button class="btn btn-light" type="button" @click="">Xbox</button>
-      <button class="btn btn-light" type="button" @click="">Pc</button>
+    <div class="btn-group filterBar">
+      <button v-if="searchQuery != ''" class="btn btn-danger" type="button" v-on:click="searchQuery = ''">Elimina filtro</button>
+      <button class="btn btn-light active" :class="{ active: searchQuery == 'Playstation 5' }" type="button" v-on:click="searchQuery = 'Playstation 5'">ps5</button>
+      <button class="btn btn-light" type="button" v-on:click="searchQuery = 'Playstation 4'">ps4</button>
+      <button class="btn btn-light" type="button" v-on:click="searchQuery = 'Xbox One'">Xbox</button>
+      <button class="btn btn-light" type="button" v-on:click="searchQuery = 'Nintendo'">Nintendo</button>
+      <button class="btn btn-light" type="button" v-on:click="searchQuery = 'Pc'">Pc</button>
+      <button class="btn btn-light" type="button" v-on:click="searchQuery = 'Nuovo'">Nuovi</button>
+      <button class="btn btn-light" type="button" @click="">Disponibili</button>
     </div>
 
   <!-- TABELLA FINALE -->
@@ -152,11 +155,12 @@
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
         <div class="col" v-for="item in resultQuery" :key="item.game">
+          <!-- implementare card 'Nessun elemento' -->
           <div class="card shadow-sm gameCard" style="text-align: center;">
             <div class="pegi">PEGI {{ item.etaMinima }}</div>
-            <img v-if="item.platform == 'ps4'" class="platform-logo playstation" src="/img/playstation-brands.svg" alt="Card image1">
-            <img v-else-if="item.platform == 'Xbox one X'" class="platform-logo xbox" src="/img/xbox-brands.svg" alt="Card image1">
-            <img v-else-if="item.platform == 'pc'" class="platform-logo pc" src="/img/laptop-solid.svg" alt="Card image1">
+            <img v-if="item.platform == 'Playstation 4' || item.platform == 'Playstation 5'" class="platform-logo playstation" src="/img/playstation-brands.svg" alt="Card image1">
+            <img v-else-if="item.platform == 'Xbox One'" class="platform-logo xbox" src="/img/xbox-brands.svg" alt="Card image1">
+            <img v-else-if="item.platform == 'PC'" class="platform-logo pc" src="/img/laptop-solid.svg" alt="Card image1">
             <div v-else class="platform-logo nintendo">Nintendo</div>
             <img class="card-img-top" src="/img/prova1.png" alt="Card image1">
             <div class="card-body">
@@ -170,8 +174,7 @@
                 <span></span>
                 Noleggia
               </a>
-              <h6 v-if="item.prezzo != 'Gratis'" style="color: white; margin-top: 10px;">{{ item.prezzo }}€ al giorno</h6>
-              <h6 v-else style="color: white; margin-top: 10px;">{{ item.prezzo }}</h6>
+              <h6 style="color: white; margin-top: 10px;">{{ item.prezzo }}€ al giorno</h6>
             </div>
             <div class="card-footer">
               <small class="text-muted" style="position: absolute; right: 0; margin-right: 10px;">{{ item.annoUscita }}</small>
@@ -213,7 +216,7 @@
   </div>
 
 
-    <!--  LISTA PAGINE  -->
+    <!--  LISTA PAGINE
     <nav aria-labelledby="lista-pagine" class="my-5">
       <ul class="pagination justify-content-center" style="margin:20px">
         <li class="page-item"><a class="page-link" aria-current="" href="#">Precedente</a></li></li>
@@ -222,7 +225,8 @@
         <li class="page-item"><a class="page-link" aria-current="" href="#">3</a></li></li>
         <li class="page-item"><a class="page-link" aria-current="" href="#">Successiva</a></li></li>
      </ul>
-   </nav>
+    </nav>
+    -->
 
  </div>
 
@@ -241,31 +245,51 @@
         axios
           .get('/db/getGames')
           .then(response => (this.items = response.data.result))
-/*
-        const it = this.items;
-        console.log([...new Set(this.items.map(i=>i.game))])
-*/
       },
 
       computed: {
         resultQuery(){
-          if(this.searchQuery){
+          if(this.searchQuery !== "" && this.searchQuery !== "Nuovo" && this.searchQuery !== "Playstation 5" && this.searchQuery !== "Playstation 4" && this.searchQuery !== "pc" && this.searchQuery !== "Nintendo"){
             return this.items.filter((gg)=>{
               return this.searchQuery.toLowerCase().split(' ').every(v => gg.game.toLowerCase().includes(v))
             })
-          }else{
+          }
+          else if (this.searchQuery == "Nuovo"){
+            return this.items.filter((gg)=>{
+              return this.searchQuery.toLowerCase().split(' ').every(v => gg.stato.toLowerCase().includes(v))
+            })
+          }
+          else if (this.searchQuery == "Playstation 5"){
+            return this.items.filter((gg)=>{
+              return this.searchQuery.toLowerCase().split(' ').every(v => gg.platform.toLowerCase().includes(v))
+            })
+          }
+          else if (this.searchQuery == "Playstation 4"){
+            return this.items.filter((gg)=>{
+              return this.searchQuery.toLowerCase().split(' ').every(v => gg.platform.toLowerCase().includes(v))
+            })
+          }
+          else if (this.searchQuery == "Nintendo"){
+            return this.items.filter((gg)=>{
+              return this.searchQuery.toLowerCase().split(' ').every(v => gg.platform.toLowerCase().includes(v))
+            })
+          }
+          else if (this.searchQuery == "Pc"){
+            return this.items.filter((gg)=>{
+              return this.searchQuery.toLowerCase().split(' ').every(v => gg.platform.toLowerCase().includes(v))
+            })
+          }
+          else if (this.searchQuery == "Playstation 5"){
+            return this.items.filter((gg)=>{
+              return this.searchQuery.toLowerCase().split(' ').every(v => gg.platform.toLowerCase().includes(v))
+            })
+          }
+          else{
             return this.items;
           }
         }
-      },
 
-      methods: {
-        /*
-        filterPrice(){
-          return this.items.filter(x => x.prezzo == 'Gratis')
-        }
-        */
-      }
+      },
     })
 
 /*
