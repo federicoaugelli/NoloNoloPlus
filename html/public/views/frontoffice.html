@@ -155,7 +155,7 @@
               <h4 class="card-title" style="color: white;">{{ item.game }}</h4>
               <!--
               <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#card-modal">Noleggia</a>-->
-              <a data-bs-toggle="modal" data-bs-target="#card-modal" class="rentbtn" v-on:click="popoModal(item)">
+              <a data-bs-toggle="modal" data-bs-target="#card-modal" class="rentbtn" v-on:click="popoModal(item)"true>
                 <span></span>
                 <span></span>
                 <span></span>
@@ -193,7 +193,7 @@
         </div>
         <div class="modal-footer">
           <p class="me-auto">costo: {{ modalItem.prezzo }}€</p>
-          <button type="button" class="btn btn-primary" v-on:click="calculateDate">Noleggia</button>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Accedi per noleggiare</button>
         </div>
       </div>
     </div>
@@ -251,8 +251,8 @@
 
         calculateDate(){
           //console.log(this.datediff(this.parseDate(this.startDate.value), this.parseDate(this.endDate.value)));
-          var mdyOne = this.startDate.split(' ');
-          var mdyTwo = this.endDate.split('/');
+          var mdyOne = this.startDate.split('-');
+          var mdyTwo = this.endDate.split('-');
           console.log(mdyOne);
         }
       },
