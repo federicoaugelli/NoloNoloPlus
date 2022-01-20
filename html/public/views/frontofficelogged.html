@@ -28,8 +28,77 @@
   <div id="app">
 
 
+<<<<<<< Updated upstream
   
   <!-- Modal cards 
+=======
+  <!-- The Modal -->
+  <div class="modal fade" id="myModal">
+     <div class="modal-dialog modal-dialog-centered">
+       <div class="modal-content">
+    <!-- Modal Header 
+       <div class="modal-header">
+         <h4 class="modal-title">Log in</h4>
+           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+       </div> -->
+    <!-- Modal body -->
+       <div class="modal-body p-0">
+        
+        <div class="row">
+          <div class="">
+            <div class="card">
+              <div class="login-box">
+                <div class="login-snip"> 
+                  <input id="tab-1" type="radio" name="tab" class="sign-in" checked>
+                  <label for="tab-1" class="tab">Accedi</label> 
+                  <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Registrati</label>
+                  <div class="login-space">
+                    <div class="login">
+                      <form action="/docs/frontend" method="POST">
+                      <div class="group"> <label for="username" class="label">Username</label> <input id="username" type="text" name="username" class="input" placeholder="Inserisci il tuo username"> </div>
+                      <div class="group"> <label for="password" class="label">Password</label> <input id="password" type="password" name="password" class="input" data-type="password" placeholder="Inserisci la tua password"> </div>
+                      <div class="group"> <input type="submit" class="button" value="Accedi"> </div>
+                      <div class="hr"></div>
+                    </div>
+                  </form>
+                    <div class="sign-up-form">
+                      <form action="/frontendregister" method="POST">
+                      <div class="group"> <label for="nome" class="label">Nome</label> <input id="nome" type="text" name="nome" class="input" placeholder="Inserisci il tuo nome"> </div>
+                      <div class="group"> <label for="cognome" class="label">Cognome</label> <input id="cognome" type="text" name="cognome" class="input" placeholder="Inserisci il tuo cognome"> </div>
+                      <div class="group"> <label for="username" class="label">Username</label> <input id="username" type="text" name="username" class="input" placeholder="Crea il tuo Username"> </div>
+                      <div class="group"> <label for="password" class="label">Password</label> <input id="password" type="password" name="password" class="input" data-type="password" placeholder="Crea nuova password"> </div>
+                      <div class="row g-3">
+                        <div class="col-sm-8">
+                      <div class="group"><label for="via" class="label">Via</label> <input id="via" type="text" name="via" class="input" placeholder=" Via, Numero "> </div>
+                        </div>
+                        <div class="col-sm-4">
+                          <div class="group"><label for="citta" class="label"> Citt&agrave;</label> <input id="citta" type="text" name="citta" class="input" placeholder=" Città "> </div>
+                        </div>
+                      </div>
+                      <div class="group"> <input type="submit" class="button" value="Registrati"> </div>
+                      <div class="hr"></div>
+                      <div class="foot"> <label for="tab-1">Already Member?</label> </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+       </div>
+    <!-- Modal footer
+       <div class="modal-footer">
+         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+       </div> -->
+       </div>
+     </div> 
+  </div> 
+  <!-- Fine The Modal -->
+
+
+  <!-- Modal cards
+>>>>>>> Stashed changes
   <div class="modal fade" id="card-modal" tabindex="-1" aria-labelledby="card-modalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -83,7 +152,7 @@
       <button class="btn btn-light" type="button" v-on:click="searchQuery = 'Nintendo'">Nintendo</button>
       <button class="btn btn-light" type="button" v-on:click="searchQuery = 'Pc'">Pc</button>
       <button class="btn btn-light" type="button" v-on:click="searchQuery = 'Nuovo'">Nuovi</button>
-      <button class="btn btn-light" type="button" @click="">Disponibili</button>
+      <button class="btn btn-light" type="button" v-on:click="">Disponibili</button>
     </div>
 
   <!-- TABELLA FINALE -->
@@ -104,7 +173,7 @@
               <h4 class="card-title" style="color: white;">{{ item.game }}</h4>
               <!--
               <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#card-modal">Noleggia</a>-->
-              <a data-bs-toggle="modal" data-bs-target="#card-modal" class="rentbtn">
+              <a data-bs-toggle="modal" data-bs-target="#card-modal" class="rentbtn" v-on:click="popoModal(item)">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -117,37 +186,34 @@
               <small class="text-muted" style="position: absolute; right: 0; margin-right: 10px;">{{ item.annoUscita }}</small>
               <small class="text-muted">in {{ item.condizioni }} condizioni</small>
             </div>
+          </div>
+        </div>
 
+      </div>
+    </div>
+  </div>
 
-  <div class="modal fade" id="card-modal" tabindex="-1" aria-labelledby="card-modalLabel" aria-hidden="true">
+    <!-- modal finale -->
+   <div class="modal fade" id="card-modal" tabindex="-1" aria-labelledby="card-modalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">{{ item.game }} per {{ item.platform }}</h5>
+          <h5 class="modal-title" id="exampleModalLabel">{{ modalItem.game }} per {{ modalItem.platform }}</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <div class="card-body">
             <label for="startRent">Da:</label>
-            <input type="date" id="startRent" name="startRent">
+            <input type="date" id="startRent" name="startRent" v-model="startDate">
 
             <label for="finishRent">A:</label>
-            <input type="date" id="finishRent" name="finishRent">
+            <input type="date" id="finishRent" name="finishRent" v-model="endDate">
           </div>
         </div>
         <div class="modal-footer">
-          <p class="me-auto">costo: $</p>
-          <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button> -->
-          <button type="button" class="btn btn-primary" disabled>Noleggia</button>
+          <p class="me-auto">costo: {{ modalItem.prezzo }}€</p>
+          <button type="button" class="btn btn-primary" v-on:click="calculateDate">Noleggia</button>
         </div>
-      </div>
-    </div>
-  </div>
-
-
-          </div>
-        </div>
-
       </div>
     </div>
   </div>
@@ -174,7 +240,11 @@
       data () {
         return {
           searchQuery: '',
-          items: ''
+          items: '',
+          modalItem: '',
+          startDate: '',
+          endDate: '',
+          showModal: false
         }
       },
 
@@ -225,7 +295,27 @@
             return this.items;
           }
         }
+      },
+      methods: {
+        popoModal(item){
+          this.modalItem = item;
+        },
 
+        parseDate(date){
+          var mdy = date.split('/');
+          return new Date(mdy[2], mdy[0]-1, mdy[1]);
+        },
+
+        datediff(first, second) {
+          return Math.round((second-first)/(1000*60*60*24));
+        },
+
+        calculateDate(){
+          //console.log(this.datediff(this.parseDate(this.startDate.value), this.parseDate(this.endDate.value)));
+          var mdyOne = this.startDate.split(' ');
+          var mdyTwo = this.endDate.split('/');
+          console.log(mdyOne);
+        }
       },
     })
 

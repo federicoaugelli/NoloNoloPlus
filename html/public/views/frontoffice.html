@@ -142,7 +142,6 @@
   <div class="album py-5">
     <div class="container">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-
         <div class="col" v-for="item in resultQuery" :key="item.game">
           <!-- implementare card 'Nessun elemento' -->
           <div class="card shadow-sm gameCard" style="text-align: center;">
@@ -156,7 +155,7 @@
               <h4 class="card-title" style="color: white;">{{ item.game }}</h4>
               <!--
               <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#card-modal">Noleggia</a>-->
-              <a data-bs-toggle="modal" data-bs-target="#card-modal" class="rentbtn">
+              <a data-bs-toggle="modal" data-bs-target="#card-modal" class="rentbtn" v-on:click="popoModal(item)">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -169,40 +168,37 @@
               <small class="text-muted" style="position: absolute; right: 0; margin-right: 10px;">{{ item.annoUscita }}</small>
               <small class="text-muted">in {{ item.condizioni }} condizioni</small>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-
-  <div class="modal fade" id="card-modal" tabindex="-1" aria-labelledby="card-modalLabel" aria-hidden="true">
+      <!-- modal finale -->
+   <div class="modal fade" id="card-modal" tabindex="-1" aria-labelledby="card-modalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">{{ item.game }} per {{ item.platform }}</h5>
+          <h5 class="modal-title" id="exampleModalLabel">{{ modalItem.game }} per {{ modalItem.platform }}</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <div class="card-body">
             <label for="startRent">Da:</label>
-            <input type="date" id="startRent" name="startRent">
+            <input type="date" id="startRent" name="startRent" v-model="startDate">
 
             <label for="finishRent">A:</label>
-            <input type="date" id="finishRent" name="finishRent">
+            <input type="date" id="finishRent" name="finishRent" v-model="endDate">
           </div>
         </div>
         <div class="modal-footer">
-          <p class="me-auto">costo: $</p>
-          <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button> -->
-          <button type="button" class="btn btn-primary" disabled>Noleggia</button>
+          <p class="me-auto">costo: {{ modalItem.prezzo }}€</p>
+          <button type="button" class="btn btn-primary" v-on:click="calculateDate">Noleggia</button>
         </div>
       </div>
     </div>
   </div>
 
-
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
 
  </div>
 
@@ -213,7 +209,11 @@
       data () {
         return {
           searchQuery: '',
-          items: ''
+          items: '',
+          modalItem: '',
+          startDate: '',
+          endDate: '',
+          showModal: false
         }
       },
 
@@ -234,7 +234,27 @@
             return this.items;
           }
         }
+      },
+      methods: {
+        popoModal(item){
+          this.modalItem = item;
+        },
 
+        parseDate(date){
+          var mdy = date.split('/');
+          return new Date(mdy[2], mdy[0]-1, mdy[1]);
+        },
+
+        datediff(first, second) {
+          return Math.round((second-first)/(1000*60*60*24));
+        },
+
+        calculateDate(){
+          //console.log(this.datediff(this.parseDate(this.startDate.value), this.parseDate(this.endDate.value)));
+          var mdyOne = this.startDate.split(' ');
+          var mdyTwo = this.endDate.split('/');
+          console.log(mdyOne);
+        }
       },
     })
 
