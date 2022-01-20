@@ -320,7 +320,6 @@ exports.findClienti = async function (credentials) {
 			peso: newObject[7].value,
 			numGiocatori: newObject[8].value,
 			prezzo: newObject[9].value,
-			quantita: newObject[10].value,
 			
 		},
 	};

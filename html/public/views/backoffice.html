@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/login.css">
+    <link rel="stylesheet" type="text/css" href="/css/backoffice.css">
     <link rel="shortcut icon" href="#">
     <script src="//code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>	
     <script type="text/javascript" src="/js/backoffice.js"></script>
@@ -188,6 +189,44 @@
 
 
 
+                                                                                             <!-- CARD LIST -->
+                                                   
+
+
+
+ <div class="album py-5">
+  <div class="container">
+    <div id="card-list" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+   
+  <!-- 
+   <div class="col">
+     <div class="card shadow-sm gameCard" style="text-align: center;">
+       <div id="pegi" class="card-pegi">PEGI</div>
+       <img id="image" src="..." class="card-img-top" alt="...">
+       <div class="card-body">
+         <h5 class="card-title">Card title</h5>
+         <a data-bs-toggle="modal" data-bs-target="#card-modal" class="rentbtn">
+           <span></span>
+           <span></span>
+           <span></span>
+           <span></span>
+           Noleggia
+         </a>
+         <h6 style="color: white; margin-top: 10px;"> € al giorno</h6>
+       </div>
+       <div class="card-footer">
+         <small class="text-muted" style="position: absolute; right: 0; margin-right: 10px;">anno uscita</small>
+         <small class="text-muted">in  condizioni</small>
+       </div>
+     </div>
+   </div>
+
+
+
+   -->
+ </div>
+ </div>
+</div>
 
 
 
@@ -199,40 +238,20 @@
 
 
 
+  
+<script>
+
+window.onload = function() {
+  getGames();
+};
+</script>
 
 
 
 
-
-
-
-
- 
-      <div class="col">
-        <div class="mx-auto">
-          <div class="card">
-            <img src="/img/prova1.png" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
 
 
       <p><a href="javascript:history.back()">Go back</a></p>
-
-
-    <button type="button" class="btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Aggiungi utenti">
-      <div style="position: absolute; bottom: 16px; right: 16px; font-size: 18px;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="3em" height="3em" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
-        </svg>
-      </div>
-    </button>
   </body>
 
 
