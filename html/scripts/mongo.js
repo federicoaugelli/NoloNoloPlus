@@ -63,8 +63,8 @@ exports.create = async function(credentials) {
 
 		debug.push(`Trying to read file '${fn}'... `)
 		//let doc = await fs.readFile('C:/Users/matte/Documents/GitHub/site202127/html/public/data/dipendenti.json', 'utf8')
-		let doc = await fs.readFile('/Users/frederick/Documents/IT/Web Programming/site202127/html/public/data/oggetti.json', 'utf8')
-		//let doc = await fs.readFile(global.rootDir + fn, 'utf8')
+		//let doc = await fs.readFile('/Users/frederick/Documents/IT/Web Programming/site202127/html/public/data/oggetti.json', 'utf8')
+		let doc = await fs.readFile(global.rootDir + fn, 'utf8')
 		let data = JSON.parse(doc)
 		debug.push(`... read ${data.length} records successfully. `)
 

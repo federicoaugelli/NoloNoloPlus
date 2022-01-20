@@ -132,22 +132,11 @@
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">            
               <!-- Modal button-->
-              <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#myModal">Accedi</button>  
+              <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#myModal">Esci</button>  
             </li>
           </ul> 
       </div>
     </nav>
-
-    <div class="btn-group filterBar">
-      <button v-if="searchQuery != ''" class="btn btn-danger" type="button" v-on:click="searchQuery = ''">Elimina filtro</button>
-      <button class="btn btn-light active" :class="{ active: searchQuery == 'Playstation 5' }" type="button" v-on:click="searchQuery = 'Playstation 5'">ps5</button>
-      <button class="btn btn-light" type="button" v-on:click="searchQuery = 'Playstation 4'">ps4</button>
-      <button class="btn btn-light" type="button" v-on:click="searchQuery = 'Xbox One'">Xbox</button>
-      <button class="btn btn-light" type="button" v-on:click="searchQuery = 'Nintendo'">Nintendo</button>
-      <button class="btn btn-light" type="button" v-on:click="searchQuery = 'Pc'">Pc</button>
-      <button class="btn btn-light" type="button" v-on:click="searchQuery = 'Nuovo'">Nuovi</button>
-      <button class="btn btn-light" type="button" @click="">Disponibili</button>
-    </div>
 
   <!-- TABELLA FINALE -->
   <div class="album py-5">
@@ -160,7 +149,7 @@
             <div class="pegi">PEGI {{ item.etaMinima }}</div>
             <img v-if="item.platform == 'Playstation 4' || item.platform == 'Playstation 5'" class="platform-logo playstation" src="/img/playstation-brands.svg" alt="Card image1">
             <img v-else-if="item.platform == 'Xbox One'" class="platform-logo xbox" src="/img/xbox-brands.svg" alt="Card image1">
-            <img v-else-if="item.platform == 'PC'" class="platform-logo pc" src="/img/laptop-solid.svg" alt="Card image1">
+            <img v-else-if="item.platform == 'Pc'" class="platform-logo pc" src="/img/laptop-solid.svg" alt="Card image1">
             <div v-else class="platform-logo nintendo">Nintendo</div>
             <img class="card-img-top" src="/img/prova1.png" alt="Card image1">
             <div class="card-body">
@@ -215,19 +204,6 @@
     </div>
   </div>
 
-
-    <!--  LISTA PAGINE
-    <nav aria-labelledby="lista-pagine" class="my-5">
-      <ul class="pagination justify-content-center" style="margin:20px">
-        <li class="page-item"><a class="page-link" aria-current="" href="#">Precedente</a></li></li>
-        <li class="page-item"><a class="page-link" aria-current="" href="#">1</a></li></li>
-        <li class="page-item"><a class="page-link" aria-current="" href="#">2</a></li></li>
-        <li class="page-item"><a class="page-link" aria-current="" href="#">3</a></li></li>
-        <li class="page-item"><a class="page-link" aria-current="" href="#">Successiva</a></li></li>
-     </ul>
-    </nav>
-    -->
-
  </div>
 
   <script type="text/javascript">
@@ -249,39 +225,9 @@
 
       computed: {
         resultQuery(){
-          if(this.searchQuery !== "" && this.searchQuery !== "Nuovo" && this.searchQuery !== "Playstation 5" && this.searchQuery !== "Playstation 4" && this.searchQuery !== "pc" && this.searchQuery !== "Nintendo"){
+          if(this.searchQuery){
             return this.items.filter((gg)=>{
               return this.searchQuery.toLowerCase().split(' ').every(v => gg.game.toLowerCase().includes(v))
-            })
-          }
-          else if (this.searchQuery == "Nuovo"){
-            return this.items.filter((gg)=>{
-              return this.searchQuery.toLowerCase().split(' ').every(v => gg.stato.toLowerCase().includes(v))
-            })
-          }
-          else if (this.searchQuery == "Playstation 5"){
-            return this.items.filter((gg)=>{
-              return this.searchQuery.toLowerCase().split(' ').every(v => gg.platform.toLowerCase().includes(v))
-            })
-          }
-          else if (this.searchQuery == "Playstation 4"){
-            return this.items.filter((gg)=>{
-              return this.searchQuery.toLowerCase().split(' ').every(v => gg.platform.toLowerCase().includes(v))
-            })
-          }
-          else if (this.searchQuery == "Nintendo"){
-            return this.items.filter((gg)=>{
-              return this.searchQuery.toLowerCase().split(' ').every(v => gg.platform.toLowerCase().includes(v))
-            })
-          }
-          else if (this.searchQuery == "Pc"){
-            return this.items.filter((gg)=>{
-              return this.searchQuery.toLowerCase().split(' ').every(v => gg.platform.toLowerCase().includes(v))
-            })
-          }
-          else if (this.searchQuery == "Playstation 5"){
-            return this.items.filter((gg)=>{
-              return this.searchQuery.toLowerCase().split(' ').every(v => gg.platform.toLowerCase().includes(v))
             })
           }
           else{
@@ -291,12 +237,6 @@
 
       },
     })
-
-/*
-  Implementare il modal con il prezzo moltiplicato per i giorni (non loggati)
-  implementare i filtri per i loggati
-  implementare le altre cose per i loggati
-*/
 
   </script>
 </div>
