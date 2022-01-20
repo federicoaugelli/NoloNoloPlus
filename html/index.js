@@ -146,11 +146,6 @@ app.get('/db/search', async function(req, res) {
 });
 
 app.get('/db/findClienti', async function(req, res) { 
-	/*let name = req.body.cookie
-	if (session[name].logged) {
-		res.send(await mymongo.findClienti(mongoCredentials))
-	}
-	*/
 	res.send(await mymongo.findClienti(mongoCredentials))
 });
 
@@ -159,32 +154,26 @@ app.get('/db/getGames', async function(req, res) {
 });
 
 app.post('/db/updateUser', async function(req, res) {
-
 	let oldUser = req.body.oldUser
 	let newUser = req.body.formData
-
 	res.send(await mymongo.updateUser(oldUser,newUser,mongoCredentials))
 });
 
 
 app.post('/db/updateObject', async function(req, res) {
-
 	let oldObject = req.body.oldObject
 	let newObject = req.body.formData
-
 	res.send(await mymongo.updateObject(oldObject,newObject,mongoCredentials))
 });
 
 
 app.delete('/db/deleteUser', async function(req, res) {
-
 	let oldUser = req.body.oldUser	
 	res.send(await mymongo.deleteUser(oldUser,mongoCredentials))
 });
 
 
 app.delete('/db/deleteObject', async function(req, res) {
-
 	let oldObject = req.body.oldObject	
 	res.send(await mymongo.deleteObject(oldObject,mongoCredentials))
 });
@@ -198,7 +187,8 @@ app.delete('/db/deleteObject', async function(req, res) {
 
 const session = require('express-session');
 const passport = require('passport');
-const checkUserLogin = require('./app/middleware/check-user-login');
+//const checkUserLogin = require('./app/middleware/check-user-login');
+
 
 //    router
 const loginRouter = require('./app/routes/login.js');
@@ -230,7 +220,8 @@ app.use(passport.session());
 
 app.use(loginRouter);
 app.use(registerRouter);
-app.use('/user', checkUserLogin(), userRouter);
+app.use('/user'/*, checkUserLogin()*/, userRouter);
+//app.use('/user1', checkUserLogin1(), userRouter1);
 
 
 

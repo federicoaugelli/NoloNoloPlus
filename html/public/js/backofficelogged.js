@@ -5,9 +5,7 @@
                                                                             /*                            */
                                                                             /* ========================== */                                               
                                                
-                                               
-                                               
-                                               
+                                                                                                                            
                                                // CHIAMATA AJAX RITORNA TUTTI I CLIENTI
 function findClienti() {
     // let cookie = getCookie("SessionCookie")

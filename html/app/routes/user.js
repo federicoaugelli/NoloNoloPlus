@@ -25,4 +25,12 @@ router.get('/backendlogged', (req, res) => {
 	res.sendFile(path.join(__dirname+'/../../public/views/backofficelogged.html'));
 });
 
+
+
+router.get('/frontendlogged', (req, res) => { 
+     
+	res.sendFile(path.join(__dirname+'/../../public/views/frontofficelogged.html'));
+});
+
+
 module.exports = router;
