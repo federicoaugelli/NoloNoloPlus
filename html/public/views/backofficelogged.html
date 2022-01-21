@@ -1,4 +1,4 @@
-<html>
+<html lang="it">
   <head>
     
     <title>Backoffice logged</title>
@@ -355,7 +355,7 @@
 
                                                  <!-- NAVBAR -->
 
-<nav class="navbar navbar-dark bg-dark">
+<nav class="navbar navbar-dark bg-dark sticky-top">
   <div class="container-fluid">
     <div class="navbar-brand ml-auto">      
       <div class="btn-group">
@@ -364,6 +364,7 @@
           <span class="visually-hidden">Toggle Dropdown</span>
         </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            
              <li class="nav-item">
               <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#anagraficaClientiModal" onclick="visualizzaClienti(); findClienti()/*; getGames()*/">
                Anagrafica clienti
@@ -374,22 +375,18 @@
                 Modifica inventario
                </button>
              </li>
-             <li class="nav-item">
-              <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#exampleModalLong">
-                Gestione noleggi
-               </button>
-             </li>
+            
           </ul>
       </div>
     </div>
       <form class="d-flex w-50 bottom-0 my-auto">
-        <input class="form-control me-2" type="search" placeholder="Cerca" aria-label="Search">
+        <input class="form-control me-2" type="search" placeholder="Cerca" aria-label="inserisci la tua parola chiave di ricerca">
         <button class="btn btn-outline-light" type="submit">Cerca</button>
       </form>
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">   
           <a href="/backendlogout">
-            <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#myModal"> ESCI</button>  
+            <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#myModal" aria-label="Esci dal backoffice"> ESCI</button>  
           </a>                    
         </li>
       </ul> 

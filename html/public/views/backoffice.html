@@ -1,4 +1,4 @@
-<html>
+<html lang="it">
   <head>
     
     <title>Backoffice</title>
@@ -34,13 +34,13 @@
            <div class="card">
              <div class="login-box">
                <div class="login-snip"> 
-                 <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Login</label> <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+                 <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Accedi</label> <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
                  <div class="login-space">
                    <div class="login">
                      <form action="/docs/backend" method="POST" >
-                     <div class="group"> <label for="username" class="label">Username</label> <input id="user" type="text" name="username" class="input" placeholder="Enter your username" required> </div>
-                     <div class="group"> <label for="password" class="label">Password</label> <input id="pass" type="password" name="password" class="input" data-type="password" placeholder="Enter your password" required> </div>
-                     <div class="group"> <input type="submit" class="button" value="Sign In" > </div>
+                     <div class="group"> <label id="ariaUser" for="username" class="label">Username</label> <input id="user" type="text" name="username" class="input" placeholder="Inserisci il tuo username" aria-describedby="ariaUser" required> </div>
+                     <div class="group"> <label id="ariaPwd" for="password" class="label">Password</label> <input id="pass" type="password" name="password" class="input" data-type="password" placeholder="Inserisci la tua password" aria-describedby="ariaPwd" required> </div>
+                     <div class="group"> <input type="submit" class="button" value="Accedi" aria-label="Accedi al backoffice"> </div>
                      <div class="hr"></div>
                     </form>
                    </div>
@@ -66,12 +66,12 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="flash-modalLabel">ERROR</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title" id="flash-modalLabel">ERRORE</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi Finestra"></button>
       </div>
       <div class="modal-body">
         <div class="alert alert-primary d-flex align-items-center" role="alert">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Immagine di errore">
             <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
           </svg>
           <div>
@@ -80,7 +80,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" id="closeFlashModal" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" id="closeFlashModal" class="btn btn-secondary" aria-label="Chiudi Finestra" data-bs-dismiss="modal">Chiudi</button>
       </div>
     </div>
   </div>
@@ -126,11 +126,8 @@
       <div class="modal-body">
         <div id="content-2">
           <div id="modificaClientiBody">
-
-
           </div>
         </div>
-      
       </div>   
       <div class="modal-footer">  
         <button type="button" id="closeModal1" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#vediInventarioModal" onclick="visualizzaClienti(); findClienti()"> Chiudi </button>    
@@ -146,13 +143,13 @@
 
                                                    <!-- NAVBAR -->
 
-<nav class="navbar navbar-dark bg-dark">
+<nav class="navbar navbar-dark bg-dark sticky-top">
   <div class="container-fluid">
     <div class="navbar-brand ml-auto">      
-      <div class="btn-group">
+      <div class="btn-group" role="group">
         <button class="btn btn-dark btn-outline-light btn-lg" type="button"> NOLO-NOLO BACKOFFICE </button>
         <button type="button" class="btn btn-outline-light btn-lg btn-dark dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-          <span class="visually-hidden">Toggle Dropdown</span>
+          <span class="visually-hidden">Vedi Azioni</span>
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
           <li class="nav-item">
@@ -164,17 +161,12 @@
            <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#vediInventarioModal" onclick="visualizzaInventario(); getGames()">
              Inventario
             </button>
-          </li>
-          <li class="nav-item">
-           <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#exampleModalLong">
-            Gestione noleggi
-            </button>
-          </li>
+          </li>   
        </ul>
       </div>
     </div>
       <form class="d-flex w-50 bottom-0 my-auto">
-        <input class="form-control me-2" type="search" placeholder="Cerca" aria-label="Search">
+        <input class="form-control me-2" type="search" placeholder="Cerca" aria-label="inserisci la tua parola chiave di ricerca">
         <button class="btn btn-outline-light" type="submit">Cerca</button>
       </form>
       <ul class="navbar-nav mr-auto">
