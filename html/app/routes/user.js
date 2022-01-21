@@ -33,4 +33,10 @@ router.get('/frontendlogged', (req, res) => {
 });
 
 
+router.get('/dashboardlogged', (req, res) => { 
+     
+	res.sendFile(path.join(__dirname+'/../../public/views/dashboardlogged.html'));
+});
+
+
 module.exports = router;

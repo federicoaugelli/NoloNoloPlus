@@ -115,11 +115,11 @@ app.get('/docs/backend', async function(req, res) {
 });
 
 
-app.get('/dashboard-2', (req,res) => {
-    const html = '<h3><a href=/backendendlogout> Ti sei registrato come nuovo  utente. Effettua il logout</a></h3>';
-    res.send(html);
-    res.send('dashboard-2');
+app.get('/docs/dashboard', async function(req, res) { 
+	res.sendFile(path.join(__dirname+'/public/views/dashboard.html'));
 });
+
+
 
 
 /* ========================== */

@@ -3,6 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 const passportConfig = require('../../scripts/passport-config');
 const passportConfig2 = require('../../scripts/passport-config2');
+const passportConfig3 = require('../../scripts/passport-config3');
 
 
 //                                                                                 PROVA DASHBOARD
@@ -72,18 +73,45 @@ router.get('/docs/frontend', (req,res) => {
 
 
 
-// SE SONO AUTENTICATO VADO A USER/DASHBOARD SENNO MI RIMANDA AL LOGIN
+// SE SONO AUTENTICATO VADO A USER/FRONTENDLOGGED SENNO MI RIMANDA AL LOGIN
 router.post('/docs/frontend', passport.authenticate('local-login-cliente', {
     successRedirect: '/user/frontendlogged',
     failureRedirect: '/docs/frontend'
 })); 
 
 
-//               IL LOGOUT MI RIMANDA AL BACKEND
+//               IL LOGOUT MI RIMANDA AL FRONTEND
 router.get('/frontendlogout', (req,res) => {
     req.logOut();
     res.redirect('/docs/frontend');
 })
+
+
+
+
+//                                                                                        LOGIN DASHBOARD
+
+//              POSSO ACCEDERE ALLA ROTTA USER/DASHBOARD SOLO SE SONO AUTENTICATO
+router.get('/docs/dashboard', (req,res) => {
+    if(req.isAuthenticated()) return res.redirect('/user/dashboardlogged');
+    res.render('/docs/frontend');
+});
+
+
+
+// SE SONO AUTENTICATO VADO A USER/DASHBOARD SENNO MI RIMANDA AL DASHBOARD LOGIN
+router.post('/docs/dashboard', passport.authenticate('local-login-manager', {
+    successRedirect: '/user/dashboardlogged',
+    failureRedirect: '/docs/dashboard'
+})); 
+
+
+//               IL LOGOUT MI RIMANDA AL BACKEND
+router.get('/dashboardlogout', (req,res) => {
+    req.logOut();
+    res.redirect('/docs/dashboard');
+})
+
 
 
 

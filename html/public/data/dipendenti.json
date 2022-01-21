@@ -2,27 +2,47 @@
    {
     "username": "Simone",
     "password": "$2a$10$K5ODS.UQYV0WDNFR.xFV3.4sbO5PgIw0yh/rqG811nBeSYyvL0tdO",
-    "ruolo" : "manager"
+    "ruolo" : "Manager"
    },
    {
     "username": "Elia",
     "password": "$2a$10$mCEGCNpuksw1V4/hPOgFKeeMfqf82nCp5uRVpeE9BHpSKjQz6Drp6",
-    "ruolo" : "funzionario"
+    "ruolo" : "Funzionario"
    },
    {
     "username": "Federico",
     "password": "$2a$10$I3DEhQ0zp9.AsH9TVPiJLO5vprxE2RnMBUHxe2t3cQMNlBJJnngGS",
-    "ruolo" : "funzionario"
+    "ruolo" : "Funzionario"
    },
    {
     "username": "Antonio",
     "password": "$2a$10$Ulme5oX5uG/WuCz6B1sevuhnVnOWqv.pt79v9CjFd8ibr1SjlTPly",
-    "ruolo" : "funzionario"
+    "ruolo" : "Funzionario"
    },
+   {
+      "username": "Giuseppe",
+      "password": "$2a$10$BD7TVMjLhaBUNLi09V.x7O63YU0svEf2idg73LiNm/N4cMi2jO8O6",
+      "ruolo" : "Manager"
+     },
+     {
+      "username": "Ayoub",
+      "password": "$2a$10$ZmEjhF4JkxL4VWBOVd8gT.Xe/4G.VeQCBzM05DPwcBGKabFsHoOya",
+      "ruolo" : "Funzionario"
+     },
+     {
+      "username": "Marika",
+      "password": "$2a$10$F1LlZoC2RCMdRkW2Tb3mmuUUpVfSE3EQbH.4ZVFjJt5oqeOspx90C",
+      "ruolo" : "Funzionario"
+     },
+     {
+      "username": "Paolo",
+      "password": "$2a$10$dMUrgzrOs0lxKvwh6pfMzuSO0c2CqSZGw3ntijiCK20jQXYRY0LBu",
+      "ruolo" : "Funzionario"
+     },
    {
       "username": "Gaia",
       "password": "$2a$10$GY.EZgLXdlNJ9e0quyRx4enFFIIiHCl7zV4lzPuIX9WsorEBFhYca",
-      "ruolo" : "funzionario"
+      "ruolo" : "Manager"
      }
 ]
 
