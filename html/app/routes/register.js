@@ -10,7 +10,9 @@ const registroclienti = require('../model/clientiModel.js');
 
 
 router.post("/frontendregister", function(req, res){
-    try{
+    
+      try{  
+
         let newUser = new registroclienti({
             nome: req.body.nome,
             cognome: req.body.cognome,
@@ -18,17 +20,54 @@ router.post("/frontendregister", function(req, res){
             password: Bcrypt.hashSync(req.body.password, 10),
             citta: req.body.citta,
             via: req.body.via,
-            punti: 0    
+            punti: 0       
     });
+
+    registroclienti.findOne({'username' : req.body.username})
+    .then(function (result) {
+      
+        if (null != result) {
+        res.redirect('/docs/frontend');
+        //console.log("USERNAME ALREADY EXISTS:", result.username);
+      }
+      else  {
         newUser.save();
         res.redirect('/docs/frontend');	 
-    }
-    catch(error){
+        //console.log("CREATING USER:", result.username);  
+      }       
+    });
+      }catch(error){
+
         res.status(500).send(error);
     }
 },
 );
 
+
+/*
+router.post("/frontendregister", function(req, res){
+    try{
+            
+        let newUser = new registroclienti({
+            nome: req.body.nome,
+            cognome: req.body.cognome,
+            username: req.body.username,
+            password: Bcrypt.hashSync(req.body.password, 10),
+            citta: req.body.citta,
+            via: req.body.via,
+            punti: 0       
+    });
+
+        newUser.save();
+        res.redirect('/docs/frontend');	 
+    }      
+    catch(error){
+
+        res.status(500).send(error);
+    }
+},
+);
+*/
 
 //                      REGISTRAZIONE NUOVO OGGETTO
 
@@ -49,7 +88,8 @@ router.post("/objectregister", function(req, res){
             numGiocatori: req.body.numGiocatori,
             prezzo: req.body.prezzo,
             quantita: req.body.quantita,
-            img: req.body.img,    
+            img: req.body.img,   
+            disponibile: req.body.disponibile 
     });
         newObject.save();
         res.redirect('/user/backendlogged');	

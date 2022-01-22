@@ -340,6 +340,7 @@ var oldUser = NULL;
        let numGiocatori = d.result[i].numGiocatori;
        let prezzo = d.result[i].prezzo;
        let img = d.result[i].img;
+       let disponibile = d.result[i].disponibile;
        //usernameSet.add(username.toLowerCase());
        //let tbody = document.getElementById("anagraficaClientiBody");
        const tr = document.createElement("tr");
@@ -367,14 +368,17 @@ var oldUser = NULL;
    etaMinima +
     `</td>
     <td class="tdCustomer1">` +
-   peso +
+   peso + 
     `</td>
     <td class="tdCustomer1">` +
    numGiocatori +
     `</td>
     <td class="tdCustomer1">` +
-   prezzo +
+   prezzo + 
     `</td>
+    <td class="tdCustomer1">` +
+   disponibile +
+     `</td>
     <td class="tdCustomer1">` +
    idGame +
      `</td>
@@ -396,7 +400,7 @@ var oldUser = NULL;
     div.style.visibility = "visible";
     div.innerHTML = `
               
-    <table border="1px" class="table table-striped table-bordered table-sm" cellspacing="2" width="100%">
+    <table border="1px" class="table table-striped table-bordered table-sm" cellspacing="2"  width="100%">
     <thead>
       <tr>
       <th th class="th-sm" scope="col">Immagine</th>
@@ -405,10 +409,11 @@ var oldUser = NULL;
       <th th class="th-sm" scope="col">Anno di uscita</th>
       <th th class="th-sm" scope="col">Stato</th>
       <th th class="th-sm" scope="col">Condizioni</th>
-      <th th class="th-sm" scope="col">Etàminima</th>
-      <th th class="th-sm" scope="col">Peso</th>
+      <th th class="th-sm" scope="col">PEGI</th>
+      <th th class="th-sm" scope="col">Peso (GB)</th>
       <th th class="th-sm" scope="col">N° giocatori</th>
-      <th th class="th-sm" scope="col">Prezzo</th>
+      <th th class="th-sm" scope="col">Prezzo ($/Giorno)</th>
+      <th th class="th-sm" scope="col">Disponibile</th>
       <th th class="th-sm" scope="col">ID</th>
       <th th class="th-sm" scope="col">Modifica</th>
       </tr>
@@ -435,6 +440,7 @@ var oldUser = NULL;
     let peso = current.getElementsByClassName("tdCustomer1")[7].textContent;
     let numGiocatori = current.getElementsByClassName("tdCustomer1")[8].textContent;
     let prezzo = current.getElementsByClassName("tdCustomer1")[9].textContent;
+    let disponibile = current.getElementsByClassName("tdCustomer1")[10].textContent;
     let modal = document.getElementById("modificaOggettoModal");
     let data = modal.getElementsByClassName("form-control");
     data[0].value = img;
@@ -447,7 +453,8 @@ var oldUser = NULL;
     data[7].value = peso;
     data[8].value = numGiocatori;
     data[9].value = prezzo;
-    oldObject = current.getElementsByClassName("tdCustomer1")[10].textContent;
+    data[10].value = disponibile;
+    oldObject = current.getElementsByClassName("tdCustomer1")[11].textContent;
     
     //console.log(current.getElementsByClassName("tdCustomer")[2].textContent);
     //console.log(oldObject)
@@ -475,7 +482,8 @@ var oldUser = NULL;
       formData[6].value != " " && 
       formData[7].value != " " && 
       formData[8].value != " " && 
-      formData[9].value != " " 
+      formData[9].value != " " &&
+      formData[10].value != " " 
       
     ){
           

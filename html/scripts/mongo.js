@@ -237,6 +237,42 @@ exports.findClienti = async function (credentials) {
 
 
 
+  exports.getUserLogged = async function(usernameLogged, credentials){
+
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+
+	let debug = [];
+    try{
+
+		debug.push('trying to connect MongoDB');
+		const mongo = new MongoClient(mongouri);
+		await mongo.connect();
+		debug.push("Managed to close connection to MongoDB.");
+		//let ObjectId = require('mongodb').ObjectId;
+		var myquery = {
+
+			username: usernameLogged
+			
+		};
+
+	let user = mongo
+	                .db(dbname)
+					.collection(collection1)
+					.findOne(myquery);
+	
+	
+	debug.push("Managed to close connection to MongoDB.");
+	await mongo.close();
+	return(user);
+    }
+	catch(e){
+
+		return e;
+	}  
+  };
+
+
+
   exports.updateUser = async function(oldUser, newUser, credentials){
 
 	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;

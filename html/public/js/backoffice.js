@@ -35,6 +35,7 @@ function getGames() {
      let prezzo = d.result[i].prezzo;
      let quantita = d.result[i].quantita;
      let img = d.result[i].img;
+     let disponibile = d.result[i].disponibile;
      //usernameSet.add(username.toLowerCase());
      //let tbody = document.getElementById("anagraficaClientiBody");
      const tr = document.createElement("tr");
@@ -56,10 +57,10 @@ function getGames() {
  condizioni + 
   `</td> 
   <td class="tdCustomer">` +
- etaMinima +
+ etaMinima + 
   `</td> 
   <td class="tdCustomer">` +
- peso +
+ peso + 
   `</td>
   <td class="tdCustomer">` +
  numGiocatori +
@@ -68,7 +69,7 @@ function getGames() {
  prezzo +
   `</td>
   <td class="tdCustomer">` +
- quantita +
+ disponibile +
   `</td>`;
  
  tbody.appendChild(tr);
@@ -92,11 +93,11 @@ function visualizzaInventario() {
       <th th class="th-sm" scope="col">Piattaforma</th>
       <th th class="th-sm" scope="col">Anno di uscita</th>
       <th th class="th-sm" scope="col">Condizioni</th>
-      <th th class="th-sm" scope="col">Etàminima</th>
-      <th th class="th-sm" scope="col">Peso</th>
+      <th th class="th-sm" scope="col">PEGI</th>
+      <th th class="th-sm" scope="col">Peso (GB)</th>
       <th th class="th-sm" scope="col">N° giocatori</th>
-      <th th class="th-sm" scope="col">Prezzo</th>
-      <th th class="th-sm" scope="col">Quantità</th>
+      <th th class="th-sm" scope="col">Prezzo ($/Giorno)</th>
+      <th th class="th-sm" scope="col">Disponibile</th>
       </tr>
     </thead>
     <tbody id="inventarioBody">  

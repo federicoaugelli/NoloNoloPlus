@@ -141,3 +141,7 @@ th.sticky {
   transition: 1s 0.75s;
 }
 
+.th-sm{
+
+  text-align: center;
+}

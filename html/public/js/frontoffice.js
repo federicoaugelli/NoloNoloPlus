@@ -25,3 +25,26 @@ new Vue({
         }
       }
 })
+
+//var usernameLogged = NULL;
+
+function getIDuserLogged(){
+
+  let login = document.getElementById("myModal");
+  let username = login.getElementsByClassName("input");
+
+  usernameLogged = username[0].textContent;
+  
+  
+  $.ajax({
+
+    url: "/db/getUserLogged",
+    type: "GET",
+    data: {usernameLogged},
+    dataType: "json",
+    contentType: "application/x-www-form-urlencoded",
+    success: console.log(usernameLogged)
+    
+});
+
+}

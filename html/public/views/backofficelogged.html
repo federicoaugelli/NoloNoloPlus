@@ -212,9 +212,9 @@
           <label class="formGroupExampleInput" for="condizioni">CONDIZIONI</label>
             <select class="form-select" id="condizioni" name="condizioni">
                   <option selected>Scegli...</option>
-                  <option value="ottime">Ottime</option>
-                  <option value="buone">Buone</option>
-                  <option value="discrete">Discrete</option>
+                  <option value="Ottime">Ottime</option>
+                  <option value="Buone">Buone</option>
+                  <option value="Discrete">Discrete</option>
            </select>
         </div>
         <div class="mb-3">
@@ -233,10 +233,18 @@
           <label for="prezzo" class="form-label">PREZZO</label>
           <input type="text" class="form-control" id="prezzo" name="prezzo" placeholder=" ... euro">
         </div>
-          <div class="input-group mb-3">
-            <label class="input-group-text" for="img">IMMAGINE</label>
-            <input type="file" class="form-control" id="img" name="img">
-          </div>
+        <div class="mb-3">
+          <label class="formGroupExampleInput" for="disponibile">DISPONIBILE</label>
+            <select class="form-select" id="disponibile" name="disponibile">
+                  <option selected>Scegli...</option>
+                  <option value="true">true</option>
+                  <option value="false">false</option>
+           </select>
+        </div>
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="img">IMMAGINE</label>
+          <input type="file" class="form-control" id="img" name="img">
+        </div>
         </div>
         <div class="mb-3">
           <input type="submit" class="btn btn-primary" value="Aggiungi oggetto"> 
@@ -299,16 +307,14 @@
         </div>
         <div class="mb-3">
           <label class="formGroupExampleInput" for="stato">STATO</label>
-            <select class="form-control" id="stato" name="stato">
-                 
+            <select class="form-control" id="stato" name="stato">               
                   <option value="Nuovo">Nuovo</option>
                   <option value="Usato">Usato</option>
            </select>
         </div>
         <div class="mb-3">
           <label class="formGroupExampleInput" for="condizioni">CONDIZIONI</label>
-            <select class="form-control" id="condizioni" name="condizioni">
-                 
+            <select class="form-control" id="condizioni" name="condizioni">             
                   <option value="Ottime">Ottime</option>
                   <option value="Buone">Buone</option>
                   <option value="Discrete">Discrete</option>
@@ -329,6 +335,13 @@
         <div class="mb-3">
           <label for="prezzo" class="form-label">PREZZO</label>
           <input type="text" class="form-control" id="prezzo" name="prezzo" placeholder=" ... euro">
+        </div>
+        <div class="mb-3">
+          <label class="formGroupExampleInput" for="disponibile">DISPONIBILE</label>
+            <select class="form-control" id="disponibile" name="disponibile">
+                  <option value="true">true</option>
+                  <option value="false">false</option>
+           </select>
         </div>
         <div class="mb-3">
           <button type="button" class="btn btn-primary" onclick="modObject()">Salva modifiche</button> 
