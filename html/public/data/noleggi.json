@@ -3,33 +3,32 @@
 		"usernameCliente": "",
 		"titoloNoleggiato": "",
 		"usernameFunzionario": "",
-		"durataNoleggio":"",
+		"inzioNoleggio": "",
+		"fineNoleggio": "",
 		"stato": "",
-		"conclusioni":""
 	},
     {
 		"usernameCliente": "",
 		"titoloNoleggiato": "",
 		"usernameFunzionario": "",
-		"durataNoleggio":"",
+		"inzioNoleggio": "",
+		"fineNoleggio": "",
 		"stato": "",
-		"conclusioni":""
 	},
     {
 		"usernameCliente": "",
 		"titoloNoleggiato": "",
 		"usernameFunzionario": "",
-		"durataNoleggio":"",
+		"inzioNoleggio": "",
+		"fineNoleggio": "",
 		"stato": "",
-		"conclusioni":""
 	},
     {
 		"usernameCliente": "",
 		"titoloNoleggiato": "",
 		"usernameFunzionario": "",
-		"durataNoleggio":"",
+		"inzioNoleggio": "",
+		"fineNoleggio": "",
 		"stato": "",
-		"conclusioni":""
 	}
-	
 ]

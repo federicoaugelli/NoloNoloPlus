@@ -206,9 +206,9 @@
           </div>
         </div>
         <div class="modal-footer">
-          <p class="me-auto">costo: {{ modalItem.prezzo }}€</p>
-          <button v-if="modalItem.disponibile" type="button" class="btn btn-primary" v-on:click="calculateDate">Noleggia</button>
-          <button v-else type="button" class="btn btn-primary" v-on:click="calculateDate" disabled>Non Disponibile</button>
+          <p class="me-auto">costo: {{ calculateDate }}€</p>
+          <button v-if="modalItem.disponibile" type="button" class="btn btn-primary" v-on:click="calculateDate()">Noleggia</button>
+          <button v-else type="button" class="btn btn-primary" disabled>Non Disponibile</button>
         </div>
       </div>
     </div>
@@ -240,6 +240,7 @@
           modalItem: '',
           startDate: '',
           endDate: '',
+          ipoteticalPrice: '',
           showModal: false
         }
       },
@@ -290,6 +291,11 @@
           else{
             return this.items;
           }
+        },
+
+        calculateDate(){
+          this.ipoteticalPrice = parseFloat(this.modalItem.prezzo) * (this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)))
+          return this.ipoteticalPrice
         }
       },
       methods: {
@@ -298,8 +304,8 @@
         },
 
         parseDate(date){
-          var mdy = date.split('/');
-          return new Date(mdy[2], mdy[0]-1, mdy[1]);
+          var mdy = date.split('-');
+          return new Date(mdy[0], mdy[1], mdy[2]);
         },
 
         datediff(first, second) {
@@ -307,10 +313,11 @@
         },
 
         calculateDate(){
-          //console.log(this.datediff(this.parseDate(this.startDate.value), this.parseDate(this.endDate.value)));
-          var mdyOne = this.startDate.split(' ');
-          var mdyTwo = this.endDate.split('/');
-          console.log(mdyOne);
+          this.ipoteticalPrice = parseFloat(this.modalItem.prezzo) * (this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)))
+          console.log(this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)));
+          //var mdyOne = this.startDate.split('-');
+          //var mdyTwo = this.endDate.split('-');
+          //console.log(mdyOne[2], mdyOne[0], mdyOne[1]);
         }
       },
     })
