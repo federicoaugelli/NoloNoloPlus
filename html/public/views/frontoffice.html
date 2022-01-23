@@ -287,13 +287,20 @@
         },
 
         calculateDate(){
-          if(this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)) > 0){
+          let yourDate = new Date().toISOString().split('T')[0];
+          console.log(this.startDate);
+          console.log(yourDate.split('-'));
+          console.log(this.parseDate(yourDate));
+          if(this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)) > 0 && this.datediff(this.parseDate(this.startDate), this.parseDate(yourDate)) >= 0){
             this.ipoteticalPrice = parseFloat(this.modalItem.prezzo) * (this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)))
           }
           else{
             this.ipoteticalPrice = "errore di calcolo"
           }
-          console.log(this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)));
+
+
+          //console.log(this.datediff(this.parseDate(this.startDate), this.parseDate(yourDate)));
+          //console.log(yourDate);
           //var mdyOne = this.startDate.split('-');
           //var mdyTwo = this.endDate.split('-');
           //console.log(mdyOne[2], mdyOne[0], mdyOne[1]);
