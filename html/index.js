@@ -31,7 +31,7 @@ Copyright (c) 2021 by Fabio Vitali
 
 global.rootDir = __dirname;
 global.startDate = null; 
-//global.userLogged = null; 
+global.userLogged = "nessun"; 
 
 const template = require(global.rootDir + '/scripts/tpl.js') ; 
 const mymongo = require(global.rootDir + '/scripts/mongo.js') ; 

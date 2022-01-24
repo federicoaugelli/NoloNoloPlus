@@ -235,7 +235,7 @@ exports.findClienti = async function (credentials) {
 	}
   };
 
-
+		
 
   exports.getUserLogged = async function(usernameLogged, credentials){
 
@@ -250,9 +250,10 @@ exports.findClienti = async function (credentials) {
 		debug.push("Managed to close connection to MongoDB.");
 		//let ObjectId = require('mongodb').ObjectId;
 		var myquery = {
+			
 
 			username: usernameLogged
-			
+		
 		};
 
 	let user = mongo
@@ -263,6 +264,7 @@ exports.findClienti = async function (credentials) {
 	
 	debug.push("Managed to close connection to MongoDB.");
 	await mongo.close();
+	//console.log(user)
 	return(user);
     }
 	catch(e){

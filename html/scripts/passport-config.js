@@ -63,8 +63,6 @@ module.exports = function(passport) {
   
 }
 
-
-
  passport.use(
     'local-login-cliente', 
     new LocalStrategy({ usernameField: "username" }, (username, password, done) =>{
@@ -80,8 +78,7 @@ module.exports = function(passport) {
 
                         if (isMatch){
                             
-                            userLogged = user;
-                            console.log(userLogged);
+                            console.log(user);                   
                             
                             return done(null, user);
                         } else {

@@ -42,9 +42,9 @@ router.get('/backendlogout', (req,res) => {
 
 //              POSSO ACCEDERE ALLA ROTTA USER/FRONTENDLOGGED SOLO SE SONO AUTENTICATO
 router.get('/docs/frontend', (req,res) => {
-    if(req.isAuthenticated()) return res.redirect('/user/frontendlogged'), { user: req.user };
-    res.render('/docs/frontend');
-    console.log(req.user);
+    if(req.isAuthenticated()) return res.redirect('/user/frontendlogged')
+    else return res.render('/docs/frontend');
+    //console.log(req.user);
 });
 
 
@@ -72,7 +72,7 @@ router.get('/frontendlogout', (req,res) => {
 //              POSSO ACCEDERE ALLA ROTTA USER/DASHBOARD SOLO SE SONO AUTENTICATO
 router.get('/docs/dashboard', (req,res) => {
     if(req.isAuthenticated()) return res.redirect('/user/dashboardlogged');
-    res.render('/docs/frontend');
+    else return res.render('/docs/frontend');
 });
 
 
