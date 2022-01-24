@@ -31,7 +31,7 @@ Copyright (c) 2021 by Fabio Vitali
 
 global.rootDir = __dirname;
 global.startDate = null; 
-global.userLogged = "nessun"; 
+//global.userLogged = "nessun"; 
 
 const template = require(global.rootDir + '/scripts/tpl.js') ; 
 const mymongo = require(global.rootDir + '/scripts/mongo.js') ; 
@@ -183,7 +183,11 @@ app.delete('/db/deleteObject', async function(req, res) {
 	let oldObject = req.body.oldObject	
 	res.send(await mymongo.deleteObject(oldObject,mongoCredentials))
 });
-
+/*
+app.post('/db/loggedUserSetFalse', async function(req,res){
+    res.send(await mymongo.loggedUserSetFalse(mongoCredentials))
+})
+*/
 
 /* ========================== */
 /*                            */

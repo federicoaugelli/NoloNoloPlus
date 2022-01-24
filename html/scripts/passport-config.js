@@ -67,7 +67,8 @@ module.exports = function(passport) {
     'local-login-cliente', 
     new LocalStrategy({ usernameField: "username" }, (username, password, done) =>{
         // MATCH USER
-        User.findOne({ username: username })
+
+        User.findOneAndUpdate({ username: username}, {$set:{logged:true}}, {new: true})
             .then(user => {
                 if(!user){
                     return done(null, false, { message: "username sbagliato"});
@@ -77,6 +78,7 @@ module.exports = function(passport) {
                         if (err) throw err;
 
                         if (isMatch){
+                            
                             
                             console.log(user);                   
                             

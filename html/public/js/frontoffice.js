@@ -48,3 +48,17 @@ function getIDuserLogged(){
 });
 
 }
+
+function loggedUserSetFalse(){
+
+  $.ajax({
+
+    url: "/db/loggedUserSetFalse",
+    type: "POST",
+    data: {},
+    dataType: "json",
+    contentType: "application/x-www-form-urlencoded",
+    success: console.log(usernameLogged)
+    
+});
+}
