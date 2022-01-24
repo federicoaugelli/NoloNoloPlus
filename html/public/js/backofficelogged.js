@@ -96,7 +96,7 @@ function visualizzaClienti() {
     `;
   }
 
-var oldUser = NULL;
+var oldUser = null;
                                                 // RITORNA IL SINGOLO CLIENTE
 
   function getUser(e){
@@ -424,7 +424,7 @@ var oldUser = NULL;
     `;
   }
 
-  var oldObject = NULL;
+  var oldObject = null;
                                                // RITORNA IL SINGOLO OGGETTO
   
   function getObject(e){

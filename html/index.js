@@ -29,8 +29,9 @@ Copyright (c) 2021 by Fabio Vitali
 /*                            */
 /* ========================== */
 
-global.rootDir = __dirname ;
+global.rootDir = __dirname;
 global.startDate = null; 
+//global.userLogged = null; 
 
 const template = require(global.rootDir + '/scripts/tpl.js') ; 
 const mymongo = require(global.rootDir + '/scripts/mongo.js') ; 
@@ -228,7 +229,12 @@ app.use(registerRouter);
 app.use('/user'/*, checkUserLogin()*/, userRouter);
 //app.use('/user1', checkUserLogin1(), userRouter1);
 
-
+/*
+app.use(function(req,res,next){
+	res.locals.currentUser = req.user;
+	next();
+  })
+*/
 
 /* ========================== */
 /*                            */

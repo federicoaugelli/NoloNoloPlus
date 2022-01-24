@@ -64,6 +64,7 @@ module.exports = function(passport) {
 }
 
 
+
  passport.use(
     'local-login-cliente', 
     new LocalStrategy({ usernameField: "username" }, (username, password, done) =>{
@@ -78,6 +79,10 @@ module.exports = function(passport) {
                         if (err) throw err;
 
                         if (isMatch){
+                            
+                            userLogged = user;
+                            console.log(userLogged);
+                            
                             return done(null, user);
                         } else {
                             return done(null, false, { message: "password sbagliata"});
@@ -124,6 +129,6 @@ module.exports = function(passport) {
 */
 
 
-
+//module.exports = globalUserLogged;
 
 module.exports = passport;

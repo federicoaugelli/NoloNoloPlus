@@ -42,17 +42,18 @@ router.get('/backendlogout', (req,res) => {
 
 //              POSSO ACCEDERE ALLA ROTTA USER/FRONTENDLOGGED SOLO SE SONO AUTENTICATO
 router.get('/docs/frontend', (req,res) => {
-    if(req.isAuthenticated()) return res.redirect('/user/frontendlogged');
+    if(req.isAuthenticated()) return res.redirect('/user/frontendlogged'), { user: req.user };
     res.render('/docs/frontend');
-    //console.log(req.user.id);
+    console.log(req.user);
 });
 
 
 
 // SE SONO AUTENTICATO VADO A USER/FRONTENDLOGGED SENNO MI RIMANDA AL LOGIN
 router.post('/docs/frontend', passport.authenticate('local-login-cliente', {
-    successRedirect: '/user/frontendlogged', 
+    successRedirect: '/user/frontendlogged' , 
     failureRedirect: '/docs/frontend'
+    
     
 })); 
 

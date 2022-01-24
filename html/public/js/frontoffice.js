@@ -26,6 +26,7 @@ new Vue({
       }
 })
 
+
 //var usernameLogged = NULL;
 
 function getIDuserLogged(){
@@ -34,8 +35,9 @@ function getIDuserLogged(){
   let username = login.getElementsByClassName("input");
 
   usernameLogged = username[0].textContent;
+  console.log(userLogged)
   
-  
+  /*
   $.ajax({
 
     url: "/db/getUserLogged",
@@ -46,5 +48,5 @@ function getIDuserLogged(){
     success: console.log(usernameLogged)
     
 });
-
+*/
 }
