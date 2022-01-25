@@ -86,7 +86,8 @@
       <button v-if="searchQuery != ''" class="btn btn-danger" type="button" v-on:click="searchQuery = ''">Elimina filtro</button>
       <button class="btn btn-light active" :class="{ active: searchQuery == 'Playstation 5' }" type="button" v-on:click="searchQuery = 'Playstation 5'">ps5</button>
       <button class="btn btn-light" type="button" v-on:click="searchQuery = 'Playstation 4'">ps4</button>
-      <button class="btn btn-light" type="button" v-on:click="searchQuery = 'Xbox One'">Xbox</button>
+      <button class="btn btn-light" type="button" v-on:click="searchQuery = 'Xbox One'">Xbox One</button>
+      <button class="btn btn-light" type="button" v-on:click="searchQuery = 'Xbox Serie X/S'">Xbox Serie X/S</button>
       <button class="btn btn-light" type="button" v-on:click="searchQuery = 'Nintendo'">Nintendo</button>
       <button class="btn btn-light" type="button" v-on:click="searchQuery = 'Pc'">Pc</button>
       <button class="btn btn-light" type="button" v-on:click="searchQuery = 'Nuovo'">Nuovi</button>
@@ -187,6 +188,7 @@
         return {
           searchQuery: '',
           items: '',
+          user: '',
           modalItem: '',
           startDate: '',
           endDate: '',
@@ -198,12 +200,12 @@
       mounted () {
         axios
           .get('/db/getGames')
-          .then(response => (this.items = response.data.result))
+          .then(response => (this.items = response.data.result));
       },
 
       computed: {
         resultQuery(){
-          if(this.searchQuery !== "" && this.searchQuery !== "Nuovo" && this.searchQuery !== "Playstation 5" && this.searchQuery !== "Pc" && this.searchQuery !== "Playstation 4" && this.searchQuery !== "pc" && this.searchQuery !== "Nintendo" && this.searchQuery != "true"){
+          if(this.searchQuery !== "" && this.searchQuery !== "Nuovo" && this.searchQuery !== "Xbox One" && this.searchQuery !== "Xbox Serie X/S"  && this.searchQuery !== "Playstation 5" && this.searchQuery !== "Pc" && this.searchQuery !== "Playstation 4" && this.searchQuery !== "Nintendo" && this.searchQuery != "true"){
             return this.items.filter((gg)=>{
               return this.searchQuery.toLowerCase().split(' ').every(v => gg.game.toLowerCase().includes(v))
             })
@@ -234,6 +236,16 @@
             })
           }
           else if (this.searchQuery == "Playstation 5"){
+            return this.items.filter((gg)=>{
+              return this.searchQuery.toLowerCase().split(' ').every(v => gg.platform.toLowerCase().includes(v))
+            })
+          }
+          else if (this.searchQuery == "Xbox One"){
+            return this.items.filter((gg)=>{
+              return this.searchQuery.toLowerCase().split(' ').every(v => gg.platform.toLowerCase().includes(v))
+            })
+          }
+          else if (this.searchQuery == "Xbox Serie X/S"){
             return this.items.filter((gg)=>{
               return this.searchQuery.toLowerCase().split(' ').every(v => gg.platform.toLowerCase().includes(v))
             })

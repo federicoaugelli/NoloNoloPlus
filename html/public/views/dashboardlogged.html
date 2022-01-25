@@ -17,6 +17,10 @@
     <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-base.min.js"></script>
     <!-- angular cdn -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <!-- axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- underscore.js -->
+    <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.2/underscore-umd-min.js"></script>
 
 
 
@@ -67,18 +71,118 @@
 </nav>
  
                                                    <!-- FINE NAVBAR -->
+  <div style="margin: 100px" ng-app="myApp" ng-controller="myCtrl" data-ng-init="init()">
+    <div ng-repeat="item in items">
+      <p>{{ item.game }} per {{ item.platform }}</p>
+    </div>
+    <!--<div id="clienti" style="width: auto; height: 1000px;"></div>-->
+    <!--<button onclick="addPoint()">aggiungi</button>-->
+    <div id="noleggi"></div>
+  </div>
 
 
   </body>
 
+<script type="text/javascript">
+  var app = angular.module("myApp", []);
+  app.controller('myCtrl', function($scope, $http) {
+  $http({
+    method : "GET",
+      url : "/db/getGames"
+  }).then(function mySuccess(response) {
+    $scope.items = response.data.result;
+    console.log($scope.items.length);
+
+    anychart.onDocumentReady(function () {
+
+      data = anychart.data.set([
+      ]);
+
+      var chart = anychart.bar();
+      var series = chart.bar(data);
+      chart.title("Panoramica Oggetti");
+      chart.xAxis().title("Piattaforma");
+      chart.yAxis().title("Numero giochi");
+      chart.container("noleggi").draw();
+
+      //newIndex = (data.mapAs().getRowsCount())+1;
+      /*
+      let platformCount = [];
+      $scope.items.forEach(item => {
+        if (item.platform === 'Playstation 4'){
+          platformCount.ps4++;
+        }
+        else if (item.platform === 'Playstation 5'){
+          platformCount.ps5++;
+        }
+        else if (item.platform === 'Pc'){
+          platformCount.pc++;
+        }
+        else if (item.platform === 'Xbox One'){
+          platformCount.xone++;
+        }
+      })
+      console.log(platformCount);
+      */
+      let count = [];
+      $scope.items.forEach(function (a) {
+        count[a.platform] = (count[a.platform] || 0) + 1;
+      });
+      console.log(count);
+
+      data.append({
+        x: 'PC',
+        value : count['Pc']
+      });
+      data.append({
+        x: 'PS4',
+        value : count['Playstation 4']
+      });
+      data.append({
+        x: 'PS5',
+        value : count['Playstation 5']
+      });
+      data.append({
+        x: 'Xbox One',
+        value : count['Xbox One']
+      });
+    });
 
 
+  }, function myError(response) {
+    $scope.items = response.statusText;
+  });
+  $scope.init = function () {
+  };
+  });
 
+/*
+  anychart.onDocumentLoad(function () {
+    // create an instance of a pie chart
+    var chart = anychart.pie();
+    // set the data
+    chart.data([
+      ["Chocolate", 5],
+      ["Rhubarb compote", 2],
+      ["Crêpe Suzette", 2],
+      ["American blueberry", 2],
+      ["Buttermilk", 1]
+    ]);
+    // set chart title
+    chart.title("Panoramica Clienti");
+    // set the container element 
+    chart.container("clienti");
+    // initiate chart display
+    chart.draw();
+  });
 
-
-
-
-
-
-
+function addPoint() {
+  newIndex = (data.mapAs().getRowsCount())+1;
+  data.append({
+    x: "P" + newIndex,
+    value : Math.floor((Math.random() * 100)+ 1)
+  });
+};
+*/
+</script>
 </html>
