@@ -149,12 +149,12 @@ app.get('/db/search', async function(req, res) {
 app.get('/db/findClienti', async function(req, res) { 
 	res.send(await mymongo.findClienti(mongoCredentials))
 });
-
+/*
 app.get('/db/getUserLogged', async function(req, res) { 
 	let usernameLogged = req.body.usernameLogged
 	res.send(await mymongo.getUserLogged(usernameLogged,mongoCredentials))
 });
-
+*/
 app.get('/db/getGames', async function(req, res) {
 	res.send(await mymongo.getGames(mongoCredentials))
 });
@@ -182,6 +182,17 @@ app.delete('/db/deleteUser', async function(req, res) {
 app.delete('/db/deleteObject', async function(req, res) {
 	let oldObject = req.body.oldObject	
 	res.send(await mymongo.deleteObject(oldObject,mongoCredentials))
+});
+
+app.get('/db/findUserLogged', async function(req, res) {
+	
+	res.send(await mymongo.findUserLogged(mongoCredentials))
+});
+
+
+app.post('/db/deleteUserLogged', async function(req, res) {
+	
+	res.send(await mymongo.deleteUserLogged(mongoCredentials))
 });
 /*
 app.post('/db/loggedUserSetFalse', async function(req,res){
@@ -215,14 +226,34 @@ app.set('views', path.join(__dirname, './public/views'))
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
-//const MongoStore = require('connect-mongo')(session);
+//var cookieParser = require('cookie-parser');
+var MongoStore = require('connect-mongo');
+//const { request } = require('http');
+//var mongoose = require('mongoose');
+
+
+let store = new MongoStore({
+	mongoUrl: "mongodb://127.0.0.1:27017/site202127", //chage with new domain in docker
+	collection: "sessions"
+	//stringify:true,
+    //autoReconnect:true
+ });
+
 
 //   app.use
 app.use(session({
 	secret: 'chiaveSegreta123',
 	saveUninitialized: false,
-	resave: false
-	//cookie: { maxAge: 600000 }
+	resave: false,
+	cookie: { domain:'http://localhost:8000' }, //change with new domain in docker
+	store: store /*
+	new MongoStore({
+		mongooseConnection: 'site202127',    
+		host: '', 
+		port: '27017', 
+		collections: 'sessions', 
+		url: 'mongodb://127.0.0.1:27017/site202127'    
+	  })*/
 }));
 
 app.use(passport.initialize());
@@ -234,10 +265,13 @@ app.use('/user'/*, checkUserLogin()*/, userRouter);
 //app.use('/user1', checkUserLogin1(), userRouter1);
 
 /*
-app.use(function(req,res,next){
-	res.locals.currentUser = req.user;
-	next();
-  })
+var cookieParser = require('cookie-parser');
+app.use(cookieParser());  
+
+app.use(function(req,res,next) {  
+	res.locals.session = req.session;  
+	next();   
+}); 
 */
 
 /* ========================== */

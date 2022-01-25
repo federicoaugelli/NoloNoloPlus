@@ -52,15 +52,14 @@ router.get('/docs/frontend', (req,res) => {
 // SE SONO AUTENTICATO VADO A USER/FRONTENDLOGGED SENNO MI RIMANDA AL LOGIN
 router.post('/docs/frontend', passport.authenticate('local-login-cliente', {
     successRedirect: '/user/frontendlogged' , 
-    failureRedirect: '/docs/frontend'
-    
-    
+    failureRedirect: '/docs/frontend'  
 })); 
 
 
 //               IL LOGOUT MI RIMANDA AL FRONTEND
 router.get('/frontendlogout', (req,res) => {
     req.logOut();
+    //req.session.destroy();
     res.redirect('/docs/frontend');
 })
 
