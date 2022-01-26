@@ -28,6 +28,7 @@ let collection ="registrodipendenti"
 let fieldname = "persone"
 let collection1 = "registroclienti"
 let collection2 = "oggetti"
+let collection3 = "noleggi"
 
 const { MongoClient } = require("mongodb");
 const fs = require('fs').promises ;
@@ -184,6 +185,35 @@ exports.getGames = async function (credentials) {
 		.collection(collection2)
 		.find()
 		.sort({ game: 1 })
+		.forEach((r) => {
+			result.push(r);
+		});
+
+		data.result = result;
+
+		await mongo.close();
+
+		return data;
+	}
+
+	catch (e) {
+		return data;
+	}
+};
+
+exports.getUserItems = async function (credentials) {
+
+	//let debug = [];
+	let data = { result: null };
+	try{
+		const mongo = new MongoClient(mongouri);
+		await mongo.connect();
+		let result = [];
+		await mongo
+		.db(dbname)
+		.collection(collection3)
+		.find()
+		.sort({ titoloNoleggiato: 1 })
 		.forEach((r) => {
 			result.push(r);
 		});

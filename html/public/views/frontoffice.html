@@ -126,7 +126,7 @@
 
   <!-- NAVBAR -->
     <nav class="navbar navbar-dark navbar-expand-md bg-primary sticky-top py-4" id="navbarTitle">
-      <div class="container-fluid">
+      <div style="margin-right: 10px; margin-left: 10px;" class="container-fluid">
         <a class="navbar-brand ml-auto">NOLO NOLO</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -286,6 +286,7 @@
 
         calculateDate(){
           let yourDate = new Date().toISOString().split('T')[0];
+          console.log(yourDate);
           console.log(this.startDate);
           console.log(yourDate.split('-'));
           console.log(this.parseDate(yourDate));

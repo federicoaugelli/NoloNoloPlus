@@ -9,8 +9,6 @@
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
       <script src="//code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
       <link rel="shortcut icon" href="#">
 
@@ -30,36 +28,46 @@
 <body style="background-color: #031336;">
   <div id="app">
 
-  
+  <!-- NAVBAR -->
+    <nav class="navbar navbar-dark navbar-expand-md bg-primary sticky-top py-4">
+      <div style="margin-right: 10px; margin-left: 10px;" class="container-fluid">
+        <a class="navbar-brand ml-auto" id="titleUser">NOLO NOLO</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <form class="d-flex w-50 bottom-0 my-auto">
+          <input class="form-control me-2" type="search" placeholder="Cerca" aria-label="inserisci la tua parola chiave di ricerca" v-model="searchQuery">
+        </form>
+        <div class="nav-item navbar-nav mr-auto dropdown">
+          <a role="button" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Ciao cliente.name</a>
+          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#clientModal">il Mio Account</a></li>
+            <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#noleggiModal">I Miei Ordini</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="/frontendlogout" aria-label="Esci dal frotoffice">Esci</a></li>
+          </ul>                 
+        </div>
+      </div>
+    </nav>
 
 
-  <!-- Modal cards
->>>>>>> Stashed changes
-  <div class="modal fade" id="card-modal" tabindex="-1" aria-labelledby="card-modalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+<!-- modal cliente -->
+  <div class="modal fade" id="clientModal" tabindex="-1" aria-labelledby="modalClient" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">{{ item.game }} per {{ item.platform }}</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Il Mio Account</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <div class="card-body">
-            <label for="startRent">Da:</label>
-            <input type="date" id="startRent" name="startRent">
-
-            <label for="finishRent">A:</label>
-            <input type="date" id="finishRent" name="finishRent">
-          </div>
         </div>
         <div class="modal-footer">
-          <p class="me-auto">costo: $</p>
-          <button type="button" class="btn btn-primary" disabled>Noleggia</button>
         </div>
       </div>
     </div>
   </div>
-  -->
 
+<<<<<<< Updated upstream
   <!-- NAVBAR -->
     <nav class="navbar navbar-dark navbar-expand-md bg-primary sticky-top py-4">
       <div class="container-fluid">
@@ -77,15 +85,44 @@
               </a>                    
             </li>
           </ul> 
+=======
+<!-- modal noleggi -->
+  <div class="modal fade" id="noleggiModal" tabindex="-1" aria-labelledby="modalNoleggi" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen modal-dialog-centered">
+      <div style="background-color: #031336;" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">I Miei Ordini</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div v-for="item in userItems" :key="item.usernameCliente">
+            <h5 class="">{{ item.titoloNoleggiato }}</h5>
+            <div>dal {{ item.inzioNoleggio }} al {{ item.fineNoleggio }}</div>
+            <div>prezzo: {{ item.prezzoTotale }}€</div>
+            <div v-if="item.stato == 'futuro'">
+              <button class="btn btn-primary">Modifica noleggio</button>
+              <button class="btn btn-danger">Cancella noleggio</button>
+            </div>
+            <div v-else-if="item.stato == 'terminato'">
+              <button class="btn btn-primary">Visualizza Fatture</button>
+            </div>
+            <div v-else>
+              <button class="btn btn-success" disabled>In Corso</button>
+            </div>
+          </div>
+        </div>
+>>>>>>> Stashed changes
       </div>
-    </nav>
+    </div>
+  </div>
+
 
     <div class="btn-group filterBar">
       <button v-if="searchQuery != ''" class="btn btn-danger" type="button" v-on:click="searchQuery = ''">Elimina filtro</button>
       <button class="btn btn-light active" :class="{ active: searchQuery == 'Playstation 5' }" type="button" v-on:click="searchQuery = 'Playstation 5'">ps5</button>
       <button class="btn btn-light" type="button" v-on:click="searchQuery = 'Playstation 4'">ps4</button>
       <button class="btn btn-light" type="button" v-on:click="searchQuery = 'Xbox One'">Xbox One</button>
-      <button class="btn btn-light" type="button" v-on:click="searchQuery = 'Xbox Serie X/S'">Xbox Serie X/S</button>
+      <button class="btn btn-light" type="button" v-on:click="searchQuery = 'Xbox Serie X/S'">Xbox X/S</button>
       <button class="btn btn-light" type="button" v-on:click="searchQuery = 'Nintendo'">Nintendo</button>
       <button class="btn btn-light" type="button" v-on:click="searchQuery = 'Pc'">Pc</button>
       <button class="btn btn-light" type="button" v-on:click="searchQuery = 'Nuovo'">Nuovi</button>
@@ -163,19 +200,6 @@
     </div>
   </div>
 
-
-    <!--  LISTA PAGINE
-    <nav aria-labelledby="lista-pagine" class="my-5">
-      <ul class="pagination justify-content-center" style="margin:20px">
-        <li class="page-item"><a class="page-link" aria-current="" href="#">Precedente</a></li></li>
-        <li class="page-item"><a class="page-link" aria-current="" href="#">1</a></li></li>
-        <li class="page-item"><a class="page-link" aria-current="" href="#">2</a></li></li>
-        <li class="page-item"><a class="page-link" aria-current="" href="#">3</a></li></li>
-        <li class="page-item"><a class="page-link" aria-current="" href="#">Successiva</a></li></li>
-     </ul>
-    </nav>
-    -->
-
  </div>
 
   <script type="text/javascript">
@@ -187,6 +211,7 @@
           searchQuery: '',
           items: '',
           user: '',
+          userItems: '',
           modalItem: '',
           startDate: '',
           endDate: '',
@@ -199,6 +224,10 @@
         axios
           .get('/db/getGames')
           .then(response => (this.items = response.data.result));
+
+        axios
+          .get('/db/getUserItems')
+          .then(gg => (this.userItems = gg.data.result));
       },
 
       computed: {
@@ -264,6 +293,10 @@
         }
       },
       methods: {
+        getUserItems(){
+          console.log(this.userItems);
+        },
+
         popoModal(item){
           this.modalItem = item;
         },

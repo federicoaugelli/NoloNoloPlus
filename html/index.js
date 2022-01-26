@@ -158,6 +158,10 @@ app.get('/db/getGames', async function(req, res) {
 	res.send(await mymongo.getGames(mongoCredentials))
 });
 
+app.get('/db/getUserItems', async function(req, res) {
+	res.send(await mymongo.getUserItems(mongoCredentials))
+});
+
 app.post('/db/updateUser', async function(req, res) {
 	let oldUser = req.body.oldUser
 	let newUser = req.body.formData
