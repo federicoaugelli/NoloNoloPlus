@@ -80,7 +80,7 @@ module.exports = function(passport) {
                         if (isMatch){
                             
                             
-                            //console.log(user);                   
+                            console.log(user);                   
                             
                             return done(null, user);
                         } else {

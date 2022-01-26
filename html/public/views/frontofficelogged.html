@@ -63,7 +63,7 @@
   <!-- NAVBAR -->
     <nav class="navbar navbar-dark navbar-expand-md bg-primary sticky-top py-4">
       <div class="container-fluid">
-        <a class="navbar-brand ml-auto" id="titleUser"> NOLO NOLO</a>
+        <a class="navbar-brand ml-auto" id="titleUser">NOLO NOLO</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -73,9 +73,9 @@
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">   
               <a href="/frontendlogout">
-                <form method="POST" action="/db/deleteUserLogged"> 
-                <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#myModal" aria-label="Esci dal frotoffice" onclick="deleteUserLogged()"> ESCI</button>  
-                </form> 
+                <!--<form method="POST" action="/db/loggedUserSetFalse"> -->
+                <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#myModal" aria-label="Esci dal frotoffice"> ESCI</button>  
+              <!--  </form> -->
               </a>                    
             </li>
           </ul> 
@@ -296,29 +296,6 @@
 */
 
   </script>
-
-
-<script>
-
-  window.onload = function() {
-    $.ajax({
-      url: "/db/findUserLogged",
-      type: "GET",
-      data: '',
-      dataType: "json",
-      contentType: "application/x-www-form-urlencoded",
-      success: function (g){
-        let session = g.result.session
-        getIdFromUserLogged(session);
-        console.log(g.result.session)
-        console.log(session)
-      },
-    });
-  
-  };
-  </script>
-
-
 </div>
 </body>
 </html>

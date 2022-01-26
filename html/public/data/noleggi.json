@@ -5,7 +5,7 @@
 		"usernameFunzionario": "",
 		"inzioNoleggio": "",
 		"fineNoleggio": "",
-		"stato": ""
+		"stato": "",
 	},
     {
 		"usernameCliente": "",
@@ -13,7 +13,7 @@
 		"usernameFunzionario": "",
 		"inzioNoleggio": "",
 		"fineNoleggio": "",
-		"stato": ""
+		"stato": "",
 	},
     {
 		"usernameCliente": "",
@@ -21,7 +21,7 @@
 		"usernameFunzionario": "",
 		"inzioNoleggio": "",
 		"fineNoleggio": "",
-		"stato": ""
+		"stato": "",
 	},
     {
 		"usernameCliente": "",
@@ -29,6 +29,6 @@
 		"usernameFunzionario": "",
 		"inzioNoleggio": "",
 		"fineNoleggio": "",
-		"stato": ""
+		"stato": "",
 	}
 ]

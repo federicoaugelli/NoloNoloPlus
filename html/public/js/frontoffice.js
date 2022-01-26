@@ -27,22 +27,38 @@ new Vue({
 })
 
 
-function getIdFromUserLogged(d){
+function getIDuserLogged(){
 
-    //console.log(session);
+  let login = document.getElementById("myModal");
+  let username = login.getElementsByClassName("input");
+
+  let usernameLogged = username[0].textContent;
+  //console.log(usernameLogged)
   
-}
-
-function deleteUserLogged(){
+  
   $.ajax({
-    url: "/db/deleteUserLogged",
-    type: "POST",
-    data: {idUserLogged},
+
+    url: "/db/getUserLogged",
+    type: "GET",
+    data: {usernameLogged},
     dataType: "json",
     contentType: "application/x-www-form-urlencoded",
-    success: {
-    },
-  });
+    success: console.log(usernameLogged)
+    
+});
 
 }
 
+function loggedUserSetFalse(){
+
+  $.ajax({
+
+    url: "/db/loggedUserSetFalse",
+    type: "POST",
+    data: {},
+    dataType: "json",
+    contentType: "application/x-www-form-urlencoded",
+    success: console.log(usernameLogged)
+    
+});
+}
