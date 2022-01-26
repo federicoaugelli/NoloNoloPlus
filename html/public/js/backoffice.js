@@ -8,7 +8,7 @@ function getGames() {
     success: function (g) {
          creaTabellaInventario(g);
          creaCardInventario(g);
-         console.log(g.result);
+         //console.log(g.result);
     },
   });
 }
@@ -73,7 +73,7 @@ function getGames() {
   `</td>`;
  
  tbody.appendChild(tr);
- console.log(d.result)
+ //console.log(d.result)
  } 
 }
  
@@ -159,7 +159,7 @@ function visualizzaInventario() {
      `;
    
  cardBody.appendChild(div);
- console.log(d.result[i])
+ //console.log(d.result[i])
  }    
  }
 

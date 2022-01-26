@@ -445,52 +445,6 @@ exports.findClienti = async function (credentials) {
 	}
   };
 
-/*
-  exports.loggedUserSetFalse = async function(credentials){
-
-	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
-
-	let debug = [];
-    try{
-
-		debug.push('trying to connect MongoDB');
-		const mongo = new MongoClient(mongouri);
-		await mongo.connect();
-		debug.push("Managed to close connection to MongoDB.");
-		var myquery = {
-
-			logged: true
-			
-		};
-
-		var newValues = {
-			$set:{
-
-			logged: false
-		},
-	};
-	let updated = mongo
-	                .db(dbname)
-					.collection(collection1)
-					.updateOne(myquery, newValues);
-		
-	let updatedFlag = false
-	if(updated.result.ok > 0) {
-
-		updatedFlag = true
-		
-	}
-	
-	debug.push("Managed to close connection to MongoDB.");
-	await mongo.close();
-	return(updatedFlag);
-    }
-	catch(e){
-
-		return e;
-	}  
-  };
-  */
   
   
 

@@ -9,7 +9,7 @@ const noleggioSchema = new Schema({
     usernameFunzionario : { type: String, required:false, unique:false },
     inizioNoleggio : { type: String, required:false, unique:false },
     fineNoleggio : { type: String, required:false, unique:false },
-    stato: { type: String, required:false, unique:false },
+    stato: { type: String, required:false, unique:false }
 
 });
   

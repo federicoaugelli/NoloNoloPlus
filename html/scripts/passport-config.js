@@ -3,8 +3,9 @@ const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require("bcryptjs");
 const User = require('../app/model/clientiModel.js');
 const User2 = require('../app/model/dipendentiModel.js');
+//passport.use(strategy);
 
-
+/*
 function SessionConstructor(userId, userGroup, details) {
 
     this.userId = userId;
@@ -62,13 +63,37 @@ module.exports = function(passport) {
     });
   
 }
+*/
+
+
+
+
+passport.serializeUser((user, done) => {
+    done(null, user.id);
+});
+
+
+
+passport.deserializeUser((id, done) => {
+    User.findById(id).then((user) => {
+        done(null, user);
+    });
+});
+
+
+
+
+
+
+
+
 
  passport.use(
     'local-login-cliente', 
     new LocalStrategy({ usernameField: "username" }, (username, password, done) =>{
         // MATCH USER
 
-        User.findOneAndUpdate({ username: username}, {$set:{logged:true}}, {new: true})
+        User.findOne({ username: username})
             .then(user => {
                 if(!user){
                     return done(null, false, { message: "username sbagliato"});
@@ -78,9 +103,7 @@ module.exports = function(passport) {
                         if (err) throw err;
 
                         if (isMatch){
-                            
-                            
-                            console.log(user);                   
+                            //console.log(user);                   
                             
                             return done(null, user);
                         } else {
@@ -95,7 +118,7 @@ module.exports = function(passport) {
     })
  );
 
-/*
+
 
  passport.use(
     'local-login-dipendente', 
@@ -124,10 +147,33 @@ module.exports = function(passport) {
     })
  );
 
+ 
+passport.use(
+    'local-login-manager', 
+    new LocalStrategy({ usernameField: "username" }, (username, password, done) =>{
+        // MATCH USER
+        User2.findOne({ username: username , ruolo:"Manager"})
+            .then(user => {
+                if(!user){
+                    return done(null, false, { message: "username sbagliato"});
+                } else {
+                    //match password
+                    bcrypt.compare(password, user.password, (err, isMatch) => {
+                        if (err) throw err;
 
-*/
+                        if (isMatch){
+                            return done(null, user);
+                        } else {
+                            return done(null, false, { message: "password sbagliata"});
+                        }
+                    });
+                }
+            })
+            .catch(err => {
+                return done(null, false, {message: err});
+            });;
+    })
+);
 
-
-//module.exports = globalUserLogged;
 
 module.exports = passport;

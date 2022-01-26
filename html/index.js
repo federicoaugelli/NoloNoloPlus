@@ -31,7 +31,6 @@ Copyright (c) 2021 by Fabio Vitali
 
 global.rootDir = __dirname;
 global.startDate = null; 
-//global.userLogged = "nessun"; 
 
 const template = require(global.rootDir + '/scripts/tpl.js') ; 
 const mymongo = require(global.rootDir + '/scripts/mongo.js') ; 
@@ -183,11 +182,7 @@ app.delete('/db/deleteObject', async function(req, res) {
 	let oldObject = req.body.oldObject	
 	res.send(await mymongo.deleteObject(oldObject,mongoCredentials))
 });
-/*
-app.post('/db/loggedUserSetFalse', async function(req,res){
-    res.send(await mymongo.loggedUserSetFalse(mongoCredentials))
-})
-*/
+
 
 /* ========================== */
 /*                            */
@@ -197,32 +192,23 @@ app.post('/db/loggedUserSetFalse', async function(req,res){
 
 const session = require('express-session');
 const passport = require('passport');
-//const checkUserLogin = require('./app/middleware/check-user-login');
+const checkUserLogin = require('./app/middleware/check-user-login');
 
 
 //    router
 const loginRouter = require('./app/routes/login.js');
 const userRouter = require('./app/routes/user.js');
 const registerRouter = require('./app/routes/register.js');
-//const crudRouter = require('./app/routes/crud.js');
-//const conn = require('./scripts/mongoose');
 
-//    view engine setup html
-//app.use(express.static(path.join(__dirname, 'public')));
-//app.set('views', path.join(__dirname, './app/views'));
-
-app.set('views', path.join(__dirname, './public/views'))
+app.set('views', path.join(__dirname, './public/views'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
-//const MongoStore = require('connect-mongo')(session);
-
-//   app.use
 app.use(session({
 	secret: 'chiaveSegreta123',
 	saveUninitialized: false,
-	resave: false
-	//cookie: { maxAge: 600000 }
+	resave: false,
+	cookie: { maxAge: 600000 }
 }));
 
 app.use(passport.initialize());
@@ -230,15 +216,14 @@ app.use(passport.session());
 
 app.use(loginRouter);
 app.use(registerRouter);
-app.use('/user'/*, checkUserLogin()*/, userRouter);
-//app.use('/user1', checkUserLogin1(), userRouter1);
+app.use('/user', checkUserLogin(), userRouter);
 
-/*
-app.use(function(req,res,next){
-	res.locals.currentUser = req.user;
+app.use((req, res, next) => {
+	console.log(req.session);
+	console.log(req.user);
 	next();
-  })
-*/
+})
+
 
 /* ========================== */
 /*                            */

@@ -5,14 +5,14 @@ const User = require('../app/model/dipendentiModel.js');
 
 
 
-passport.serializeUser((User, done) => {
-    done(null, User.id);
+passport.serializeUser((user, done) => {
+    done(null, user.id);
 });
 
 
 passport.deserializeUser((id, done) => {
-    User.findById(id, (err, user) => {
-        done(err, user);
+    User.findById(id).then((user) => {
+        done(null, user);
     });
 });
 

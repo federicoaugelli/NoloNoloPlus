@@ -2,7 +2,7 @@ module.exports = () => {
 
     return (req,res,next) => {
 
-        if(!req.isAuthenticated()) return res.redirect('/docs/backend');
+        if(!req.isAuthenticated()) return res.redirect('/docs/frontend');
 
         next();
     }

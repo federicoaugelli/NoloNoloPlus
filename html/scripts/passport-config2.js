@@ -5,8 +5,8 @@ const User = require('../app/model/dipendentiModel.js');
 
 
 
-passport.serializeUser((User, done) => {
-    done(null, User.id);
+passport.serializeUser((user, done) => {
+    done(null, user.id);
 });
 
 
@@ -45,5 +45,10 @@ passport.use(
             });;
     })
 );
+
+
+
+
+
 
 module.exports = passport;

@@ -1,3 +1,4 @@
+const { response } = require('express');
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
@@ -12,7 +13,7 @@ const passportConfig3 = require('../../scripts/passport-config3');
 // POSSO ACCEDERE ALLA ROTTA USER/BACKENDLOGGED SOLO SE SONO AUTENTICATO
 router.get('/docs/backend', (req,res) => {
     if(req.isAuthenticated()) return res.redirect('/user/backendlogged');
-    else return res.render('/docs/backend');
+    res.render('/docs/backend');
 });
 
 
@@ -42,8 +43,8 @@ router.get('/backendlogout', (req,res) => {
 
 //              POSSO ACCEDERE ALLA ROTTA USER/FRONTENDLOGGED SOLO SE SONO AUTENTICATO
 router.get('/docs/frontend', (req,res) => {
-    if(req.isAuthenticated()) return res.redirect('/user/frontendlogged')
-    else return res.render('/docs/frontend');
+    if(req.isAuthenticated()) return res.redirect('/user/frontendlogged');
+    res.render('/docs/frontend');
     //console.log(req.user);
 });
 
@@ -55,7 +56,11 @@ router.post('/docs/frontend', passport.authenticate('local-login-cliente', {
     failureRedirect: '/docs/frontend'
     
     
-})); 
+}), (request, response) => {
+
+    console.log(request.user)
+    
+}); 
 
 
 //               IL LOGOUT MI RIMANDA AL FRONTEND
@@ -72,7 +77,7 @@ router.get('/frontendlogout', (req,res) => {
 //              POSSO ACCEDERE ALLA ROTTA USER/DASHBOARD SOLO SE SONO AUTENTICATO
 router.get('/docs/dashboard', (req,res) => {
     if(req.isAuthenticated()) return res.redirect('/user/dashboardlogged');
-    else return res.render('/docs/frontend');
+    res.render('/docs/dashboard');
 });
 
 

@@ -148,9 +148,9 @@ var oldUser = null;
         contentType: "application/x-www-form-urlencoded",
         success: function(data){
 
-          console.log(oldUser)
-          console.log(formData)
-          console.log(data)
+          //console.log(oldUser)
+          //console.log(formData)
+          //console.log(data)
 
           if(data){
 
@@ -310,7 +310,7 @@ var oldUser = null;
      `;
    
  cardBody.appendChild(div);
- console.log(d.result[i])
+ //console.log(d.result[i])
  }    
  }
 
@@ -386,7 +386,7 @@ var oldUser = null;
     </td>`;
    
    tbody.appendChild(tr);
-   console.log(d.result[i])
+   //console.log(d.result[i])
    }    
    }
 
@@ -469,8 +469,8 @@ var oldUser = null;
 
     var formData = $("#modObjectForm").serializeArray();
 
-     console.log(formData)
-     console.log(oldObject)
+     //console.log(formData)
+     //console.log(oldObject)
 
     if(
       formData[0].value != " " &&
