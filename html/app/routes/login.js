@@ -3,8 +3,8 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const passportConfig = require('../../scripts/passport-config');
-const passportConfig2 = require('../../scripts/passport-config2');
-const passportConfig3 = require('../../scripts/passport-config3');
+//const passportConfig2 = require('../../scripts/passport-config2');
+//const passportConfig3 = require('../../scripts/passport-config3');
 
 
 
@@ -59,7 +59,7 @@ router.post('/docs/frontend', passport.authenticate('local-login-cliente', {
 }), (request, response) => {
 
     console.log(request.user)
-    
+    response.render()
 }); 
 
 

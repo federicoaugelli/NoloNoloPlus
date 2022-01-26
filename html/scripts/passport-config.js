@@ -73,18 +73,48 @@ passport.serializeUser((user, done) => {
 });
 
 
-
+/*
 passport.deserializeUser((id, done) => {
+    
     User.findById(id).then((user) => {
         done(null, user);
+    });
+});
+*/
+
+
+passport.deserializeUser((id, done) => {
+    
+    User.findById(id).then((user) => {
+        if(null) done(null);
+        else if(user) done(null, user);
+        else {
+
+        User2.findById(id).then((user) => {
+            if(null) done(null);
+                done(null, user);
+            });
+        }
     });
 });
 
 
 
 
-
-
+/*
+passport.deserializeUser(function(id, done){
+    adminSchema.findById(id, function(err, user){
+      if(err) done(err);
+        if(user){
+          done(null, user);
+        } else {
+           UserSchema.findById(id, function(err, user){
+           if(err) done(err);
+           done(null, user);
+        })
+    }
+ });
+*/
 
 
 
