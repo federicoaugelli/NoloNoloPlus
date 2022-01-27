@@ -69,6 +69,7 @@ module.exports = function(passport) {
 
 
 passport.serializeUser((user, done) => {
+    
     done(null, user.id);
 });
 
@@ -89,7 +90,6 @@ passport.deserializeUser((id, done) => {
         if(null) done(null);
         else if(user) done(null, user);
         else {
-
         User2.findById(id).then((user) => {
             if(null) done(null);
                 done(null, user);
@@ -122,7 +122,7 @@ passport.deserializeUser(function(id, done){
     'local-login-cliente', 
     new LocalStrategy({ usernameField: "username" }, (username, password, done) =>{
         // MATCH USER
-
+        
         User.findOne({ username: username})
             .then(user => {
                 if(!user){

@@ -9,12 +9,8 @@ const noleggioSchema = new Schema({
     usernameFunzionario : { type: String, required:false, unique:false },
     inizioNoleggio : { type: String, required:false, unique:false },
     fineNoleggio : { type: String, required:false, unique:false },
-<<<<<<< Updated upstream
-    stato: { type: String, required:false, unique:false }
-=======
     prezzoTotale : { type: Number, required:true, unique: false },
-    stato: { type: String, required:false, unique:false },
->>>>>>> Stashed changes
+    stato: { type: String, required:false, unique:false }
 
 });
   

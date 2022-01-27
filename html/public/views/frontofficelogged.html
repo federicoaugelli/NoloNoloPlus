@@ -39,7 +39,7 @@
           <input class="form-control me-2" type="search" placeholder="Cerca" aria-label="inserisci la tua parola chiave di ricerca" v-model="searchQuery">
         </form>
         <div class="nav-item navbar-nav mr-auto dropdown">
-          <a role="button" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Ciao cliente.name</a>
+          <a role="button" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Ciao <%= username %></a>
           <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
             <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#clientModal">il Mio Account</a></li>
             <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#noleggiModal">I Miei Ordini</a></li>
@@ -67,7 +67,6 @@
     </div>
   </div>
 
-<<<<<<< Updated upstream
   <!-- NAVBAR -->
     <nav class="navbar navbar-dark navbar-expand-md bg-primary sticky-top py-4">
       <div class="container-fluid">
@@ -85,33 +84,6 @@
               </a>                    
             </li>
           </ul> 
-=======
-<!-- modal noleggi -->
-  <div class="modal fade" id="noleggiModal" tabindex="-1" aria-labelledby="modalNoleggi" aria-hidden="true">
-    <div class="modal-dialog modal-fullscreen modal-dialog-centered">
-      <div style="background-color: #031336;" class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">I Miei Ordini</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div v-for="item in userItems" :key="item.usernameCliente">
-            <h5 class="">{{ item.titoloNoleggiato }}</h5>
-            <div>dal {{ item.inzioNoleggio }} al {{ item.fineNoleggio }}</div>
-            <div>prezzo: {{ item.prezzoTotale }}€</div>
-            <div v-if="item.stato == 'futuro'">
-              <button class="btn btn-primary">Modifica noleggio</button>
-              <button class="btn btn-danger">Cancella noleggio</button>
-            </div>
-            <div v-else-if="item.stato == 'terminato'">
-              <button class="btn btn-primary">Visualizza Fatture</button>
-            </div>
-            <div v-else>
-              <button class="btn btn-success" disabled>In Corso</button>
-            </div>
-          </div>
-        </div>
->>>>>>> Stashed changes
       </div>
     </div>
   </div>

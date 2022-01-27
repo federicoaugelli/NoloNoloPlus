@@ -1,3 +1,4 @@
+/*
 var mongoose = require('mongoose');
 
 //const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
@@ -16,4 +17,4 @@ conn.on('error', console.error.bind(console, 'connection error:'));
 
 
 
-module.exports = conn;
+module.exports = conn;*/

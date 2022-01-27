@@ -1,13 +1,14 @@
-const { response } = require('express');
+const { response, request } = require('express');
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const passportConfig = require('../../scripts/passport-config');
+const checkUserLogin = require('../middleware/check-user-login');
 //const passportConfig2 = require('../../scripts/passport-config2');
 //const passportConfig3 = require('../../scripts/passport-config3');
 
-
-
+//const cookieParser = require('cookie-parser');
+//app.use(cookieParser());
 //                                                                                       LOGIN BACKEND
 
 // POSSO ACCEDERE ALLA ROTTA USER/BACKENDLOGGED SOLO SE SONO AUTENTICATO
@@ -16,12 +17,16 @@ router.get('/docs/backend', (req,res) => {
     res.render('/docs/backend');
 });
 
+router.get('/user/backendlogged', function(req, res){
+    const { user: { username } = {} } = req;
+    console.log(username)
+    res.render('backofficelogged', {username});
+    });
 
 //                SE SONO AUTENTICATO VADO AL BACKENDLOGGED SENNO MI RIMANDA AL LOGIN
 router.post('/docs/backend', passport.authenticate('local-login-dipendente', {
     successRedirect: '/user/backendlogged',
     failureRedirect: '/docs/backend'
-    //successFlash: 'Welcome!'
 })); 
 
 
@@ -47,6 +52,13 @@ router.get('/docs/frontend', (req,res) => {
     res.render('/docs/frontend');
     //console.log(req.user);
 });
+
+
+router.get('/user/frontendlogged', function(req, res){
+    const { user: { username } = {} } = req;
+    console.log(username)
+    res.render('frontofficelogged', {username});
+    });
 
 
 

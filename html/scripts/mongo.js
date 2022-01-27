@@ -47,7 +47,7 @@ MongoClient.connect(mongouri, {
         return console.log(err);
     }
     // Specify database you want to access
-    console.log(`MongoDB Connected: ${mongouri} to dbname: ${dbname} and collection: ${collection}`);
+    console.log(`MongoDB Connected: ${mongouri} to dbname: ${dbname}`);
 });
 
 
