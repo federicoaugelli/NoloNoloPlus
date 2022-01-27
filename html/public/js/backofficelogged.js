@@ -289,12 +289,7 @@ var oldUser = null;
        <div class="card-body">
          <h5 class="card-title">` + game + `</h5>
          <h3 class="card-platform">` + platform + `</h3>
-         <a data-bs-toggle="modal" data-bs-target="#card-modal" class="rentbtn">
-           <span></span>
-           <span></span>
-           <span></span>
-           <span></span>
-           Noleggia
+         <button data-bs-toggle="modal" data-bs-target="#noleggia-modal" class="btn btn-primary" aria-label="bottone di modifica cliente" type="button" onclick="creaNoleggio(this)"><i class="bi bi-pencil-square"> Noleggia</i></button>
          </a>
          <h6 style="color: white; margin-top: 10px;">` + prezzo + ` € al giorno</h6>
        </div>
@@ -303,11 +298,8 @@ var oldUser = null;
          <small class="text-muted">in ` + condizioni + ` condizioni</small>
        </div>
      </div>
-   </div>
-  
-     
-
-     `;
+    </div>
+    `;
    
  cardBody.appendChild(div);
  //console.log(d.result[i])
@@ -315,6 +307,14 @@ var oldUser = null;
  }
 
    
+ function creaNoleggio(e){
+
+  let current = e.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName;
+  let etaMinima = current.getElementById("pegi").textContent;
+  console.log(etaMinima)
+
+
+ }
 
 
      

@@ -417,38 +417,43 @@
  <div class="album py-5">
    <div class="container">
      <div id="card-list" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-    
-   <!-- 
-    <div class="col">
-      <div class="card shadow-sm gameCard" style="text-align: center;">
-        <div id="pegi" class="card-pegi">PEGI</div>
-        <img id="image" src="..." class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <a data-bs-toggle="modal" data-bs-target="#card-modal" class="rentbtn">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            Noleggia
-          </a>
-          <h6 style="color: white; margin-top: 10px;"> € al giorno</h6>
-        </div>
-        <div class="card-footer">
-          <small class="text-muted" style="position: absolute; right: 0; margin-right: 10px;">anno uscita</small>
-          <small class="text-muted">in  condizioni</small>
-        </div>
-      </div>
-    </div>
-
-
-
-    -->
   </div>
   </div>
  </div>
 
+                                                   <!-- CARD LIST NOLEGGIO-->
 
+ <div class="modal fade" id="noleggia-modal" tabindex="-1" aria-labelledby="card-modalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-fullscreen-sm-down modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{ modalItem.game }} per {{ modalItem.platform }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="card-body">
+          <h5>Il gioco è uscito nel {{ modalItem.annoUscita }}, è {{ modalItem.stato }} e in {{ modalItem.condizioni }} condizioni.</h6>
+          <h6>Età minima: {{ modalItem.etaMinima }}</h6>
+          <h6>Peso: {{ modalItem.peso }}</h6>
+          <h6>Numero giocatori: {{ modalItem.numGiocatori }}</h6>
+          <div style="margin-top: 40px; margin-bottom: 40px;">
+            <h4>Quando vorresti noleggiarlo?</h4>
+            <label for="startRent">Da:</label>
+            <input type="date" id="startRent" name="startRent" v-model="startDate">
+            <label for="finishRent">A:</label>
+            <input type="date" id="finishRent" name="finishRent" v-model="endDate">
+          </div>
+          <h5>I tuoi punti fedeltà: user.punti</h5>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <p class="me-auto">costo: {{ calculateDate }}€</p>
+        <button v-if="modalItem.disponibile" type="button" class="btn btn-primary" v-on:click="calculateDate()">Noleggia</button>
+        <button v-else type="button" class="btn btn-primary" disabled>Non Disponibile</button>
+      </div>
+    </div>
+  </div>
+</div>
 
   </body>
 

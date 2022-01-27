@@ -3,53 +3,27 @@
 		"usernameCliente": "ciao",
 		"titoloNoleggiato": "Minecraft",
 		"usernameFunzionario": "",
-<<<<<<< Updated upstream
-		"inzioNoleggio": "",
-		"fineNoleggio": "",
-		"stato": ""
-=======
 		"inzioNoleggio": "2022-01-27",
 		"fineNoleggio": "2022-02-27",
 		"prezzoTotale": 29.99,
-		"stato": "futuro",
->>>>>>> Stashed changes
+		"stato": "futuro"
 	},
     {
 		"usernameCliente": "ciao",
 		"titoloNoleggiato": "Battlefield",
 		"usernameFunzionario": "",
-<<<<<<< Updated upstream
-		"inzioNoleggio": "",
-		"fineNoleggio": "",
-		"stato": ""
-=======
 		"inzioNoleggio": "2022-01-01",
 		"fineNoleggio": "2022-02-01",
 		"prezzoTotale": 39.99,
-		"stato": "in corso",
->>>>>>> Stashed changes
+		"stato": "in corso"
 	},
     {
 		"usernameCliente": "ciao",
 		"titoloNoleggiato": "Cyberpunk 2077",
 		"usernameFunzionario": "",
-<<<<<<< Updated upstream
-		"inzioNoleggio": "",
-		"fineNoleggio": "",
-		"stato": ""
-	},
-    {
-		"usernameCliente": "",
-		"titoloNoleggiato": "",
-		"usernameFunzionario": "",
-		"inzioNoleggio": "",
-		"fineNoleggio": "",
-		"stato": ""
-=======
 		"inzioNoleggio": "2021-01-01",
 		"fineNoleggio": "2022-01-01",
 		"prezzoTotale": 99.99,
-		"stato": "terminato",
->>>>>>> Stashed changes
+		"stato": "terminato"
 	}
 ]
