@@ -284,18 +284,18 @@ var oldUser = null;
      `
      <div class="col">
      <div class="card shadow-sm gameCard" style="text-align: center;">
-       <div id="pegi" class="card-pegi">PEGI ` + etaMinima + `</div>
-       <img id="image" src="/img/prova1.png" class="card-img-top" alt="...">
+       <div id="pegi" class="val">PEGI ` + etaMinima + `</div>
+       <img id="image" src="/img/prova1.png" class="val" alt="...">
        <div class="card-body">
-         <h5 class="card-title">` + game + `</h5>
-         <h3 class="card-platform">` + platform + `</h3>
+         <h5 class="val">` + game + `</h5>
+         <h3 class=val">` + platform + `</h3>
          <button data-bs-toggle="modal" data-bs-target="#noleggia-modal" class="btn btn-primary" aria-label="bottone di modifica cliente" type="button" onclick="creaNoleggio(this)"><i class="bi bi-pencil-square"> Noleggia</i></button>
          </a>
-         <h6 style="color: white; margin-top: 10px;">` + prezzo + ` € al giorno</h6>
+         <h6 class="val" style="color: white; margin-top: 10px;">` + prezzo + ` € al giorno</h6>
        </div>
        <div class="card-footer">
-         <small class="text-muted" style="position: absolute; right: 0; margin-right: 10px;">` + annoUscita + `</small>
-         <small class="text-muted">in ` + condizioni + ` condizioni</small>
+         <small class="val" style="position: absolute; right: 0; margin-right: 10px;">` + annoUscita + `</small>
+         <small class="val">in ` + condizioni + ` condizioni</small>
        </div>
      </div>
     </div>
@@ -309,9 +309,16 @@ var oldUser = null;
    
  function creaNoleggio(e){
 
-  let current = e.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName;
-  let etaMinima = current.getElementById("pegi").textContent;
-  console.log(etaMinima)
+  let current = e.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+  let etaMinima = current.getElementsByClassName("val")[0].textContent;
+  let game = current.getElementsByClassName("val")[2].textContent;
+  let platform = current.getElementsByClassName("val")[3].textContent;
+  let prezzo = current.getElementsByClassName("val")[4].textContent;
+  console.log(game)
+  let modal = document.getElementById("noleggia-modal");
+  let data1 = modal.getElementsByClassName("newval");
+  data1.value = "2ss"//game + " per " + platform;
+
 
 
  }

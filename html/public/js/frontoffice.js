@@ -62,3 +62,19 @@ function loggedUserSetFalse(){
     
 });
 }
+
+
+function showHideLoginRegister(){
+
+  var x = document.getElementsByClassName("login");
+  var y = document.getElementsByClassName("sign-up-form");
+
+  if (x.style.display === "none") {
+    y.style.display = "block";
+  } else {
+    y.style.display = "none";
+  }
+
+
+
+}

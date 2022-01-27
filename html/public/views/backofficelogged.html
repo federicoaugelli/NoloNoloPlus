@@ -426,32 +426,38 @@
  <div class="modal fade" id="noleggia-modal" tabindex="-1" aria-labelledby="card-modalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-fullscreen-sm-down modal-dialog-centered">
     <div class="modal-content">
+
+
+
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">{{ modalItem.game }} per {{ modalItem.platform }}</h5>
+        <h5 class="newval" id="exampleModalLabel"></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="card-body">
-          <h5>Il gioco è uscito nel {{ modalItem.annoUscita }}, è {{ modalItem.stato }} e in {{ modalItem.condizioni }} condizioni.</h6>
-          <h6>Età minima: {{ modalItem.etaMinima }}</h6>
-          <h6>Peso: {{ modalItem.peso }}</h6>
-          <h6>Numero giocatori: {{ modalItem.numGiocatori }}</h6>
+          <h5 class="newval">Il gioco è uscito nel {{ modalItem.annoUscita }}, è {{ modalItem.stato }} e in {{ modalItem.condizioni }} condizioni.</h6>
+          <h6 class="newval">Età minima: {{ modalItem.etaMinima }}</h6>
+          <h6 class="newval">Peso: {{ modalItem.peso }}</h6>
+          <h6 class="newval">Numero giocatori: {{ modalItem.numGiocatori }}</h6>
           <div style="margin-top: 40px; margin-bottom: 40px;">
             <h4>Quando vorresti noleggiarlo?</h4>
             <label for="startRent">Da:</label>
-            <input type="date" id="startRent" name="startRent" v-model="startDate">
+            <input class="newval" type="date" id="startRent" name="startRent">
             <label for="finishRent">A:</label>
-            <input type="date" id="finishRent" name="finishRent" v-model="endDate">
+            <input class="newval" type="date" id="finishRent" name="finishRent">
           </div>
           <h5>I tuoi punti fedeltà: user.punti</h5>
         </div>
       </div>
       <div class="modal-footer">
-        <p class="me-auto">costo: {{ calculateDate }}€</p>
+        <p class="newval">costo: {{ calculateDate }}€</p>
         <button v-if="modalItem.disponibile" type="button" class="btn btn-primary" v-on:click="calculateDate()">Noleggia</button>
         <button v-else type="button" class="btn btn-primary" disabled>Non Disponibile</button>
       </div>
     </div>
+
+
+
   </div>
 </div>
 

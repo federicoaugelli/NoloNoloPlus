@@ -114,9 +114,9 @@
   <div class="album py-5">
     <div class="container">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-
+        
         <div class="col" v-for="item in resultQuery" :key="item.game">
-          <!-- implementare card 'Nessun elemento' -->
+          <!-- implementare card 'Nessun elemento' -->       
           <div class="card shadow-sm gameCard" style="text-align: center;">
             <div class="pegi">PEGI {{ item.etaMinima }}</div>
             <img v-if="item.platform == 'Playstation 4' || item.platform == 'Playstation 5'" class="platform-logo playstation" src="/img/playstation-brands.svg" alt="Card image1">
