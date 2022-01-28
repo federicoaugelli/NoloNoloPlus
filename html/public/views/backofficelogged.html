@@ -372,7 +372,7 @@
   <div class="container-fluid">
     <div class="navbar-brand ml-auto">      
       <div class="btn-group">
-        <button class="btn btn-dark btn-outline-light btn-lg" type="button"> NOLO-NOLO BACKOFFICE LOGGED <%= username %></button> 
+        <button class="btn btn-dark btn-outline-light btn-lg" type="button"> NOLO-NOLO BACKOFFICE <%= username %></button> 
         <button type="button" class="btn btn-outline-light btn-lg btn-dark dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
           <span class="visually-hidden">Vedi Azioni Dropdown</span>
         </button>
@@ -409,7 +409,7 @@
                                                    <!-- FINE NAVBAR -->
                                                    
 
-                                                   <!-- CARD LIST -->
+                                                   <!-- CARD LIST HOME BACKENDLOGGED-->
                                                    
 
 
@@ -421,23 +421,20 @@
   </div>
  </div>
 
-                                                   <!-- CARD LIST NOLEGGIO-->
+                                                   <!-- MODAL CREA NOLEGGIO -->
 
  <div class="modal fade" id="noleggia-modal" tabindex="-1" aria-labelledby="card-modalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-fullscreen-sm-down modal-dialog-centered">
     <div class="modal-content">
-
-
-
       <div class="modal-header">
         <h5 class="newval" id="exampleModalLabel"></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="card-body">
-          <h5 class="newval">Il gioco è uscito nel {{ modalItem.annoUscita }}, è {{ modalItem.stato }} e in {{ modalItem.condizioni }} condizioni.</h6>
-          <h6 class="newval">Età minima: {{ modalItem.etaMinima }}</h6>
-          <h6 class="newval">Peso: {{ modalItem.peso }}</h6>
+          <h5 class="newval"></h6>
+          <h6 class="newval"></h6>
+          <h6 class="newval"></h6>
           <h6 class="newval">Numero giocatori: {{ modalItem.numGiocatori }}</h6>
           <div style="margin-top: 40px; margin-bottom: 40px;">
             <h4>Quando vorresti noleggiarlo?</h4>
