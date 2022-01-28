@@ -105,6 +105,36 @@ router.post("/objectregister", function(req, res){
 );
 
 
+//                      REGISTRAZIONE NUOVO NOLEGGIO
+
+
+const noleggio = require('../model/noleggioModel.js');
+
+
+router.post("/noleggioregister", function(req, res){
+    
+    try{
+        let newRent = new noleggio({
+            usernameCliente: req.body.usernameCliente,
+            titoloNoleggiato: req.body.titoloNoleggiato,
+            usernameFunzionario: req.body.usernameFunzionario,
+            inizioNoleggio: req.body.inizioNoleggio,
+            fineNoleggio: req.body.fineNoleggio,
+            prezzoTotale: req.body.prezzoTotale,
+            stato: "in corso"
+            
+    });
+        newRent.save();
+        res.redirect('/user/backendlogged');	
+        
+    }
+    catch(error){
+        res.status(500).send(error);
+    }
+},
+);
+
+
 
 
 

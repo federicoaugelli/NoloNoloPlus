@@ -213,7 +213,7 @@ app.delete('/db/deleteLease', async function(req, res) {
 /* ========================== */
 
 
-
+/*
 
 var mongoose = require('mongoose');
 
@@ -231,7 +231,7 @@ conn.on('disconnected',function(){
     console.log('database is disconnected successfully');
 })
 conn.on('error', console.error.bind(console, 'connection error:'));
-
+*/
 
 
 /* ========================== */

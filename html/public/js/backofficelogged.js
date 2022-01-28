@@ -18,6 +18,7 @@ function findClienti() {
        contentType: "application/x-www-form-urlencoded",
        success: function (d) {
         creaTabellaClienti(d);
+        listClientiSelectNoleggio(d);
        },
      });
 }
@@ -289,10 +290,11 @@ var oldUser = null;
        <div class="card-body">
          <h3 style="color: white;" class="val">` + game + `</h3>
          <h5 style="color: white;" class="val">` + platform + `</h5>
-         <button data-bs-toggle="modal" data-bs-target="#noleggia-modal" class="btn btn-primary" aria-label="bottone di modifica cliente" type="button" onclick="creaNoleggio(this)"><i class="bi bi-pencil-square"> Noleggia</i></button>
+         <button data-bs-toggle="modal" data-bs-target="#noleggia-modal" class="btn btn-primary" aria-label="bottone di modifica cliente" type="button" onclick="creaNoleggio(this); findClienti()"><i class="bi bi-pencil-square"> Noleggia</i></button>
          </a>
          <br>    
          <h5 class="val" style="color: white; margin-top: 20px;">` + prezzo + ` € al giorno</h5>
+         
        </div>
        <div class="card-footer">
          <small style="color: white;" class="val" style="position: absolute; left: 0; margin-left: 10px;">` + annoUscita + `</small>
@@ -320,20 +322,77 @@ var oldUser = null;
   let stato = current.getElementsByClassName("val")[6].textContent;
   let condizioni = current.getElementsByClassName("val")[7].textContent;
 
-  console.log(game)
+  //console.log(game)
   let modal = document.getElementById("noleggia-modal");
   let data1 = modal.getElementsByClassName("newval")[0];
-  data1.innerHTML = game + " per " + platform;
+  data1.value = game;
   let data2 = modal.getElementsByClassName("newval")[1];
-  data2.innerHTML = "Il gioco è uscito nel " + annoUscita + " , è " + stato + " e in "+ condizioni + " condizioni";
-  let data3 = modal.getElementsByClassName("newval")[2];
-  data3.innerHTML =  etaMinima;
+  data2.value = platform;
 
-
-
+  //let data3 = modal.getElementsByClassName("newval")[2];
+ // data3.value = <%= username %>;
+  //let data2 = modal.getElementsByClassName("newval")[1];
+  //data2.innerHTML = "Il gioco è uscito nel " + annoUscita + " , è " + stato + " e in "+ condizioni + " condizioni";
+  
+  //let x = document.getElementById("usernameFunzionario").textContent;
+  //console.log(x)
  }
 
+ 
+ function  listClientiSelectNoleggio(d){
+  
+  for (let i in d.result) {
 
+    let idCliente = d.result[i]._id;
+    let username = d.result[i].username;
+    let punti = d.result[i].punti;
+
+    let option = document.createElement("OPTION");
+    option.setAttribute("value", username);
+    let option2 = document.createTextNode(username);
+    option.appendChild(option2);
+    document.getElementById("usernameCliente").appendChild(option);
+  
+ }
+}
+
+
+function calcolaCosto(){
+
+  let date1 = document.getElementById("startRent").value;
+  let date2 = document.getElementById("finishRent").value;
+  console.log(date1)
+ console.log(getDifferenceInDays(date1,date2))
+ getDifferenceInDays(date1,date2)
+
+  /*
+  var Difference_In_Time = parseInt( date2 - date1);
+  
+  
+  // To calculate the no. of days between two dates
+  var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+
+  //let x = datediff(parseDate(date1,parseDate(date2)));
+
+  console.log(Difference_In_Days)
+*/
+
+}
+function getDifferenceInDays(date1, date2) {
+  const diffInMs = Math.abs(date2 - date1);
+  return diffInMs / (1000 * 60 * 60 * 24);
+}
+ 
+function parseDate(str) {
+  var mdy = str.split('/');
+  return new Date(mdy[2], mdy[0]-1, mdy[1]);
+}
+
+function datediff(first, second) {
+  // Take the difference between the dates and divide by milliseconds per day.
+  // Round to nearest whole number to deal with DST.
+  return Math.round((second-first)/(1000*60*60*24));
+}
      
    
                                                                              //CREA LA TABELLA PER L'INVENTARIO

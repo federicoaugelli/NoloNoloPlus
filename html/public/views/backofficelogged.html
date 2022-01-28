@@ -427,28 +427,46 @@
   <div class="modal-dialog modal-lg modal-fullscreen-sm-down modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="newval" id="exampleModalLabel"></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <form method="POST" action="/noleggioregister">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <h2>CREA NOLEGGIO</h2>
       </div>
       <div class="modal-body">
         <div class="card-body">
+          <div class="mb-3">
+            <label for="titoloNoleggiato">TITOLO :</label>  
+            <input type="text" class="newval" id="titoloNoleggiato" name="titoloNoleggiato" size="50" readonly><br><br>
+          </div>
+          <div class="mb-3">
+            <label for="piattaforma">PIATTAFORMA :</label>  
+            <input type="text" class="newval" id="piattaforma" name="piattaforma" size="50" readonly><br><br>
+          </div>
+          <h5>Il tuo Username è :</h5>
+          <h5 id="usernameFunzionario" class="newval" name="usernameFunzionario"> <%= username %></h5>
           <h5 class="newval"></h6>
           <h6 class="newval"></h6>
           <h6 class="newval"></h6>
-          <h6 class="newval">Numero giocatori: {{ modalItem.numGiocatori }}</h6>
+          <div class="mb-3">
+            <label class="formGroupExampleInput" for="usernameCliente">NOME CLIENTE </label>
+              <select class="form-control" id="usernameCliente" name="usernameCliente">                 
+             </select>
+          </div>
           <div style="margin-top: 40px; margin-bottom: 40px;">
             <h4>Quando vorresti noleggiarlo?</h4>
             <label for="startRent">Da:</label>
             <input class="newval" type="date" id="startRent" name="startRent">
             <label for="finishRent">A:</label>
             <input class="newval" type="date" id="finishRent" name="finishRent">
+            <button type="button" class="btn btn-primary" onclick="calcolaCosto()">Calcola costo</button>
           </div>
-          <h5>I tuoi punti fedeltà: user.punti</h5>
         </div>
       </div>
       <div class="modal-footer">
-        <p class="newval">costo: {{ calculateDate }}€</p>
-        <button v-if="modalItem.disponibile" type="button" class="btn btn-primary" v-on:click="calculateDate()">Noleggia</button>
+        <p id="prezzoTotale" name="prezzoTotale" class="newval"> 10</p>
+        <div class="mb-3">
+          <input type="submit" class="btn btn-primary" value="Crea noleggio"> 
+        </div>
+      </form>
         <button v-else type="button" class="btn btn-primary" disabled>Non Disponibile</button>
       </div>
     </div>
