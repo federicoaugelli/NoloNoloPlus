@@ -168,8 +168,9 @@ app.post('/db/updateUser', async function(req, res) {
 	res.send(await mymongo.updateUser(oldUser,newUser,mongoCredentials))
 });
 
-app.post('/db/createLease', async function(req, res) {
-	let newLease = req.body.newLease
+app.post('/db/createLease', async function(newLease, res) {
+	//let newLease = req
+	console.log (newLease)
 	res.send(await mymongo.createLease(newLease, mongoCredentials))
 })
 

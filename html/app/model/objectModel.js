@@ -15,7 +15,7 @@ const gameSchema = new Schema({
     prezzo  : { type: String, required:false },
     disponibile : { type: Boolean, required:false},
     img  : { type: String, required:false },
-    id: {type: Number, required: false, unique: true}
+    id: {type: Number, required: false, unique: false}
 });
   
 // plugin for passport-local-mongoose

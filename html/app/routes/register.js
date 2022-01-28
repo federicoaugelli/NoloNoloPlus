@@ -77,7 +77,7 @@ const oggetto = require('../model/objectModel.js');
 
 
 router.post("/objectregister", function(req, res){
-    const idUnique = Math.floor(100000 + Math.random() * 900000);
+    const idUnique = Math.floor(10000000 + Math.random() * 90000000);
     try{
         let newObject = new oggetto({
             game: req.body.game,

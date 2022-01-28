@@ -41,7 +41,7 @@
         <div class="nav-item navbar-nav mr-auto dropstart">
           <a role="button" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" v-model="user = '<%= username %>'">Ciao <%= username %></a>
           <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#clientModal">il Mio Account</a></li>
+            <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#clientModal" v-on:click="getCliente">il Mio Account</a></li>
             <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#noleggiModal">I Miei Ordini</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="/frontendlogout" aria-label="Esci dal frotoffice">Esci</a></li>
@@ -53,15 +53,64 @@
 
 <!-- modal cliente -->
   <div class="modal fade" id="clientModal" tabindex="-1" aria-labelledby="modalClient" aria-hidden="true">
-    <div class="modal-dialog modal-fullscreen modal-dialog-centered">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Il Mio Account</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
+          <div v-for="item in utenti" :key="item.username" v-if="item.username == user">
+            <h4 style="text-align: center;">Benvenuto {{ item.nome }} {{ item.cognome }}</h4>
+            <h5>I Tuoi Dati</h5>
+            <h6>Username: {{ item.username }}</h6>
+            <h6>Indirizzo di fatturazione: {{ item.indirizzo }}</h6>
+            <h6>Punti fedeltà: {{ item.punti }}</h6>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modificaCliente">modifica</button>
+          </div>
         </div>
-        <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+
+<!-- modal modifica cliente -->
+  <div class="modal fade" id="modificaCliente" tabindex="-1" aria-labelledby="modalClient" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Il Mio Account</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div v-for="item in utenti" :key="item.username" v-if="item.username == user">
+            <form class="needs-validation" novalidate>
+              <div class="mb-3">
+                <label for="validationDefaultFirstname" class="form-label">Nome</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="validationDefaultFirstname" :value="item.nome" aria-describedby="inputGroupPrepend1" required>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="validationDefaultLastname" class="form-label">Cognome</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="validationDefaultLastname" :value="item.cognome" aria-describedby="inputGroupPrepend2" required>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="validationPW" class="form-label">Password</label>
+                <div class="input-group">
+                  <input type="password" class="form-control" id="validationPW" aria-describedby="inputGroupPrepend3" required>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="validationbill" class="form-label">Indirizzo</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="validationbill" :value="item.indirizzo" aria-describedby="inputGroupPrepend4" required>
+                </div>
+              </div>
+              <button type="button" class="btn btn-success">conferma modifiche</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
@@ -82,8 +131,8 @@
             <div>dal {{ item.inzioNoleggio }} al {{ item.fineNoleggio }}</div>
             <div>prezzo: {{ item.prezzoTotale }}€</div>
             <div v-if="item.stato == 'futuro'">
-              <button class="btn btn-primary">Modifica noleggio</button>
-              <button class="btn btn-danger">Cancella noleggio</button>
+              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modificaNoleggio" v-on:click="popoModal(item)">Modifica noleggio</button>
+              <button class="btn btn-danger" v-on:click="cancelLease">Cancella noleggio</button>
             </div>
             <div v-else-if="item.stato == 'terminato'">
               <button class="btn btn-primary">Visualizza Fatture</button>
@@ -91,6 +140,35 @@
             <div v-else>
               <button class="btn btn-success" disabled>In Corso</button>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- modal modifica noleggi -->
+  <div class="modal fade" id="modificaNoleggio" tabindex="-1" aria-labelledby="modalNoleggio" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{ modalItem.titoloNoleggiato }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div>
+            <form class="needs-validation" novalidate>
+              <div class="mb-3">
+                <h4>Periodo noleggio</h4>
+                <label for="startRent">Da:</label>
+                <input type="date" id="startRent" name="startRent" v-model="startDate">
+                <label for="finishRent">A:</label>
+                <input type="date" id="finishRent" name="finishRent" v-model="endDate">
+              </div>
+              <div class="mb-3">
+                <label for="validationDefaultFirstname" class="form-label">Prezzo: {{ modalItem.prezzoTotale }}</label>
+              </div>
+              <button type="button" class="btn btn-success">conferma modifiche</button>
+            </form>
           </div>
         </div>
       </div>
@@ -193,6 +271,7 @@
           searchQuery: '',
           items: '',
           user: '',
+          utenti: '',
           userItems: '',
           modalItem: '',
           startDate: '',
@@ -280,6 +359,12 @@
           console.log(this.userItems);
         },
 
+        getCliente(){
+          axios
+            .get('/db/findClienti')
+            .then(response => (this.utenti = response.data.result));
+        },
+
         popoModal(item){
           this.modalItem = item;
         },
@@ -307,15 +392,29 @@
             this.ipoteticalPrice = ''
           }
         },
+
+        cancelLease(){
+          axios
+            .delete('/db/deleteLease')
+        }
 /*
-        postLease(item){
+        postLease(){
           const Lease = {
-            "usernameCliente": this.user,
-            "titoloNoleggiato": this.,
+            usernameCliente: "ciao",
+            titoloNoleggiato: "a",
+            usernameFunzionario: "",
+            inzioNoleggio: "2022-01-01",
+            fineNoleggio: "2022-02-01",
+            prezzoTotale: 39.99,
+            stato: "in corso",
+            id: 39047032
           }
-          if(item != '') {
+          axios
+              .post('/db/createLease', {Lease})
+              .then(response => console.log(Lease))
+          /*if(item != '') {
             axios
-              .post('/db/createLease', item)
+              .post('/db/createLease', Lease)
             //triggera un toast
           }
           //else triggera un toast
