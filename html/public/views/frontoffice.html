@@ -187,7 +187,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">{{ modalItem.game }} per {{ modalItem.platform }}</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" v-on:click="ipoteticalPrice = 0"></button>
         </div>
         <div class="modal-body">
           <div class="card-body">
@@ -199,8 +199,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <p class="me-auto">costo: {{ ipoteticalPrice }}€</p>
-          <button type="button" class="btn btn-primary" v-on:click="calculateDate()">ipotesi</button>
+          <p v-if="ipoteticalPrice != 0 || ipoteticalPrice != ''" class="me-auto">costo: {{ ipoteticalPrice }}€</p>
+          <button v-else type="button" class="btn btn-primary" class="me-auto" v-on:click="calculateDate()">ipotesi</button>
           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Accedi per noleggiare</button>
         </div>
       </div>
@@ -294,7 +294,7 @@
             this.ipoteticalPrice = parseFloat(this.modalItem.prezzo) * (this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)))
           }
           else{
-            this.ipoteticalPrice = "errore di calcolo"
+            this.ipoteticalPrice = ''
           }
 
 

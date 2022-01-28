@@ -168,11 +168,21 @@ app.post('/db/updateUser', async function(req, res) {
 	res.send(await mymongo.updateUser(oldUser,newUser,mongoCredentials))
 });
 
+app.post('/db/createLease', async function(req, res) {
+	let newLease = req.body.newLease
+	res.send(await mymongo.createLease(newLease, mongoCredentials))
+})
 
 app.post('/db/updateObject', async function(req, res) {
 	let oldObject = req.body.oldObject
 	let newObject = req.body.formData
 	res.send(await mymongo.updateObject(oldObject,newObject,mongoCredentials))
+});
+
+app.post('/db/updateLease', async function(req, res) {
+	let oldObject = req.body.oldObject
+	let newObject = req.body.formData
+	res.send(await mymongo.updateLease(oldObject,newObject,mongoCredentials))
 });
 
 
@@ -185,6 +195,11 @@ app.delete('/db/deleteUser', async function(req, res) {
 app.delete('/db/deleteObject', async function(req, res) {
 	let oldObject = req.body.oldObject	
 	res.send(await mymongo.deleteObject(oldObject,mongoCredentials))
+});
+
+app.delete('/db/deleteLease', async function(req, res) {
+	let oldObject = req.body.oldObject	
+	res.send(await mymongo.deleteLease(oldObject,mongoCredentials))
 });
 
 

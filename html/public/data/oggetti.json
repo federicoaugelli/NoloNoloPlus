@@ -10,7 +10,8 @@
 		"numGiocatori": "4",
 		"prezzo": "19,99",
 		"disponibile": true,
-		"img":""
+		"img":"",
+		"id": 00000000
 	},
 	{
 		"game": "Fifa 22",
@@ -23,7 +24,8 @@
 		"numGiocatori": "1",
 		"prezzo": "12,99",
 		"disponibile": true,
-		"img":""
+		"img":"",
+		"id": 11111111
 	},	
 	{
 		"game": "Call Of Duty Vanguaard",
@@ -36,7 +38,8 @@
 		"numGiocatori": "1-4",
 		"prezzo": "69,99",
 		"disponibile": false,
-		"img":""
+		"img":"",
+		"id": 22222222
 	},
 	{
 		"game": "Call Of Duty Vanguaard",
@@ -49,7 +52,8 @@
 		"numGiocatori": "1-4",
 		"prezzo": "29,99",
 		"disponibile": true,
-		"img":""
+		"img":"",
+		"id": 33333333
 	},
 	{
 		"game": "Minecraft",
@@ -63,7 +67,8 @@
 		"prezzo": "2,99",
 		"quantita": "3",
 		"disponibile": true,
-		"img":""
+		"img":"",
+		"id": 44444444
 	},
 	{
 		"game": "Minecraft",
@@ -76,7 +81,8 @@
 		"numGiocatori": "1",
 		"prezzo": "9,99",
 		"disponibile": false,
-		"img":""
+		"img":"",
+		"id": 55555555
 	},
 	{
 		"game": "Grand Theft Auto",
@@ -89,7 +95,8 @@
 		"numGiocatori": "1",
 		"prezzo": "9,99",
 		"disponibile": true,
-		"img":""
+		"img":"",
+		"id": 66666666
 	},
 	{
 		"game": "Grand Theft Auto",
@@ -102,6 +109,7 @@
 		"numGiocatori": "1",
 		"prezzo": "19,99",
 		"disponibile": true,
-		"img":""
+		"img":"",
+		"id": 77777777
 	}
 ]

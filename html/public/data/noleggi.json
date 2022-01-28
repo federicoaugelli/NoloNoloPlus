@@ -6,7 +6,8 @@
 		"inzioNoleggio": "2022-01-27",
 		"fineNoleggio": "2022-02-27",
 		"prezzoTotale": 29.99,
-		"stato": "futuro"
+		"stato": "futuro",
+		"id": 00000000
 	},
     {
 		"usernameCliente": "ciao",
@@ -15,7 +16,8 @@
 		"inzioNoleggio": "2022-01-01",
 		"fineNoleggio": "2022-02-01",
 		"prezzoTotale": 39.99,
-		"stato": "in corso"
+		"stato": "in corso",
+		"id": 11111111
 	},
     {
 		"usernameCliente": "ciao",
@@ -24,6 +26,7 @@
 		"inzioNoleggio": "2021-01-01",
 		"fineNoleggio": "2022-01-01",
 		"prezzoTotale": 99.99,
-		"stato": "terminato"
+		"stato": "terminato",
+		"id": 22222222
 	}
 ]

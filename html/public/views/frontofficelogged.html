@@ -154,7 +154,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">{{ modalItem.game }} per {{ modalItem.platform }}</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" v-on:click="ipoteticalPrice = 0"></button>
         </div>
         <div class="modal-body">
           <div class="card-body">
@@ -173,8 +173,9 @@
           </div>
         </div>
         <div class="modal-footer">
-          <p class="me-auto">costo: {{ calculateDate }}€</p>
-          <button v-if="modalItem.disponibile" type="button" class="btn btn-primary" v-on:click="calculateDate()">Noleggia</button>
+          <p v-if="ipoteticalPrice != 0 || ipoteticalPrice != ''" class="me-auto">costo: {{ ipoteticalPrice }}€</p>
+          <button v-if="modalItem.disponibile" type="button" class="btn btn-primary" class="me-auto" v-on:click="calculateDate()">ipotesi</button>
+          <button v-if="modalItem.disponibile" type="button" class="btn btn-primary" v-on:click="postLease()">Noleggia</button>
           <button v-else type="button" class="btn btn-primary" disabled>Non Disponibile</button>
         </div>
       </div>
@@ -267,11 +268,12 @@
             return this.items;
           }
         },
-
+/*
         calculateDate(){
           this.ipoteticalPrice = parseFloat(this.modalItem.prezzo) * (this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)))
           return this.ipoteticalPrice
         }
+*/
       },
       methods: {
         getUserItems(){
@@ -292,12 +294,33 @@
         },
 
         calculateDate(){
-          this.ipoteticalPrice = parseFloat(this.modalItem.prezzo) * (this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)))
-          console.log(this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)));
-          //var mdyOne = this.startDate.split('-');
-          //var mdyTwo = this.endDate.split('-');
-          //console.log(mdyOne[2], mdyOne[0], mdyOne[1]);
+          console.log(Math.floor(10000000 + Math.random() * 90000000));
+          let yourDate = new Date().toISOString().split('T')[0];
+          console.log(yourDate);
+          console.log(this.startDate);
+          console.log(yourDate.split('-'));
+          console.log(this.parseDate(yourDate));
+          if(this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)) > 0 && this.datediff(this.parseDate(this.startDate), this.parseDate(yourDate)) >= 0){
+            this.ipoteticalPrice = parseFloat(this.modalItem.prezzo) * (this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)))
+          }
+          else{
+            this.ipoteticalPrice = ''
+          }
+        },
+/*
+        postLease(item){
+          const Lease = {
+            "usernameCliente": this.user,
+            "titoloNoleggiato": this.,
+          }
+          if(item != '') {
+            axios
+              .post('/db/createLease', item)
+            //triggera un toast
+          }
+          //else triggera un toast
         }
+        */
       },
     })
 

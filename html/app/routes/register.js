@@ -77,6 +77,7 @@ const oggetto = require('../model/objectModel.js');
 
 
 router.post("/objectregister", function(req, res){
+    const idUnique = Math.floor(100000 + Math.random() * 900000);
     try{
         let newObject = new oggetto({
             game: req.body.game,
@@ -90,7 +91,8 @@ router.post("/objectregister", function(req, res){
             prezzo: req.body.prezzo,
             quantita: req.body.quantita,
             img: req.body.img,   
-            disponibile: req.body.disponibile 
+            disponibile: req.body.disponibile,
+            id: idUnique
     });
         newObject.save();
         res.redirect('/user/backendlogged');	
