@@ -10,7 +10,7 @@ const userSchema = new Schema({
     password : { type: String, required:true, unique:false },
     citta : { type: String, required:false },
     via : { type: String, required:false },
-    punti  : { type: String, required:false }
+    punti  : { type: String }
 });
   
 // plugin for passport-local-mongoose

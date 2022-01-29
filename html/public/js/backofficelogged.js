@@ -233,6 +233,8 @@ var oldUser = null;
     //});
   }
 
+
+
                                                                             
                                                                             /* ========================== */
                                                                             /*                            */
@@ -321,17 +323,22 @@ var oldUser = null;
   let annoUscita = current.getElementsByClassName("val")[5].textContent;
   let stato = current.getElementsByClassName("val")[6].textContent;
   let condizioni = current.getElementsByClassName("val")[7].textContent;
-
+  
   //console.log(game,platform)
   let modal = document.getElementById("noleggia-modal");
+  user = modal.getElementsByClassName("useruser")[0].textContent;
+  user = user.split(" ")[2];
+  console.log(user)
   
+
   let data = modal.getElementsByClassName("newval");
-  data[0].value =  game + ", " + platform;
+  data[0].value = user;
+  //modal.getElementsByClassName("useruser")[0].textContent = " NUOVO NOLEGGIO";
+  data[1].value =  game + ", " + platform;
   
   let prezzo1 = prezzo.split(" ")[0];
+  data[5].value = prezzo1;
   //console.log(prezzo1)
- 
-  data[4].value = prezzo1;
   
   //console.log(data[1].value);
   
@@ -352,8 +359,40 @@ var oldUser = null;
     let option2 = document.createTextNode(username);
     option.appendChild(option2);
     document.getElementById("usernameCliente").appendChild(option);
-  
  }
+
+}
+
+function calcolaPuntiCliente(){
+
+   var usernameCliente = document.getElementById("usernameCliente").value;
+   //console.log(usernameCliente)
+
+  $.ajax({
+    url: "/db/getUserNoleggio",
+    type: "GET",
+    data: { usernameCliente },
+    dataType: "json",
+    contentType: "application/x-www-form-urlencoded",
+        success: function (d) {
+
+          console.log(d)
+          for (let i in d.result) {
+
+            if(d.result[i].username == usernameCliente){
+
+              punti = d.result[i].punti;
+            }
+          }
+          
+      punti = parseInt(punti)
+      console.log(punti)
+     
+      let modal = document.getElementById("noleggia-modal");
+      let data = modal.getElementsByClassName("newval");
+      data[6].value = punti;       
+    },
+  });
 }
 
 function calculateDays() {
@@ -377,8 +416,9 @@ function calcolaCosto(days){
 
   let modal = document.getElementById("noleggia-modal");
   let data = modal.getElementsByClassName("newval");
+  let punti =  modal.getElementsByClassName("newval")[6].value;
 
-  data[6].value = costo * days;
+  data[7].value = costo * days - (punti/10);
   //console.log(costo * days)
   
 }

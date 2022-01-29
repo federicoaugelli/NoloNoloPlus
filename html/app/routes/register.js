@@ -20,8 +20,7 @@ router.post("/frontendregister", function(req, res){
             password: Bcrypt.hashSync(req.body.password, 10),
             citta: req.body.citta,
             via: req.body.via,
-            punti: 0,
-            logged: false      
+            punti: "10"    
     });
 
     registroclienti.findOne({'username' : req.body.username})

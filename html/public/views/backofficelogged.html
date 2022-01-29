@@ -426,23 +426,31 @@
   <div class="modal-dialog modal-lg modal-fullscreen-sm-down modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <form method="POST" action="/noleggioregister">
+          <h2 class="useruser">CREA NOLEGGIO <%= username %></h2>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          <h2>CREA NOLEGGIO</h2>
       </div>
       <div class="modal-body">
+        <form method="POST" action="/noleggioregister" id="modNoleggioForm">
         <div class="card-body">
+          <div class="mb-3">
+            <label for="usernameFunzionario">Dipendente</label>  
+            <input type="text" class="newval" id="usernameFunzionario" name="usernameFunzionario" size="50" readonly><br><br>
+          </div>
           <div class="mb-3">
             <label for="titoloNoleggiato">TITOLO :</label>  
             <input type="text" class="newval" id="titoloNoleggiato" name="titoloNoleggiato" size="50" readonly><br><br>
           </div>
           <h5>Il tuo Username è :</h5>
           <h5 id="usernameFunzionario" class="newval" name="usernameFunzionario"> <%= username %></h5>
-          <div class="mb-3">
+          <div class="mb-3">       
             <label class="formGroupExampleInput" for="usernameCliente">NOME CLIENTE </label>
               <select class="form-control" id="usernameCliente" name="usernameCliente">   
                 <option selected>Scegli...</option>
-              </select>
+              </select> 
+              <br>
+             <!-- <form action="GET" method="/db/getUserNoleggio">-->
+              <button type="button" class="btn btn-primary" onclick="calcolaPuntiCliente()">Calcola punti fedeltà</button>  
+             <!-- </form> -->
           </div>
           <div style="margin-top: 40px; margin-bottom: 40px;">
             <h4>Periodo di noleggio :</h4>
@@ -462,7 +470,7 @@
           </div>
           <div style="margin-top: 40px; margin-bottom: 40px;">
             <label for="prezzoTotale">COSTO TOTALE: </label>
-            <input class="newval" type="text" id="prezzoTotale" name="prezzoTotale" size="20" readonly>
+            <input class="newval" type="text" id="prezzoTotale" name="prezzoTotale" size="20" readonly> euro
           </div>
         </div>
       </div>
@@ -471,7 +479,6 @@
           <input type="submit" class="btn btn-primary" value="Crea noleggio"> 
         </div>
       </form>
-        <button v-else type="button" class="btn btn-primary" disabled>Non Disponibile</button>
       </div>
     </div>
 

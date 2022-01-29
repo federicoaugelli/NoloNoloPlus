@@ -162,6 +162,11 @@ app.get('/db/getUserItems', async function(req, res) {
 	res.send(await mymongo.getUserItems(mongoCredentials))
 });
 
+app.get('/db/getUserNoleggio', async function(req, res) {
+    let usernameCliente = req.body.usernameCliente
+	res.send(await mymongo.getUserNoleggio(usernameCliente,mongoCredentials))
+});
+
 app.post('/db/updateUser', async function(req, res) {
 	let oldUser = req.body.oldUser
 	let newUser = req.body.formData
