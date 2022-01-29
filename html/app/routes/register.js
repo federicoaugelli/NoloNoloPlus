@@ -77,7 +77,7 @@ const oggetto = require('../model/objectModel.js');
 
 
 router.post("/objectregister", function(req, res){
-    const idUnique = Math.floor(10000000 + Math.random() * 90000000);
+    const idUnique = Math.floor(100000 + Math.random() * 900000);
     try{
         let newObject = new oggetto({
             game: req.body.game,
@@ -121,7 +121,7 @@ router.post("/noleggioregister", function(req, res){
             inizioNoleggio: req.body.inizioNoleggio,
             fineNoleggio: req.body.fineNoleggio,
             prezzoTotale: req.body.prezzoTotale,
-            stato: "in corso"
+            stato: req.body.stato
             
     });
         newRent.save();

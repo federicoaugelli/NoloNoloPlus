@@ -290,7 +290,7 @@ var oldUser = null;
        <div class="card-body">
          <h3 style="color: white;" class="val">` + game + `</h3>
          <h5 style="color: white;" class="val">` + platform + `</h5>
-         <button data-bs-toggle="modal" data-bs-target="#noleggia-modal" class="btn btn-primary" aria-label="bottone di modifica cliente" type="button" onclick="creaNoleggio(this); findClienti()"><i class="bi bi-pencil-square"> Noleggia</i></button>
+         <button data-bs-toggle="modal" data-bs-target="#noleggia-modal" class="btn btn-primary" aria-label="bottone di crea noleggio" type="button" onclick="creaNoleggio(this); findClienti()"><i class="bi bi-pencil-square"> Noleggia</i></button>
          </a>
          <br>    
          <h5 class="val" style="color: white; margin-top: 20px;">` + prezzo + ` € al giorno</h5>
@@ -313,7 +313,7 @@ var oldUser = null;
    
  function creaNoleggio(e){
 
-  let current = e.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+  let current = e.parentNode.parentNode;
   let etaMinima = current.getElementsByClassName("val")[0].textContent;
   let game = current.getElementsByClassName("val")[2].textContent;
   let platform = current.getElementsByClassName("val")[3].textContent;
@@ -322,12 +322,18 @@ var oldUser = null;
   let stato = current.getElementsByClassName("val")[6].textContent;
   let condizioni = current.getElementsByClassName("val")[7].textContent;
 
-  //console.log(game)
+  console.log(game,platform)
   let modal = document.getElementById("noleggia-modal");
-  let data1 = modal.getElementsByClassName("newval")[0];
-  data1.value = game;
-  let data2 = modal.getElementsByClassName("newval")[1];
-  data2.value = platform;
+  
+  let data = modal.getElementsByClassName("newval");
+  data[0].value =  game + " " + platform;
+  console.log(data[1].value);
+ 
+  
+  //let data1 = modal.getElementsByClassName("newval")[0];
+  //data1.value = game;
+  //let data2 = modal.getElementsByClassName("newval")[1];
+  //data2.value = platform;
 
   //let data3 = modal.getElementsByClassName("newval")[2];
  // data3.value = <%= username %>;
@@ -395,6 +401,9 @@ function datediff(first, second) {
 }
      
    
+
+
+
                                                                              //CREA LA TABELLA PER L'INVENTARIO
    function creaTabellaInventario(d) {
    
