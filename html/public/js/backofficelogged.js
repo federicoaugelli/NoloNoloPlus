@@ -322,29 +322,23 @@ var oldUser = null;
   let stato = current.getElementsByClassName("val")[6].textContent;
   let condizioni = current.getElementsByClassName("val")[7].textContent;
 
-  console.log(game,platform)
+  //console.log(game,platform)
   let modal = document.getElementById("noleggia-modal");
   
   let data = modal.getElementsByClassName("newval");
-  data[0].value =  game + " " + platform;
-  console.log(data[1].value);
+  data[0].value =  game + ", " + platform;
+  
+  let prezzo1 = prezzo.split(" ")[0];
+  //console.log(prezzo1)
  
+  data[4].value = prezzo1;
   
-  //let data1 = modal.getElementsByClassName("newval")[0];
-  //data1.value = game;
-  //let data2 = modal.getElementsByClassName("newval")[1];
-  //data2.value = platform;
-
-  //let data3 = modal.getElementsByClassName("newval")[2];
- // data3.value = <%= username %>;
-  //let data2 = modal.getElementsByClassName("newval")[1];
-  //data2.innerHTML = "Il gioco è uscito nel " + annoUscita + " , è " + stato + " e in "+ condizioni + " condizioni";
+  //console.log(data[1].value);
   
-  //let x = document.getElementById("usernameFunzionario").textContent;
-  //console.log(x)
  }
 
- 
+ //                                     SELECT FORM CHE MOSTRA TUTTI CLIENTI A CUI ASSOCIARE UN NOLEGGIO
+
  function  listClientiSelectNoleggio(d){
   
   for (let i in d.result) {
@@ -362,44 +356,32 @@ var oldUser = null;
  }
 }
 
+function calculateDays() {
+  var d1 = document.getElementById("inizioNoleggio").value;
+  var d2 = document.getElementById("fineNoleggio").value;    
+  const dateOne = new Date(d1);
+  const dateTwo = new Date(d2);
+  const time = Math.abs(dateTwo - dateOne);
+  const days = Math.ceil(time / (1000 * 60 * 60 * 24));
+  //console.log(days)
+  calcolaCosto(days); 
+}    
 
-function calcolaCosto(){
 
-  let date1 = document.getElementById("startRent").value;
-  let date2 = document.getElementById("finishRent").value;
-  console.log(date1)
- console.log(getDifferenceInDays(date1,date2))
- getDifferenceInDays(date1,date2)
+function calcolaCosto(days){
 
-  /*
-  var Difference_In_Time = parseInt( date2 - date1);
+  let costoDay = document.getElementById("costo").value;
+  //console.log(costoDay)
+  costo = parseFloat(costoDay.split(" ")[0]);
+  //console.log(costo)
+
+  let modal = document.getElementById("noleggia-modal");
+  let data = modal.getElementsByClassName("newval");
+
+  data[6].value = costo * days;
+  //console.log(costo * days)
   
-  
-  // To calculate the no. of days between two dates
-  var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-
-  //let x = datediff(parseDate(date1,parseDate(date2)));
-
-  console.log(Difference_In_Days)
-*/
-
 }
-function getDifferenceInDays(date1, date2) {
-  const diffInMs = Math.abs(date2 - date1);
-  return diffInMs / (1000 * 60 * 60 * 24);
-}
- 
-function parseDate(str) {
-  var mdy = str.split('/');
-  return new Date(mdy[2], mdy[0]-1, mdy[1]);
-}
-
-function datediff(first, second) {
-  // Take the difference between the dates and divide by milliseconds per day.
-  // Round to nearest whole number to deal with DST.
-  return Math.round((second-first)/(1000*60*60*24));
-}
-     
    
 
 

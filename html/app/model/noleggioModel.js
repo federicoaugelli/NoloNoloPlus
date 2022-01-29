@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const passportLocalMongoose = require('passport-local-mongoose');
-//const conn = require('../../scripts/mongoose.js');
+const conn = require('../../scripts/mongoose.js');
   
 const noleggioSchema = new Schema({   
     usernameCliente : { type: String, required:false, unique:false },

@@ -293,7 +293,6 @@
         <div class="mb-3">
           <label class="formGroupExampleInput" for="platform">PIATTAFORMA</label>
             <select class="form-control" id="platform" name="platform">
-      
                   <option value="Pc">PC</option>
                   <option value="Xbox One">Xbox One</option>
                   <option value="Xbox Serie X/S">Xbox Serie X/S</option>
@@ -441,21 +440,33 @@
           <h5 id="usernameFunzionario" class="newval" name="usernameFunzionario"> <%= username %></h5>
           <div class="mb-3">
             <label class="formGroupExampleInput" for="usernameCliente">NOME CLIENTE </label>
-              <select class="form-control" id="usernameCliente" name="usernameCliente">                 
+              <select class="form-control" id="usernameCliente" name="usernameCliente">   
+                <option selected>Scegli...</option>
               </select>
           </div>
           <div style="margin-top: 40px; margin-bottom: 40px;">
-            <h4>Quando vorresti noleggiarlo?</h4>
+            <h4>Periodo di noleggio :</h4>
             <label for="inizioNoleggio">Da:</label>
             <input class="newval" type="date" id="inizioNoleggio" name="inizioNoleggio">
             <label for="fineNoleggio">A:</label>
             <input class="newval" type="date" id="fineNoleggio" name="fineNoleggio">
-            <button type="button" class="btn btn-primary" onclick="calcolaCosto()">Calcola costo</button>
+            <button type="button" class="btn btn-primary" onclick="calculateDays()">Calcola costo</button>  
+          </div>
+          <div style="margin-top: 40px; margin-bottom: 40px;">
+            <label for="costo">TARIFFA GIORNALIERA: </label>
+            <input class="newval" type="text" id="costo" name="costo" size="20" readonly> euro al giorno
+          </div>
+          <div style="margin-top: 40px; margin-bottom: 40px;">
+            <label for="punti">PUNTI CLIENTE: </label>
+            <input class="newval" type="text" id="punti" name="punti" size="20" readonly>
+          </div>
+          <div style="margin-top: 40px; margin-bottom: 40px;">
+            <label for="prezzoTotale">COSTO TOTALE: </label>
+            <input class="newval" type="text" id="prezzoTotale" name="prezzoTotale" size="20" readonly>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <p id="prezzoTotale" name="prezzoTotale" class="newval"> 10</p>
         <div class="mb-3">
           <input type="submit" class="btn btn-primary" value="Crea noleggio"> 
         </div>
