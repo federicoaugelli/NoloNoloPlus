@@ -199,8 +199,11 @@
           </div>
         </div>
         <div class="modal-footer">
-          <p v-if="ipoteticalPrice != 0 || ipoteticalPrice != ''" class="me-auto">costo: {{ ipoteticalPrice }}€</p>
-          <button v-else type="button" class="btn btn-primary" class="me-auto" v-on:click="calculateDate()">ipotesi</button>
+          <p v-if="ipoteticalPrice > 0 && ipoteticalPrice != '' && ipoteticalPrice != 'err'" class="me-auto">costo: {{ ipoteticalPrice }}€</p>
+          <p v-else-if="ipoteticalPrice == 'err'" class="me-auto" style="color: red;">Errore</p>
+          <p v-else-if="ipoteticalPrice < 0" class="me-auto" style="color: red;">Errore</p>
+
+          <button type="button" class="btn btn-primary" class="me-auto" v-on:click="calculateDate()">ipotesi</button>
           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Accedi per noleggiare</button>
         </div>
       </div>
@@ -226,13 +229,24 @@
         }
       },
 
-      mounted () {
+      beforeMount () {
         axios
           .get('/db/getGames')
-          .then(response => (this.items = response.data.result))
+          .then(response => (this.items = response.data.result));
+      },
 
-        this.removeDuplicates(this.items);
-
+      mounted () {
+        const lol = this.items;
+        var cleaned = [];
+        lol.forEach(function(itm) {
+          var unique = true;
+          cleaned.forEach(function(itm2) {
+            if (_.isEqual(itm.game, itm2.game)) unique = false;
+          });
+          if (unique)  cleaned.push(itm);
+        });
+        this.items = cleaned;
+        console.log(this.items);
       },
 
       computed: {
@@ -246,17 +260,8 @@
             return this.items;
           }
         },
-
-        calculateDate(){
-          if (this.endDate){
-            this.ipoteticalPrice = parseFloat(this.modalItem.prezzo) * (this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)))
-            return this.ipoteticalPrice
-          }
-          else{
-            return "Scegli le date"
-          }
-        }
       },
+
       methods: {
         removeDuplicates(item){
           var cleaned = [];
@@ -281,29 +286,26 @@
         },
 
         datediff(first, second) {
-          return (second-first)/(1000*60*60*24);
+          return Math.round((second-first)/(1000*60*60*24));
         },
 
         calculateDate(){
           let yourDate = new Date().toISOString().split('T')[0];
-          console.log(yourDate);
-          console.log(this.startDate);
-          console.log(yourDate.split('-'));
-          console.log(this.parseDate(yourDate));
-          if(this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)) > 0 && this.datediff(this.parseDate(this.startDate), this.parseDate(yourDate)) >= 0){
+          //console.log(yourDate);
+          //console.log(this.startDate);
+          //console.log(yourDate.split('-'));
+          console.log(this.datediff(this.parseDate(yourDate), this.parseDate(this.startDate)));
+          //console.log(this.datediff(this.parseDate(this.startDate), yourDate.split('-')));
+          if(this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)) > 0 && this.datediff(this.parseDate(yourDate), this.parseDate(this.startDate)) >= 0){
             this.ipoteticalPrice = parseFloat(this.modalItem.prezzo) * (this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)))
           }
-          else{
-            this.ipoteticalPrice = ''
+          else if(this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)) <= 0){
+            this.ipoteticalPrice = -1
           }
-
-
-          //console.log(this.datediff(this.parseDate(this.startDate), this.parseDate(yourDate)));
-          //console.log(yourDate);
-          //var mdyOne = this.startDate.split('-');
-          //var mdyTwo = this.endDate.split('-');
-          //console.log(mdyOne[2], mdyOne[0], mdyOne[1]);
-        }
+          else{
+            this.ipoteticalPrice = 'err'
+          }
+        },
       },
     })
 

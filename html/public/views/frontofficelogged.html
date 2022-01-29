@@ -41,7 +41,7 @@
         <div class="nav-item navbar-nav mr-auto dropstart">
           <a role="button" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" v-model="user = '<%= username %>'">Ciao <%= username %></a>
           <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#clientModal" v-on:click="getCliente">il Mio Account</a></li>
+            <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#clientModal">il Mio Account</a></li>
             <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#noleggiModal">I Miei Ordini</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="/frontendlogout" aria-label="Esci dal frotoffice">Esci</a></li>
@@ -65,7 +65,7 @@
             <h5>I Tuoi Dati</h5>
             <h6>Username: {{ item.username }}</h6>
             <h6>Indirizzo di fatturazione: {{ item.indirizzo }}</h6>
-            <h6>Punti fedeltà: {{ item.punti }}</h6>
+            <h6 style="margin-bottom: 40px;" v-model="punti = item.punti">Punti fedeltà: {{ item.punti }}</h6>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modificaCliente">modifica</button>
           </div>
         </div>
@@ -116,23 +116,80 @@
     </div>
   </div>
 
+                                                   <!-- MODAL MODIFICA ED ELIMINA CLIENTE
+
+
+<div class="modal fade" id="modificaClienteModal" tabindex="-1" role="dialog" aria-labelledby="modificaClienteModal" aria-hidden="true">
+  <div class="modal-dialog  modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">MODIFICA CLIENTI</h5>
+      </div>
+      <div class="modal-body">
+        <div id="content-2">
+          <div id="modificaClientiBody">
+            
+            <form method="POST" action="/db/updateUser"  id="modUserForm">
+              
+            <div class="mb-3">
+              <label for="nome" class="form-label">NOME</label>
+              <input type="text" class="form-control" id="nome" name="nome" placeholder="nome">
+            </div>
+            <div class="mb-3">
+              <label for="cognome" class="form-label">COGNOME</label>
+              <input type="text" class="form-control" id="cognome" name="cognome" placeholder="cognome">
+            </div>
+            <div class="mb-3">
+              <label for="username" class="form-label">USERNAME</label>
+              <input type="text" class="form-control" id="username" name="username" placeholder="username">
+            </div>
+            <div class="mb-3">
+              <label for="citta" class="form-label">CITTA</label>
+              <input type="text" class="form-control" id="citta" name="citta" placeholder="citta">
+            </div>
+            <div class="mb-3">
+              <label for="via" class="form-label">VIA</label>
+              <input type="text" class="form-control" id="via" name="via" placeholder="via">
+            </div>
+            <div class="mb-3">
+              <label for="punti" class="form-label">PUNTI</label>
+              <input type="text" class="form-control" id="punti" name="punti" placeholder="punti">
+            </div>
+            <button type="button" class="btn btn-primary" onclick="modUser()">Salva modifiche</button>
+          </form>
+          </div>
+          </div>
+        </div>      
+      </div>   
+      <div class="modal-footer">  
+        
+        
+        <button type="button" id="closeModal1" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#anagraficaClientiModal" onclick="visualizzaClienti(); findClienti()"> Chiudi </button>    
+       
+      </div>  
+    </div>   
+  </div>
+</div>-->
+
 
 <!-- modal noleggi -->
   <div class="modal fade" id="noleggiModal" tabindex="-1" aria-labelledby="modalNoleggi" aria-hidden="true">
-    <div class="modal-dialog modal-fullscreen modal-dialog-centered">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">I Miei Ordini</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <div v-for="item in userItems" :key="item.usernameCliente" v-if="item.usernameCliente == user">
-            <h5 class="">{{ item.titoloNoleggiato }}</h5>
-            <div>dal {{ item.inzioNoleggio }} al {{ item.fineNoleggio }}</div>
-            <div>prezzo: {{ item.prezzoTotale }}€</div>
+          <div class="d-flex justify-content-between" v-for="item in userItems" :key="item.usernameCliente" v-if="item.usernameCliente == user" style="margin-bottom: 40px;">
+            <div class="">
+              <h5 class="">{{ item.titoloNoleggiato }}</h5>
+              <div>dal {{ item.inzioNoleggio }} al {{ item.fineNoleggio }}</div>
+              <div>prezzo: {{ item.prezzoTotale }}€</div>
+            </div>
             <div v-if="item.stato == 'futuro'">
               <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modificaNoleggio" v-on:click="popoModal(item)">Modifica noleggio</button>
-              <button class="btn btn-danger" v-on:click="cancelLease">Cancella noleggio</button>
+              <button class="btn btn-danger">Cancella noleggio</button>
             </div>
             <div v-else-if="item.stato == 'terminato'">
               <button class="btn btn-primary">Visualizza Fatture</button>
@@ -167,7 +224,7 @@
               <div class="mb-3">
                 <label for="validationDefaultFirstname" class="form-label">Prezzo: {{ modalItem.prezzoTotale }}</label>
               </div>
-              <button type="button" class="btn btn-success">conferma modifiche</button>
+              <button type="button" class="btn btn-success" v-on:click="modificaLease(modalItem)">conferma modifiche</button>
             </form>
           </div>
         </div>
@@ -247,14 +304,19 @@
               <label for="finishRent">A:</label>
               <input type="date" id="finishRent" name="finishRent" v-model="endDate">
             </div>
-            <h5>I tuoi punti fedeltà: user.punti</h5>
+            <h5 v-for="item in utenti" v-if="item.username == user">I tuoi punti fedeltà: {{ item.punti }}</h5>
           </div>
         </div>
         <div class="modal-footer">
-          <p v-if="ipoteticalPrice != 0 || ipoteticalPrice != ''" class="me-auto">costo: {{ ipoteticalPrice }}€</p>
+          <p v-if="ipoteticalPrice > 0 && ipoteticalPrice != '' && ipoteticalPrice != 'err'" class="me-auto">costo: {{ ipoteticalPrice }}€</p>
+          <p v-else-if="ipoteticalPrice == 'err'" class="me-auto" style="color: red;">Errore: puoi scegliere solo noleggi nel futuro!</p>
+          <p v-else-if="ipoteticalPrice < 0" class="me-auto" style="color: red;">Errore: Il noleggio deve iniziare prima della fine</p>
+
           <button v-if="modalItem.disponibile" type="button" class="btn btn-primary" class="me-auto" v-on:click="calculateDate()">ipotesi</button>
-          <button v-if="modalItem.disponibile" type="button" class="btn btn-primary" v-on:click="postLease()">Noleggia</button>
-          <button v-else type="button" class="btn btn-primary" disabled>Non Disponibile</button>
+
+          <button v-if="modalItem.disponibile && ipoteticalPrice != 'err' && ipoteticalPrice != '' && ipoteticalPrice > 0" type="button" class="btn btn-primary" v-on:click="postLease()">Noleggia</button>
+          <button v-else-if="modalItem.disponibile == true && (ipoteticalPrice == 'err' || ipoteticalPrice == '' || ipoteticalPrice <= 0)" type="button" class="btn btn-primary" disabled>Noleggia</button>
+          <button v-else-if="modalItem.disponibile == false" type="button" class="btn btn-primary" disabled>Non Disponibile</button>
         </div>
       </div>
     </div>
@@ -272,6 +334,7 @@
           items: '',
           user: '',
           utenti: '',
+          punti: 2,
           userItems: '',
           modalItem: '',
           startDate: '',
@@ -289,6 +352,10 @@
         axios
           .get('/db/getUserItems')
           .then(gg => (this.userItems = gg.data.result));
+
+        axios
+          .get('/db/findClienti')
+          .then(response => (this.utenti = response.data.result));
       },
 
       computed: {
@@ -355,9 +422,11 @@
 */
       },
       methods: {
+        /*
         getUserItems(){
           console.log(this.userItems);
         },
+        */
 
         getCliente(){
           axios
@@ -379,25 +448,33 @@
         },
 
         calculateDate(){
-          console.log(Math.floor(10000000 + Math.random() * 90000000));
           let yourDate = new Date().toISOString().split('T')[0];
-          console.log(yourDate);
-          console.log(this.startDate);
-          console.log(yourDate.split('-'));
-          console.log(this.parseDate(yourDate));
-          if(this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)) > 0 && this.datediff(this.parseDate(this.startDate), this.parseDate(yourDate)) >= 0){
+          //console.log(yourDate);
+          //console.log(this.startDate);
+          //console.log(yourDate.split('-'));
+          console.log(this.datediff(this.parseDate(yourDate), this.parseDate(this.startDate)));
+          //console.log(this.datediff(this.parseDate(this.startDate), yourDate.split('-')));
+          if(this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)) > 0 && this.datediff(this.parseDate(yourDate), this.parseDate(this.startDate)) >= 0){
             this.ipoteticalPrice = parseFloat(this.modalItem.prezzo) * (this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)))
           }
+          else if(this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)) <= 0){
+            this.ipoteticalPrice = -1
+          }
           else{
-            this.ipoteticalPrice = ''
+            this.ipoteticalPrice = 'err'
           }
         },
-
+/*
         cancelLease(){
           axios
             .delete('/db/deleteLease')
         }
-/*
+
+        modificaLease(){
+          axios
+            .post('/db/updateLease')
+        }
+
         postLease(){
           const Lease = {
             usernameCliente: "ciao",
@@ -419,15 +496,61 @@
           }
           //else triggera un toast
         }
-        */
-      },
-    })
-
-/*
-  Implementare il modal con il prezzo moltiplicato per i giorni (non loggati)
-  implementare i filtri per i loggati
-  implementare le altre cose per i loggati
 */
+      },
+    });
+
+  function modUser(){
+
+    var formData = $("#modUserForm").serializeArray();
+
+    if(
+      formData[0].value != " " &&
+      formData[1].value != " " &&
+      formData[2].value != " " &&
+      formData[3].value != " " &&
+      formData[4].value != " " 
+      
+    ){
+          
+      $.ajax({
+
+        url: "/db/updateUser",
+        type: "POST",
+        data: { oldUser, formData },
+        dataType: "json",
+        contentType: "application/x-www-form-urlencoded",
+        success: function(data){
+
+          //console.log(oldUser)
+          //console.log(formData)
+          //console.log(data)
+
+          if(data){
+
+            document.getElementById("alert-body").textContent = "Utente modificato con successo"
+            $("#flash-modal").modal("show");
+            $("#modUserForm").trigger("reset");
+            $("#modificaClienteModal").modal("hide");
+            console.log("Utente modificato");
+            findClienti();
+          }
+          else{
+
+            document.getElementById("alert-body").textContent = "Errore. non è possibile modificare l'utente"
+            $("#flash-modal").modal("show");
+            console.log("errore");
+          }
+        }
+      });
+    }
+    else{
+
+      document.getElementById("alert-body").textContent = "Compilare tutti i campi"
+      $("#flash-modal").modal("show");
+      console.log("err")
+    }
+  };
 
   </script>
 </div>
