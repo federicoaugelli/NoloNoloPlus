@@ -27,7 +27,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="flash-modalLabel">ERROR</h5>
+        <h5 class="modal-title" id="flash-modalLabel"></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -50,8 +50,7 @@
 
 
 
-                                             <!-- FINE MODAL-FLASH -->
-
+                                           
 
                                                  <!-- MODAL ANAGRAFICA CLIENTI -->
 
@@ -89,10 +88,8 @@
       </div>
       <div class="modal-body">
         <div id="content-2">
-          <div id="modificaClientiBody">
-            
+          <div id="modificaClientiBody">       
             <form method="POST" action="/db/updateUser"  id="modUserForm">
-              
             <div class="mb-3">
               <label for="nome" class="form-label">NOME</label>
               <input type="text" class="form-control" id="nome" name="nome" placeholder="nome">
@@ -365,20 +362,48 @@
 
 
 
+
+                                                 
+                                             <!-- MODAL NOLEGGI -->
+
+
+<div class="modal fade" id="statoNoleggiModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog  modal-fullscreen" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">NOLEGGI</h5>
+      </div>
+      <div class="modal-body">
+        <div id="inventarioContent">
+          <div id="inventarioBody">
+
+
+          </div>
+        </div>
+      </div>   
+      <div class="modal-footer">  
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#aggiungiOggetto">Aggiungi oggetto</button>    
+        <button type="button" id="closeModal1" class="btn btn-danger" data-bs-dismiss="modal">Chiudi</button>  
+      </div>  
+    </div>   
+  </div>
+</div>
+
+                                                   <!-- FINE MODAL NOLEGGI -->
+
                                                  <!-- NAVBAR -->
 
 <nav class="navbar navbar-dark bg-dark sticky-top">
   <div class="container-fluid">
     <div class="navbar-brand ml-auto">      
       <div class="btn-group">
-        <button class="btn btn-dark btn-outline-light btn-lg" type="button"> NOLO-NOLO BACKOFFICE <%= username %></button> 
+        <button class="btn btn-dark btn-outline-light btn-lg" type="button"> NOLO-NOLO BACKOFFICE</button> 
         <button type="button" class="btn btn-outline-light btn-lg btn-dark dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
           <span class="visually-hidden">Vedi Azioni Dropdown</span>
         </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">           
              <li class="nav-item">
-              <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#anagraficaClientiModal" onclick="visualizzaClienti(); findClienti()/*; getGames()*/">
+              <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#anagraficaClientiModal" onclick="visualizzaClienti(); findClienti()">
                Anagrafica clienti
               </button>
              </li>
@@ -386,13 +411,17 @@
               <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#vediInventarioModal" onclick="visualizzaInventario(); getGames()">
                 Modifica inventario
                </button>
+             </li>       
+             <li class="nav-item">
+              <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#statoNoleggiModal" onclick="">
+               Noleggi
+              </button>
              </li>
-            
           </ul>
       </div>
     </div>
       <form class="d-flex w-50 bottom-0 my-auto">
-        <input class="form-control me-2" type="search" placeholder="Cerca" aria-label="inserisci la tua parola chiave di ricerca">
+        <input class="form-control me-2" type="search" id="searchFilterNavbar" onkeyup="searchNavbar()" placeholder="Cerca" aria-label="inserisci la tua parola chiave di ricerca">
         <button class="btn btn-outline-light" type="submit">Cerca</button>
       </form>
       <ul class="navbar-nav mr-auto">
@@ -426,31 +455,30 @@
   <div class="modal-dialog modal-lg modal-fullscreen-sm-down modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-          <h2 class="useruser">CREA NOLEGGIO <%= username %></h2>
+          <h2 class="useruser">CREA NOLEGGIO <%-username-%></h2>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form method="POST" action="/noleggioregister" id="modNoleggioForm">
         <div class="card-body">
           <div class="mb-3">
-            <label for="usernameFunzionario">Dipendente</label>  
+            <label for="usernameFunzionario">DIPENDENTE : </label>  
             <input type="text" class="newval" id="usernameFunzionario" name="usernameFunzionario" size="50" readonly><br><br>
           </div>
           <div class="mb-3">
             <label for="titoloNoleggiato">TITOLO :</label>  
-            <input type="text" class="newval" id="titoloNoleggiato" name="titoloNoleggiato" size="50" readonly><br><br>
+            <input type="text" class="newval" id="titoloNoleggiato" name="titoloNoleggiato" size="50" readonly> <br><br>
           </div>
-          <h5>Il tuo Username è :</h5>
-          <h5 id="usernameFunzionario" class="newval" name="usernameFunzionario"> <%= username %></h5>
+          <div class="mb-3">
+            <label for="pittaforma">PIATTAFORMA :</label>  
+            <input type="text" class="newval" id="pittaforma" name="pittaforma" size="50" readonly> <br><br>
+          </div>
           <div class="mb-3">       
             <label class="formGroupExampleInput" for="usernameCliente">NOME CLIENTE </label>
               <select class="form-control" id="usernameCliente" name="usernameCliente">   
-                <option selected>Scegli...</option>
               </select> 
               <br>
-             <!-- <form action="GET" method="/db/getUserNoleggio">-->
               <button type="button" class="btn btn-primary" onclick="calcolaPuntiCliente()">Calcola punti fedeltà</button>  
-             <!-- </form> -->
           </div>
           <div style="margin-top: 40px; margin-bottom: 40px;">
             <h4>Periodo di noleggio :</h4>
@@ -470,7 +498,17 @@
           </div>
           <div style="margin-top: 40px; margin-bottom: 40px;">
             <label for="prezzoTotale">COSTO TOTALE: </label>
-            <input class="newval" type="text" id="prezzoTotale" name="prezzoTotale" size="20" readonly> euro
+            <input class="newval" type="text" id="prezzoTotale" name="prezzoTotale" size="20" readonly> euro       
+            <button type="button" class="btn btn-primary" onclick="applicaPunti()">APPLICA PUNTI</button> 
+          </div>
+          <div class="mb-3">       
+            <label class="formGroupExampleInput" for="stato">INDICARE LO STATO DEL NOLEGGIO : </label>
+              <select class="form-control" id="stato" name="stato">   
+                <option selected>Scegli...</option>
+                <option value="in corso">in corso</option>
+                <option value="passato">passato</option>
+                <option value="futuro">futuro</option>
+              </select> 
           </div>
         </div>
       </div>

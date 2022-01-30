@@ -116,6 +116,7 @@ router.post("/noleggioregister", function(req, res){
         let newRent = new noleggio({
             usernameCliente: req.body.usernameCliente,
             titoloNoleggiato: req.body.titoloNoleggiato,
+            piattaforma: req.body.piattaforma,
             usernameFunzionario: req.body.usernameFunzionario,
             inizioNoleggio: req.body.inizioNoleggio,
             fineNoleggio: req.body.fineNoleggio,

@@ -23,6 +23,15 @@ function findClienti() {
      });
 }
 
+
+function creaTabellaNoleggi(){
+
+
+  
+}
+
+
+
                                                 // CREA LA TABELLA CON TUTTI I CLIENTI
  function creaTabellaClienti(d) {
  
@@ -181,29 +190,31 @@ var oldUser = null;
 
                                                 //ELIMINA IL SINGOLO CLIENTE
 
-  function delUser(){
+var userCliente = null;
 
-    //let user = document.getElementsById("usernameModUser").value;
-    //let formData = {type: "username", rent: [user]};
-    let countPrenotati = 0;
-    /*$.ajax({
-      url: "/db/searchRent/",
-      type:"POST",
-      data: formData,
+  function delUser(){
+    let modal = document.getElementById("modificaClienteModal");
+    userCliente = modal.getElementsByClassName("form-control")[2].value;
+    console.log(userCliente)
+    let prenotato = 0;
+    $.ajax({
+      url: "/db/getNoleggi/",
+      type:"GET",
+      data: {},
       dataType: "json",
       contentType: "application/x-www-form-urlencoded",
-      success: function(data) {
-
-        for(let i = 0; i < data.result.length; i++){
-
-          if(data.result[i].stato == "prenotato" || data.result[i].stato == "in corso"){
-
-          countPrenotati++;
+      success: function(d) {
+        console.log(d.result)
+        for(let i in d.result){
+       
+          if (userCliente == d.result[i].usernameCliente && (d.result[i].stato == "futuro" || d.result[i].stato == "in corso")){
+            console.log(d.result[i].usernameCliente)
+            prenotato++;            
+          }
         }
-      }
-    */
-      console.log(countPrenotati);
-      if(countPrenotati == 0){
+        
+        console.log(prenotato)
+      if(prenotato == 0){
 
         $.ajax({
           url: "/db/deleteUser",
@@ -215,22 +226,21 @@ var oldUser = null;
           },
         });
 
-        document.getElementsById("alertContent").textContent = "Utente rimosso con successo"
-        $("alertmodal").modal("show");
+        document.getElementById("alert-body").textContent = "Utente rimosso con successo"
+        $("#flash-modal").modal("show");
         $("#modUserForm").trigger("reset");
-        $("#modUserModal").modal("hide");
+        $("#modificaClienteModal").modal("hide");
         console.log("Utente rimosso");
       }
       else{
-
-        document.getElementsById("alertContent").textContent = "Errore. non è possibile rimuovere l'utente"
-        $("alertmodal").modal("show");
+        document.getElementById("alert-body").textContent = "Impossibile rimuovere il cliente perchè ha almeno un noleggio prenotato"
+        $("#flash-modal").modal("show");
         $("#modUserForm").trigger("reset");
-        $("#modUserModal").modal("hide");
+        $("#modificaClienteModal").modal("hide");
       }
       findClienti();
-    //}
-    //});
+      }
+    });
   }
 
 
@@ -238,7 +248,7 @@ var oldUser = null;
                                                                             
                                                                             /* ========================== */
                                                                             /*                            */
-                                                                            /*           OGGETTI          */
+                                                                            /*          NOLEGGI           */
                                                                             /*                            */
                                                                             /* ========================== */
 
@@ -292,7 +302,7 @@ var oldUser = null;
        <div class="card-body">
          <h3 style="color: white;" class="val">` + game + `</h3>
          <h5 style="color: white;" class="val">` + platform + `</h5>
-         <button data-bs-toggle="modal" data-bs-target="#noleggia-modal" class="btn btn-primary" aria-label="bottone di crea noleggio" type="button" onclick="creaNoleggio(this); findClienti()"><i class="bi bi-pencil-square"> Noleggia</i></button>
+         <button data-bs-toggle="modal" data-bs-target="#noleggia-modal" class="btn btn-primary" aria-label="bottone di crea noleggio" onclick="creaNoleggio(this); findClienti()"><i class="bi bi-pencil-square"> Noleggia</i></button>
          </a>
          <br>    
          <h5 class="val" style="color: white; margin-top: 20px;">` + prezzo + ` € al giorno</h5>
@@ -310,6 +320,28 @@ var oldUser = null;
  cardBody.appendChild(div);
  //console.log(d.result[i])
  }    
+ }
+
+
+ 
+
+ function searchNavbar(){
+
+  var input, filter, ul, li, a, i, txtValue;
+  input = document.getElementById("searchFilterNavbar");
+  filter = input.value.toUpperCase();
+  div = document.getElementById("card-list");
+  div1 = div.getElementsByClassName("col");
+  
+  for (i = 0; i < div1.length; i++) {
+    h3 = div1[i].getElementsByTagName("h3")[0];
+    txtValue = h3.textContent || h3.innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        div1[i].style.display = "";
+    } else {
+        div1[i].style.display = "none";
+    }
+  }
  }
 
    
@@ -337,9 +369,8 @@ var oldUser = null;
   data[1].value =  game + ", " + platform;
   
   let prezzo1 = prezzo.split(" ")[0];
-  data[5].value = prezzo1;
-  //console.log(prezzo1)
-  
+  data[4].value = prezzo1;
+  //console.log(prezzo1)s
   //console.log(data[1].value);
   
  }
@@ -348,20 +379,29 @@ var oldUser = null;
 
  function  listClientiSelectNoleggio(d){
   
+  //var x = document.getElementById("usernameCliente");
+  //x.remove(x);
+  document.getElementById("usernameCliente").options.length = 0;
+  let option = document.createElement("OPTION");
+  option.setAttribute("value", "nessun cliente selezionato");
+  let option2 = document.createTextNode("Scegli cliente ...");
+  option.appendChild(option2);
+  document.getElementById("usernameCliente").appendChild(option);
+
   for (let i in d.result) {
 
     let idCliente = d.result[i]._id;
     let username = d.result[i].username;
     let punti = d.result[i].punti;
-
+    
     let option = document.createElement("OPTION");
     option.setAttribute("value", username);
     let option2 = document.createTextNode(username);
     option.appendChild(option2);
     document.getElementById("usernameCliente").appendChild(option);
  }
-
 }
+
 
 function calcolaPuntiCliente(){
 
@@ -369,9 +409,9 @@ function calcolaPuntiCliente(){
    //console.log(usernameCliente)
 
   $.ajax({
-    url: "/db/getUserNoleggio",
+    url: "/db/findClienti",
     type: "GET",
-    data: { usernameCliente },
+    data: {},
     dataType: "json",
     contentType: "application/x-www-form-urlencoded",
         success: function (d) {
@@ -390,7 +430,7 @@ function calcolaPuntiCliente(){
      
       let modal = document.getElementById("noleggia-modal");
       let data = modal.getElementsByClassName("newval");
-      data[6].value = punti;       
+      data[5].value = punti;       
     },
   });
 }
@@ -400,10 +440,18 @@ function calculateDays() {
   var d2 = document.getElementById("fineNoleggio").value;    
   const dateOne = new Date(d1);
   const dateTwo = new Date(d2);
-  const time = Math.abs(dateTwo - dateOne);
-  const days = Math.ceil(time / (1000 * 60 * 60 * 24));
+  if(dateOne <= dateTwo){
+     const time = Math.abs(dateTwo - dateOne);
+     const days = Math.ceil(time / (1000 * 60 * 60 * 24));
+     calcolaCosto(days + 1); 
+  }
+  else{
+     days = 0;
+     calcolaCosto(days);
+     alert("La data di inizio del noleggio deve essere precedente alla data di fine noleggio")
+  }
   //console.log(days)
-  calcolaCosto(days); 
+  
 }    
 
 
@@ -416,14 +464,40 @@ function calcolaCosto(days){
 
   let modal = document.getElementById("noleggia-modal");
   let data = modal.getElementsByClassName("newval");
-  let punti =  modal.getElementsByClassName("newval")[6].value;
-
-  data[7].value = costo * days - (punti/10);
+  let punti =  modal.getElementsByClassName("newval")[5].value;
+  //punti = parseFloat(punti);
+  data[6].value = (costo * days ).toFixed(2);
   //console.log(costo * days)
   
 }
    
+function applicaPunti(){
 
+  let modal = document.getElementById("noleggia-modal");
+  let data = modal.getElementsByClassName("newval");
+
+  if (punti != 0){
+    data[6].value = (data[6].value - (punti  / 10)).toFixed(2);
+    punti = punti - punti;
+  } 
+  else{
+    data[6].value = (data[6].value - (0)).toFixed(2);
+  }
+}
+
+
+
+
+
+
+
+
+                                                                           
+                                                                            /* ========================== */
+                                                                            /*                            */
+                                                                            /*          OGGETTI           */
+                                                                            /*                            */
+                                                                            /* ========================== */
 
 
                                                                              //CREA LA TABELLA PER L'INVENTARIO

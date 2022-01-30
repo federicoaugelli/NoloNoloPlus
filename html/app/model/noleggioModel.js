@@ -6,6 +6,7 @@ const conn = require('../../scripts/mongoose.js');
 const noleggioSchema = new Schema({   
     usernameCliente : { type: String, required:false, unique:false },
     titoloNoleggiato: { type: String, required:false, unique:false },
+    piattaforma: { type: String, required:false, unique:false },
     usernameFunzionario : { type: String, required:false, unique:false },
     inizioNoleggio : { type: String, required:false, unique:false },
     fineNoleggio : { type: String, required:false, unique:false },

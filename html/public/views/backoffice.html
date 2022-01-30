@@ -159,7 +159,7 @@
       </div>
     </div>
       <form class="d-flex w-50 bottom-0 my-auto">
-        <input class="form-control me-2" type="search" placeholder="Cerca" aria-label="inserisci la tua parola chiave di ricerca">
+        <input class="form-control me-2" id="searchFilterNavbar" type="search" onkeyup="searchNavbar()" placeholder="Cerca" aria-label="inserisci la tua parola chiave di ricerca">
         <button class="btn btn-outline-light" type="submit">Cerca</button>
       </form>
       <ul class="navbar-nav mr-auto">
@@ -182,35 +182,72 @@
  <div class="album py-5">
   <div class="container">
     <div id="card-list" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-   
-  <!-- 
-   <div class="col">
-     <div class="card shadow-sm gameCard" style="text-align: center;">
-       <div id="pegi" class="card-pegi">PEGI</div>
-       <img id="image" src="..." class="card-img-top" alt="...">
-       <div class="card-body">
-         <h5 class="card-title">Card title</h5>
-         <a data-bs-toggle="modal" data-bs-target="#card-modal" class="rentbtn">
-           <span></span>
-           <span></span>
-           <span></span>
-           <span></span>
-           Noleggia
-         </a>
-         <h6 style="color: white; margin-top: 10px;"> € al giorno</h6>
-       </div>
-       <div class="card-footer">
-         <small class="text-muted" style="position: absolute; right: 0; margin-right: 10px;">anno uscita</small>
-         <small class="text-muted">in  condizioni</small>
-       </div>
-     </div>
-   </div>
-
-
-
-   -->
+  </div>
  </div>
- </div>
+</div>
+
+
+                                                 <!-- MODAL IPOTESI DI NOLEGGIO -->
+
+ <div class="modal fade" id="noleggia-modal" tabindex="-1" aria-labelledby="card-modalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-fullscreen-sm-down modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+          <h2 class="useruser">IPOTESI DI NOLEGGIO</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="card-body">
+          <div class="mb-3">
+            <label for="usernameFunzionario">DIPENDENTE : </label>  
+            <input type="text" class="newval" id="usernameFunzionario" name="usernameFunzionario" size="50" readonly><br><br>
+          </div>
+          <div class="mb-3">
+            <label for="titoloNoleggiato">TITOLO :</label>  
+            <input type="text" class="newval" id="titoloNoleggiato" name="titoloNoleggiato" size="50" readonly><br><br>
+          </div>
+          <div class="mb-3">       
+            <label class="formGroupExampleInput" for="usernameCliente">NOME CLIENTE </label>
+              <select class="form-control" id="usernameCliente" name="usernameCliente">   
+                <option selected>Scegli...</option>
+              </select> 
+              <br>
+              <button type="button" class="btn btn-primary" onclick="calcolaPuntiCliente()">Calcola punti fedeltà</button>  
+          </div>
+          <div style="margin-top: 40px; margin-bottom: 40px;">
+            <h4>Periodo di noleggio :</h4>
+            <label for="inizioNoleggio">Da:</label>
+            <input class="newval" type="date" id="inizioNoleggio" name="inizioNoleggio">
+            <label for="fineNoleggio">A:</label>
+            <input class="newval" type="date" id="fineNoleggio" name="fineNoleggio">
+            <button type="button" class="btn btn-primary" onclick="calculateDays()">Calcola costo</button>  
+          </div>
+          <div style="margin-top: 40px; margin-bottom: 40px;">
+            <label for="costo">TARIFFA GIORNALIERA: </label>
+            <input class="newval" type="text" id="costo" name="costo" size="20" readonly> euro al giorno
+          </div>
+          <div style="margin-top: 40px; margin-bottom: 40px;">
+            <label for="punti">PUNTI CLIENTE: </label>
+            <input class="newval" type="text" id="punti" name="punti" size="20" readonly>
+          </div>
+          <div style="margin-top: 40px; margin-bottom: 40px;">
+            <label for="prezzoTotale">COSTO TOTALE: </label>
+            <input class="newval" type="text" id="prezzoTotale" name="prezzoTotale" size="20" readonly> euro       
+            <button type="button" class="btn btn-primary" onclick="applicaPunti()">APPLICA PUNTI</button> 
+          </div>
+          <div class="mb-3">       
+            <label class="formGroupExampleInput" for="stato">INDICARE LO STATO DEL NOLEGGIO : </label>
+              <select class="form-control" id="stato" name="stato">   
+                <option selected>Scegli...</option>
+                <option value="in corso">in corso</option>
+                <option value="passato">passato</option>
+                <option value="futuro">futuro</option>
+              </select> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 

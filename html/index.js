@@ -162,9 +162,8 @@ app.get('/db/getUserItems', async function(req, res) {
 	res.send(await mymongo.getUserItems(mongoCredentials))
 });
 
-app.get('/db/getUserNoleggio', async function(req, res) {
-    let usernameCliente = req.body.usernameCliente
-	res.send(await mymongo.getUserNoleggio(usernameCliente,mongoCredentials))
+app.get('/db/getNoleggi', async function(req, res) {
+	res.send(await mymongo.getNoleggi(mongoCredentials))
 });
 
 app.post('/db/updateUser', async function(req, res) {

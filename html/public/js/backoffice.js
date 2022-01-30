@@ -1,3 +1,10 @@
+                                                                            /* ========================== */
+                                                                            /*                            */
+                                                                            /*      TABELLA INVENTARIO    */
+                                                                            /*                            */
+                                                                            /* ========================== */     
+
+
 function getGames() {
   $.ajax({
     url: "/db/getGames",
@@ -11,9 +18,7 @@ function getGames() {
          //console.log(g.result);
     },
   });
-}
-   
- 
+} 
  
  function creaTabellaInventario(d) {
  
@@ -106,6 +111,28 @@ function visualizzaInventario() {
     `;
   }
 
+                                                                            /* ========================== */
+                                                                            /*                            */
+                                                                            /*   CARD E IPOTESI NOLEGGIO  */
+                                                                            /*                            */
+                                                                            /* ========================== */ 
+
+  
+function findClienti() {
+  // let cookie = getCookie("SessionCookie")
+   //let data = {cookie: cookie}
+   $.ajax({
+     url: "/db/findClienti",
+     type: "GET",
+     data: '',
+     dataType: "json",
+     contentType: "application/x-www-form-urlencoded",
+     success: function (d) {
+      listClientiSelectNoleggio(d);
+     },
+   });
+}
+   
 
                                                               //CREA LA LISTA DI CARTE PER IL BACKOFFICE LOGGED
   function creaCardInventario(d){
@@ -133,33 +160,189 @@ function visualizzaInventario() {
      `
      <div class="col">
      <div class="card shadow-sm gameCard" style="text-align: center;">
-       <div id="pegi" class="card-pegi">PEGI ` + etaMinima + `</div>
-       <img id="image" src="/img/prova1.png" class="card-img-top" alt="...">
+       <div id="pegi" style="color: white;" class="val">PEGI ` + etaMinima + `</div>
+       <img id="image" src="/img/prova1.png" class="val" alt="...">
        <div class="card-body">
-         <h5 class="card-title">` + game + `</h5>
-         <h3 class="card-platform">` + platform + `</h3>
-         <a data-bs-toggle="modal" data-bs-target="#card-modal" class="rentbtn">
-           <span></span>
-           <span></span>
-           <span></span>
-           <span></span>
-           Noleggia
+         <h3 style="color: white;" class="val">` + game + `</h3>
+         <h5 style="color: white;" class="val">` + platform + `</h5>
+         <button data-bs-toggle="modal" data-bs-target="#noleggia-modal" class="btn btn-primary" aria-label="bottone di crea noleggio" type="button" onclick="creaNoleggio(this); findClienti()"><i class="bi bi-pencil-square"> Noleggia</i></button>
          </a>
-         <h6 style="color: white; margin-top: 10px;">` + prezzo + ` € al giorno</h6>
+         <br>    
+         <h5 class="val" style="color: white; margin-top: 20px;">` + prezzo + ` € al giorno</h5>
+         
        </div>
        <div class="card-footer">
-         <small class="text-muted" style="position: absolute; right: 0; margin-right: 10px;">` + annoUscita + `</small>
-         <small class="text-muted">in ` + condizioni + ` condizioni</small>
+         <small style="color: white;" class="val" style="position: absolute; left: 0; margin-left: 10px;">` + annoUscita + `</small>
+         <small style="color: white;" class="val">` + stato + `</small>
+         <small style="color: white;" class="val"> e in ` + condizioni + ` condizioni</small>
        </div>
      </div>
-   </div>
-  
-     
-
-     `;
+    </div>
+    `;
    
  cardBody.appendChild(div);
  //console.log(d.result[i])
  }    
  }
+
+
+
+ function searchNavbar(){
+
+  var input, filter, ul, li, a, i, txtValue;
+  input = document.getElementById("searchFilterNavbar");
+  filter = input.value.toUpperCase();
+  div = document.getElementById("card-list");
+  div1 = div.getElementsByClassName("col");
+  
+  for (i = 0; i < div1.length; i++) {
+    h3 = div1[i].getElementsByTagName("h3")[0];
+    txtValue = h3.textContent || h3.innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        div1[i].style.display = "";
+    } else {
+        div1[i].style.display = "none";
+    }
+}
+
+
+
+}
+
+
+  
+ function creaNoleggio(e){
+
+  let current = e.parentNode.parentNode;
+  let etaMinima = current.getElementsByClassName("val")[0].textContent;
+  let game = current.getElementsByClassName("val")[2].textContent;
+  let platform = current.getElementsByClassName("val")[3].textContent;
+  let prezzo = current.getElementsByClassName("val")[4].textContent;
+  let annoUscita = current.getElementsByClassName("val")[5].textContent;
+  let stato = current.getElementsByClassName("val")[6].textContent;
+  let condizioni = current.getElementsByClassName("val")[7].textContent;
+  
+  //console.log(game,platform)
+  let modal = document.getElementById("noleggia-modal");
+  //user = modal.getElementsByClassName("useruser")[0].textContent;
+  //user = user.split(" ")[2];
+  //console.log(user)
+  
+
+  let data = modal.getElementsByClassName("newval");
+  data[0].value = "";
+  //modal.getElementsByClassName("useruser")[0].textContent = " NUOVO NOLEGGIO";
+  data[1].value =  game + ", " + platform;
+  
+  let prezzo1 = prezzo.split(" ")[0];
+  data[4].value = prezzo1;
+  //console.log(prezzo1)s
+  //console.log(data[1].value);
+  
+ }
+
+ //                                     SELECT FORM CHE MOSTRA TUTTI CLIENTI A CUI ASSOCIARE UN NOLEGGIO
+
+ function  listClientiSelectNoleggio(d){
+  
+  for (let i in d.result) {
+
+    let idCliente = d.result[i]._id;
+    let username = d.result[i].username;
+    let punti = d.result[i].punti;
+
+    let option = document.createElement("OPTION");
+    option.setAttribute("value", username);
+    let option2 = document.createTextNode(username);
+    option.appendChild(option2);
+    document.getElementById("usernameCliente").appendChild(option);
+ }
+
+}
+
+function calcolaPuntiCliente(){
+
+   var usernameCliente = document.getElementById("usernameCliente").value;
+   //console.log(usernameCliente)
+
+  $.ajax({
+    url: "/db/findClienti",
+    type: "GET",
+    data: {},
+    dataType: "json",
+    contentType: "application/x-www-form-urlencoded",
+        success: function (d) {
+
+          console.log(d)
+          for (let i in d.result) {
+
+            if(d.result[i].username == usernameCliente){
+
+              punti = d.result[i].punti;
+            }
+          }
+          
+      punti = parseInt(punti)
+      console.log(punti)
+     
+      let modal = document.getElementById("noleggia-modal");
+      let data = modal.getElementsByClassName("newval");
+      data[5].value = punti;       
+    },
+  });
+}
+
+function calculateDays() {
+  var d1 = document.getElementById("inizioNoleggio").value;
+  var d2 = document.getElementById("fineNoleggio").value;    
+  const dateOne = new Date(d1);
+  const dateTwo = new Date(d2);
+  if(dateOne <= dateTwo){
+     const time = Math.abs(dateTwo - dateOne);
+     const days = Math.ceil(time / (1000 * 60 * 60 * 24));
+     calcolaCosto(days + 1); 
+  }
+  else{
+     days = 0;
+     calcolaCosto(days);
+     alert("La data di inizio del noleggio deve essere precedente alla data di fine noleggio")
+  }
+  //console.log(days)
+  
+}    
+
+
+function calcolaCosto(days){
+
+  let costoDay = document.getElementById("costo").value;
+  //console.log(costoDay)
+  costo = parseFloat(costoDay.split(" ")[0]);
+  //console.log(costo)
+
+  let modal = document.getElementById("noleggia-modal");
+  let data = modal.getElementsByClassName("newval");
+  let punti =  modal.getElementsByClassName("newval")[5].value;
+  //punti = parseFloat(punti);
+  data[6].value = (costo * days ).toFixed(2);
+  //console.log(costo * days)
+  
+}
+   
+function applicaPunti(){
+
+  let modal = document.getElementById("noleggia-modal");
+  let data = modal.getElementsByClassName("newval");
+
+  if (punti != 0){
+    data[6].value = (data[6].value - (punti  / 10)).toFixed(2);
+    punti = punti - punti;
+  } 
+  else{
+    data[6].value = (data[6].value - (0)).toFixed(2);
+  }
+    
+
+}
+
+
 
