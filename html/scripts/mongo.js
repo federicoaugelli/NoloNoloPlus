@@ -343,6 +343,85 @@ exports.getNoleggi = async function (credentials) {
   };
 
 
+
+   
+exports.getNoleggiTerminati = async function (credentials) {
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+  
+	let debug = [];
+	let data = { result: null };
+	try {
+	  debug.push(`Trying to connect to MongoDB`);
+	  console.log(debug)
+	  const mongo = new MongoClient(mongouri);
+	  await mongo.connect();
+	  let result = [];
+	  debug.push("... managed to connect to MongoDB.");
+	  //console.log(debug)
+	  await mongo
+		.db(dbname)
+		.collection(collection3)
+		.find({stato : "concluso"})
+		.sort({ usernameCliente: 1 })
+		.forEach((r) => {
+		  result.push(r);
+		});
+  
+	  data.result = result;
+  
+	  await mongo.close();
+  
+	  debug.push("Managed to close connection to MongoDB.");
+	  return data;
+	} catch (e) {
+	  return data;
+	}
+  };
+
+
+
+   
+exports.getNoleggiAttivieFuturi = async function (credentials) {
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+  
+	let debug = [];
+	let data = { result: null };
+	try {
+	  debug.push(`Trying to connect to MongoDB`);
+	  console.log(debug)
+	  const mongo = new MongoClient(mongouri);
+	  await mongo.connect();
+	  let result = [];
+	  debug.push("... managed to connect to MongoDB.");
+	  //console.log(debug)
+	  await mongo
+		.db(dbname)
+		.collection(collection3)
+		//.find({stato : "attivo" ,stato: "futuro"})
+		.find({$or: [
+			{
+				stato : "attivo"
+			},
+			{
+				stato: "futuro"
+			}
+		  ]})
+		.sort({ usernameCliente: 1 })
+		.forEach((r) => {
+		  result.push(r);
+		});
+  
+	  data.result = result;
+  
+	  await mongo.close();
+  
+	  debug.push("Managed to close connection to MongoDB.");
+	  return data;
+	} catch (e) {
+	  return data;
+	}
+  };
+
 //modifica utente
   exports.updateUser = async function(oldUser, newUser, credentials){
 
@@ -433,6 +512,52 @@ exports.getNoleggi = async function (credentials) {
 	let updated = mongo
 	                .db(dbname)
 					.collection(collection2)
+					.updateOne(myquery, newValues);
+	
+	let updatedFlag = false
+	if(updated.result.ok > 0) {
+
+		updatedFlag = true
+		
+	}
+	debug.push("Managed to close connection to MongoDB.");
+	await mongo.close();
+	return(updatedFlag);
+    }
+	catch(e){
+
+		return e;
+	}  
+  };
+
+
+
+  //modifica oggetto nel database
+  exports.updatePuntiCliente = async function(user, credentials){
+
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+
+	let debug = [];
+    try{
+
+		debug.push('trying to connect MongoDB');
+		const mongo = new MongoClient(mongouri);
+		await mongo.connect();
+		debug.push("Managed to close connection to MongoDB.");
+		var myquery = {
+
+			username: user
+		};
+
+		var newValues = {
+			$set:{
+
+			punti: 0			
+		},
+	};
+	let updated = mongo
+	                .db(dbname)
+					.collection(collection1)
 					.updateOne(myquery, newValues);
 	
 	let updatedFlag = false

@@ -125,6 +125,217 @@ function visualizzaNoleggi() {
 }
 
 
+function getNoleggiTerminati() {
+
+  $.ajax({
+    url: "/db/getNoleggiTerminati",
+    type: "GET",
+    data: '',
+    dataType: "json",
+    contentType: "application/x-www-form-urlencoded",
+    success: function (d) {
+      console.log(d.result)
+     creaTabellaNoleggiTerminati(d);
+    },
+  });
+}
+
+
+function creaTabellaNoleggiTerminati(d){
+
+  
+  document.getElementById("noleggioTerminatoBody").innerHTML = "";
+  //usernameSet.clear();
+  //usernameArray = [];
+  let tbody = document.getElementById("noleggioTerminatoBody");
+
+ for (let i in d.result) {
+   let idNoleggio = d.result[i]._id;
+   let usernameCliente = d.result[i].usernameCliente;
+   let titoloNoleggiato = d.result[i].titoloNoleggiato;
+   let piattaforma = d.result[i].piattaforma;
+   let usernameFunzionario = d.result[i].usernameFunzionario;
+   let inizioNoleggio = d.result[i].inizioNoleggio;
+   let fineNoleggio = d.result[i].fineNoleggio;
+   let prezzoTotale = d.result[i].prezzoTotale;
+   let stato = d.result[i].stato
+   //usernameSet.add(username.toLowerCase());
+   //let tbody = document.getElementById("anagraficaClientiBody");
+   const tr = document.createElement("tr");
+   tr.innerHTML =
+
+`<td class="tdCustomer">` +
+usernameCliente +
+`</td>
+<td class="tdCustomer">` +
+titoloNoleggiato +
+`</td>
+<td class="tdCustomer">` +
+piattaforma +
+`</td>
+<td class="tdCustomer">` +
+usernameFunzionario +
+`</td>  
+<td class="tdCustomer">` +
+inizioNoleggio +
+`</td> 
+<td class="tdCustomer">` +
+fineNoleggio +
+`</td> 
+<td class="tdCustomer">` +
+prezzoTotale +
+`</td> 
+<td class="tdCustomer">` +
+stato +
+`</td> 
+<td class="tdCustomer">` +
+idNoleggio +
+`</td> 
+<td class="tdCustomer"><button data-bs-toggle="modal" data-bs-target="#" class="btn btn-secondary" aria-label="bottone di modifica cliente" type="button" onclick=""><i class="bi bi-pencil-square"></i></button>
+</td>`;
+
+    tbody.appendChild(tr);
+    //console.log(d.result[i])
+}
+}
+
+
+
+
+function visualizzaNoleggiTerminati() {
+     
+  var div = document.getElementById("noleggiTerminatiContent");
+  div.style.visibility = "visible";
+  div.innerHTML = `
+            
+  <table border="2px" class="table table-striped table-bordered table-sm" cellspacing="2" width="100%">
+  <thead>
+    <tr>
+    <th th class="th-sm" scope="col">Cliente</th>
+    <th th class="th-sm" scope="col">Titolo</th>
+    <th th class="th-sm" scope="col">Piattaforma</th>
+    <th th class="th-sm" scope="col">Dipendente</th>
+    <th th class="th-sm" scope="col">Data inizio noleggio</th>
+    <th th class="th-sm" scope="col">Data fine noleggio</th>
+    <th th class="th-sm" scope="col">Importo</th>
+    <th th class="th-sm" scope="col">Stato noleggio</th>
+    <th th class="th-sm" scope="col">ID Noleggio</th>
+    </tr>
+  </thead>
+  <tbody id="noleggioTerminatoBody">  
+  </tbody>
+</table>      
+  `;
+}
+
+
+
+
+
+
+function getNoleggiAttivieFuturi() {
+
+  $.ajax({
+    url: "/db/getNoleggiAttivieFuturi",
+    type: "GET",
+    data: '',
+    dataType: "json",
+    contentType: "application/x-www-form-urlencoded",
+    success: function (d) {
+      console.log(d.result)
+     creaTabellaNoleggiAttivieFuturi(d);
+    },
+  });
+}
+
+
+function creaTabellaNoleggiAttivieFuturi(d){
+
+  
+  document.getElementById("noleggioAttivieFuturiBody").innerHTML = "";
+  //usernameSet.clear();
+  //usernameArray = [];
+  let tbody = document.getElementById("noleggioAttivieFuturiBody");
+
+ for (let i in d.result) {
+   let idNoleggio = d.result[i]._id;
+   let usernameCliente = d.result[i].usernameCliente;
+   let titoloNoleggiato = d.result[i].titoloNoleggiato;
+   let piattaforma = d.result[i].piattaforma;
+   let usernameFunzionario = d.result[i].usernameFunzionario;
+   let inizioNoleggio = d.result[i].inizioNoleggio;
+   let fineNoleggio = d.result[i].fineNoleggio;
+   let prezzoTotale = d.result[i].prezzoTotale;
+   let stato = d.result[i].stato
+   //usernameSet.add(username.toLowerCase());
+   //let tbody = document.getElementById("anagraficaClientiBody");
+   const tr = document.createElement("tr");
+   tr.innerHTML =
+
+`<td class="tdCustomer">` +
+usernameCliente +
+`</td>
+<td class="tdCustomer">` +
+titoloNoleggiato +
+`</td>
+<td class="tdCustomer">` +
+piattaforma +
+`</td>
+<td class="tdCustomer">` +
+usernameFunzionario +
+`</td>  
+<td class="tdCustomer">` +
+inizioNoleggio +
+`</td> 
+<td class="tdCustomer">` +
+fineNoleggio +
+`</td> 
+<td class="tdCustomer">` +
+prezzoTotale +
+`</td> 
+<td class="tdCustomer">` +
+stato +
+`</td> 
+<td class="tdCustomer">` +
+idNoleggio +
+`</td> 
+<td class="tdCustomer"><button data-bs-toggle="modal" data-bs-target="#" class="btn btn-secondary" aria-label="bottone di modifica cliente" type="button" onclick=""><i class="bi bi-pencil-square"></i></button>
+</td>`;
+
+    tbody.appendChild(tr);
+    //console.log(d.result[i])
+}
+}
+
+
+
+
+function visualizzaNoleggiAttivieFuturi() {
+     
+  var div = document.getElementById("noleggiAttivieFuturiContent");
+  div.style.visibility = "visible";
+  div.innerHTML = `
+            
+  <table border="2px" class="table table-striped table-bordered table-sm" cellspacing="2" width="100%">
+  <thead>
+    <tr>
+    <th th class="th-sm" scope="col">Cliente</th>
+    <th th class="th-sm" scope="col">Titolo</th>
+    <th th class="th-sm" scope="col">Piattaforma</th>
+    <th th class="th-sm" scope="col">Dipendente</th>
+    <th th class="th-sm" scope="col">Data inizio noleggio</th>
+    <th th class="th-sm" scope="col">Data fine noleggio</th>
+    <th th class="th-sm" scope="col">Importo</th>
+    <th th class="th-sm" scope="col">Stato noleggio</th>
+    <th th class="th-sm" scope="col">ID Noleggio</th>
+    </tr>
+  </thead>
+  <tbody id="noleggioAttivieFuturiBody">  
+  </tbody>
+</table>      
+  `;
+}
+
 
 
 
@@ -294,7 +505,7 @@ var userCliente = null;
     console.log(userCliente)
     let prenotato = 0;
     $.ajax({
-      url: "/db/getNoleggi/",
+      url: "/db/getNoleggi",
       type:"GET",
       data: {},
       dataType: "json",
@@ -303,7 +514,7 @@ var userCliente = null;
         console.log(d.result)
         for(let i in d.result){
        
-          if (userCliente == d.result[i].usernameCliente && (d.result[i].stato == "futuro" || d.result[i].stato == "in corso")){
+          if (userCliente == d.result[i].usernameCliente && (d.result[i].stato == "futuro" || d.result[i].stato == "attivo")){
             console.log(d.result[i].usernameCliente)
             prenotato++;            
           }
@@ -337,6 +548,26 @@ var userCliente = null;
       findClienti();
       }
     });
+  }
+
+
+  function  updatePuntiCliente(){
+
+     let modal = document.getElementById("noleggia-modal");
+     let user = modal.getElementsByClassName("form-control")[0].value;
+     //console.log(user)
+
+    $.ajax({
+      url: "/db/updatePuntiCliente",
+      type: "POST",
+      data: { user },
+      dataType: "json",
+      contentType: "application/x-www-form-urlencoded",
+      success: function(data){
+      },
+    });
+
+
   }
 
 

@@ -381,9 +381,9 @@
 
           </div>
         </div>
-      </div>   
-      <div class="modal-footer">  
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#aggiungiOggetto">Aggiungi oggetto</button>    
+      </div>        
+        <div class="modal-footer">  
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#aggiungiOggetto">Aggiungi oggetto</button> 
         <button type="button" id="closeModal1" class="btn btn-danger" data-bs-dismiss="modal">Chiudi</button>  
       </div>  
     </div>   
@@ -391,6 +391,63 @@
 </div>
 
                                                    <!-- FINE MODAL NOLEGGI -->
+
+                                                   <!-- MODAL NOLEGGI TERMINATI-->
+
+
+<div class="modal fade" id="statoNoleggiTerminatiModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog  modal-fullscreen" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">NOLEGGI CONCLUSI</h5>
+      </div>
+      <div class="modal-body">
+        <div id="noleggiTerminatiContent">
+          <div id="noleggioTerminatoBody">
+
+
+          </div>
+        </div>
+      </div>        
+        <div class="modal-footer">  
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#aggiungiOggetto">Aggiungi oggetto</button> 
+        <button type="button" id="closeModal1" class="btn btn-danger" data-bs-dismiss="modal">Chiudi</button>  
+      </div>  
+    </div>   
+  </div>
+</div>
+
+                                                   <!-- FINE MODAL NOLEGGI -->
+
+
+
+                                                   
+                                                   <!-- MODAL NOLEGGI ATTIVI E FUTURI-->
+
+
+<div class="modal fade" id="statoNoleggiAttivieFuturiModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog  modal-fullscreen" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">NOLEGGI CONCLUSI</h5>
+      </div>
+      <div class="modal-body">
+        <div id="noleggiAttivieFuturiContent">
+          <div id="noleggioAttivieFuturiBody">
+
+
+          </div>
+        </div>
+      </div>        
+        <div class="modal-footer">  
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#aggiungiOggetto">Aggiungi oggetto</button> 
+        <button type="button" id="closeModal1" class="btn btn-danger" data-bs-dismiss="modal">Chiudi</button>  
+      </div>  
+    </div>   
+  </div>
+</div>
+
+                                                   <!-- FINE MODAL NOLEGGI ATTIVI E FUTURI-->
 
                                                  <!-- NAVBAR -->
 
@@ -415,7 +472,17 @@
              </li>       
              <li class="nav-item">
               <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#statoNoleggiModal" onclick="visualizzaNoleggi(); getNoleggi()">
-               Noleggi
+               Storico noleggi
+              </button>
+             </li>
+             <li class="nav-item">
+              <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#statoNoleggiTerminatiModal" onclick="visualizzaNoleggiTerminati(); getNoleggiTerminati()">
+               Noleggi conclusi
+              </button>
+             </li>
+             <li class="nav-item">
+              <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#statoNoleggiAttivieFuturiModal" onclick="visualizzaNoleggiAttivieFuturi(); getNoleggiAttivieFuturi()">
+               Noleggi attivi e futuri
               </button>
              </li>
           </ul>
@@ -449,8 +516,9 @@
   </div>
   </div>
  </div>
+                                                   <!-- CARD LIST HOME BACKENDLOGGED FINE -->
 
-                                                   <!-- MODAL CREA NOLEGGIO -->
+                                                   <!-- MODAL CREA NOLEGGIO CARDS-->
 
  <div class="modal fade" id="noleggia-modal" tabindex="-1" aria-labelledby="card-modalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-fullscreen-sm-down modal-dialog-centered">
@@ -500,14 +568,14 @@
           <div style="margin-top: 40px; margin-bottom: 40px;">
             <label for="prezzoTotale">COSTO TOTALE: </label>
             <input class="newval" type="text" id="prezzoTotale" name="prezzoTotale" size="20" readonly> euro       
-            <button type="button" class="btn btn-primary" onclick="applicaPunti()">APPLICA PUNTI</button> 
+            <button type="button" class="btn btn-primary" onclick="applicaPunti(); updatePuntiCliente()">APPLICA PUNTI</button> 
           </div>
           <div class="mb-3">       
             <label class="formGroupExampleInput" for="stato">INDICARE LO STATO DEL NOLEGGIO : </label>
               <select class="form-control" id="stato" name="stato">   
                 <option selected>Scegli...</option>
-                <option value="in corso">in corso</option>
-                <option value="passato">passato</option>
+                <option value="attivo">attivo</option>
+                <option value="concluso">concluso</option>
                 <option value="futuro">futuro</option>
               </select> 
           </div>

@@ -166,6 +166,13 @@ app.get('/db/getNoleggi', async function(req, res) {
 	res.send(await mymongo.getNoleggi(mongoCredentials))
 });
 
+app.get('/db/getNoleggiTerminati', async function(req, res) {
+	res.send(await mymongo.getNoleggiTerminati(mongoCredentials))
+});
+
+app.get('/db/getNoleggiAttivieFuturi', async function(req, res) {
+	res.send(await mymongo.getNoleggiAttivieFuturi(mongoCredentials))
+});
 app.post('/db/updateUser', async function(req, res) {
 	let oldUser = req.body.oldUser
 	let newUser = req.body.formData
@@ -188,6 +195,11 @@ app.post('/db/updateLease', async function(req, res) {
 	let oldObject = req.body.oldObject
 	let newObject = req.body.formData
 	res.send(await mymongo.updateLease(oldObject,newObject,mongoCredentials))
+});
+
+app.post('/db/updatePuntiCliente', async function(req, res) {
+	user = req.body.user
+	res.send(await mymongo.updatePuntiCliente(user,mongoCredentials))
 });
 
 
