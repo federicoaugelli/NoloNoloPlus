@@ -8,8 +8,7 @@
                                                                                                                             
                                                // CHIAMATA AJAX RITORNA TUTTI I CLIENTI
 function findClienti() {
-    // let cookie = getCookie("SessionCookie")
-     //let data = {cookie: cookie}
+   
      $.ajax({
        url: "/db/findClienti",
        type: "GET",
@@ -24,11 +23,108 @@ function findClienti() {
 }
 
 
-function creaTabellaNoleggi(){
+function getNoleggi() {
 
-
-  
+   $.ajax({
+     url: "/db/getNoleggi",
+     type: "GET",
+     data: '',
+     dataType: "json",
+     contentType: "application/x-www-form-urlencoded",
+     success: function (d) {
+       //console.log(d.result)
+      creaTabellaNoleggi(d);
+     },
+   });
 }
+
+
+function creaTabellaNoleggi(d){
+
+  document.getElementById("noleggioBody").innerHTML = "";
+  //usernameSet.clear();
+  //usernameArray = [];
+  let tbody = document.getElementById("noleggioBody");
+
+ for (let i in d.result) {
+   let idNoleggio = d.result[i]._id;
+   let usernameCliente = d.result[i].usernameCliente;
+   let titoloNoleggiato = d.result[i].titoloNoleggiato;
+   let piattaforma = d.result[i].piattaforma;
+   let usernameFunzionario = d.result[i].usernameFunzionario;
+   let inizioNoleggio = d.result[i].inizioNoleggio;
+   let fineNoleggio = d.result[i].fineNoleggio;
+   let prezzoTotale = d.result[i].prezzoTotale;
+   let stato = d.result[i].stato
+   //usernameSet.add(username.toLowerCase());
+   //let tbody = document.getElementById("anagraficaClientiBody");
+   const tr = document.createElement("tr");
+   tr.innerHTML =
+
+`<td class="tdCustomer">` +
+usernameCliente +
+`</td>
+<td class="tdCustomer">` +
+titoloNoleggiato +
+`</td>
+<td class="tdCustomer">` +
+piattaforma +
+`</td>
+<td class="tdCustomer">` +
+usernameFunzionario +
+`</td>  
+<td class="tdCustomer">` +
+inizioNoleggio +
+`</td> 
+<td class="tdCustomer">` +
+fineNoleggio +
+`</td> 
+<td class="tdCustomer">` +
+prezzoTotale +
+`</td> 
+<td class="tdCustomer">` +
+stato +
+`</td> 
+<td class="tdCustomer">` +
+idNoleggio +
+`</td> 
+<td class="tdCustomer"><button data-bs-toggle="modal" data-bs-target="#" class="btn btn-secondary" aria-label="bottone di modifica cliente" type="button" onclick=""><i class="bi bi-pencil-square"></i></button>
+</td>`;
+
+    tbody.appendChild(tr);
+    //console.log(d.result[i])
+}
+}
+
+
+
+function visualizzaNoleggi() {
+     
+  var div = document.getElementById("noleggiContent");
+  div.style.visibility = "visible";
+  div.innerHTML = `
+            
+  <table border="2px" class="table table-striped table-bordered table-sm" cellspacing="2" width="100%">
+  <thead>
+    <tr>
+    <th th class="th-sm" scope="col">Cliente</th>
+    <th th class="th-sm" scope="col">Titolo</th>
+    <th th class="th-sm" scope="col">Piattaforma</th>
+    <th th class="th-sm" scope="col">Dipendente</th>
+    <th th class="th-sm" scope="col">Data inizio noleggio</th>
+    <th th class="th-sm" scope="col">Data fine noleggio</th>
+    <th th class="th-sm" scope="col">Importo</th>
+    <th th class="th-sm" scope="col">Stato noleggio</th>
+    <th th class="th-sm" scope="col">ID Noleggio</th>
+    </tr>
+  </thead>
+  <tbody id="noleggioBody">  
+  </tbody>
+</table>      
+  `;
+}
+
+
 
 
 
@@ -366,10 +462,11 @@ var userCliente = null;
   let data = modal.getElementsByClassName("newval");
   data[0].value = user;
   //modal.getElementsByClassName("useruser")[0].textContent = " NUOVO NOLEGGIO";
-  data[1].value =  game + ", " + platform;
+  data[1].value =  game;
+  data[2].value =  platform;
   
   let prezzo1 = prezzo.split(" ")[0];
-  data[4].value = prezzo1;
+  data[5].value = prezzo1;
   //console.log(prezzo1)s
   //console.log(data[1].value);
   
@@ -430,7 +527,7 @@ function calcolaPuntiCliente(){
      
       let modal = document.getElementById("noleggia-modal");
       let data = modal.getElementsByClassName("newval");
-      data[5].value = punti;       
+      data[6].value = punti;       
     },
   });
 }
@@ -464,9 +561,9 @@ function calcolaCosto(days){
 
   let modal = document.getElementById("noleggia-modal");
   let data = modal.getElementsByClassName("newval");
-  let punti =  modal.getElementsByClassName("newval")[5].value;
+  let punti =  modal.getElementsByClassName("newval")[6].value;
   //punti = parseFloat(punti);
-  data[6].value = (costo * days ).toFixed(2);
+  data[7].value = (costo * days ).toFixed(2);
   //console.log(costo * days)
   
 }
@@ -477,11 +574,11 @@ function applicaPunti(){
   let data = modal.getElementsByClassName("newval");
 
   if (punti != 0){
-    data[6].value = (data[6].value - (punti  / 10)).toFixed(2);
+    data[7].value = (data[7].value - (punti  / 10)).toFixed(2);
     punti = punti - punti;
   } 
   else{
-    data[6].value = (data[6].value - (0)).toFixed(2);
+    data[7].value = (data[7].value - (0)).toFixed(2);
   }
 }
 
