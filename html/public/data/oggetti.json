@@ -8,9 +8,9 @@
 		"etaMinima": "3",
 		"peso": "10",
 		"numGiocatori": "4",
-		"prezzo": "19,99",
+		"prezzo": "19.99",
 		"disponibile": true,
-		"img":"",
+		"img":"nms.jpg",
 		"id": 00000000
 	},
 	{
@@ -22,9 +22,9 @@
 		"etaMinima": "3",
 		"peso": "90",
 		"numGiocatori": "1",
-		"prezzo": "12,99",
+		"prezzo": "12.99",
 		"disponibile": true,
-		"img":"",
+		"img":"fifa22.jpg",
 		"id": 11111111
 	},	
 	{
@@ -36,9 +36,9 @@
 		"etaMinima": "18",
 		"peso": "80",
 		"numGiocatori": "1-4",
-		"prezzo": "69,99",
+		"prezzo": "69.99",
 		"disponibile": false,
-		"img":"",
+		"img":"vanguard.jpg",
 		"id": 22222222
 	},
 	{
@@ -50,9 +50,9 @@
 		"etaMinima": "18",
 		"peso": "8000",
 		"numGiocatori": "1-4",
-		"prezzo": "29,99",
+		"prezzo": "29.99",
 		"disponibile": true,
-		"img":"",
+		"img":"vanguard.jpg",
 		"id": 33333333
 	},
 	{
@@ -64,10 +64,10 @@
 		"etaMinima": "1",
 		"peso": "100",
 		"numGiocatori": "1",
-		"prezzo": "2,99",
+		"prezzo": "2.99",
 		"quantita": "3",
 		"disponibile": true,
-		"img":"",
+		"img":"minecraft.jpg",
 		"id": 44444444
 	},
 	{
@@ -79,9 +79,9 @@
 		"etaMinima": "1",
 		"peso": "100",
 		"numGiocatori": "1",
-		"prezzo": "9,99",
+		"prezzo": "9.99",
 		"disponibile": false,
-		"img":"",
+		"img":"minecraft.jpg",
 		"id": 55555555
 	},
 	{
@@ -93,9 +93,9 @@
 		"etaMinima": "18",
 		"peso": "90",
 		"numGiocatori": "1",
-		"prezzo": "9,99",
+		"prezzo": "9.99",
 		"disponibile": true,
-		"img":"",
+		"img":"gta5.jpg",
 		"id": 66666666
 	},
 	{
@@ -107,9 +107,9 @@
 		"etaMinima": "18",
 		"peso": "90",
 		"numGiocatori": "1",
-		"prezzo": "19,99",
+		"prezzo": "19.99",
 		"disponibile": true,
-		"img":"",
+		"img":"gta5.jpg",
 		"id": 77777777
 	}
 ]

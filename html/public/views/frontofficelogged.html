@@ -258,7 +258,9 @@
             <img v-else-if="item.platform == 'Xbox One'" class="platform-logo xbox" src="/img/xbox-brands.svg" alt="Card image1">
             <img v-else-if="item.platform == 'Pc'" class="platform-logo pc" src="/img/laptop-solid.svg" alt="Card image1">
             <div v-else class="platform-logo nintendo">Nintendo</div>
-            <img class="card-img-top" src="/img/prova1.png" alt="Card image1">
+
+            <img v-if="item.img == ''" class="card-img-top" src="/img/default.jpg" alt="Card image1">
+            <img v-else class="card-img-top" :src="'/img/' + item.img" alt="Card image1">
             <div class="card-body">
               <h4 class="card-title" style="color: white;">{{ item.game }}</h4>
               <!--
@@ -340,7 +342,9 @@
           startDate: '',
           endDate: '',
           ipoteticalPrice: '',
-          showModal: false
+          showModal: false,
+          searchVal: '',
+          types: []
         }
       },
 
@@ -414,6 +418,24 @@
             return this.items;
           }
         },
+
+        noResults() {
+          return this.filteredMovies.length === 0;
+        },
+
+        filteredMovies() {      
+          let moviesList = this.movies.filter(item => {
+            let match = item.title.toLowerCase().match(this.searchVal.toLowerCase());
+        
+          if (this.types.length && item.type) {
+            return (match && this.types.includes(item.type.toLowerCase()));
+          }
+
+          return match;
+      });
+
+          return moviesList;
+        }
 /*
         calculateDate(){
           this.ipoteticalPrice = parseFloat(this.modalItem.prezzo) * (this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)))

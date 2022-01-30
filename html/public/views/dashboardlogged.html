@@ -28,7 +28,7 @@
 	
   </head>
 
-  <body style="background-color: #dac5b4;">                       
+  <body style="background-color: rgb(128,128,128);">                       
 
                                                             <!-- NAVBAR -->
 
@@ -36,8 +36,8 @@
   <div class="container-fluid">
     <div class="navbar-brand ml-auto">      
       <div class="btn-group">
-        <button class="btn btn-dark btn-outline-light btn-lg" type="button"> DASHBOARD LOGGED</button>
-        <button type="button" class="btn btn-outline-light btn-lg btn-dark dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+        <button class="btn btn-dark btn-lg" type="button"> DASHBOARD LOGGED</button>
+        <button type="button" class="btn btn-lg btn-dark dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
           <span class="visually-hidden">Vedi Azioni Dropdown</span>
         </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -56,14 +56,16 @@
           </ul>
       </div>
     </div>
+    <!--
       <form class="d-flex w-50 bottom-0 my-auto">
         <input class="form-control me-2" type="search" placeholder="Cerca" aria-label="inserisci la tua parola chiave di ricerca">
         <button class="btn btn-outline-light" type="submit">Cerca</button>
       </form>
+    -->
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">   
           <a href="/dashboardlogout">
-            <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#myModal" aria-label="Esci dalla dashboard">ESCI</button>  
+            <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#myModal" aria-label="Esci dalla dashboard">ESCI</button>  
           </a>                    
         </li>
       </ul> 
@@ -71,15 +73,16 @@
 </nav>
  
                                                    <!-- FINE NAVBAR -->
-  <div style="margin: 100px" ng-app="myApp" ng-controller="myCtrl" data-ng-init="init()">
-    <!--
-    <div ng-repeat="item in items">
-      <p>{{ item.game }} per {{ item.platform }}</p>
+  <div style="margin: 100px; background-color: rgb(220,220,220);" ng-app="myApp" ng-controller="myCtrl" data-ng-init="init()">
+    <div class="d-flex justify-content-between">
+      <div style="width: 100%; height: 1000px;" id="noleggi"></div>
+      <div style="width: 100%; height: 1000px;" id="giochiVenduti"></div>
     </div>
-    -->
-    <!--<div id="clienti" style="width: auto; height: 1000px;"></div>-->
-    <!--<button onclick="addPoint()">aggiungi</button>-->
-    <div id="noleggi"></div>
+    <div class="d-flex justify-content-between">
+      <div style="width: 100%; height: 1000px;" id="fatturatoNoleggi"></div>
+      <div style="width: 100%; height: 1000px;" id="clienti"></div>
+    </div>
+    <div style="width: 100%; height: 1000px;" id="fatturatoCliente"></div>
   </div>
 
 
@@ -88,23 +91,24 @@
 <script type="text/javascript">
   var app = angular.module("myApp", []);
   app.controller('myCtrl', function($scope, $http) {
-  $http({
-    method : "GET",
-      url : "/db/getGames"
-  }).then(function mySuccess(response) {
+
+    //STATISTICA NUMERO GIOCHI PER PIATTAFORMA
+  $http({method : "GET", url : "/db/getGames"}).then(function mySuccess(response) {
     $scope.items = response.data.result;
-    console.log($scope.items.length);
 
     anychart.onDocumentReady(function () {
 
       data = anychart.data.set([
       ]);
 
-      var chart = anychart.bar();
-      var series = chart.bar(data);
-      chart.title("Panoramica Oggetti");
+      var chart = anychart.column();
+      var series = chart.column(data);
+      series.hovered().fill("#00cc99", 0.1);
+      chart.background({fill: "#DCDCDC 0.2"});
+      chart.palette(anychart.palettes.pastel);
+      chart.title("Panoramica Categorie");
       chart.xAxis().title("Piattaforma");
-      chart.yAxis().title("Numero giochi");
+      chart.yAxis().title("Numero Giochi");
       chart.container("noleggi").draw();
 
       //newIndex = (data.mapAs().getRowsCount())+1;
@@ -126,11 +130,11 @@
       })
       console.log(platformCount);
       */
+
       let count = [];
       $scope.items.forEach(function (a) {
         count[a.platform] = (count[a.platform] || 0) + 1;
       });
-      console.log(count);
 
       data.append({
         x: 'PC',
@@ -148,12 +152,166 @@
         x: 'Xbox One',
         value : count['Xbox One']
       });
+      data.append({
+        x: 'Xbox Serie X/S',
+        value : count['Xbox Serie X/S']
+      })
     });
-
-
-  }, function myError(response) {
+  },
+  function myError(response) {
     $scope.items = response.statusText;
   });
+
+
+
+    //STATISTICA GIOCHI VENDUTI PER GIOCHI
+  $http({method : "GET", url : "/db/getUserItems"}).then(function mySuccess(response) {
+    $scope.client = response.data.result;
+
+    anychart.onDocumentReady(function () {
+
+      data = anychart.data.set([
+      ]);
+
+      var chart = anychart.pie(data);
+      chart.palette(anychart.palettes.provence);
+      chart.title("Giochi venduti");
+      chart.background({fill: "#DCDCDC 0.2"});
+      chart.container("giochiVenduti").draw();
+
+      let count = [];
+      $scope.client.forEach(function (a) {
+        count[a.titoloNoleggiato] = (count[a.titoloNoleggiato] || 0) + 1;
+      });
+
+      Object.keys(count).forEach(function(key) {
+        data.append({
+          x: key,
+          value : count[key]
+        });
+
+      });
+    });
+  },
+  function myError(response) {
+    $scope.client = response.statusText;
+  });
+
+
+      //STATISTICA FATTURATO PER GIOCHI
+  $http({method : "GET", url : "/db/getUserItems"}).then(function mySuccess(response) {
+    $scope.client = response.data.result;
+
+    anychart.onDocumentReady(function () {
+
+      data = anychart.data.set([
+      ]);
+
+      var chart = anychart.pie(data);
+      chart.palette(anychart.palettes.blue);
+      chart.title("Fatturato per ogni gioco");
+      chart.background({fill: "#DCDCDC 0.2"});
+      chart.container("fatturatoNoleggi").draw();
+
+      let count = [];
+      $scope.client.forEach(function (a) {
+        //count[a.titoloNoleggiato] = (count[a.titoloNoleggiato] || 0) + 1;
+        count[a.titoloNoleggiato] = (count[a.titoloNoleggiato] || 0) + a.prezzoTotale;
+        //count['titolo'] = a;
+      });
+
+      var slag = [];
+      slag.push(Object.values($scope.client));
+
+      Object.keys(count).forEach(function(key) {
+        data.append({
+          x: key,
+          value : count[key]
+        });
+
+      });
+    });
+  },
+  function myError(response) {
+    $scope.client = response.statusText;
+  });
+
+
+    //STATISTICA NUMERO GIOCHI VENDUTI PER OGNI CLIENTE
+  $http({method : "GET", url : "/db/getUserItems"}).then(function mySuccess(response) {
+    $scope.client = response.data.result;
+
+    anychart.onDocumentReady(function () {
+
+      data = anychart.data.set([
+      ]);
+
+      var chart = anychart.bar();
+      var series = chart.bar(data);
+      chart.background({fill: "#DCDCDC 0.2"});
+      chart.title("Panoramica numero noleggi per cliente");
+      chart.xAxis().title("Cliente");
+      chart.yAxis().title("Numero giochi noleggiati");
+      chart.container("clienti").draw();
+
+      let count = [];
+      $scope.client.forEach(function (a) {
+        count[a.usernameCliente] = (count[a.usernameCliente] || 0) + 1;
+      });
+
+      Object.keys(count).forEach(function(key) {
+        data.append({
+          x: key,
+          value : count[key]
+        });
+
+      });
+    });
+  },
+  function myError(response) {
+    $scope.client = response.statusText;
+  });
+
+
+    //STATISTICA Fatturato PER OGNI CLIENTE
+  $http({method : "GET", url : "/db/getUserItems"}).then(function mySuccess(response) {
+    $scope.client = response.data.result;
+
+    anychart.onDocumentReady(function () {
+
+      data = anychart.data.set([
+      ]);
+
+      var chart = anychart.column();
+      var series = chart.column(data);
+      chart.background({fill: "#DCDCDC 0.2"});
+      chart.title("Panoramica fatturato per cliente");
+      chart.xAxis().title("Cliente");
+      chart.yAxis().title("Fatturato");
+      chart.container("clienti").draw();
+
+      let count = [];
+      $scope.client.forEach(function (a) {
+        count[a.usernameCliente] = (count[a.usernameCliente] || 0) + a.prezzoTotale;
+      });
+
+      Object.keys(count).forEach(function(key) {
+        data.append({
+          x: key,
+          value : count[key]
+        });
+
+      });
+    });
+  },
+  function myError(response) {
+    $scope.client = response.statusText;
+  });
+
+
+
+
+
   $scope.init = function () {
   };
   });

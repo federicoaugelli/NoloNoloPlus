@@ -20,13 +20,14 @@
 }
 
 .login-snip .login,
-.login-snip .sign-up-form {
+.sign-up-form {
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   position: absolute;
   transform: rotateY(180deg);
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   transition: all .4s linear
 }
