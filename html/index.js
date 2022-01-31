@@ -196,6 +196,12 @@ app.post('/db/updateUser', async function(req, res) {
 	res.send(await mymongo.updateUser(oldUser,newUser,mongoCredentials))
 });
 
+app.post('/db/updateClient', async function(req, res) {
+	let oldUser = req.body.oldUser
+	let newUser = req.body.formData
+	res.send(await mymongo.updateClient(oldUser,newUser,mongoCredentials))
+});
+
 app.post('/db/createLease', async function(newLease, res) {
 	//let newLease = req
 	console.log (newLease)

@@ -10,6 +10,7 @@
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
       <script src="//code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
       <link rel="shortcut icon" href="#">
 
       <!-- vue.js CDN
@@ -32,10 +33,8 @@
     <nav class="navbar navbar-dark navbar-expand-md bg-primary sticky-top py-4">
       <div style="margin-right: 10px; margin-left: 10px;" class="container-fluid">
         <a class="navbar-brand ml-auto" id="titleUser">NOLO NOLO</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
         </button>
-        <form class="d-flex w-50 bottom-0 my-auto">
+        <form class="d-flex w-50 bottom-0 my-auto d-none d-lg-block">
           <input class="form-control me-2" type="search" placeholder="Cerca" aria-label="inserisci la tua parola chiave di ricerca" v-model="searchQuery">
         </form>
         <div class="nav-item navbar-nav mr-auto dropstart">
@@ -64,7 +63,8 @@
             <h4 style="text-align: center;">Benvenuto {{ item.nome }} {{ item.cognome }}</h4>
             <h5>I Tuoi Dati</h5>
             <h6>Username: {{ item.username }}</h6>
-            <h6>Indirizzo di fatturazione: {{ item.indirizzo }}</h6>
+            <h6>Via: {{ item.via }}</h6>
+            <h6>Città: {{ item.citta }}</h6>
             <h6 style="margin-bottom: 40px;" v-model="punti = item.punti">Punti fedeltà: {{ item.punti }}</h6>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modificaCliente">modifica</button>
           </div>
@@ -83,93 +83,50 @@
         </div>
         <div class="modal-body">
           <div v-for="item in utenti" :key="item.username" v-if="item.username == user">
-            <form class="needs-validation" novalidate>
+            <form class="needs-validation" method="POST" action="/db/updateUser" v-model="oldUser = item._id" id="modUserForm">
               <div class="mb-3">
                 <label for="validationDefaultFirstname" class="form-label">Nome</label>
                 <div class="input-group">
-                  <input type="text" class="form-control" id="validationDefaultFirstname" :value="item.nome" aria-describedby="inputGroupPrepend1" required>
+                  <input type="text" class="form-control" id="validationDefaultFirstname" name="nome" :value="item.nome" aria-describedby="inputGroupPrepend1" required>
                 </div>
               </div>
               <div class="mb-3">
                 <label for="validationDefaultLastname" class="form-label">Cognome</label>
                 <div class="input-group">
-                  <input type="text" class="form-control" id="validationDefaultLastname" :value="item.cognome" aria-describedby="inputGroupPrepend2" required>
+                  <input type="text" class="form-control" id="validationDefaultLastname" name="cognome" :value="item.cognome" aria-describedby="inputGroupPrepend2" required>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="usernameval" class="form-label">Username</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="usernameval" name="username" :value="item.username" aria-describedby="inputGroupPrepend3" required>
                 </div>
               </div>
               <div class="mb-3">
                 <label for="validationPW" class="form-label">Password</label>
                 <div class="input-group">
-                  <input type="password" class="form-control" id="validationPW" aria-describedby="inputGroupPrepend3" required>
+                  <input type="password" class="form-control" id="validationPW" name="password" aria-describedby="inputGroupPrepend4" required>
                 </div>
               </div>
               <div class="mb-3">
-                <label for="validationbill" class="form-label">Indirizzo</label>
+                <label for="validationbill" class="form-label">Città</label>
                 <div class="input-group">
-                  <input type="text" class="form-control" id="validationbill" :value="item.indirizzo" aria-describedby="inputGroupPrepend4" required>
+                  <input type="text" class="form-control" id="validationbill" name="citta" :value="item.citta" aria-describedby="inputGroupPrepend5" required>
                 </div>
               </div>
-              <button type="button" class="btn btn-success">conferma modifiche</button>
+              <div class="mb-3">
+                <label for="validationcity" class="form-label">Via</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="validationcity" name="via" :value="item.via" aria-describedby="inputGroupPrepend6" required>
+                </div>
+              </div>
+              <button type="button" class="btn btn-success" v-on:click="postUser()">conferma modifiche</button>
             </form>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-                                                   <!-- MODAL MODIFICA ED ELIMINA CLIENTE
-
-
-<div class="modal fade" id="modificaClienteModal" tabindex="-1" role="dialog" aria-labelledby="modificaClienteModal" aria-hidden="true">
-  <div class="modal-dialog  modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">MODIFICA CLIENTI</h5>
-      </div>
-      <div class="modal-body">
-        <div id="content-2">
-          <div id="modificaClientiBody">
-            
-            <form method="POST" action="/db/updateUser"  id="modUserForm">
-              
-            <div class="mb-3">
-              <label for="nome" class="form-label">NOME</label>
-              <input type="text" class="form-control" id="nome" name="nome" placeholder="nome">
-            </div>
-            <div class="mb-3">
-              <label for="cognome" class="form-label">COGNOME</label>
-              <input type="text" class="form-control" id="cognome" name="cognome" placeholder="cognome">
-            </div>
-            <div class="mb-3">
-              <label for="username" class="form-label">USERNAME</label>
-              <input type="text" class="form-control" id="username" name="username" placeholder="username">
-            </div>
-            <div class="mb-3">
-              <label for="citta" class="form-label">CITTA</label>
-              <input type="text" class="form-control" id="citta" name="citta" placeholder="citta">
-            </div>
-            <div class="mb-3">
-              <label for="via" class="form-label">VIA</label>
-              <input type="text" class="form-control" id="via" name="via" placeholder="via">
-            </div>
-            <div class="mb-3">
-              <label for="punti" class="form-label">PUNTI</label>
-              <input type="text" class="form-control" id="punti" name="punti" placeholder="punti">
-            </div>
-            <button type="button" class="btn btn-primary" onclick="modUser()">Salva modifiche</button>
-          </form>
-          </div>
-          </div>
-        </div>      
-      </div>   
-      <div class="modal-footer">  
-        
-        
-        <button type="button" id="closeModal1" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#anagraficaClientiModal" onclick="visualizzaClienti(); findClienti()"> Chiudi </button>    
-       
-      </div>  
-    </div>   
-  </div>
-</div>-->
 
 
 <!-- modal noleggi -->
@@ -183,16 +140,20 @@
         <div class="modal-body">
           <div class="d-flex justify-content-between" v-for="item in userItems" :key="item.usernameCliente" v-if="item.usernameCliente == user" style="margin-bottom: 40px;">
             <div class="">
+              <h7 class="tagRed leaseTag" v-if="item.stato == 'terminato'">terminato</h7>
+              <h7 class="tagWarning leaseTag" v-else-if="item.stato == 'futuro'">futuro</h7>
+              <h7 class="tagGreen leaseTag" v-else>in corso</h7>
+
               <h5 class="">{{ item.titoloNoleggiato }}</h5>
               <div>dal {{ item.inzioNoleggio }} al {{ item.fineNoleggio }}</div>
               <div>prezzo: {{ item.prezzoTotale }}€</div>
             </div>
             <div v-if="item.stato == 'futuro'">
-              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modificaNoleggio" v-on:click="popoModal(item)">Modifica noleggio</button>
-              <button class="btn btn-danger">Cancella noleggio</button>
+              <!--<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modificaNoleggio" v-on:click="popoModal(item)">Modifica noleggio</button>-->
+              <button class="btn btn-danger" v-on:click="deleteLease(item._id)">Cancella noleggio</button>
             </div>
             <div v-else-if="item.stato == 'terminato'">
-              <button class="btn btn-primary">Visualizza Fatture</button>
+              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalinvoice" v-on:click="triggerModalInvoice(item)">Visualizza Fatture</button>
             </div>
             <div v-else>
               <button class="btn btn-success" disabled>In Corso</button>
@@ -203,7 +164,7 @@
     </div>
   </div>
 
-<!-- modal modifica noleggi -->
+<!-- modal modifica noleggi
   <div class="modal fade" id="modificaNoleggio" tabindex="-1" aria-labelledby="modalNoleggio" aria-hidden="true">
     <div class="modal-dialog modal-md modal-dialog-centered">
       <div class="modal-content">
@@ -221,8 +182,9 @@
                 <label for="finishRent">A:</label>
                 <input type="date" id="finishRent" name="finishRent" v-model="endDate">
               </div>
+              <button type="button" class="btn btn-primary" class="me-auto" v-on:click="calculateDate()">calcola</button>
               <div class="mb-3">
-                <label for="validationDefaultFirstname" class="form-label">Prezzo: {{ modalItem.prezzoTotale }}</label>
+                <label for="validationDefaultFirstname" class="form-label">Prezzo: {{ ipoteticalPrice }}</label>
               </div>
               <button type="button" class="btn btn-success" v-on:click="modificaLease(modalItem)">conferma modifiche</button>
             </form>
@@ -231,7 +193,148 @@
       </div>
     </div>
   </div>
+ -->
 
+ <!-- modal fatture -->
+  <div class="modal fade" id="modalinvoice" tabindex="-1" aria-labelledby="modalinvoice" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" style="margin: 50px;">
+          <div class="d-flex justify-content-between">
+            <h6>Ricevuta di fine noleggio</h6>
+            <h3>Nolo Nolo Plus</h3>
+            <h6>Titolo Noleggiato: {{ invoice.titoloNoleggiato }}</h6>
+          </div>
+
+          <div class="d-flex justify-content-between">
+            <div style="margin-left: 0;">
+              <h5>Via delle Forre 44,</h5>
+              <h5>Alto Reno Terme, Bologna,</h5>
+              <h5>40046</h5>
+            </div>
+            <div style="margin-right: 0;">
+              <h5>Fattura A:</h5>
+              <h5>{{ user }}</h5>
+              <h5></h4>
+            </div>
+          </div>
+          <div style="padding: 30px; margin: 100px; border: 5px solid grey" class="d-flex justify-content-between">
+            <div>
+              <h5>Titolo Noleggiato: {{ invoice.titoloNoleggiato }}</h5>
+              <h5>Quantità: 1</h5>
+              <h5>Prezzo Totale: {{ invoice.prezzoTotale }}€</h5>
+            </div>
+            <div>
+              <h5>Inizio noleggio: {{ invoice.inizioNoleggio }}</h5>
+              <h5>Fine noleggio: {{ invoice.fineNoleggio }}</h5>
+            </div>
+          </div>
+          <button class="btn btn-secondary">Print Invoice</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ <!-- modal success -->
+  <div class="modal fade" id="modalSuccess" tabindex="-1" aria-labelledby="modalSuccess" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h3>Noleggio eliminato con successo</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ <!-- modal success -->
+  <div class="modal fade" id="userModalSuccess" tabindex="-1" aria-labelledby="userModalSuccess" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h6>Modifiche avvenute con successo</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ <!-- modal error -->
+  <div class="modal fade" id="modalError" tabindex="-1" aria-labelledby="modalError" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h6 style="color: red;">Operazione non possibile al momento</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ <!-- modal empty -->
+  <div class="modal fade" id="emptyInput" tabindex="-1" aria-labelledby="emptyInput" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h6 style="color: red;">Completa tutti i campi</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ <!-- modal punti info -->
+  <div class="modal fade" id="infoPoints" tabindex="-1" aria-labelledby="infopoints" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h5>Modalità funzionamento dei punti fedeltà: Ad ogni noleggio, il numero dei punti fedeltà aumenterà di 10. Ogni 10 punti sarà applicato uno sconto di un euro al noleggio.</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ <!-- modal noleggio occupato -->
+  <div class="modal fade" id="fullnol" tabindex="-1" aria-labelledby="NoleggioFull" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h6 style="color: red;">Noleggio non disponibile in questa data</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ <!-- modal noleggio riuscito -->
+  <div class="modal fade" id="nolok" tabindex="-1" aria-labelledby="NoleggioOk" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h6 style="color: green;">Noleggio effettuato con successo!!!</h6>
+        </div>
+      </div>
+    </div>
+  </div>
 
     <div class="btn-group filterBar">
       <button v-if="searchQuery != ''" class="btn btn-danger" type="button" v-on:click="searchQuery = ''">Elimina filtro</button>
@@ -239,25 +342,24 @@
       <button class="btn btn-light" type="button" v-on:click="searchQuery = 'Playstation 4'">ps4</button>
       <button class="btn btn-light" type="button" v-on:click="searchQuery = 'Xbox One'">Xbox One</button>
       <button class="btn btn-light" type="button" v-on:click="searchQuery = 'Xbox Serie X/S'">Xbox X/S</button>
-      <button class="btn btn-light" type="button" v-on:click="searchQuery = 'Nintendo'">Nintendo</button>
       <button class="btn btn-light" type="button" v-on:click="searchQuery = 'Pc'">Pc</button>
       <button class="btn btn-light" type="button" v-on:click="searchQuery = 'Nuovo'">Nuovi</button>
       <button class="btn btn-light" type="button" v-on:click="searchQuery = 'true'">Disponibili</button>
     </div>
+
 
   <!-- TABELLA FINALE -->
   <div class="album py-5">
     <div class="container">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         
-        <div class="col" v-for="item in resultQuery" :key="item.game">
+        <div class="col" v-for="(item, index) in resultQuery" :key="index">
           <!-- implementare card 'Nessun elemento' -->       
           <div class="card shadow-sm gameCard" style="text-align: center;">
             <div class="pegi">PEGI {{ item.etaMinima }}</div>
             <img v-if="item.platform == 'Playstation 4' || item.platform == 'Playstation 5'" class="platform-logo playstation" src="/img/playstation-brands.svg" alt="Card image1">
-            <img v-else-if="item.platform == 'Xbox One'" class="platform-logo xbox" src="/img/xbox-brands.svg" alt="Card image1">
+            <img v-else-if="item.platform == 'Xbox One' || item.platform == 'Xbox Serie X/S'" class="platform-logo xbox" src="/img/xbox-brands.svg" alt="Card image1">
             <img v-else-if="item.platform == 'Pc'" class="platform-logo pc" src="/img/laptop-solid.svg" alt="Card image1">
-            <div v-else class="platform-logo nintendo">Nintendo</div>
 
             <img v-if="item.img == ''" class="card-img-top" src="/img/default.jpg" alt="Card image1">
             <img v-else class="card-img-top" :src="'/img/' + item.img" alt="Card image1">
@@ -286,40 +388,49 @@
   </div>
 
     <!-- modal finale -->
-   <div class="modal fade" id="card-modal" tabindex="-1" aria-labelledby="card-modalLabel" aria-hidden="true">
+   <div class="modal fade" id="card-modal" tabindex="-1" aria-labelledby="card-modalLabel" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-lg modal-fullscreen-sm-down modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">{{ modalItem.game }} per {{ modalItem.platform }}</h5>
+          <h7 v-if="modalItem.disponibile == false" style="margin-left: 20px; color: red;">Non Disponibile</h7>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" v-on:click="ipoteticalPrice = 0"></button>
         </div>
-        <div class="modal-body">
-          <div class="card-body">
-            <h5>Il gioco è uscito nel {{ modalItem.annoUscita }}, è {{ modalItem.stato }} e in {{ modalItem.condizioni }} condizioni.</h6>
-            <h6>Età minima: {{ modalItem.etaMinima }}</h6>
-            <h6>Peso: {{ modalItem.peso }}</h6>
-            <h6>Numero giocatori: {{ modalItem.numGiocatori }}</h6>
-            <div style="margin-top: 40px; margin-bottom: 40px;">
-              <h4>Quando vorresti noleggiarlo?</h4>
-              <label for="startRent">Da:</label>
-              <input type="date" id="startRent" name="startRent" v-model="startDate">
-              <label for="finishRent">A:</label>
-              <input type="date" id="finishRent" name="finishRent" v-model="endDate">
+        <form class="needs-validation" method="POST" action="/createnoleggio">
+          <div class="modal-body">
+            <div class="card-body">
+              <textarea class="form-control" id="validationDefaultUsername" name="usernameCliente" hidden>{{ user }}</textarea>
+              <textarea class="form-control" id="validationDefaultTitle" name="titoloNoleggiato" hidden>{{ modalItem.game }}</textarea>
+              <textarea class="form-control" id="validationDefaultBack" name="usernameFunzionario" hidden></textarea>
+              <textarea class="form-control" id="validationDefaultPrice" name="prezzoTotale" hidden>{{ ipoteticalPrice }}</textarea>
+              <textarea class="form-control" id="validationDefaultPrice" name="stato" hidden></textarea>
+              <textarea class="form-control" id="validationDefaultPrice" name="idGioco" v-model="id = modalItem._id" hidden>{{ modalItem._id }}</textarea>
+              <h5>Il gioco è uscito nel {{ modalItem.annoUscita }}, è {{ modalItem.stato }} e in {{ modalItem.condizioni }} condizioni.</h5>
+              <h6>Età minima: {{ modalItem.etaMinima }}</h6>
+              <h6>Peso: {{ modalItem.peso }}</h6>
+              <h6>Numero giocatori: {{ modalItem.numGiocatori }}</h6>
+              <div style="margin-top: 40px; margin-bottom: 40px;">
+                <h4>Quando vorresti noleggiarlo?</h4>
+                <label for="startRent">Da:</label>
+                <input type="date" id="inizioNoleggio" name="inizioNoleggio" v-model="startDate">
+                <label for="finishRent">A:</label>
+                <input type="date" id="fineNoleggio" name="fineNoleggio" v-model="endDate">
+              </div>
+              <h5 v-for="item in utenti" v-if="item.username == user">I tuoi punti fedeltà: {{ item.punti }}</h5>
+              <button class="btn btn-info btn-sm" v-on:click="showPunti()">come funzionano i punti fedeltà?</button>
             </div>
-            <h5 v-for="item in utenti" v-if="item.username == user">I tuoi punti fedeltà: {{ item.punti }}</h5>
           </div>
-        </div>
-        <div class="modal-footer">
-          <p v-if="ipoteticalPrice > 0 && ipoteticalPrice != '' && ipoteticalPrice != 'err'" class="me-auto">costo: {{ ipoteticalPrice }}€</p>
-          <p v-else-if="ipoteticalPrice == 'err'" class="me-auto" style="color: red;">Errore: puoi scegliere solo noleggi nel futuro!</p>
-          <p v-else-if="ipoteticalPrice < 0" class="me-auto" style="color: red;">Errore: Il noleggio deve iniziare prima della fine</p>
+          <div class="modal-footer">
+            <p v-if="ipoteticalPrice > 0 && ipoteticalPrice != '' && ipoteticalPrice != 'err'" class="me-auto">prezzo: {{ ipoteticalPrice }}€</p>
+            <p v-else-if="ipoteticalPrice == 'err'" class="me-auto" style="color: red;">Errore: puoi scegliere solo noleggi nel futuro!</p>
+            <p v-else-if="ipoteticalPrice < 0" class="me-auto" style="color: red;">Errore: Il noleggio deve iniziare prima della fine</p>
 
-          <button v-if="modalItem.disponibile" type="button" class="btn btn-primary" class="me-auto" v-on:click="calculateDate()">ipotesi</button>
+            <button v-if="modalItem.disponibile" type="button" class="btn btn-primary" class="me-auto" v-on:click="calculateDate(modalItem.prezzo), checkDisponibilità()">Verifica disponibilità</button>
 
-          <button v-if="modalItem.disponibile && ipoteticalPrice != 'err' && ipoteticalPrice != '' && ipoteticalPrice > 0" type="button" class="btn btn-primary" v-on:click="postLease()">Noleggia</button>
-          <button v-else-if="modalItem.disponibile == true && (ipoteticalPrice == 'err' || ipoteticalPrice == '' || ipoteticalPrice <= 0)" type="button" class="btn btn-primary" disabled>Noleggia</button>
-          <button v-else-if="modalItem.disponibile == false" type="button" class="btn btn-primary" disabled>Non Disponibile</button>
-        </div>
+            <button v-if="checkData == 'ok' && modalItem.disponibile && ipoteticalPrice != 'err' && ipoteticalPrice != '' && ipoteticalPrice > 0" type="submit" class="btn btn-primary" v-on:click="createLease()">Noleggia</button>
+            <button v-else-if="checkData != 'ok' || modalItem.disponibile == true && (ipoteticalPrice == 'err' || ipoteticalPrice == '' || ipoteticalPrice <= 0)" type="submit" class="btn btn-primary" disabled>Noleggia</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -343,8 +454,19 @@
           endDate: '',
           ipoteticalPrice: '',
           showModal: false,
-          searchVal: '',
-          types: []
+
+          //invoice item
+          invoice: '',
+
+          //modifica user
+          formData: [],
+          oldUser : '',
+
+          //crea noleggio
+          compareElem: '',
+          postLeaseItem: '',
+          id: '',
+          checkData: ''
         }
       },
 
@@ -364,7 +486,7 @@
 
       computed: {
         resultQuery(){
-          if(this.searchQuery !== "" && this.searchQuery !== "Nuovo" && this.searchQuery !== "Xbox One" && this.searchQuery !== "Xbox Serie X/S"  && this.searchQuery !== "Playstation 5" && this.searchQuery !== "Pc" && this.searchQuery !== "Playstation 4" && this.searchQuery !== "Nintendo" && this.searchQuery != "true"){
+          if(this.searchQuery !== "" && this.searchQuery !== "Nuovo" && this.searchQuery !== "Xbox One" && this.searchQuery !== "Xbox Serie X/S"  && this.searchQuery !== "Playstation 5" && this.searchQuery !== "Pc" && this.searchQuery !== "Playstation 4" && this.searchQuery !== "Nintendo" && this.searchQuery !== "true"){
             return this.items.filter((gg)=>{
               return this.searchQuery.toLowerCase().split(' ').every(v => gg.game.toLowerCase().includes(v))
             })
@@ -394,11 +516,6 @@
               return this.searchQuery.toLowerCase().split(' ').every(v => gg.platform.toLowerCase().includes(v))
             })
           }
-          else if (this.searchQuery == "Playstation 5"){
-            return this.items.filter((gg)=>{
-              return this.searchQuery.toLowerCase().split(' ').every(v => gg.platform.toLowerCase().includes(v))
-            })
-          }
           else if (this.searchQuery == "Xbox One"){
             return this.items.filter((gg)=>{
               return this.searchQuery.toLowerCase().split(' ').every(v => gg.platform.toLowerCase().includes(v))
@@ -409,46 +526,18 @@
               return this.searchQuery.toLowerCase().split(' ').every(v => gg.platform.toLowerCase().includes(v))
             })
           }
-          else if (this.searchQuery == "true"){
+          else if (this.searchQuery == 'true'){
+            let disp = true
             return this.items.filter((gg)=>{
-              return this.searchQuery.toLowerCase().split(' ').every(v => gg.disponibile.toLowerCase().includes(v))
+              return gg.disponibile
             })
           }
           else{
             return this.items;
           }
         },
-
-        noResults() {
-          return this.filteredMovies.length === 0;
-        },
-
-        filteredMovies() {      
-          let moviesList = this.movies.filter(item => {
-            let match = item.title.toLowerCase().match(this.searchVal.toLowerCase());
-        
-          if (this.types.length && item.type) {
-            return (match && this.types.includes(item.type.toLowerCase()));
-          }
-
-          return match;
-      });
-
-          return moviesList;
-        }
-/*
-        calculateDate(){
-          this.ipoteticalPrice = parseFloat(this.modalItem.prezzo) * (this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)))
-          return this.ipoteticalPrice
-        }
-*/
       },
       methods: {
-        /*
-        getUserItems(){
-          console.log(this.userItems);
-        },
-        */
 
         getCliente(){
           axios
@@ -460,6 +549,10 @@
           this.modalItem = item;
         },
 
+        triggerModalInvoice(item){
+          this.invoice = item;
+        },
+
         parseDate(date){
           var mdy = date.split('-');
           return new Date(mdy[0], mdy[1], mdy[2]);
@@ -469,15 +562,14 @@
           return Math.round((second-first)/(1000*60*60*24));
         },
 
-        calculateDate(){
+        calculateDate(item){
           let yourDate = new Date().toISOString().split('T')[0];
-          //console.log(yourDate);
-          //console.log(this.startDate);
-          //console.log(yourDate.split('-'));
+          console.log(yourDate, this.startDate, this.endDate);
           console.log(this.datediff(this.parseDate(yourDate), this.parseDate(this.startDate)));
-          //console.log(this.datediff(this.parseDate(this.startDate), yourDate.split('-')));
           if(this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)) > 0 && this.datediff(this.parseDate(yourDate), this.parseDate(this.startDate)) >= 0){
-            this.ipoteticalPrice = parseFloat(this.modalItem.prezzo) * (this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)))
+            this.ipoteticalPrice = parseFloat(item) * (this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)));
+            this.ipoteticalPrice = this.ipoteticalPrice - (this.punti / 10);
+            this.ipoteticalPrice = this.ipoteticalPrice.toFixed(2);
           }
           else if(this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)) <= 0){
             this.ipoteticalPrice = -1
@@ -485,94 +577,112 @@
           else{
             this.ipoteticalPrice = 'err'
           }
+          console.log(this.ipoteticalPrice);
         },
-/*
-        cancelLease(){
-          axios
-            .delete('/db/deleteLease')
-        }
 
-        modificaLease(){
-          axios
-            .post('/db/updateLease')
-        }
+        checkDisponibilità(){
+          console.log(this.id);
+          for (let i = 0; i < this.userItems.length; i++){
+            if(this.id == this.userItems[i].idGioco){
+              if(this.datediff(this.parseDate(this.userItems[i].inizioNoleggio), this.parseDate(this.startDate)) > 0 && this.datediff(this.parseDate(this.userItems[i].fineNoleggio), this.parseDate(this.startDate)) < 0){
+                this.checkData = 'occupato';
+                console.log('occupato');
+                $('#fullnol').modal('toggle');
+              }
+              else if(this.datediff(this.parseDate(this.userItems[i].inizioNoleggio), this.parseDate(this.endDate)) > 0 && this.datediff(this.parseDate(this.userItems[i].fineNoleggio), this.parseDate(this.endDate)) < 0){
+                this.checkData = 'occupato';
+                console.log('occupato');
+                $('#fullnol').modal('toggle');
+              }
+              else if(this.datediff(this.parseDate(this.userItems[i].inizioNoleggio), this.parseDate(this.startDate)) < 0 && this.datediff(this.parseDate(this.userItems[i].fineNoleggio), this.parseDate(this.endDate)) > 0){
+                this.checkData = 'occupato';
+                console.log('occupato');
+                $('#fullnol').modal('toggle');
+              }
+              else {
+                this.checkData = 'ok';
+              }
+            }
+            else {
+              this.checkData = 'ok';
+            }
+          }
+        },
 
-        postLease(){
-          const Lease = {
-            usernameCliente: "ciao",
-            titoloNoleggiato: "a",
-            usernameFunzionario: "",
-            inzioNoleggio: "2022-01-01",
-            fineNoleggio: "2022-02-01",
-            prezzoTotale: 39.99,
-            stato: "in corso",
-            id: 39047032
+        postUser(){
+          var formData = $("#modUserForm").serializeArray();
+          console.log(formData[0]);
+          if(
+            formData[0].value != "" &&
+            formData[1].value != "" &&
+            formData[2].value != "" &&
+            formData[3].value != "" &&
+            formData[4].value != "" && 
+            formData[5].value != "" 
+      
+          ){
+            console.log(formData);
+            const oldUser = this.oldUser
+            var body = {oldUser, formData}
+
+            $.ajax({
+
+              url: "/db/updateClient",
+              type: "POST",
+              data: { oldUser, formData },
+              dataType: "json",
+              contentType: "application/x-www-form-urlencoded",
+              success: function(data){
+                $('#modificaCliente').modal('hide');
+                $('#userModalSuccess').modal('toggle');
+              },
+              error: function(){
+                $('#modalError').modal('toggle');
+              }
+            });
           }
-          axios
-              .post('/db/createLease', {Lease})
-              .then(response => console.log(Lease))
-          /*if(item != '') {
-            axios
-              .post('/db/createLease', Lease)
-            //triggera un toast
+          else {
+            $('#emptyInput').modal('toggle');
           }
-          //else triggera un toast
+        },
+
+        deleteLease(id){
+          console.log(id);
+          $.ajax({
+
+            url: "/db/deleteLease",
+            type: "DELETE",
+            data: { id },
+            dataType: "json",
+            contentType: "application/x-www-form-urlencoded",
+            success: function(data){
+              $('#noleggiModal').modal('hide');
+              $('#modalSuccess').modal('toggle');
+            },
+            error: function(){
+              $('#modalError').modal('toggle');
+            }
+          });
+        },
+
+        createLease(){
+          $('#card-modal').modal('hide');
+          $('#nolok').modal('toggle');
+        },
+
+        updatePoints(){
+
+        },
+
+        showPunti(){
+          $('#infoPoints').modal('toggle');
+        },
+
+        printInvoice(){
+
         }
-*/
       },
     });
-
-  function modUser(){
-
-    var formData = $("#modUserForm").serializeArray();
-
-    if(
-      formData[0].value != " " &&
-      formData[1].value != " " &&
-      formData[2].value != " " &&
-      formData[3].value != " " &&
-      formData[4].value != " " 
-      
-    ){
-          
-      $.ajax({
-
-        url: "/db/updateUser",
-        type: "POST",
-        data: { oldUser, formData },
-        dataType: "json",
-        contentType: "application/x-www-form-urlencoded",
-        success: function(data){
-
-          //console.log(oldUser)
-          //console.log(formData)
-          //console.log(data)
-
-          if(data){
-
-            document.getElementById("alert-body").textContent = "Utente modificato con successo"
-            $("#flash-modal").modal("show");
-            $("#modUserForm").trigger("reset");
-            $("#modificaClienteModal").modal("hide");
-            console.log("Utente modificato");
-            findClienti();
-          }
-          else{
-
-            document.getElementById("alert-body").textContent = "Errore. non è possibile modificare l'utente"
-            $("#flash-modal").modal("show");
-            console.log("errore");
-          }
-        }
-      });
-    }
-    else{
-
-      document.getElementById("alert-body").textContent = "Compilare tutti i campi"
-      $("#flash-modal").modal("show");
-      console.log("err")
-    }
-  };
 
   </script>
 </div>

@@ -31,8 +31,9 @@ let collection2 = "oggetti"
 let collection3 = "noleggi"
 
 const { MongoClient } = require("mongodb");
-const fs = require('fs').promises ;
-const template = require(global.rootDir + '/scripts/tpl.js') ; 
+const fs = require('fs').promises;
+const template = require(global.rootDir + '/scripts/tpl.js');
+const Bcrypt = require("bcryptjs"); 
 
 
 
@@ -545,10 +546,9 @@ exports.updateNoleggioFuturo = async function(oldNoleggio, newNoleggio, credenti
   exports.updateUser = async function(oldUser, newUser, credentials){
 
 	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
-
 	let debug = [];
     try{
-
+    	console.log(oldUser, newUser);
 		debug.push('trying to connect MongoDB');
 		const mongo = new MongoClient(mongouri);
 		await mongo.connect();
@@ -569,6 +569,55 @@ exports.updateNoleggioFuturo = async function(oldNoleggio, newNoleggio, credenti
 			citta: newUser[3].value,
 			via: newUser[4].value,
 			punti: newUser[5].value
+		},
+	};
+	let updated = mongo
+	                .db(dbname)
+					.collection(collection1)
+					.updateOne(myquery, newValues);
+	
+	let updatedFlag = false
+	if(updated.result.ok > 0) {
+
+		updatedFlag = true
+		
+	}
+	debug.push("Managed to close connection to MongoDB.");
+	await mongo.close();
+	return(updatedFlag);
+    }
+	catch(e){
+
+		return e;
+	}  
+  };
+
+//update Cliente
+  exports.updateClient = async function(oldUser, newUser, credentials){
+
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+	let debug = [];
+    try{
+    	console.log(oldUser, newUser);
+		debug.push('trying to connect MongoDB');
+		const mongo = new MongoClient(mongouri);
+		await mongo.connect();
+		debug.push("Managed to close connection to MongoDB.");
+		let ObjectId = require('mongodb').ObjectId;
+		var myquery = {
+
+			_id: ObjectId(oldUser)
+			
+		};
+
+		var newValues = {
+			$set:{
+			nome: newUser[0].value,
+			cognome: newUser[1].value,
+			username: newUser[2].value,
+			password: Bcrypt.hashSync(newUser[3].value, 10), //newUser[3].value,
+			citta: newUser[4].value,
+			via: newUser[5].value,
 		},
 	};
 	let updated = mongo
@@ -780,7 +829,7 @@ exports.createLease = async function(newLease, credentials) {
    exports.deleteLease = async function(oldObject, credentials){
 
 	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
-
+	console.log(oldObject);
 	let debug = [];
 	try{
 

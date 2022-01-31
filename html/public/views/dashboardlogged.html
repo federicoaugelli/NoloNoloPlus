@@ -74,11 +74,11 @@
  
                                                    <!-- FINE NAVBAR -->
   <div style="margin: 100px; background-color: rgb(220,220,220);" ng-app="myApp" ng-controller="myCtrl" data-ng-init="init()">
-    <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-between" style="margin-bottom: 60px;">
       <div style="width: 100%; height: 1000px;" id="noleggi"></div>
       <div style="width: 100%; height: 1000px;" id="giochiVenduti"></div>
     </div>
-    <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-between" style="margin-bottom: 60px;">
       <div style="width: 100%; height: 1000px;" id="fatturatoNoleggi"></div>
       <div style="width: 100%; height: 1000px;" id="clienti"></div>
     </div>
@@ -209,7 +209,7 @@
 
       var chart = anychart.pie(data);
       chart.palette(anychart.palettes.blue);
-      chart.title("Fatturato per ogni gioco");
+      chart.title("Fatturato per gioco");
       chart.background({fill: "#DCDCDC 0.2"});
       chart.container("fatturatoNoleggi").draw();
 
@@ -249,7 +249,7 @@
       var chart = anychart.bar();
       var series = chart.bar(data);
       chart.background({fill: "#DCDCDC 0.2"});
-      chart.title("Panoramica numero noleggi per cliente");
+      chart.title("Numero noleggi per cliente");
       chart.xAxis().title("Cliente");
       chart.yAxis().title("Numero giochi noleggiati");
       chart.container("clienti").draw();
@@ -285,10 +285,10 @@
       var chart = anychart.column();
       var series = chart.column(data);
       chart.background({fill: "#DCDCDC 0.2"});
-      chart.title("Panoramica fatturato per cliente");
+      chart.title("Fatturato per cliente");
       chart.xAxis().title("Cliente");
       chart.yAxis().title("Fatturato");
-      chart.container("clienti").draw();
+      chart.container("fatturatoCliente").draw();
 
       let count = [];
       $scope.client.forEach(function (a) {
@@ -316,33 +316,5 @@
   };
   });
 
-/*
-  anychart.onDocumentLoad(function () {
-    // create an instance of a pie chart
-    var chart = anychart.pie();
-    // set the data
-    chart.data([
-      ["Chocolate", 5],
-      ["Rhubarb compote", 2],
-      ["Crêpe Suzette", 2],
-      ["American blueberry", 2],
-      ["Buttermilk", 1]
-    ]);
-    // set chart title
-    chart.title("Panoramica Clienti");
-    // set the container element 
-    chart.container("clienti");
-    // initiate chart display
-    chart.draw();
-  });
-
-function addPoint() {
-  newIndex = (data.mapAs().getRowsCount())+1;
-  data.append({
-    x: "P" + newIndex,
-    value : Math.floor((Math.random() * 100)+ 1)
-  });
-};
-*/
 </script>
 </html>

@@ -887,9 +887,9 @@ var oldUser = null;
         contentType: "application/x-www-form-urlencoded",
         success: function(data){
 
-          //console.log(oldUser)
-          //console.log(formData)
-          //console.log(data)
+          console.log(oldUser)
+          console.log(formData)
+          console.log(data)
 
           if(data){
 
@@ -942,7 +942,7 @@ var userCliente = null;
             prenotato++;            
           }
         }
-        
+        console.log(oldUser);
         console.log(prenotato)
       if(prenotato == 0){
 

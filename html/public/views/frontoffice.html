@@ -128,10 +128,8 @@
     <nav class="navbar navbar-dark navbar-expand-md bg-primary sticky-top py-4" id="navbarTitle">
       <div style="margin-right: 10px; margin-left: 10px;" class="container-fluid">
         <a class="navbar-brand ml-auto">NOLO NOLO</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
         </button>
-          <form class="d-flex w-50 bottom-0 my-auto">
+          <form class="d-flex w-50 bottom-0 my-auto d-none d-lg-block">
             <input class="form-control me-2" type="search" placeholder="Cerca" aria-label="inserisci la tua parola chiave di ricerca" v-model="searchQuery">
           </form>
           <ul class="navbar-nav mr-auto">
@@ -143,20 +141,19 @@
       </div>
     </nav>
 
-    <button class="btn btn-dark" v-on:click="removeDuplicates(items)">rimuovi duplicati</button>
+  <div v-if="show == true" v-model="removeDuplicates(), show = false"></div>
 
   <!-- TABELLA FINALE -->
   <div class="album py-5">
     <div class="container">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        <div class="col" v-for="item in resultQuery" :key="item.game">
+        <div class="col" v-for="(item, index) in resultQuery" :key="index">
           <!-- implementare card 'Nessun elemento' -->
           <div class="card shadow-sm gameCard" style="text-align: center;">
             <div class="pegi">PEGI {{ item.etaMinima }}</div>
             <img v-if="item.platform == 'Playstation 4' || item.platform == 'Playstation 5'" class="platform-logo playstation" src="/img/playstation-brands.svg" alt="Card image1">
-            <img v-else-if="item.platform == 'Xbox One'" class="platform-logo xbox" src="/img/xbox-brands.svg" alt="Card image1">
+            <img v-else-if="item.platform == 'Xbox One' || item.platform == 'Xbox Serie X/S'" class="platform-logo xbox" src="/img/xbox-brands.svg" alt="Card image1">
             <img v-else-if="item.platform == 'Pc'" class="platform-logo pc" src="/img/laptop-solid.svg" alt="Card image1">
-            <div v-else class="platform-logo nintendo">Nintendo</div>
             <img class="card-img-top" :src="'/img/' + item.img" alt="Card image1">
             <div class="card-body">
               <h4 class="card-title" style="color: white;">{{ item.game }}</h4>
@@ -182,7 +179,7 @@
   </div>
 
       <!-- modal finale -->
-   <div class="modal fade" id="card-modal" tabindex="-1" aria-labelledby="card-modalLabel" aria-hidden="true">
+   <div class="modal fade" id="card-modal" tabindex="-1" aria-labelledby="card-modalLabel" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
@@ -236,18 +233,11 @@
           .then(response => (this.items = response.data.result));
       },
 
-      mounted () {
-        const lol = this.items;
-        var cleaned = [];
-        lol.forEach(function(itm) {
-          var unique = true;
-          cleaned.forEach(function(itm2) {
-            if (_.isEqual(itm.game, itm2.game)) unique = false;
-          });
-          if (unique)  cleaned.push(itm);
-        });
-        this.items = cleaned;
-        console.log(this.items);
+      async mounted () {
+
+      },
+
+      updated () {
       },
 
       computed: {
@@ -264,9 +254,9 @@
       },
 
       methods: {
-        removeDuplicates(item){
+        removeDuplicates(){
           var cleaned = [];
-          item.forEach(function(itm) {
+          this.items.forEach(function(itm) {
             var unique = true;
             cleaned.forEach(function(itm2) {
               if (_.isEqual(itm.game, itm2.game)) unique = false;
@@ -298,7 +288,8 @@
           console.log(this.datediff(this.parseDate(yourDate), this.parseDate(this.startDate)));
           //console.log(this.datediff(this.parseDate(this.startDate), yourDate.split('-')));
           if(this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)) > 0 && this.datediff(this.parseDate(yourDate), this.parseDate(this.startDate)) >= 0){
-            this.ipoteticalPrice = parseFloat(this.modalItem.prezzo) * (this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)))
+            this.ipoteticalPrice = parseFloat(this.modalItem.prezzo) * (this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)));
+            this.ipoteticalPrice = this.ipoteticalPrice.toFixed(2);
           }
           else if(this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)) <= 0){
             this.ipoteticalPrice = -1

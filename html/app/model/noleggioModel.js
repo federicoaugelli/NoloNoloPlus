@@ -14,7 +14,7 @@ const noleggioSchema = new Schema({
     stato: { type: String, required:false, unique:false },
     commenti: { type: String, required:false, unique:false },
     costoGiorno: { type: String, required:false, unique:false }
-
+    idGioco: { type: String, required:false, unique:false}
 });
   
 // plugin for passport-local-mongoose

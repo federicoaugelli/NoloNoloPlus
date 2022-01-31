@@ -137,6 +137,42 @@ router.post("/noleggioregister", function(req, res){
 );
 
 
+router.post("/createnoleggio", function(req, res){
+    console.log(req.body);
+    let yourDate = new Date().toISOString().split('T')[0];
+    let state = '';
+    if(yourDate == req.body.inizioNoleggio){
+        state = 'in corso';
+    }
+    else{
+        state = 'futuro';
+    }
+
+    try{
+        let newRent = new noleggio({
+            usernameCliente: req.body.usernameCliente,
+            titoloNoleggiato: req.body.titoloNoleggiato,
+            piattaforma: req.body.piattaforma,
+            usernameFunzionario: req.body.usernameFunzionario,
+            inizioNoleggio: req.body.inizioNoleggio,
+            fineNoleggio: req.body.fineNoleggio,
+            prezzoTotale: req.body.prezzoTotale,
+            stato: state,
+            idGioco: req.body.idGioco
+
+            
+    });
+        newRent.save();
+        res.redirect('/user/frontendlogged');    
+        
+    }
+    catch(error){
+        res.status(500).send(error);
+    }
+},
+);
+
+
 
 
 

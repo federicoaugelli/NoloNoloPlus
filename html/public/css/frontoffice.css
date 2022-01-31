@@ -17,6 +17,25 @@ td {
     text-align: center;
 }
 
+.leaseTag {
+  border-radius: 20px;
+  text-align: center; 
+  font-size: 15px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.tagRed {
+  border: 2px solid red;
+}
+
+.tagWarning {
+  border: 2px solid orange;
+}
+
+.tagGreen {
+  border: 2px solid green;
+}
 
 .table-responsive{
 
@@ -39,13 +58,6 @@ th.sticky {
     position: absolute;
 }
 
-.xbox {
-    color: green;
-}
-
-.nintendo {
-  color: #bfc7d9;
-}
 
 .pegi {
     margin: 10px;
