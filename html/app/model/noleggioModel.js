@@ -13,7 +13,7 @@ const noleggioSchema = new Schema({
     prezzoTotale : { type: Number, required:false, unique: false },
     stato: { type: String, required:false, unique:false },
     commenti: { type: String, required:false, unique:false },
-    costoGiorno: { type: String, required:false, unique:false }
+    costoGiorno: { type: String, required:false, unique:false },
     idGioco: { type: String, required:false, unique:false}
 });
   

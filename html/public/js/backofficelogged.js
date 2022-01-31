@@ -142,7 +142,7 @@ function getNoleggiTerminati() {
     dataType: "json",
     contentType: "application/x-www-form-urlencoded",
     success: function (d) {
-      console.log(d.result)
+      //console.log(d.result)
      creaTabellaNoleggiTerminati(d);
     },
   });
@@ -395,7 +395,7 @@ function getNoleggiAttivi() {
     dataType: "json",
     contentType: "application/x-www-form-urlencoded",
     success: function (d) {
-      console.log(d.result)
+      //console.log(d.result)
      creaTabellaNoleggiAttivi(d);
     },
   });
@@ -1048,7 +1048,7 @@ var userCliente = null;
      <div class="col">
      <div class="card shadow-sm gameCard" style="text-align: center;">
        <div id="pegi" style="color: white;" class="val">PEGI ` + etaMinima + `</div>
-       <img id="image" src="/img/prova1.png" class="val" alt="...">
+       <img id="image" src="/img/" class="val" alt="...">
        <div class="card-body">
          <h3 style="color: white;" class="val">` + game + `</h3>
          <h5 style="color: white;" class="val">` + platform + `</h5>
@@ -1100,12 +1100,25 @@ var dateOccupateF = {};
              dateOccupateF[i] = d.result[i].fineNoleggio;
              console.log(dateOccupateI[i],dateOccupateF[i])
              //console.log(d.result[i].inizioNoleggio,d.result[i].fineNoleggio)
+ 
+            // document.getElementById("inizioNoleggio1").setAttribute("min", dateOccupateI[i]);
+            // document.getElementById("inizioNoleggio1").setAttribute("max", dateOccupateF[i]);
+
+             //document.getElementById("fineNoleggio1").setAttribute("min", dateOccupateI[i]);
+             //document.getElementById("fineNoleggio1").setAttribute("max", dateOccupateF[i]);
+
+
+             var daylist = getDaysArray(new Date(dateOccupateI[i]),new Date(dateOccupateF[i]));
+                        daylist.map((v)=>v.toISOString().slice(0,10)).join("")
           }
          }
 
-        
+        console.log(daylist)
 
-         //document.getElementById("inizioNoleggio1").
+
+      
+
+         //document.getElementById("inizioNoleggio1").setAttribute("min", dateOccupateI[i]);
 
 
 
@@ -1114,6 +1127,18 @@ var dateOccupateF = {};
 
 
  }
+
+
+ var getDaysArray = function(start, end) {
+  for(var arr=[],dt=new Date(start); dt<=end; dt.setDate(dt.getDate()+1)){
+      arr.push(new Date(dt));
+  }
+  return arr;
+};
+
+
+ 
+
 
 
  
@@ -1174,7 +1199,7 @@ function searchNavbar2(){
   let modal = document.getElementById("noleggia-modal");
   user = modal.getElementsByClassName("useruser")[0].textContent;
   user = user.split(" ")[2];
-  console.log(user)
+  //console.log(user)
   
 
   let data = modal.getElementsByClassName("newval");
