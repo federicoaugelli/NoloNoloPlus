@@ -22,14 +22,14 @@
 <div class="wrapper fadeInDown">
   <div id="formContent">
     <div class="fadeIn first">
-     <h4> Login </h4>
+     <label  aria-label="form di login"> Login </label>
     </div>
     <form method="POST" action="/docs/dashboard">
-      <label for="username" class="label">
-        <input type="text" id="username" class="fadeIn second" name="username" placeholder="username">
+      <label id="ariaUser"for="username" class="label">
+        <input type="text" id="username" class="fadeIn second" name="username" placeholder="username" aria-describedby="ariaUser" required>
       </label> 
-      <label for="password" class="label">
-        <input type="password" id="password" class="fadeIn third" name="password" placeholder="password">
+      <label id="ariaUser" for="password" class="label">
+        <input type="password" id="password" class="fadeIn third" name="password" placeholder="password" aria-describedby="ariaUser" required>
       </label> 
       <input type="submit" class="fadeIn fourth" value="Accedi">
     </form>

@@ -302,10 +302,44 @@ exports.findClienti = async function (credentials) {
 	} catch (e) {
 	  return e;
 	}
-	
-
   };
 
+/*
+  
+exports.getDateDisponibilitaOggetti = async function (game,platform,credentials) {
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+  
+	let debug = [];
+	let data = { result: null };
+	try {
+	  debug.push(`Trying to connect to MongoDB`);
+	  console.log(debug)
+	  const mongo = new MongoClient(mongouri);
+	  await mongo.connect();
+	  let result = [];
+	  debug.push("... managed to connect to MongoDB.");
+	  //console.log(debug)
+	  await mongo
+		.db(dbname)
+		.collection(collection3)
+		.find()
+		.sort({ usernameCliente: 1 })
+		.forEach((r) => {
+		  result.push(r);
+		});
+  
+	  data.result = result;
+  
+	  await mongo.close();
+  
+	  debug.push("Managed to close connection to MongoDB.");
+	  return data;
+	} catch (e) {
+	  return data;
+	}
+  };
+
+*/
 
 
   
@@ -381,7 +415,7 @@ exports.getNoleggiTerminati = async function (credentials) {
 
 
    
-exports.getNoleggiAttivieFuturi = async function (credentials) {
+exports.getNoleggiAttivi = async function (credentials) {
 	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
   
 	let debug = [];
@@ -398,14 +432,7 @@ exports.getNoleggiAttivieFuturi = async function (credentials) {
 		.db(dbname)
 		.collection(collection3)
 		//.find({stato : "attivo" ,stato: "futuro"})
-		.find({$or: [
-			{
-				stato : "attivo"
-			},
-			{
-				stato: "futuro"
-			}
-		  ]})
+		.find({stato: "attivo"})
 		.sort({ usernameCliente: 1 })
 		.forEach((r) => {
 		  result.push(r);
@@ -421,6 +448,98 @@ exports.getNoleggiAttivieFuturi = async function (credentials) {
 	  return data;
 	}
   };
+
+
+    
+exports.getNoleggiFuturi = async function (credentials) {
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+  
+	let debug = [];
+	let data = { result: null };
+	try {
+	  debug.push(`Trying to connect to MongoDB`);
+	  console.log(debug)
+	  const mongo = new MongoClient(mongouri);
+	  await mongo.connect();
+	  let result = [];
+	  debug.push("... managed to connect to MongoDB.");
+	  //console.log(debug)
+	  await mongo
+		.db(dbname)
+		.collection(collection3)
+		//.find({stato : "attivo" ,stato: "futuro"})
+		.find({stato: "futuro"})
+		.sort({ usernameCliente: 1 })
+		.forEach((r) => {
+		  result.push(r);
+		});
+  
+	  data.result = result;
+  
+	  await mongo.close();
+  
+	  debug.push("Managed to close connection to MongoDB.");
+	  return data;
+	} catch (e) {
+	  return data;
+	}
+  };
+
+
+
+//modifica oggetto nel database
+exports.updateNoleggioFuturo = async function(oldNoleggio, newNoleggio, credentials){
+
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+
+	let debug = [];
+    try{
+
+		debug.push('trying to connect MongoDB');
+		const mongo = new MongoClient(mongouri);
+		await mongo.connect();
+		debug.push("Managed to close connection to MongoDB.");
+		let ObjectId = require('mongodb').ObjectId;
+		var myquery = {
+
+			_id: ObjectId(oldNoleggio)
+			
+		};
+
+		var newValues = {
+			$set:{
+
+			inizioNoleggio: newNoleggio[3].value,	
+			fineNoleggio: newNoleggio[4].value,
+			stato: newNoleggio[7].value,
+			commenti: newNoleggio[8].value
+		},
+	};
+	let updated = mongo
+	                .db(dbname)
+					.collection(collection3)
+					.updateOne(myquery, newValues);
+	
+	let updatedFlag = false
+	if(updated.result.ok > 0) {
+
+		updatedFlag = true
+		
+	}
+	debug.push("Managed to close connection to MongoDB.");
+	await mongo.close();
+	return(updatedFlag);
+    }
+	catch(e){
+
+		return e;
+	}  
+  }
+
+
+
+
+
 
 //modifica utente
   exports.updateUser = async function(oldUser, newUser, credentials){
@@ -718,6 +837,39 @@ exports.createLease = async function(newLease, credentials) {
 		return e;
 	}
   };
+
+
+  
+//elimina utente dal database
+exports.deleteNoleggioFuturo = async function(oldNoleggio, credentials){
+
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+
+	let debug = [];
+	try{
+
+		debug.push('trying to connect MongoDB');
+		const mongo = new MongoClient(mongouri);
+		await mongo.connect();
+		debug.push("Managed to close connection to MongoDB.");
+		let ObjectId = require('mongodb').ObjectId;
+		var myquery = {
+
+			_id: ObjectId(oldNoleggio)
+		};
+		let removed = await mongo
+		                .db(dbname)
+						.collection(collection3)
+						.deleteOne(myquery)
+	    await mongo.close();
+		debug.push("Managed to close connection to MongoDB.");
+	}
+	catch(e){
+
+		return e;
+	}
+  };
+
 
 
 //elimina oggetto dal database

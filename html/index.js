@@ -170,9 +170,26 @@ app.get('/db/getNoleggiTerminati', async function(req, res) {
 	res.send(await mymongo.getNoleggiTerminati(mongoCredentials))
 });
 
-app.get('/db/getNoleggiAttivieFuturi', async function(req, res) {
-	res.send(await mymongo.getNoleggiAttivieFuturi(mongoCredentials))
+app.get('/db/getNoleggiAttivi', async function(req, res) {
+	res.send(await mymongo.getNoleggiAttivi(mongoCredentials))
 });
+
+app.get('/db/getNoleggiFuturi', async function(req, res) {
+	res.send(await mymongo.getNoleggiFuturi(mongoCredentials))
+});
+/*
+app.get('/db/getDateDisponibilitaOggetti', async function(req, res) { 
+	let game = req.body.game
+	let platform = req.body.platform
+	res.send(await mymongo.getDateDisponibilitaOggetti(game,platform,mongoCredentials))
+});
+*/
+app.post('/db/updateNoleggioFuturo', async function(req, res) {
+	let oldNoleggio = req.body.oldNoleggio
+	let newNoleggio = req.body.formData
+	res.send(await mymongo.updateNoleggioFuturo(oldNoleggio,newNoleggio,mongoCredentials))
+});
+
 app.post('/db/updateUser', async function(req, res) {
 	let oldUser = req.body.oldUser
 	let newUser = req.body.formData
@@ -208,6 +225,11 @@ app.delete('/db/deleteUser', async function(req, res) {
 	res.send(await mymongo.deleteUser(oldUser,mongoCredentials))
 });
 
+
+app.delete('/db/deleteNoleggioFuturo', async function(req, res) {
+	let oldNoleggio = req.body.oldNoleggio
+	res.send(await mymongo.deleteNoleggioFuturo(oldNoleggio,mongoCredentials))
+});
 
 app.delete('/db/deleteObject', async function(req, res) {
 	let oldObject = req.body.oldObject	

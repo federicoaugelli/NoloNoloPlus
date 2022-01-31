@@ -11,7 +11,9 @@ const noleggioSchema = new Schema({
     inizioNoleggio : { type: String, required:false, unique:false },
     fineNoleggio : { type: String, required:false, unique:false },
     prezzoTotale : { type: Number, required:false, unique: false },
-    stato: { type: String, required:false, unique:false }
+    stato: { type: String, required:false, unique:false },
+    commenti: { type: String, required:false, unique:false },
+    costoGiorno: { type: String, required:false, unique:false }
 
 });
   

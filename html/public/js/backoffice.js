@@ -90,19 +90,19 @@ function visualizzaInventario() {
     div.style.visibility = "visible";
     div.innerHTML = `
               
-    <table border="1px" class="table table-striped table-bordered table-sm" cellspacing="2" width="100%">
+    <table border="1px" class="table table-striped table-bordered table-sm" cellspacing="2" width="100%" summary="titolo, id, piattaforma, anno di uscita, condizioni, età minima, peso, numero giocatori, prezzo e disponibilità">
     <thead>
       <tr>
-      <th th class="th-sm" scope="col">Titolo</th>
-      <th th class="th-sm" scope="col">ID</th>
-      <th th class="th-sm" scope="col">Piattaforma</th>
-      <th th class="th-sm" scope="col">Anno di uscita</th>
-      <th th class="th-sm" scope="col">Condizioni</th>
-      <th th class="th-sm" scope="col">PEGI</th>
-      <th th class="th-sm" scope="col">Peso (GB)</th>
-      <th th class="th-sm" scope="col">N° giocatori</th>
-      <th th class="th-sm" scope="col">Prezzo ($/Giorno)</th>
-      <th th class="th-sm" scope="col">Disponibile</th>
+      <th th abbr="titolo" class="th-sm" scope="col">Titolo</th>
+      <th th abbr="id" class="th-sm" scope="col">ID</th>
+      <th th abbr="piattaforma" class="th-sm" scope="col">Piattaforma</th>
+      <th th abbr="anno di uscita" class="th-sm" scope="col">Anno di uscita</th>
+      <th th abbr="condizioni="th-sm" scope="col">Condizioni</th>
+      <th th abbr="pegi" class="th-sm" scope="col">PEGI</th>
+      <th th abbr="peso" class="th-sm" scope="col">Peso (GB)</th>
+      <th th abbr="num giocatori" class="th-sm" scope="col">N° giocatori</th>
+      <th th abbr="euro al giorno" class="th-sm" scope="col">Prezzo ($/Giorno)</th>
+      <th th abbr="disponibile" class="th-sm" scope="col">Disponibile</th>
       </tr>
     </thead>
     <tbody id="inventarioBody">  
@@ -187,9 +187,9 @@ function findClienti() {
 
 
 
- function searchNavbar(){
+function searchNavbar(){
 
-  var input, filter, ul, li, a, i, txtValue;
+  var input, filter, div, div1, h3, i, txtValue;
   input = document.getElementById("searchFilterNavbar");
   filter = input.value.toUpperCase();
   div = document.getElementById("card-list");
@@ -203,14 +203,10 @@ function findClienti() {
     } else {
         div1[i].style.display = "none";
     }
+  }
 }
 
-
-
-}
-
-
-  
+ 
  function creaNoleggio(e){
 
   let current = e.parentNode.parentNode;

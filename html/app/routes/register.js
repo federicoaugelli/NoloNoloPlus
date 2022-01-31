@@ -121,7 +121,9 @@ router.post("/noleggioregister", function(req, res){
             inizioNoleggio: req.body.inizioNoleggio,
             fineNoleggio: req.body.fineNoleggio,
             prezzoTotale: req.body.prezzoTotale,
-            stato: req.body.stato
+            stato: req.body.stato,
+            commenti: req.body.commenti,
+            costoGiorno: req.body.costoGiorno
             
     });
         newRent.save();

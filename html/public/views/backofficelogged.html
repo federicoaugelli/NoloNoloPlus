@@ -7,6 +7,7 @@
     <!--<script src="https://unpkg.com/@popperjs/core@2"></script>-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/login.css">
     <link rel="stylesheet" type="text/css" href="/css/backofficelogged.css">
     <script type="text/javascript" src="/js/backofficelogged.js"></script>
@@ -372,18 +373,21 @@
   <div class="modal-dialog  modal-fullscreen" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">NOLEGGI</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">STORICO NOLEGGI</h5>
       </div>
       <div class="modal-body">
+        <form id="form-center" class="d-flex w-50 bottom-0 my-auto">
+          <input class="form-control me-2" type="search" id="searchFilterNavbar2" onkeyup="searchNavbar2()" placeholder="Cerca per cliente ..." aria-label="Ricerca per cliente">
+        </form>
+        <br><br><br>
         <div id="noleggiContent">
           <div id="noleggioBody">
-
+            
 
           </div>
         </div>
       </div>        
-        <div class="modal-footer">  
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#aggiungiOggetto">Aggiungi oggetto</button> 
+        <div class="modal-footer">   
         <button type="button" id="closeModal1" class="btn btn-danger" data-bs-dismiss="modal">Chiudi</button>  
       </div>  
     </div>   
@@ -410,7 +414,6 @@
         </div>
       </div>        
         <div class="modal-footer">  
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#aggiungiOggetto">Aggiungi oggetto</button> 
         <button type="button" id="closeModal1" class="btn btn-danger" data-bs-dismiss="modal">Chiudi</button>  
       </div>  
     </div>   
@@ -422,32 +425,142 @@
 
 
                                                    
-                                                   <!-- MODAL NOLEGGI ATTIVI E FUTURI-->
+                                                   <!-- MODAL NOLEGGI ATTIVI-->
 
 
-<div class="modal fade" id="statoNoleggiAttivieFuturiModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+<div class="modal fade" id="statoNoleggiAttiviModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
   <div class="modal-dialog  modal-fullscreen" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">NOLEGGI CONCLUSI</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">NOLEGGI ATTIVI</h5>
       </div>
       <div class="modal-body">
-        <div id="noleggiAttivieFuturiContent">
-          <div id="noleggioAttivieFuturiBody">
+        <div id="noleggiAttiviContent">
+          <div id="noleggioAttiviBody">
 
 
           </div>
         </div>
       </div>        
         <div class="modal-footer">  
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#aggiungiOggetto">Aggiungi oggetto</button> 
         <button type="button" id="closeModal1" class="btn btn-danger" data-bs-dismiss="modal">Chiudi</button>  
       </div>  
     </div>   
   </div>
 </div>
 
-                                                   <!-- FINE MODAL NOLEGGI ATTIVI E FUTURI-->
+                                                   <!-- FINE MODAL NOLEGGI ATTIVI-->
+
+
+
+                                                <!-- MODAL NOLEGGI FUTURI-->
+
+
+<div class="modal fade" id="statoNoleggiFuturiModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog  modal-fullscreen" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">NOLEGGI FUTURI</h5>
+      </div>
+      <div class="modal-body">
+        <div id="noleggiFuturiContent">
+          <div id="noleggioFuturiBody">
+
+
+          </div>
+        </div>
+      </div>        
+        <div class="modal-footer">  
+        <button type="button" id="closeModal1" class="btn btn-danger" data-bs-dismiss="modal">Chiudi</button>  
+      </div>  
+    </div>   
+  </div>
+</div>
+
+                                                   <!-- FINE MODAL NOLEGGI FUTURI-->
+
+
+
+
+
+
+                                                   
+                                                 <!-- MODAL MODIFICA ED ELIMINA NOLEGGIO FUTURO -->
+
+<div class="modal fade" id="modificaNoleggioFuturoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog  modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addObject">MODIFICA NOLEGGIO NON ANCORA ATTIVO</h5>
+      </div>
+      <div class="modal-body">
+        <div id="content-3">
+          <div id="modificaOggettiBody">
+
+        <form method="POST" action="/db/updateNoleggioFuturo" id="modNoleggioForm">
+        <div class="mb-3">
+          <label for="game" class="form-label">TITOLO NOLEGGIATO</label>
+          <input type="text" class="form-control" id="titoloNoleggiato" name="titoloNoleggiato" placeholder="titolo del gioco" readonly>
+        </div>
+        <div class="mb-3">
+          <label class="formGroupExampleInput" for="platform">PIATTAFORMA</label>
+            <input type="text" class="form-control" id="platform" name="piattaforma" readonly>
+        </div>
+        <div class="mb-3">       
+          <label class="formGroupExampleInput" for="usernameCliente">USERNAME CLIENTE </label>
+            <input type="text" class="form-control" id="usernameCliente" name="usernameCliente" placeholder="username cliente" readonly>   
+            </select> 
+        </div>
+        <div style="margin-top: 40px; margin-bottom: 40px;">
+          <h4>PERIODO DI NOLEGGIO :</h4>
+          <label for="inizioNoleggio">DA:</label>
+          <input class="form-control" type="date" id="inizioNoleggio" name="inizioNoleggio">
+          <label for="fineNoleggio">A:</label>
+          <input class="form-control" type="date" id="fineNoleggio" name="fineNoleggio">
+          <br>
+          <button type="button" class="btn btn-primary" onclick="calculateDays2()">Calcola costo</button>  
+        </div>
+        <div style="margin-top: 40px; margin-bottom: 40px;">
+          <label for="costoGiorno">TARIFFA GIORNALIERA: </label>
+          <input class="form-control" type="text" id="costoGiorno" name="costoGiorno" size="20" readonly> euro al giorno
+        </div>
+        <div style="margin-top: 40px; margin-bottom: 40px;">
+          <label for="prezzoTotale1">COSTO TOTALE: </label>
+          <input class="form-control" type="text" id="prezzoTotale1" name="prezzoTotale" size="20" readonly> euro       
+        </div>
+        <div class="mb-3">       
+          <label class="formGroupExampleInput" for="stato">INDICARE LO STATO DEL NOLEGGIO : </label>
+            <select class="form-control" id="stato" name="stato">   
+              <option selected>Scegli...</option>
+              <option value="attivo">attivo</option>
+              <option value="concluso">concluso</option>
+              <option value="futuro">futuro</option>
+            </select> 
+        </div>
+        <div class="mb-3">       
+          <label class="formGroupExampleInput" for="commenti">COMMENTI SULLO STATO DEL PRODOTTO NOLEGGIATO : </label>
+            <select class="form-control" id="commenti" name="commenti">   
+              <option selected>Scegli...</option>
+              <option value="da ritirare">da ritirare</option>
+              <option value="ritirato">ritirato</option>
+              <option value="restituito">restituito</option>
+            </select> 
+        </div>
+    </div>   
+        </div>
+      </div>
+      <div class="modal-footer">  
+        <div class="mb-3">
+          <button type="button" class="btn btn-primary" onclick="modNoleggioFuturo()">Salva modifiche</button> 
+          <form action="POST" method="/db/deleteNoleggioFuturo">
+            <button type="button" class="btn btn-primary" onclick="delNoleggioFuturo()">Elimina titolo</button>
+            </form>
+        </div>
+      </form> 
+    </div>  
+    </div>   
+  </div>
+</div>
 
                                                  <!-- NAVBAR -->
 
@@ -481,8 +594,13 @@
               </button>
              </li>
              <li class="nav-item">
-              <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#statoNoleggiAttivieFuturiModal" onclick="visualizzaNoleggiAttivieFuturi(); getNoleggiAttivieFuturi()">
-               Noleggi attivi e futuri
+              <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#statoNoleggiAttiviModal" onclick="visualizzaNoleggiAttivi(); getNoleggiAttivi()">
+               Noleggi attivi
+              </button>
+             </li>
+             <li class="nav-item">
+              <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#statoNoleggiFuturiModal" onclick="visualizzaNoleggiFuturi(); getNoleggiFuturi()">
+               Noleggi futuri
               </button>
              </li>
           </ul>
@@ -490,7 +608,6 @@
     </div>
       <form class="d-flex w-50 bottom-0 my-auto">
         <input class="form-control me-2" type="search" id="searchFilterNavbar" onkeyup="searchNavbar()" placeholder="Cerca" aria-label="inserisci la tua parola chiave di ricerca">
-        <button class="btn btn-outline-light" type="submit">Cerca</button>
       </form>
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">   
@@ -543,23 +660,23 @@
             <input type="text" class="newval" id="piattaforma" name="piattaforma" size="50" readonly> <br><br>
           </div>
           <div class="mb-3">       
-            <label class="formGroupExampleInput" for="usernameCliente">NOME CLIENTE </label>
-              <select class="form-control" id="usernameCliente" name="usernameCliente">   
+            <label class="formGroupExampleInput" for="usernameCliente1">NOME CLIENTE </label>
+              <select class="form-control" id="usernameCliente1" name="usernameCliente">   
               </select> 
               <br>
-              <button type="button" class="btn btn-primary" onclick="calcolaPuntiCliente()">Calcola punti fedeltà</button>  
+              <button type="button" id="bbz"class="btn btn-primary" onclick="calcolaPuntiCliente()">Calcola punti fedeltà</button>  
           </div>
           <div style="margin-top: 40px; margin-bottom: 40px;">
             <h4>Periodo di noleggio :</h4>
-            <label for="inizioNoleggio">Da:</label>
-            <input class="newval" type="date" id="inizioNoleggio" name="inizioNoleggio">
-            <label for="fineNoleggio">A:</label>
-            <input class="newval" type="date" id="fineNoleggio" name="fineNoleggio">
+            <label for="inizioNoleggio1">Da:</label>
+            <input class="newval" type="date" id="inizioNoleggio1" name="inizioNoleggio" min="2022-01-02" max="2022-02-02">
+            <label for="fineNoleggio1">A:</label>
+            <input class="newval" type="date" id="fineNoleggio1" name="fineNoleggio">
             <button type="button" class="btn btn-primary" onclick="calculateDays()">Calcola costo</button>  
           </div>
           <div style="margin-top: 40px; margin-bottom: 40px;">
-            <label for="costo">TARIFFA GIORNALIERA: </label>
-            <input class="newval" type="text" id="costo" name="costo" size="20" readonly> euro al giorno
+            <label for="costo1">TARIFFA GIORNALIERA: </label>
+            <input class="newval" type="text" id="costo1" name="costoGiorno" size="20" readonly> euro al giorno
           </div>
           <div style="margin-top: 40px; margin-bottom: 40px;">
             <label for="punti">PUNTI CLIENTE: </label>
@@ -568,7 +685,7 @@
           <div style="margin-top: 40px; margin-bottom: 40px;">
             <label for="prezzoTotale">COSTO TOTALE: </label>
             <input class="newval" type="text" id="prezzoTotale" name="prezzoTotale" size="20" readonly> euro       
-            <button type="button" class="btn btn-primary" onclick="applicaPunti(); updatePuntiCliente()">APPLICA PUNTI</button> 
+            <button type="button" id="aaz"class="btn btn-primary" onclick="applicaPunti(); updatePuntiCliente()">APPLICA PUNTI</button> 
           </div>
           <div class="mb-3">       
             <label class="formGroupExampleInput" for="stato">INDICARE LO STATO DEL NOLEGGIO : </label>
@@ -577,6 +694,15 @@
                 <option value="attivo">attivo</option>
                 <option value="concluso">concluso</option>
                 <option value="futuro">futuro</option>
+              </select> 
+          </div>
+          <div class="mb-3">       
+            <label class="formGroupExampleInput" for="commenti">COMMENTI SULLO STATO DEL PRODOTTO NOLEGGIATO : </label>
+              <select class="form-control" id="commenti" name="commenti">   
+                <option selected>Scegli...</option>
+                <option value="da ritirare">da ritirare</option>
+                <option value="ritirato">ritirato</option>
+                <option value="restituito">restituito</option>
               </select> 
           </div>
         </div>
@@ -588,11 +714,100 @@
       </form>
       </div>
     </div>
-
-
-
   </div>
 </div>
+
+
+
+
+<div class="modal fade" id="fattura-modal" tabindex="-1" aria-labelledby="fattura-modalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-sm-down modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+          <h2 class="useruser">FATTURA</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+ <!-- 
+<table class="body-wrap">
+  <tbody><tr>
+      <td></td>
+      <td class="container" width="600">
+          <div class="content">
+              <table class="main" width="100%" cellpadding="0" cellspacing="0">
+                  <tbody><tr>
+                      <td class="content-wrap aligncenter">
+                          <table width="100%" cellpadding="0" cellspacing="0">
+                              <tbody><tr>
+                                  <td class="content-block">
+                                      <h2>Grazie per avere utilizzato nolo-nolo pluus</h2>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td class="content-block">
+                                    
+                                    <table class="invoice">
+                                      <tbody><tr>
+                                          <td id="ccccc">     </td>
+                                      </tr>
+                                      <tr>
+                                          <td>
+                                              <table class="invoice-items" cellpadding="0" cellspacing="0">
+                                                  <tbody><tr>
+                                                      <td>Service 1</td>
+                                                      <td class="alignright">$ 20.00</td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td>Service 2</td>
+                                                      <td class="alignright">$ 10.00</td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td>Service 3</td>
+                                                      <td class="alignright">$ 6.00</td>
+                                                  </tr>
+                                                  <tr class="total">
+                                                      <td class="alignright" width="80%">Total</td>
+                                                      <td class="alignright">$ 36.00</td>
+                                                  </tr>
+                                              </tbody></table>
+                                              
+                                          </td>
+                                      </tr>
+                                  </tbody></table>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td class="content-block">
+                                      <a href="#">View in browser</a>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td class="content-block">
+                                      Company Inc. 123 Van Ness, San Francisco 94102
+                                  </td>
+                              </tr>
+                          </tbody></table>
+                      </td>
+                  </tr>
+              </tbody></table>
+              <div class="footer">
+                  <table width="100%">
+                      <tbody><tr>
+                          <td class="aligncenter content-block">Questions? Email <a href="mailto:">support@company.inc</a></td>
+                      </tr>
+                  </tbody></table>
+              </div></div>
+      </td>
+      <td></td>
+  </tr>
+</tbody></table>
+-->
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
 
   </body>
 
