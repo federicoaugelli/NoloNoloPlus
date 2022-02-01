@@ -35,10 +35,10 @@ const fs = require('fs').promises;
 const template = require(global.rootDir + '/scripts/tpl.js');
 const Bcrypt = require("bcryptjs"); 
 
-/*
+
 
      const mongouri = "mongodb://127.0.0.1:27017";
-     const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+    // const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
 
 MongoClient.connect(mongouri, {
     useNewUrlParser: true,
@@ -50,11 +50,11 @@ MongoClient.connect(mongouri, {
     // Specify database you want to access
     console.log(`MongoDB Connected: ${mongouri} to dbname: ${dbname}`);
 });
-*/
+
 
 exports.create = async function(credentials) {
 	
-	const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
 	
 	let debug = []
 	try {
@@ -97,7 +97,8 @@ exports.create = async function(credentials) {
 
 
 exports.search = async function(q,credentials) {
-	const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+	
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
 
 	let query =  {}
 	let debug = []
@@ -175,7 +176,7 @@ exports.createObject = async function(newObject){
 
 exports.getGames = async function (credentials) {
 
-	const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
 
 
 	//let debug = [];
@@ -208,7 +209,7 @@ exports.getGames = async function (credentials) {
 //get noleggi
 exports.getUserItems = async function (credentials) {
 
-	const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
 
 	//let debug = [];
 	let data = { result: null };
@@ -240,7 +241,8 @@ exports.getUserItems = async function (credentials) {
 
 
 exports.findClienti = async function (credentials) {
-	const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+	
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
   
 	let debug = [];
 	let data = { result: null };
@@ -275,7 +277,8 @@ exports.findClienti = async function (credentials) {
 
   
   exports.getNoleggiUser = async function (userCliente) {
-	const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+	
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
   
 	let debug = [];
 	let data = { result: null };
@@ -313,7 +316,8 @@ exports.findClienti = async function (credentials) {
 
   
 exports.getNoleggi = async function (credentials) {
-	const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+	
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
   
 	let debug = [];
 	let data = { result: null };
@@ -349,7 +353,8 @@ exports.getNoleggi = async function (credentials) {
 
    
 exports.getNoleggiTerminati = async function (credentials) {
-	const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+	
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
   
 	let debug = [];
 	let data = { result: null };
@@ -385,7 +390,8 @@ exports.getNoleggiTerminati = async function (credentials) {
 
    
 exports.getNoleggiAttivi = async function (credentials) {
-	const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+	
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
   
 	let debug = [];
 	let data = { result: null };
@@ -421,7 +427,8 @@ exports.getNoleggiAttivi = async function (credentials) {
 
     
 exports.getNoleggiFuturi = async function (credentials) {
-	const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+	
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
   
 	let debug = [];
 	let data = { result: null };
@@ -459,7 +466,7 @@ exports.getNoleggiFuturi = async function (credentials) {
 //modifica oggetto nel database
 exports.updateNoleggioFuturo = async function(oldNoleggio, newNoleggio, credentials){
 
-	const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
 
 	let debug = [];
     try{
@@ -514,7 +521,7 @@ exports.updateNoleggioFuturo = async function(oldNoleggio, newNoleggio, credenti
 //modifica utente
   exports.updateUser = async function(oldUser, newUser, credentials){
 
-	const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
 	let debug = [];
     try{
     	console.log(oldUser, newUser);
@@ -566,7 +573,7 @@ exports.updateNoleggioFuturo = async function(oldNoleggio, newNoleggio, credenti
 //modifica oggetto nel database
 exports.updateObject = async function(oldObject, newObject, credentials){
 
-	const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
 
 	let debug = [];
     try{
@@ -628,7 +635,7 @@ exports.updateObject = async function(oldObject, newObject, credentials){
 //update Cliente
   exports.updateClient = async function(oldUser, newUser, credentials){
 
-	const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
 	let debug = [];
     try{
     	console.log(oldUser, newUser);
@@ -681,7 +688,7 @@ exports.updateObject = async function(oldObject, newObject, credentials){
   //modifica oggetto nel database
   exports.updatePuntiCliente = async function(user, credentials){
 
-	const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
 
 	let debug = [];
     try{
@@ -725,7 +732,7 @@ exports.updateObject = async function(oldObject, newObject, credentials){
 //Aggiorna i punti cliente di 10
   exports.updatePuntiClientSide = async function(user, points, credentials){
 
-	const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
 
 
   	points = parseInt(points) + 10;
@@ -772,7 +779,7 @@ exports.updateObject = async function(oldObject, newObject, credentials){
 //Decrementa i punti cliente di 10
   exports.decreasePuntiClientSide = async function(user, points, credentials){
 
-	const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
 
 
   	points = parseInt(points) - 10;
@@ -845,7 +852,7 @@ exports.createLease = async function(newLease, credentials) {
 //modifica noleggio
   exports.updateLease = async function(oldObject, newObject, credentials){
 
-	const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
 
 	let debug = [];
     try{
@@ -899,7 +906,7 @@ exports.createLease = async function(newLease, credentials) {
 //elimina noleggio dal database
    exports.deleteLease = async function(oldObject, credentials){
 
-	const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
 	console.log(oldObject);
 	let debug = [];
 	try{
@@ -931,7 +938,7 @@ exports.createLease = async function(newLease, credentials) {
 //elimina utente dal database
   exports.deleteUser = async function(oldUser, credentials){
 
-	const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
 
 	let debug = [];
 	try{
@@ -963,7 +970,7 @@ exports.createLease = async function(newLease, credentials) {
 //elimina utente dal database
 exports.deleteNoleggioFuturo = async function(oldNoleggio, credentials){
 
-	const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
 
 	let debug = [];
 	try{
@@ -995,7 +1002,7 @@ exports.deleteNoleggioFuturo = async function(oldNoleggio, credentials){
 //elimina oggetto dal database
   exports.deleteObject = async function(oldObject, credentials){
 
-	const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
 
 	let debug = [];
 	try{
@@ -1032,7 +1039,7 @@ exports.deleteNoleggioFuturo = async function(oldNoleggio, credentials){
 
 exports.isConnected = async function() {
 
-	const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
 
 	
 	let client = await MongoClient.connect(mongouri);
