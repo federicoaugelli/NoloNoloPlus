@@ -123,11 +123,8 @@
           </form>
           </div>
           </div>
-        </div>      
       </div>   
-      <div class="modal-footer">  
-        
-        
+      <div class="modal-footer">        
         <button type="button" id="closeModal1" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#anagraficaClientiModal" onclick="visualizzaClienti(); findClienti()"> Chiudi </button>    
        
       </div>  
@@ -232,18 +229,9 @@
           <label for="prezzo" class="form-label">PREZZO</label>
           <input type="text" class="form-control" id="prezzo" name="prezzo" placeholder=" ... euro">
         </div>
-        <div class="mb-3">
-          <label class="formGroupExampleInput" for="disponibile">DISPONIBILE</label>
-            <select class="form-select" id="disponibile" name="disponibile">
-                  <option selected>Scegli...</option>
-                  <option value="true">true</option>
-                  <option value="false">false</option>
-           </select>
-        </div>
         <div class="input-group mb-3">
           <label class="input-group-text" for="img">IMMAGINE</label>
           <input type="file" class="form-control" id="img" name="img">
-        </div>
         </div>
         <div class="mb-3">
           <input type="submit" class="btn btn-primary" value="Aggiungi oggetto"> 
@@ -273,18 +261,13 @@
       <div class="modal-body">
         <div id="content-3">
           <div id="modificaOggettiBody">
-
-        <form method="POST" action="/db/updateObject" id="modObjectForm">
-     <!--   <div class="mb-3">
+        <form method="POST" action="/db/updateObject" id="modObjectForm">     
+          <div class="mb-3">
           <div class="input-group mb-3">
             <label class="input-group-text" for="img">IMMAGINE</label>
             <input type="file" class="form-control" id="img" name="img">
           </div>
-        </div>-->
-        <div class="mb-3">
-          <label for="img" class="form-label">IMMAGINE</label>
-          <input type="text" class="form-control" id="img" name="img" placeholder="img del gioco">
-        </div>
+        </div> 
         <div class="mb-3">
           <label for="game" class="form-label">TITOLO</label>
           <input type="text" class="form-control" id="game" name="game" placeholder="titolo del gioco">
@@ -335,11 +318,12 @@
           <input type="text" class="form-control" id="prezzo" name="prezzo" placeholder=" ... euro">
         </div>
         <div class="mb-3">
-          <label class="formGroupExampleInput" for="disponibile">DISPONIBILE</label>
-            <select class="form-control" id="disponibile" name="disponibile">
-                  <option value="true">true</option>
-                  <option value="false">false</option>
-           </select>
+          <label class="form-label" for="disponibile">INDISPONIBILE DA </label>
+           <input type="date" class="form-control" id="dataIndisponibilitaI" name="dataIndisponibilitaI"> 
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="disponibile">A</label>
+           <input type="date" class="form-control" id="dataIndisponibilitaF" name="dataIndisponibilitaF"> 
         </div>
         <div class="mb-3">
           <button type="button" class="btn btn-primary" onclick="modObject()">Salva modifiche</button> 
@@ -360,7 +344,7 @@
 
 
 
-                                                 <!-- FINE MODAL -->
+                                                 <!-- FINE MODAL MODIFICA ED ELIMINA OGGETTO INVENTARIO-->
 
 
 
@@ -756,6 +740,7 @@ $(document).ready(function(){
 
 window.onload = function() {
   getGames();
+
 };
 
 

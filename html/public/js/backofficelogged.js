@@ -340,7 +340,7 @@ function vediFatturaNoleggiConclusi(e){
 
                   <div class="row mt-3">
                       <div class="col-12 col-sm-7 text-grey-d2 text-95 mt-2 mt-lg-0">
-                      `+ "nome sito" + `
+        
                       </div>
 
                       <div class="col-12 col-sm-5 text-grey text-90 order-first order-sm-last">
@@ -765,8 +765,6 @@ function delNoleggioFuturo(){
  function creaTabellaClienti(d) {
  
     document.getElementById("anagraficaClientiBody").innerHTML = "";
-    //usernameSet.clear();
-    //usernameArray = [];
     let tbody = document.getElementById("anagraficaClientiBody");
  
    for (let i in d.result) {
@@ -887,9 +885,9 @@ var oldUser = null;
         contentType: "application/x-www-form-urlencoded",
         success: function(data){
 
-          console.log(oldUser)
-          console.log(formData)
-          console.log(data)
+          //console.log(oldUser)
+          //console.log(formData)
+          //console.log(data)
 
           if(data){
 
@@ -897,14 +895,14 @@ var oldUser = null;
             $("#flash-modal").modal("show");
             $("#modUserForm").trigger("reset");
             $("#modificaClienteModal").modal("hide");
-            console.log("Utente modificato");
+            //console.log("Utente modificato");
             findClienti();
           }
           else{
 
             document.getElementById("alert-body").textContent = "Errore. non è possibile modificare l'utente"
             $("#flash-modal").modal("show");
-            console.log("errore");
+            //console.log("errore");
           }
         }
       });
@@ -925,7 +923,7 @@ var userCliente = null;
   function delUser(){
     let modal = document.getElementById("modificaClienteModal");
     userCliente = modal.getElementsByClassName("form-control")[2].value;
-    console.log(userCliente)
+    //console.log(userCliente)
     let prenotato = 0;
     $.ajax({
       url: "/db/getNoleggi",
@@ -934,7 +932,7 @@ var userCliente = null;
       dataType: "json",
       contentType: "application/x-www-form-urlencoded",
       success: function(d) {
-        console.log(d.result)
+        //console.log(d.result)
         for(let i in d.result){
        
           if (userCliente == d.result[i].usernameCliente && (d.result[i].stato == "futuro" || d.result[i].stato == "attivo")){
@@ -942,8 +940,8 @@ var userCliente = null;
             prenotato++;            
           }
         }
-        console.log(oldUser);
-        console.log(prenotato)
+        //console.log(oldUser);
+        //console.log(prenotato)
       if(prenotato == 0){
 
         $.ajax({
@@ -960,7 +958,7 @@ var userCliente = null;
         $("#flash-modal").modal("show");
         $("#modUserForm").trigger("reset");
         $("#modificaClienteModal").modal("hide");
-        console.log("Utente rimosso");
+        //console.log("Utente rimosso");
       }
       else{
         document.getElementById("alert-body").textContent = "Impossibile rimuovere il cliente perchè ha almeno un noleggio prenotato"
@@ -1031,24 +1029,24 @@ var userCliente = null;
  
    for (let i in d.result) {
  
-     let idGame = d.result[i]._id;
+     //let idGame = d.result[i]._id;
      let game = d.result[i].game;
      let platform = d.result[i].platform;
      let annoUscita = d.result[i].annoUscita;
      let stato = d.result[i].stato;
      let condizioni = d.result[i].condizioni;
      let etaMinima = d.result[i].etaMinima;
-     let peso = d.result[i].peso;
-     let numGiocatori = d.result[i].numGiocatori;
+     //let peso = d.result[i].peso;
+     //let numGiocatori = d.result[i].numGiocatori;
      let prezzo = d.result[i].prezzo;
-     let img = d.result[i].img;
+     //let img = d.result[i].img;
      const div = document.createElement("div");
      div.innerHTML =
      `
      <div class="col">
      <div class="card shadow-sm gameCard" style="text-align: center;">
        <div id="pegi" style="color: white;" class="val">PEGI ` + etaMinima + `</div>
-       <img id="image" src="/img/" class="val" alt="...">
+       <img id="image" src="/img/prova1.png" class="val" alt="...">
        <div class="card-body">
          <h3 style="color: white;" class="val">` + game + `</h3>
          <h5 style="color: white;" class="val">` + platform + `</h5>
@@ -1098,15 +1096,7 @@ var dateOccupateF = {};
 
              dateOccupateI[i] = d.result[i].inizioNoleggio;
              dateOccupateF[i] = d.result[i].fineNoleggio;
-             console.log(dateOccupateI[i],dateOccupateF[i])
-             //console.log(d.result[i].inizioNoleggio,d.result[i].fineNoleggio)
- 
-            // document.getElementById("inizioNoleggio1").setAttribute("min", dateOccupateI[i]);
-            // document.getElementById("inizioNoleggio1").setAttribute("max", dateOccupateF[i]);
-
-             //document.getElementById("fineNoleggio1").setAttribute("min", dateOccupateI[i]);
-             //document.getElementById("fineNoleggio1").setAttribute("max", dateOccupateF[i]);
-
+             //console.log(dateOccupateI[i],dateOccupateF[i])
 
              var daylist = getDaysArray(new Date(dateOccupateI[i]),new Date(dateOccupateF[i]));
                         daylist.map((v)=>v.toISOString().slice(0,10)).join("")
@@ -1114,19 +1104,9 @@ var dateOccupateF = {};
          }
 
         console.log(daylist)
-
-
-      
-
-         //document.getElementById("inizioNoleggio1").setAttribute("min", dateOccupateI[i]);
-
-
-
     },
   });
-
-
- }
+}
 
 
  var getDaysArray = function(start, end) {
@@ -1187,13 +1167,13 @@ function searchNavbar2(){
  function creaNoleggio(e){
 
   let current = e.parentNode.parentNode;
-  let etaMinima = current.getElementsByClassName("val")[0].textContent;
+  //let etaMinima = current.getElementsByClassName("val")[0].textContent;
   let game = current.getElementsByClassName("val")[2].textContent;
   let platform = current.getElementsByClassName("val")[3].textContent;
   let prezzo = current.getElementsByClassName("val")[4].textContent;
-  let annoUscita = current.getElementsByClassName("val")[5].textContent;
-  let stato = current.getElementsByClassName("val")[6].textContent;
-  let condizioni = current.getElementsByClassName("val")[7].textContent;
+  //let annoUscita = current.getElementsByClassName("val")[5].textContent;
+  //let stato = current.getElementsByClassName("val")[6].textContent;
+  //let condizioni = current.getElementsByClassName("val")[7].textContent;
   
   //console.log(game,platform)
   let modal = document.getElementById("noleggia-modal");
@@ -1233,9 +1213,9 @@ function searchNavbar2(){
 
   for (let i in d.result) {
 
-    let idCliente = d.result[i]._id;
+    //let idCliente = d.result[i]._id;
     let username = d.result[i].username;
-    let punti = d.result[i].punti;
+    //let punti = d.result[i].punti;
     
     let option = document.createElement("OPTION");
     option.setAttribute("value", username);
@@ -1371,16 +1351,13 @@ function applicaPunti(){
        let numGiocatori = d.result[i].numGiocatori;
        let prezzo = d.result[i].prezzo;
        let img = d.result[i].img;
-       let disponibile = d.result[i].disponibile;
+       dataIndisponibilita = d.result[i].dataIndisponibilita;
        //usernameSet.add(username.toLowerCase());
        //let tbody = document.getElementById("anagraficaClientiBody");
        const tr = document.createElement("tr");
        tr.innerHTML =
     
     `<td class="tdCustomer1">` +
-   img +
-    `</td>
-   <td class="tdCustomer1">` +
    game +
     `</td>
     <td class="tdCustomer1">` +
@@ -1408,9 +1385,6 @@ function applicaPunti(){
    prezzo + 
     `</td>
     <td class="tdCustomer1">` +
-   disponibile +
-     `</td>
-    <td class="tdCustomer1">` +
    idGame +
      `</td>
     <td class="tdCustomer1"><button data-bs-toggle="modal" data-bs-target="#modificaOggettoModal" class="btn btn-secondary" aria-label="bottone di modifica cliente" type="button" onclick="getObject(this)"><i class="bi bi-pencil-square"></i></button>
@@ -1434,7 +1408,6 @@ function applicaPunti(){
     <table border="1px" class="table table-striped table-bordered table-sm" cellspacing="2"  width="100%">
     <thead>
       <tr>
-      <th th class="th-sm" scope="col">Immagine</th>
       <th th class="th-sm" scope="col">Titolo</th>
       <th th class="th-sm" scope="col">Piattaforma</th>
       <th th class="th-sm" scope="col">Anno di uscita</th>
@@ -1444,7 +1417,6 @@ function applicaPunti(){
       <th th class="th-sm" scope="col">Peso (GB)</th>
       <th th class="th-sm" scope="col">N° giocatori</th>
       <th th class="th-sm" scope="col">Prezzo ($/Giorno)</th>
-      <th th class="th-sm" scope="col">Disponibile</th>
       <th th class="th-sm" scope="col">ID</th>
       <th th class="th-sm" scope="col">Modifica</th>
       </tr>
@@ -1461,20 +1433,19 @@ function applicaPunti(){
   function getObject(e){
 
     let current = e.parentNode.parentNode;
-    let img = current.getElementsByClassName("tdCustomer1")[0].textContent;
-    let game = current.getElementsByClassName("tdCustomer1")[1].textContent;
-    let platform = current.getElementsByClassName("tdCustomer1")[2].textContent;
-    let annoUscita = current.getElementsByClassName("tdCustomer1")[3].textContent;
-    let stato = current.getElementsByClassName("tdCustomer1")[4].textContent;
-    let condizioni = current.getElementsByClassName("tdCustomer1")[5].textContent;
-    let etaMinima = current.getElementsByClassName("tdCustomer1")[6].textContent;
-    let peso = current.getElementsByClassName("tdCustomer1")[7].textContent;
-    let numGiocatori = current.getElementsByClassName("tdCustomer1")[8].textContent;
-    let prezzo = current.getElementsByClassName("tdCustomer1")[9].textContent;
-    let disponibile = current.getElementsByClassName("tdCustomer1")[10].textContent;
+    //let img = current.getElementsByClassName("tdCustomer1")[0].textContent;
+    let game = current.getElementsByClassName("tdCustomer1")[0].textContent;
+    let platform = current.getElementsByClassName("tdCustomer1")[1].textContent;
+    let annoUscita = current.getElementsByClassName("tdCustomer1")[2].textContent;
+    let stato = current.getElementsByClassName("tdCustomer1")[3].textContent;
+    let condizioni = current.getElementsByClassName("tdCustomer1")[4].textContent;
+    let etaMinima = current.getElementsByClassName("tdCustomer1")[5].textContent;
+    let peso = current.getElementsByClassName("tdCustomer1")[6].textContent;
+    let numGiocatori = current.getElementsByClassName("tdCustomer1")[7].textContent;
+    let prezzo = current.getElementsByClassName("tdCustomer1")[8].textContent;
     let modal = document.getElementById("modificaOggettoModal");
     let data = modal.getElementsByClassName("form-control");
-    data[0].value = img;
+    //data[0].value = img;
     data[1].value = game;
     data[2].value = platform;
     data[3].value = annoUscita;
@@ -1484,10 +1455,8 @@ function applicaPunti(){
     data[7].value = peso;
     data[8].value = numGiocatori;
     data[9].value = prezzo;
-    data[10].value = disponibile;
-    oldObject = current.getElementsByClassName("tdCustomer1")[11].textContent;
+    oldObject = current.getElementsByClassName("tdCustomer1")[9].textContent;
     
-    //console.log(current.getElementsByClassName("tdCustomer")[2].textContent);
     //console.log(oldObject)
   }
 
@@ -1504,16 +1473,15 @@ function applicaPunti(){
      //console.log(oldObject)
 
     if(
-      formData[0].value != " " &&
       formData[1].value != " " &&
       formData[2].value != " " &&
       formData[3].value != " " &&
       formData[4].value != " " &&
-      formData[5].value != " " && 
+      formData[5].value != " " &&
       formData[6].value != " " && 
       formData[7].value != " " && 
       formData[8].value != " " && 
-      formData[9].value != " " &&
+      formData[9].value != " " && 
       formData[10].value != " " 
       
     ){
@@ -1528,12 +1496,14 @@ function applicaPunti(){
         success: function(data){
 
           if(data){
+
             document.getElementById("alert-body").textContent = "Titolo modificato con successo"
             $("#flash-modal").modal("show");
             $("#modObjectForm").trigger("reset");
             $("#modificaOggettoModal").modal("hide");
-            console.log("Utente modificato");
+            //console.log("Titolo modificato");
             getGames();
+
           }
           else{
 
@@ -1541,6 +1511,7 @@ function applicaPunti(){
             $("#flash-modal").modal("show");
             console.log("errore");
           }
+          getGames();
         }
       });
     }
@@ -1571,8 +1542,9 @@ function applicaPunti(){
         $("#flash-modal").modal("show");
         $("#modObjectForm").trigger("reset");
         $("#modificaOggettoModal").modal("hide");
-        console.log("Utente modificato");
+        //console.log("titolo rimosso");
         getGames();
     
   }
+
 

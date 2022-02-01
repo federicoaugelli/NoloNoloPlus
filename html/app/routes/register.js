@@ -88,9 +88,9 @@ router.post("/objectregister", function(req, res){
             peso: req.body.peso,
             numGiocatori: req.body.numGiocatori,
             prezzo: req.body.prezzo,
-            quantita: req.body.quantita,
             img: req.body.img,   
-            disponibile: req.body.disponibile,
+            dataIndisponibilitaI: "nessuna",
+            dataIndisponibilitaF: "nessuna",
             id: idUnique
     });
         newObject.save();
@@ -124,7 +124,6 @@ router.post("/noleggioregister", function(req, res){
             stato: req.body.stato,
             commenti: req.body.commenti,
             costoGiorno: req.body.costoGiorno
-            
     });
         newRent.save();
         res.redirect('/user/backendlogged');	

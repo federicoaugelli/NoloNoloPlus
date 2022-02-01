@@ -663,8 +663,7 @@ exports.updateNoleggioFuturo = async function(oldNoleggio, newNoleggio, credenti
 
 		var newValues = {
 			$set:{
-
-			img: newObject[0].value,	
+	
 			game: newObject[1].value,
 			platform: newObject[2].value,
 			annoUscita: newObject[3].value,
@@ -674,6 +673,9 @@ exports.updateNoleggioFuturo = async function(oldNoleggio, newNoleggio, credenti
 			peso: newObject[7].value,
 			numGiocatori: newObject[8].value,
 			prezzo: newObject[9].value,
+			dataIndisponibilitaF: newObject[10].value,
+			dataIndisponibilitaI: newObject[11].value,
+			img: newObject[0].value,
 			
 		},
 	};
