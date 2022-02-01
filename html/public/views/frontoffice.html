@@ -36,11 +36,6 @@
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="ModalLogin" aria-hidden="true">
      <div class="modal-dialog modal-dialog-centered" role="document">
        <div class="modal-content form-elegant">
-    <!-- Modal Header 
-       <div class="modal-header">
-         <h4 class="modal-title">Log in</h4>
-           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-       </div> -->
     <!-- Modal body -->
        <div class="modal-body p-0">
         
@@ -88,41 +83,11 @@
           </div>
         </div>
        </div>
-    <!-- Modal footer
-       <div class="modal-footer">
-         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-       </div> -->
        </div>
      </div> 
   </div> 
-  <!-- Fine The Modal -->
 
 
-  <!-- Modal cards 
-  <div class="modal fade" id="card-modal" tabindex="-1" aria-labelledby="card-modalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">{{ item.game }} per {{ item.platform }}</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="card-body">
-            <label for="startRent">Da:</label>
-            <input type="date" id="startRent" name="startRent">
-
-            <label for="finishRent">A:</label>
-            <input type="date" id="finishRent" name="finishRent">
-          </div>
-        </div>
-        <div class="modal-footer">
-          <p class="me-auto">costo: $</p>
-          <button type="button" class="btn btn-primary" disabled>Noleggia</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  -->
 
   <!-- NAVBAR -->
     <nav class="navbar navbar-dark navbar-expand-md bg-primary sticky-top py-4" id="navbarTitle">
@@ -233,13 +198,6 @@
           .then(response => (this.items = response.data.result));
       },
 
-      async mounted () {
-
-      },
-
-      updated () {
-      },
-
       computed: {
         resultQuery(){
           if(this.searchQuery){
@@ -254,6 +212,8 @@
       },
 
       methods: {
+
+        //rimuove i duplicati di stessi giochi... vincolo del progetto
         removeDuplicates(){
           var cleaned = [];
           this.items.forEach(function(itm) {
@@ -267,19 +227,23 @@
           console.log(this.items);
         },
 
+        //funzione per variabili
         popoModal(item){
           this.modalItem = item;
         },
 
+        //funzioni per il calcolo delle date
         parseDate(date){
           var mdy = date.split('-');
           return new Date(mdy[0], mdy[1], mdy[2]);
         },
 
+        //funzioni per il calcolo delle date
         datediff(first, second) {
           return Math.round((second-first)/(1000*60*60*24));
         },
 
+        //funzione che calcola la data... senza check sulle disponibilità
         calculateDate(){
           let yourDate = new Date().toISOString().split('T')[0];
           //console.log(yourDate);

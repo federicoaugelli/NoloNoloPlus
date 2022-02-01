@@ -152,11 +152,13 @@ router.post("/createnoleggio", function(req, res){
             usernameCliente: req.body.usernameCliente,
             titoloNoleggiato: req.body.titoloNoleggiato,
             piattaforma: req.body.piattaforma,
-            usernameFunzionario: req.body.usernameFunzionario,
+            usernameFunzionario: '',
             inizioNoleggio: req.body.inizioNoleggio,
             fineNoleggio: req.body.fineNoleggio,
             prezzoTotale: req.body.prezzoTotale,
             stato: state,
+            commenti: '',
+            costoGiorno: req.body.costoGiorno,
             idGioco: req.body.idGioco
 
             

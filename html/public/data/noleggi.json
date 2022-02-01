@@ -2,81 +2,14 @@
 	{
 		"usernameCliente": "ciao",
 		"titoloNoleggiato": "Minecraft",
+		"piattaforma": "Playstation 5",
 		"usernameFunzionario": "",
 		"inzioNoleggio": "2022-01-27",
 		"fineNoleggio": "2022-02-27",
 		"prezzoTotale": 29.99,
-		"stato": "futuro",
-		"id": 00000000
-	},
-    {
-		"usernameCliente": "ciao",
-		"titoloNoleggiato": "Battlefield",
-		"usernameFunzionario": "",
-		"inzioNoleggio": "2022-01-01",
-		"fineNoleggio": "2022-02-01",
-		"prezzoTotale": 39.99,
 		"stato": "in corso",
-		"id": 11111111
+		"commenti": "",
+		"costoGiorno": 0.29,
+		"idGioco": "61f5682c414ea53945e9e928"
 	},
-    {
-		"usernameCliente": "ciao",
-		"titoloNoleggiato": "Cyberpunk 2077",
-		"usernameFunzionario": "",
-		"inzioNoleggio": "2021-01-01",
-		"fineNoleggio": "2022-01-01",
-		"prezzoTotale": 99.99,
-		"stato": "in corso",
-		"id": 22222222
-	},
-    {
-		"usernameCliente": "federicoaugelli@gmail.com",
-		"titoloNoleggiato": "Minecraft",
-		"usernameFunzionario": "",
-		"inzioNoleggio": "2021-01-01",
-		"fineNoleggio": "2022-01-01",
-		"prezzoTotale": 99.99,
-		"stato": "in corso",
-		"id": 22222222
-	},
-    {
-		"usernameCliente": "federicoaugelli@gmail.com",
-		"titoloNoleggiato": "Cyberpunk 2077",
-		"usernameFunzionario": "",
-		"inzioNoleggio": "2021-01-01",
-		"fineNoleggio": "2022-01-01",
-		"prezzoTotale": 99.99,
-		"stato": "in corso",
-		"id": 22222222
-	},
-    {
-		"usernameCliente": "federicoaugelli@gmail.com",
-		"titoloNoleggiato": "Nba 2k22",
-		"usernameFunzionario": "",
-		"inzioNoleggio": "2021-01-01",
-		"fineNoleggio": "2022-01-01",
-		"prezzoTotale": 99.99,
-		"stato": "in corso",
-		"id": 22222222
-	},
-    {
-		"usernameCliente": "federicoaugelli@gmail.com",
-		"titoloNoleggiato": "Grand Theft Auto 4",
-		"usernameFunzionario": "",
-		"inzioNoleggio": "2021-01-29",
-		"fineNoleggio": "2022-04-1",
-		"prezzoTotale": 99.99,
-		"stato": "futuro",
-		"id": 22222222
-	},
-    {
-		"usernameCliente": "ciao",
-		"titoloNoleggiato": "Battlefield",
-		"usernameFunzionario": "",
-		"inzioNoleggio": "2021-02-01",
-		"fineNoleggio": "2022-01-01",
-		"prezzoTotale": 99.99,
-		"stato": "futuro",
-		"id": 22222222
-	}
 ]

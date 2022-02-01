@@ -707,6 +707,7 @@ exports.updateObject = async function(oldObject, newObject, credentials){
 
 
 
+
   //modifica oggetto nel database
   exports.updatePuntiCliente = async function(user, credentials){
 
@@ -751,7 +752,92 @@ exports.updateObject = async function(oldObject, newObject, credentials){
 	}  
   };
 
+//Aggiorna i punti cliente di 10
+  exports.updatePuntiClientSide = async function(user, points, credentials){
+  	points = parseInt(points) + 10;
 
+	let debug = [];
+    try{
+
+		debug.push('trying to connect MongoDB');
+		const mongo = new MongoClient(mongouri);
+		await mongo.connect();
+		debug.push("Managed to close connection to MongoDB.");
+		var myquery = {
+
+			username: user
+		};
+
+		var newValues = {
+			$set:{
+
+			punti: points		
+		},
+	};
+	let updated = mongo
+	                .db(dbname)
+					.collection(collection1)
+					.updateOne(myquery, newValues);
+	
+	let updatedFlag = false
+	if(updated.result.ok > 0) {
+
+		updatedFlag = true
+		
+	}
+	debug.push("Managed to close connection to MongoDB.");
+	await mongo.close();
+	return(updatedFlag);
+    }
+	catch(e){
+
+		return e;
+	}  
+  };
+
+//Decrementa i punti cliente di 10
+  exports.decreasePuntiClientSide = async function(user, points, credentials){
+  	points = parseInt(points) - 10;
+  	
+	let debug = [];
+    try{
+
+		debug.push('trying to connect MongoDB');
+		const mongo = new MongoClient(mongouri);
+		await mongo.connect();
+		debug.push("Managed to close connection to MongoDB.");
+		var myquery = {
+
+			username: user
+		};
+
+		var newValues = {
+			$set:{
+
+			punti: points		
+		},
+	};
+	let updated = mongo
+	                .db(dbname)
+					.collection(collection1)
+					.updateOne(myquery, newValues);
+	
+	let updatedFlag = false
+	if(updated.result.ok > 0) {
+
+		updatedFlag = true
+		
+	}
+	debug.push("Managed to close connection to MongoDB.");
+	await mongo.close();
+	return(updatedFlag);
+    }
+	catch(e){
+
+		return e;
+	}  
+  };
+/*
 exports.createLease = async function(newLease, credentials) {
 	
 	let debug = []
@@ -776,7 +862,7 @@ exports.createLease = async function(newLease, credentials) {
 		return e
 	}
 } 
-
+*/
 
 //modifica noleggio
   exports.updateLease = async function(oldObject, newObject, credentials){

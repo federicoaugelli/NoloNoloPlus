@@ -231,6 +231,17 @@ app.post('/db/updatePuntiCliente', async function(req, res) {
 	res.send(await mymongo.updatePuntiCliente(user,mongoCredentials))
 });
 
+app.post('/db/updatePuntiClientSide', async function(req, res) {
+	user = req.body.user
+	points = req.body.points
+	res.send(await mymongo.updatePuntiClientSide(user,points,mongoCredentials))
+});
+
+app.post('/db/decreasePuntiClientSide', async function(req, res) {
+	user = req.body.user
+	points = req.body.points
+	res.send(await mymongo.decreasePuntiClientSide(user,points,mongoCredentials))
+});
 
 app.delete('/db/deleteUser', async function(req, res) {
 	let oldUser = req.body.oldUser	

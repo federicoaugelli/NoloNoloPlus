@@ -145,12 +145,12 @@
               <h7 class="tagGreen leaseTag" v-else>in corso</h7>
 
               <h5 class="">{{ item.titoloNoleggiato }}</h5>
-              <div>dal {{ item.inzioNoleggio }} al {{ item.fineNoleggio }}</div>
+              <div>dal {{ item.inizioNoleggio }} al {{ item.fineNoleggio }}</div>
               <div>prezzo: {{ item.prezzoTotale }}€</div>
             </div>
             <div v-if="item.stato == 'futuro'">
               <!--<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modificaNoleggio" v-on:click="popoModal(item)">Modifica noleggio</button>-->
-              <button class="btn btn-danger" v-on:click="deleteLease(item._id)">Cancella noleggio</button>
+              <button class="btn btn-danger" v-on:click="deleteLease(item._id), decreasePoints()">Cancella noleggio</button>
             </div>
             <div v-else-if="item.stato == 'terminato'">
               <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalinvoice" v-on:click="triggerModalInvoice(item)">Visualizza Fatture</button>
@@ -164,7 +164,7 @@
     </div>
   </div>
 
-<!-- modal modifica noleggi
+  <!-- modal modifica noleggi
   <div class="modal fade" id="modificaNoleggio" tabindex="-1" aria-labelledby="modalNoleggio" aria-hidden="true">
     <div class="modal-dialog modal-md modal-dialog-centered">
       <div class="modal-content">
@@ -193,7 +193,7 @@
       </div>
     </div>
   </div>
- -->
+  -->
 
  <!-- modal fatture -->
   <div class="modal fade" id="modalinvoice" tabindex="-1" aria-labelledby="modalinvoice" aria-hidden="true">
@@ -202,7 +202,7 @@
         <div class="modal-header">
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body" style="margin: 50px;">
+        <div class="modal-body" style="margin: 50px;" id="ricevuta">
           <div class="d-flex justify-content-between">
             <h6>Ricevuta di fine noleggio</h6>
             <h3>Nolo Nolo Plus</h3>
@@ -223,7 +223,7 @@
           </div>
           <div style="padding: 30px; margin: 100px; border: 5px solid grey" class="d-flex justify-content-between">
             <div>
-              <h5>Titolo Noleggiato: {{ invoice.titoloNoleggiato }}</h5>
+              <h5>Titolo Noleggiato: {{ invoice.titoloNoleggiato }} per {{ invoice.piattaforma }}</h5>
               <h5>Quantità: 1</h5>
               <h5>Prezzo Totale: {{ invoice.prezzoTotale }}€</h5>
             </div>
@@ -232,27 +232,27 @@
               <h5>Fine noleggio: {{ invoice.fineNoleggio }}</h5>
             </div>
           </div>
-          <button class="btn btn-secondary">Print Invoice</button>
+          <button class="btn btn-secondary" v-on:click="printInvoice(invoice)" data-html2canvas-ignore="true">Print Invoice</button>
         </div>
       </div>
     </div>
   </div>
 
- <!-- modal success -->
+ <!-- modal delete success -->
   <div class="modal fade" id="modalSuccess" tabindex="-1" aria-labelledby="modalSuccess" aria-hidden="true">
-    <div class="modal-dialog modal-md modal-dialog-centered">
+    <div class="modal-dialog modal-md">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <h3>Noleggio eliminato con successo</h3>
+          <h5>Noleggio eliminato con successo</h5>
         </div>
       </div>
     </div>
   </div>
 
- <!-- modal success -->
+ <!-- modal modfiche success -->
   <div class="modal fade" id="userModalSuccess" tabindex="-1" aria-labelledby="userModalSuccess" aria-hidden="true">
     <div class="modal-dialog modal-md modal-dialog-centered">
       <div class="modal-content">
@@ -336,6 +336,7 @@
     </div>
   </div>
 
+  <!-- filterbar -->
     <div class="btn-group filterBar">
       <button v-if="searchQuery != ''" class="btn btn-danger" type="button" v-on:click="searchQuery = ''">Elimina filtro</button>
       <button class="btn btn-light active" :class="{ active: searchQuery == 'Playstation 5' }" type="button" v-on:click="searchQuery = 'Playstation 5'">ps5</button>
@@ -348,7 +349,7 @@
     </div>
 
 
-  <!-- TABELLA FINALE -->
+  <!-- TABELLA CARD NOLEGGI PRINCIPALE -->
   <div class="album py-5">
     <div class="container">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -387,7 +388,7 @@
     </div>
   </div>
 
-    <!-- modal finale -->
+   <!-- MODAL NOLEGGIO -->
    <div class="modal fade" id="card-modal" tabindex="-1" aria-labelledby="card-modalLabel" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-lg modal-fullscreen-sm-down modal-dialog-centered">
       <div class="modal-content">
@@ -401,7 +402,7 @@
             <div class="card-body">
               <textarea class="form-control" id="validationDefaultUsername" name="usernameCliente" hidden>{{ user }}</textarea>
               <textarea class="form-control" id="validationDefaultTitle" name="titoloNoleggiato" hidden>{{ modalItem.game }}</textarea>
-              <textarea class="form-control" id="validationDefaultBack" name="usernameFunzionario" hidden></textarea>
+              <textarea class="form-control" id="validationDefaultPlatform" name="piattaforma" hidden>{{ modalItem.platform }}</textarea>
               <textarea class="form-control" id="validationDefaultPrice" name="prezzoTotale" hidden>{{ ipoteticalPrice }}</textarea>
               <textarea class="form-control" id="validationDefaultPrice" name="stato" hidden></textarea>
               <textarea class="form-control" id="validationDefaultPrice" name="idGioco" v-model="id = modalItem._id" hidden>{{ modalItem._id }}</textarea>
@@ -416,8 +417,8 @@
                 <label for="finishRent">A:</label>
                 <input type="date" id="fineNoleggio" name="fineNoleggio" v-model="endDate">
               </div>
-              <h5 v-for="item in utenti" v-if="item.username == user">I tuoi punti fedeltà: {{ item.punti }}</h5>
-              <button class="btn btn-info btn-sm" v-on:click="showPunti()">come funzionano i punti fedeltà?</button>
+              <h5 v-for="item in utenti" v-if="item.username == user" v-model="points = item.punti">I tuoi punti fedeltà: {{ item.punti }}</h5>
+              <!--<button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#infoPoints">come funzionano i punti fedeltà?</button>-->
             </div>
           </div>
           <div class="modal-footer">
@@ -425,9 +426,9 @@
             <p v-else-if="ipoteticalPrice == 'err'" class="me-auto" style="color: red;">Errore: puoi scegliere solo noleggi nel futuro!</p>
             <p v-else-if="ipoteticalPrice < 0" class="me-auto" style="color: red;">Errore: Il noleggio deve iniziare prima della fine</p>
 
-            <button v-if="modalItem.disponibile" type="button" class="btn btn-primary" class="me-auto" v-on:click="calculateDate(modalItem.prezzo), checkDisponibilità()">Verifica disponibilità</button>
+            <button v-if="modalItem.disponibile" type="button" class="btn btn-primary" class="me-auto" v-on:click="calculateDate(modalItem.prezzo), checkDisponibilità(modalItem)">Verifica disponibilità</button>
 
-            <button v-if="checkData == 'ok' && modalItem.disponibile && ipoteticalPrice != 'err' && ipoteticalPrice != '' && ipoteticalPrice > 0" type="submit" class="btn btn-primary" v-on:click="createLease()">Noleggia</button>
+            <button v-if="checkData == 'ok' && modalItem.disponibile && ipoteticalPrice != 'err' && ipoteticalPrice != '' && ipoteticalPrice > 0" type="submit" class="btn btn-primary" v-on:click="createLease(), updatePoints()">Noleggia</button>
             <button v-else-if="checkData != 'ok' || modalItem.disponibile == true && (ipoteticalPrice == 'err' || ipoteticalPrice == '' || ipoteticalPrice <= 0)" type="submit" class="btn btn-primary" disabled>Noleggia</button>
           </div>
         </form>
@@ -447,7 +448,7 @@
           items: '',
           user: '',
           utenti: '',
-          punti: 2,
+          points: '',
           userItems: '',
           modalItem: '',
           startDate: '',
@@ -471,6 +472,7 @@
       },
 
       mounted () {
+        //chiamate axios al db
         axios
           .get('/db/getGames')
           .then(response => (this.items = response.data.result));
@@ -485,6 +487,7 @@
       },
 
       computed: {
+        //Funzione per la ricerca della searchbar e per i filtri della filterbar
         resultQuery(){
           if(this.searchQuery !== "" && this.searchQuery !== "Nuovo" && this.searchQuery !== "Xbox One" && this.searchQuery !== "Xbox Serie X/S"  && this.searchQuery !== "Playstation 5" && this.searchQuery !== "Pc" && this.searchQuery !== "Playstation 4" && this.searchQuery !== "Nintendo" && this.searchQuery !== "true"){
             return this.items.filter((gg)=>{
@@ -538,38 +541,46 @@
         },
       },
       methods: {
-
+        //Ritorna il cliente
         getCliente(){
           axios
             .get('/db/findClienti')
             .then(response => (this.utenti = response.data.result));
         },
 
+        //parametri per il modal noleggi
         popoModal(item){
           this.modalItem = item;
         },
 
+        //parametri per le fatture
         triggerModalInvoice(item){
           this.invoice = item;
         },
 
+        //funzioni per il calcolo delle date
         parseDate(date){
           var mdy = date.split('-');
           return new Date(mdy[0], mdy[1], mdy[2]);
         },
 
+        //funzioni per il calcolo delle date
         datediff(first, second) {
           return Math.round((second-first)/(1000*60*60*24));
         },
 
+        //calcolo prezzo in base alla data scelta (con eventuali errori)
         calculateDate(item){
           let yourDate = new Date().toISOString().split('T')[0];
           console.log(yourDate, this.startDate, this.endDate);
-          console.log(this.datediff(this.parseDate(yourDate), this.parseDate(this.startDate)));
+          //console.log(this.datediff(this.parseDate(yourDate), this.parseDate(this.startDate)));
           if(this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)) > 0 && this.datediff(this.parseDate(yourDate), this.parseDate(this.startDate)) >= 0){
             this.ipoteticalPrice = parseFloat(item) * (this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)));
-            this.ipoteticalPrice = this.ipoteticalPrice - (this.punti / 10);
-            this.ipoteticalPrice = this.ipoteticalPrice.toFixed(2);
+            //applica punti solo se i punti/10 sono minori del prezzo... sennò prezzo negativo
+            if ((this.points/10) < this.ipoteticalPrice){
+              this.ipoteticalPrice = this.ipoteticalPrice - (this.points / 10);
+            }
+              this.ipoteticalPrice = this.ipoteticalPrice.toFixed(2);
           }
           else if(this.datediff(this.parseDate(this.startDate), this.parseDate(this.endDate)) <= 0){
             this.ipoteticalPrice = -1
@@ -580,35 +591,62 @@
           console.log(this.ipoteticalPrice);
         },
 
-        checkDisponibilità(){
-          console.log(this.id);
+        //funzione di controllo per la disponibilità del noleggio nelle date scelte (sia indisponiblità sia sovrapposizione)
+        checkDisponibilità(item){
+          var noleggioItem = item;
+          /*
+          if(noleggioItem.dataIndisponibilitaI != '' || noleggioItem.dataIndisponibilitaF != ''){
+              if(this.datediff(this.parseDate(noleggioItem.dataIndisponibilitaI), this.parseDate(this.startDate)) > 0 && this.datediff(this.parseDate(noleggioItem.dataIndisponibilitaF), this.parseDate(this.startDate)) < 0){
+                this.checkData = 'occupato';
+                console.log('occupato');
+                $('#fullnol').modal('toggle');
+              }
+              else if(this.datediff(this.parseDate(noleggioItem.dataIndisponibilitaI), this.parseDate(this.endDate)) > 0 && this.datediff(this.parseDate(noleggioItem.dataIndisponibilitaF), this.parseDate(this.endDate)) < 0){
+                this.checkData = 'occupato';
+                console.log('occupato');
+                $('#fullnol').modal('toggle');
+              }
+              else if(this.datediff(this.parseDate(noleggioItem.dataIndisponibilitaI), this.parseDate(this.startDate)) < 0 && this.datediff(this.parseDate(noleggioItem.dataIndisponibilitaF), this.parseDate(this.endDate)) > 0){
+                this.checkData = 'occupato';
+                console.log('occupato');
+                $('#fullnol').modal('toggle');
+              }
+          }
+          */
+          //console.log(this.id);
           for (let i = 0; i < this.userItems.length; i++){
             if(this.id == this.userItems[i].idGioco){
               if(this.datediff(this.parseDate(this.userItems[i].inizioNoleggio), this.parseDate(this.startDate)) > 0 && this.datediff(this.parseDate(this.userItems[i].fineNoleggio), this.parseDate(this.startDate)) < 0){
                 this.checkData = 'occupato';
                 console.log('occupato');
                 $('#fullnol').modal('toggle');
+                break;
               }
               else if(this.datediff(this.parseDate(this.userItems[i].inizioNoleggio), this.parseDate(this.endDate)) > 0 && this.datediff(this.parseDate(this.userItems[i].fineNoleggio), this.parseDate(this.endDate)) < 0){
                 this.checkData = 'occupato';
                 console.log('occupato');
                 $('#fullnol').modal('toggle');
+                break;
               }
               else if(this.datediff(this.parseDate(this.userItems[i].inizioNoleggio), this.parseDate(this.startDate)) < 0 && this.datediff(this.parseDate(this.userItems[i].fineNoleggio), this.parseDate(this.endDate)) > 0){
                 this.checkData = 'occupato';
                 console.log('occupato');
                 $('#fullnol').modal('toggle');
+                break;
               }
               else {
                 this.checkData = 'ok';
+                console.log('ok');
               }
             }
             else {
               this.checkData = 'ok';
+              console.log('ok');
             }
           }
         },
 
+        //funzione per la modifica dati dell'utente
         postUser(){
           var formData = $("#modUserForm").serializeArray();
           console.log(formData[0]);
@@ -646,13 +684,14 @@
           }
         },
 
-        deleteLease(id){
-          console.log(id);
+        //funzione elimina noleggio
+        deleteLease(userID){
+          var oldObject = userID;
           $.ajax({
 
             url: "/db/deleteLease",
             type: "DELETE",
-            data: { id },
+            data: { oldObject },
             dataType: "json",
             contentType: "application/x-www-form-urlencoded",
             success: function(data){
@@ -660,26 +699,73 @@
               $('#modalSuccess').modal('toggle');
             },
             error: function(){
-              $('#modalError').modal('toggle');
+              $('#noleggiModal').modal('hide');
+              $('#modalSuccess').modal('toggle');
+              setTimeout('', 2000);
+              location.reload();
             }
           });
         },
 
+        //trigger modal per avvenuto noleggio
         createLease(){
           $('#card-modal').modal('hide');
           $('#nolok').modal('toggle');
         },
 
+        //aggiorna punti dopo noleggio (di 10)
         updatePoints(){
-
+          var user = this.user;
+          var points = this.points;
+            $.ajax({
+              url: "/db/updatePuntiClientSide",
+              type: "POST",
+              data: { user, points },
+              dataType: "json",
+              contentType: "application/x-www-form-urlencoded",
+              success: function(data){
+                console.log(data);
+                //$('#modificaCliente').modal('hide');
+                //$('#userModalSuccess').modal('toggle');
+              },
+              error: function(){
+                $('#modalError').modal('toggle');
+              }
+            });
         },
 
-        showPunti(){
-          $('#infoPoints').modal('toggle');
+        //decrementa punti (di 10), triggerata quando il noleggio viene cancellato
+        decreasePoints(){
+          var user = this.user;
+          var points = this.points;
+            $.ajax({
+              url: "/db/decreasePuntiClientSide",
+              type: "POST",
+              data: { user, points },
+              dataType: "json",
+              contentType: "application/x-www-form-urlencoded",
+              success: function(data){
+                console.log(data);
+                //$('#modificaCliente').modal('hide');
+                //$('#userModalSuccess').modal('toggle');
+              },
+              error: function(){
+                $('#modalError').modal('toggle');
+              }
+            });
         },
 
-        printInvoice(){
-
+        //stampa ricevuta
+        printInvoice(item){
+          var invoice = item;
+          const element = document.getElementById('ricevuta');
+          const opt = {
+            filename: 'Ricevuta ' + invoice.titoloNoleggiato + ' per ' + invoice.piattaforma,
+            margin: 0,
+            image: {type: 'jpeg', quality: 0.9},
+            jsPDF: {format: 'letter', orientation: 'portrait'}
+          }
+          html2pdf().set(opt).from(element).save();
         }
       },
     });

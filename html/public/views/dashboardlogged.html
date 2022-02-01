@@ -30,38 +30,14 @@
 
   <body style="background-color: rgb(128,128,128);">                       
 
-                                                            <!-- NAVBAR -->
-
+<!-- navbar dashboard -->
 <nav class="navbar navbar-dark bg-dark sticky-top">
   <div class="container-fluid">
     <div class="navbar-brand ml-auto">      
       <div class="btn-group">
-        <button class="btn btn-dark btn-lg" type="button"> DASHBOARD LOGGED</button>
-        <button type="button" class="btn btn-lg btn-dark dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-          <span class="visually-hidden">Vedi Azioni Dropdown</span>
-        </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-          
-             <li class="nav-item">
-              <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#anagraficaClientiModal" onclick="">
-               Anagrafica clienti
-              </button>
-             </li>
-             <li class="nav-item">
-              <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#vediInventarioModal" onclick="">
-                Modifica inventario
-               </button>
-             </li>
-            
-          </ul>
+        <div class="btn btn-dark btn-lg"> DASHBOARD LOGGED</div>
       </div>
     </div>
-    <!--
-      <form class="d-flex w-50 bottom-0 my-auto">
-        <input class="form-control me-2" type="search" placeholder="Cerca" aria-label="inserisci la tua parola chiave di ricerca">
-        <button class="btn btn-outline-light" type="submit">Cerca</button>
-      </form>
-    -->
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">   
           <a href="/dashboardlogout">
@@ -72,21 +48,31 @@
   </div>
 </nav>
  
-                                                   <!-- FINE NAVBAR -->
+  <!-- grafici -->
   <div style="margin: 100px; background-color: rgb(220,220,220);" ng-app="myApp" ng-controller="myCtrl" data-ng-init="init()">
     <div class="d-flex justify-content-between" style="margin-bottom: 60px;">
-      <div style="width: 100%; height: 1000px;" id="noleggi"></div>
-      <div style="width: 100%; height: 1000px;" id="giochiVenduti"></div>
+      <div class="graph" style="width: 100%; height: 1000px;" id="noleggi"></div>
+      <div class="graph" style="width: 100%; height: 1000px;" id="giochiVenduti"></div>
     </div>
     <div class="d-flex justify-content-between" style="margin-bottom: 60px;">
-      <div style="width: 100%; height: 1000px;" id="fatturatoNoleggi"></div>
-      <div style="width: 100%; height: 1000px;" id="clienti"></div>
+      <div class="graph" style="width: 100%; height: 1000px;" id="fatturatoCategorie"></div>
+      <div class="graph" style="width: 100%; height: 1000px;" id="numeroNoleggiCategorie"></div>
     </div>
-    <div style="width: 100%; height: 1000px;" id="fatturatoCliente"></div>
+    <div class="d-flex justify-content-between" style="margin-bottom: 60px;">
+      <div class="graph" style="width: 100%; height: 1000px;" id="fatturatoNoleggi"></div>
+      <div class="graph" style="width: 100%; height: 1000px;" id="clienti"></div>
+    </div>
+    <div class="graph" style="width: 100%; height: 1000px;" id="fatturatoCliente"></div>
   </div>
 
 
   </body>
+
+<style type="text/css">
+  .graph {
+    padding: 100px;
+  }
+</style>
 
 <script type="text/javascript">
   var app = angular.module("myApp", []);
@@ -110,26 +96,6 @@
       chart.xAxis().title("Piattaforma");
       chart.yAxis().title("Numero Giochi");
       chart.container("noleggi").draw();
-
-      //newIndex = (data.mapAs().getRowsCount())+1;
-      /*
-      let platformCount = [];
-      $scope.items.forEach(item => {
-        if (item.platform === 'Playstation 4'){
-          platformCount.ps4++;
-        }
-        else if (item.platform === 'Playstation 5'){
-          platformCount.ps5++;
-        }
-        else if (item.platform === 'Pc'){
-          platformCount.pc++;
-        }
-        else if (item.platform === 'Xbox One'){
-          platformCount.xone++;
-        }
-      })
-      console.log(platformCount);
-      */
 
       let count = [];
       $scope.items.forEach(function (a) {
@@ -198,7 +164,7 @@
   });
 
 
-      //STATISTICA FATTURATO PER GIOCHI
+    //STATISTICA FATTURATO PER GIOCHI
   $http({method : "GET", url : "/db/getUserItems"}).then(function mySuccess(response) {
     $scope.client = response.data.result;
 
@@ -293,6 +259,77 @@
       let count = [];
       $scope.client.forEach(function (a) {
         count[a.usernameCliente] = (count[a.usernameCliente] || 0) + a.prezzoTotale;
+      });
+
+      Object.keys(count).forEach(function(key) {
+        data.append({
+          x: key,
+          value : count[key]
+        });
+
+      });
+    });
+  },
+  function myError(response) {
+    $scope.client = response.statusText;
+  });
+
+    //STATISTICA Fatturato PER CATEGORIA
+  $http({method : "GET", url : "/db/getUserItems"}).then(function mySuccess(response) {
+    $scope.client = response.data.result;
+
+    anychart.onDocumentReady(function () {
+
+      data = anychart.data.set([
+      ]);
+
+      var chart = anychart.column();
+      var series = chart.column(data);
+      chart.background({fill: "#DCDCDC 0.2"});
+      chart.title("Fatturato per categorie");
+      chart.xAxis().title("Piattaforma");
+      chart.yAxis().title("Fatturato");
+      chart.container("fatturatoCategorie").draw();
+
+      let count = [];
+      $scope.client.forEach(function (a) {
+        count[a.piattaforma] = (count[a.piattaforma] || 0) + a.prezzoTotale;
+      });
+
+      Object.keys(count).forEach(function(key) {
+        data.append({
+          x: key,
+          value : count[key]
+        });
+
+      });
+    });
+  },
+  function myError(response) {
+    $scope.client = response.statusText;
+  });
+
+
+    //STATISTICA NUMERO NOLEGGI PER CATEGORIA
+  $http({method : "GET", url : "/db/getUserItems"}).then(function mySuccess(response) {
+    $scope.client = response.data.result;
+
+    anychart.onDocumentReady(function () {
+
+      data = anychart.data.set([
+      ]);
+
+      var chart = anychart.column();
+      var series = chart.column(data);
+      chart.background({fill: "#DCDCDC 0.2"});
+      chart.title("Numero noleggi per categorie");
+      chart.xAxis().title("Piattaforma");
+      chart.yAxis().title("Numero noleggi");
+      chart.container("numeroNoleggiCategorie").draw();
+
+      let count = [];
+      $scope.client.forEach(function (a) {
+        count[a.piattaforma] = (count[a.piattaforma] || 0) + 1;
       });
 
       Object.keys(count).forEach(function(key) {
