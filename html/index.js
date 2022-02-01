@@ -52,12 +52,12 @@ app.use('/css' , express.static(global.rootDir +'/public/css'));
 app.use('/data', express.static(global.rootDir +'/public/data'));
 app.use('/docs', express.static(global.rootDir +'/public/views'));
 app.use('/img' , express.static(global.rootDir +'/public/media'));
-app.use(express.urlencoded({ extended: true })) 
+app.use(express.urlencoded({ extended: true , limit: "10mb"})) 
 app.use(cors())
 
 var bodyParser = require('body-parser');
 app.use(express.json()); 
-app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.json({limit: '500mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 

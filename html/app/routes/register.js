@@ -89,9 +89,7 @@ router.post("/objectregister", function(req, res){
             numGiocatori: req.body.numGiocatori,
             prezzo: req.body.prezzo,
             img: req.body.img,   
-            dataIndisponibilitaI: "",
-            dataIndisponibilitaF: "",
-            id: idUnique
+            //id: idUnique
     });
         newObject.save();
         res.redirect('/user/backendlogged');	
