@@ -89,8 +89,8 @@ router.post("/objectregister", function(req, res){
             numGiocatori: req.body.numGiocatori,
             prezzo: req.body.prezzo,
             img: req.body.img,   
-            dataIndisponibilitaI: "nessuna",
-            dataIndisponibilitaF: "nessuna",
+            dataIndisponibilitaI: "",
+            dataIndisponibilitaF: "",
             id: idUnique
     });
         newObject.save();

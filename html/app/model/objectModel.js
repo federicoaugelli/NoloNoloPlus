@@ -15,7 +15,7 @@ const gameSchema = new Schema({
     prezzo  : { type: String, required:false },
     dataIndisponibilitaI : { type: String, required:false},
     dataIndisponibilitaF : { type: String, required:false},
-    img  : { type: Buffer, required:false },
+    img  : { type: String, required:false },
     id: {type: Number, required: false, unique: false}
 
 });

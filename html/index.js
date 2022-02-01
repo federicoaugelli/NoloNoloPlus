@@ -55,6 +55,12 @@ app.use('/img' , express.static(global.rootDir +'/public/media'));
 app.use(express.urlencoded({ extended: true })) 
 app.use(cors())
 
+var bodyParser = require('body-parser');
+app.use(express.json()); 
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+
+
 // https://stackoverflow.com/questions/40459511/in-express-js-req-protocol-is-not-picking-up-https-for-my-secure-link-it-alwa
 app.enable('trust proxy');
 
@@ -204,7 +210,7 @@ app.post('/db/updateClient', async function(req, res) {
 
 app.post('/db/createLease', async function(newLease, res) {
 	//let newLease = req
-	console.log (newLease)
+	//console.log (newLease)
 	res.send(await mymongo.createLease(newLease, mongoCredentials))
 })
 

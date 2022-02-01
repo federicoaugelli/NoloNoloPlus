@@ -592,6 +592,69 @@ exports.updateNoleggioFuturo = async function(oldNoleggio, newNoleggio, credenti
 	}  
   };
 
+
+
+//modifica oggetto nel database
+exports.updateObject = async function(oldObject, newObject, credentials){
+
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+
+	let debug = [];
+    try{
+
+		debug.push('trying to connect MongoDB');
+		const mongo = new MongoClient(mongouri);
+		await mongo.connect();
+		debug.push("Managed to close connection to MongoDB.");
+		let ObjectId = require('mongodb').ObjectId;
+		var myquery = {
+
+			_id: ObjectId(oldObject)
+			
+		};
+
+		var newValues = {
+
+			$set:{
+			
+			game: newObject[1].value,
+			platform: newObject[2].value,
+			annoUscita: newObject[3].value,
+			stato: newObject[4].value,
+			condizioni: newObject[5].value,
+			etaMinima: newObject[6].value,
+			peso: newObject[7].value,
+			numGiocatori: newObject[8].value,
+			prezzo: newObject[9].value,
+			dataIndisponibilitaF: newObject[10].value,
+			dataIndisponibilitaI: newObject[11].value,
+			//img: newObject[0].value,
+				
+		},
+	};
+	let updated = mongo
+	                .db(dbname)
+					.collection(collection2)
+					.updateOne(myquery, newValues);
+	
+	let updatedFlag = false
+	if(updated.result.ok > 0) {
+
+		updatedFlag = true
+		
+	}
+	debug.push("Managed to close connection to MongoDB.");
+	await mongo.close();
+	return(updatedFlag);
+    }
+	catch(e){
+
+		return e;
+	}  
+  };
+
+
+
 //update Cliente
   exports.updateClient = async function(oldUser, newUser, credentials){
 
@@ -641,64 +704,6 @@ exports.updateNoleggioFuturo = async function(oldNoleggio, newNoleggio, credenti
 	}  
   };
 
-
-//modifica oggetto nel database
-  exports.updateObject = async function(oldObject, newObject, credentials){
-
-	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
-
-	let debug = [];
-    try{
-
-		debug.push('trying to connect MongoDB');
-		const mongo = new MongoClient(mongouri);
-		await mongo.connect();
-		debug.push("Managed to close connection to MongoDB.");
-		let ObjectId = require('mongodb').ObjectId;
-		var myquery = {
-
-			_id: ObjectId(oldObject)
-			
-		};
-
-		var newValues = {
-			$set:{
-	
-			game: newObject[1].value,
-			platform: newObject[2].value,
-			annoUscita: newObject[3].value,
-			stato: newObject[4].value,
-			condizioni: newObject[5].value,
-			etaMinima: newObject[6].value,
-			peso: newObject[7].value,
-			numGiocatori: newObject[8].value,
-			prezzo: newObject[9].value,
-			dataIndisponibilitaF: newObject[10].value,
-			dataIndisponibilitaI: newObject[11].value,
-			img: newObject[0].value,
-			
-		},
-	};
-	let updated = mongo
-	                .db(dbname)
-					.collection(collection2)
-					.updateOne(myquery, newValues);
-	
-	let updatedFlag = false
-	if(updated.result.ok > 0) {
-
-		updatedFlag = true
-		
-	}
-	debug.push("Managed to close connection to MongoDB.");
-	await mongo.close();
-	return(updatedFlag);
-    }
-	catch(e){
-
-		return e;
-	}  
-  };
 
 
 
