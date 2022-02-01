@@ -55,11 +55,12 @@ app.use('/img' , express.static(global.rootDir +'/public/media'));
 app.use(express.urlencoded({ extended: true , limit: "10mb"})) 
 app.use(cors())
 
+/*
 var bodyParser = require('body-parser');
 app.use(express.json()); 
 app.use(bodyParser.json({limit: '500mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
-
+*/
 
 // https://stackoverflow.com/questions/40459511/in-express-js-req-protocol-is-not-picking-up-https-for-my-secure-link-it-alwa
 app.enable('trust proxy');
@@ -183,13 +184,7 @@ app.get('/db/getNoleggiAttivi', async function(req, res) {
 app.get('/db/getNoleggiFuturi', async function(req, res) {
 	res.send(await mymongo.getNoleggiFuturi(mongoCredentials))
 });
-/*
-app.get('/db/getDateDisponibilitaOggetti', async function(req, res) { 
-	let game = req.body.game
-	let platform = req.body.platform
-	res.send(await mymongo.getDateDisponibilitaOggetti(game,platform,mongoCredentials))
-});
-*/
+
 app.post('/db/updateNoleggioFuturo', async function(req, res) {
 	let oldNoleggio = req.body.oldNoleggio
 	let newNoleggio = req.body.formData

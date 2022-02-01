@@ -339,9 +339,10 @@ var userCliente = null;
          <small style="color: white;" class="val"> e in ` + condizioni + ` condizioni</small>
        </div>
      </div>
-    </div>
-    `;
+    </div>`;
    
+   
+
  cardBody.appendChild(div);
  //console.log(d.result[i])
  }    
@@ -938,7 +939,7 @@ function vediFatturaNoleggiConclusi(e){
                                   TASSE
                               </div>
                               <div class="col-5">
-                                  <span class="text-110 text-secondary-d1">`+ "euro" + `</span>
+                                  <span class="text-110 text-secondary-d1">`+ "0 euro" + `</span>
                               </div>
                           </div>
 
@@ -1459,7 +1460,7 @@ function delNoleggioFuturo(){
   function getObject(e){
 
     let current = e.parentNode.parentNode;
-    //let img = current.getElementsByClassName("td1")[0].textContent;
+    let img = null;//= current.getElementsByClassName("td1")[0].textContent;
     let game = current.getElementsByClassName("td1")[0].textContent;
     let platform = current.getElementsByClassName("td1")[1].textContent;
     let annoUscita = current.getElementsByClassName("td1")[2].textContent;
@@ -1469,8 +1470,8 @@ function delNoleggioFuturo(){
     let peso = current.getElementsByClassName("td1")[6].textContent;
     let numGiocatori = current.getElementsByClassName("td1")[7].textContent;
     let prezzo = current.getElementsByClassName("td1")[8].textContent;
-    let disponibile = current.getElementsByClassName("td1")[8].textContent;
-    let dataIndisponibilita = current.getElementsByClassName("td1")[8].textContent;
+    let disponibile = current.getElementsByClassName("td1")[9].textContent;
+    let dataIndisponibilita = current.getElementsByClassName("td1")[10].textContent;
     let modal = document.getElementById("modificaOggettoModal");
     let data = modal.getElementsByClassName("form-control");
     
@@ -1489,8 +1490,29 @@ function delNoleggioFuturo(){
     oldObject = current.getElementsByClassName("td1")[11].textContent;
     
     //console.log(oldObject)
-  }
+    $.ajax({
 
+      url: "/db/getGames",
+      type: "GET",
+      data: {},
+      dataType: "json",
+      contentType: "application/x-www-form-urlencoded",
+      success: function(d){
+
+        for(let i in d.result){
+
+          if(d.result[i].game == game && d.result[i].platform == platform){
+
+           img = d.result[i].img
+          }    
+        }
+        data[0].value = img;
+      }
+      });
+
+
+
+  }
 
 
 
@@ -1504,6 +1526,7 @@ function delNoleggioFuturo(){
      //console.log(oldObject)
 
     if(
+      formData[0].value != " " &&
       formData[1].value != " " &&
       formData[2].value != " " &&
       formData[3].value != " " &&
@@ -1513,7 +1536,8 @@ function delNoleggioFuturo(){
       formData[7].value != " " && 
       formData[8].value != " " &&
       formData[9].value != " " &&
-      formData[10].value != " "
+      formData[10].value != " " &&
+      formData[11].value != " "
       
     ){
           
