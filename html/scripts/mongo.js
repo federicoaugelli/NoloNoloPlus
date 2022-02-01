@@ -627,7 +627,6 @@ exports.updateObject = async function(oldObject, newObject, credentials){
 			numGiocatori: newObject[8].value,
 			prezzo: newObject[9].value,
 			dataIndisponibilitaF: newObject[10].value,
-			dataIndisponibilitaI: newObject[11].value,
 			//img: newObject[0].value,
 				
 		},
