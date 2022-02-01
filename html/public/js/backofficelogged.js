@@ -3,7 +3,8 @@
                                                                             /*                            */
                                                                             /*           CLIENTI          */
                                                                             /*                            */
-                                                                            /* ========================== */                                               
+                                                                            /* ========================== */
+                                            
                                                
                                                                                                                             
                                                // CHIAMATA AJAX RITORNA TUTTI I CLIENTI
@@ -326,7 +327,7 @@ var userCliente = null;
        <div class="card-body">
          <h3 style="color: white;" class="val">` + game + `</h3>
          <h5 style="color: white;" class="val">` + platform + `</h5>
-         <button data-bs-toggle="modal" data-bs-target="#noleggia-modal" class="btn btn-primary" aria-label="bottone di crea noleggio" onclick="creaNoleggio(this); findClienti(); vediDateDisponibilitaOggetto(this)"><i class="bi bi-pencil-square"> Noleggia</i></button>
+         <button data-bs-toggle="modal" data-bs-target="#noleggia-modal" class="btn btn-primary" aria-label="bottone di crea noleggio" onclick="creaNoleggio(this); findClienti(); vediDateDisponibilitaOggetto(this); setMaxCalendar(this)"><i class="bi bi-pencil-square"> Noleggia</i></button>
          </a>
          <br>    
          <h5 class="val" style="color: white; margin-top: 20px;">` + prezzo + ` € al giorno</h5>
@@ -400,8 +401,42 @@ var c = {};
 };
 
 
- 
 
+function setMaxCalendar(e){
+
+  let current = e.parentNode.parentNode;
+  let game1 = current.getElementsByClassName("val")[2].textContent;
+  let platform1 = current.getElementsByClassName("val")[3].textContent;
+  let maxval = null;
+
+  $.ajax({
+    url: "/db/getGames",
+    type: "GET",
+    data: {},
+    dataType: "json",
+    contentType: "application/x-www-form-urlencoded",
+    success: function (d) {
+
+
+      for(let i in d.result){
+
+        if(d.result[i].game == game1 && d.result[i].platform == platform1){
+
+          maxval = d.result[i].dataIndisponibilita;
+        }
+      }
+
+      modal = document.getElementById("noleggia-modal");
+      let da = modal.getElementsByClassName("newval")[3];
+      let a = modal.getElementsByClassName("newval")[4];
+
+      a.setAttribute("max", maxval);
+      da.setAttribute("max", maxval);
+
+}
+
+});
+}
 
 
  
@@ -909,7 +944,7 @@ function vediFatturaNoleggiConclusi(e){
 
                           <div class="row my-2 align-items-center bgc-primary-l3 p-2">
                               <div class="col-7 text-right">
-                                  Eventuali sconti sono stati applicati all' importo totale
+                                  Eventuali sconti sono stati applicati sull' importo totale
                               </div>
                           </div>
                       </div>
@@ -1334,7 +1369,8 @@ function delNoleggioFuturo(){
        let numGiocatori = d.result[i].numGiocatori;
        let prezzo = d.result[i].prezzo;
        let img = d.result[i].img;
-       dataIndisponibilita = d.result[i].dataIndisponibilita;
+       let disponibile = d.result[i].disponibile;
+       let dataIndisponibilita = d.result[i].dataIndisponibilita;
        //usernameSet.add(username.toLowerCase());
        //let tbody = document.getElementById("anagraficaClientiBody");
        const tr = document.createElement("tr");
@@ -1365,6 +1401,12 @@ function delNoleggioFuturo(){
     `</td>
     <td class="td1">` +
    prezzo + 
+    `</td>
+    <td class="td1">` +
+   disponibile + 
+    `</td>
+    <td class="td1">` +
+   dataIndisponibilita + 
     `</td>
    <td class="td1">` +
    idGame +
@@ -1399,6 +1441,8 @@ function delNoleggioFuturo(){
       <th th class="th-sm" scope="col">Peso (GB)</th>
       <th th class="th-sm" scope="col">N° giocatori</th>
       <th th class="th-sm" scope="col">Prezzo ($/Giorno)</th>
+      <th th class="th-sm" scope="col">Disponibile</th>
+      <th th class="th-sm" scope="col">Indisponibile da</th>
       <th th class="th-sm" scope="col">ID</th>
       <th th class="th-sm" scope="col">Modifica</th>
       </tr>
@@ -1415,7 +1459,7 @@ function delNoleggioFuturo(){
   function getObject(e){
 
     let current = e.parentNode.parentNode;
-    //let img = current.getElementsByClassName("tdCustomer1")[0].textContent;
+    //let img = current.getElementsByClassName("td1")[0].textContent;
     let game = current.getElementsByClassName("td1")[0].textContent;
     let platform = current.getElementsByClassName("td1")[1].textContent;
     let annoUscita = current.getElementsByClassName("td1")[2].textContent;
@@ -1425,8 +1469,11 @@ function delNoleggioFuturo(){
     let peso = current.getElementsByClassName("td1")[6].textContent;
     let numGiocatori = current.getElementsByClassName("td1")[7].textContent;
     let prezzo = current.getElementsByClassName("td1")[8].textContent;
+    let disponibile = current.getElementsByClassName("td1")[8].textContent;
+    let dataIndisponibilita = current.getElementsByClassName("td1")[8].textContent;
     let modal = document.getElementById("modificaOggettoModal");
     let data = modal.getElementsByClassName("form-control");
+    
     //data[0].value = img;
     data[1].value = game;
     data[2].value = platform;
@@ -1437,7 +1484,9 @@ function delNoleggioFuturo(){
     data[7].value = peso;
     data[8].value = numGiocatori;
     data[9].value = prezzo;
-    oldObject = current.getElementsByClassName("td1")[9].textContent;
+    data[10].value = disponibile;
+    data[11].value = dataIndisponibilita;
+    oldObject = current.getElementsByClassName("td1")[11].textContent;
     
     //console.log(oldObject)
   }
@@ -1462,9 +1511,9 @@ function delNoleggioFuturo(){
       formData[5].value != " " &&
       formData[6].value != " " && 
       formData[7].value != " " && 
-      formData[8].value != " " 
-      //formData[9].value != " " 
-      //formData[10].value != " " 
+      formData[8].value != " " &&
+      formData[9].value != " " &&
+      formData[10].value != " "
       
     ){
           
@@ -1555,6 +1604,38 @@ function delNoleggioFuturo(){
 
     let imgConverted = convertImgObject();
     let modal = document.getElementById("aggiungiOggetto");
+    modal.getElementsByClassName("form-control")[0].value = imgConverted;
+
+  }
+
+
+
+
+  function convertImgObject2(){
+
+    let img = document.getElementById("img22");
+    var reader = new FileReader();
+
+    if(img.files[0] != undefined){
+
+      reader.readAsDataURL(img.files[0]);
+      
+      reader.onload = function(){
+      document.getElementById("imgC").value = reader.result;
+      console.log(reader.result)
+      };
+      
+      reader.onerror = function(error){
+      onmouseleave.log("errore" ,error);
+      };
+    }
+  }
+
+
+  function immagineConvertitapopolaText2(){
+
+    let imgConverted = convertImgObject2();
+    let modal = document.getElementById("modificaOggettoModal");
     modal.getElementsByClassName("form-control")[0].value = imgConverted;
 
   }

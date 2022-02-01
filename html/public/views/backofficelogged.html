@@ -88,7 +88,8 @@
       </div>
       <div class="modal-body">
         <div id="content-2">
-          <div id="modificaClientiBody">       
+          <div id="modificaClientiBody">   
+            <div class="modal-body">
             <form method="POST" action="/db/updateUser" id="modUserForm">
             <div class="mb-3">
               <label for="nome" class="form-label">NOME</label>
@@ -121,7 +122,8 @@
           </form>
           </div>
           </div>
-      </div>   
+      </div>  
+      </div> 
       <div class="modal-footer">        
         <button type="button" id="closeModal1" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#anagraficaClientiModal" onclick="visualizzaClienti(); findClienti()"> Chiudi </button>    
        
@@ -236,6 +238,17 @@
           <label for="prezzo" class="form-label">PREZZO</label>
           <input type="text" class="form-control" id="prezzo" name="prezzo" placeholder=" ... euro">
         </div>
+        <div class="mb-3">
+          <label class="formGroupExampleInput" for="disponibile">DISPONIBILE</label>
+            <select class="form-select" id="disponibile" name="disponibile">
+                  <option value="true">true</option>
+                  <option value="false">false</option>
+           </select>
+        </div>
+        <div class="mb-3">
+          <label for="dataIndisponibilita" class="form-label">INDISPONIBILE DA</label>
+          <input type="date" class="form-control" id="dataIndisponibilita" name="dataIndisponibilita">
+        </div>
         
           <input type="submit" class="btn btn-primary" value="Aggiungi oggetto"> 
         </div>
@@ -255,8 +268,9 @@
 
                                                  <!-- MODAL MODIFICA ED ELIMINA OGGETTO INVENTARIO -->
 
+
 <div class="modal fade" id="modificaOggettoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-dialog  modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="addObject">MODIFICA PRODOTTO</h5>
@@ -264,13 +278,23 @@
       <div class="modal-body">
         <div id="content-3">
           <div id="modificaOggettiBody">
-        <form method="POST" action="/db/updateObject" id="modObjectForm">     
-          <div class="mb-3">
-          <div class="input-group mb-3">
-            <label class="input-group-text" for="img">IMMAGINE</label>
-            <input type="file" class="form-control" id="img" name="img">
-          </div>
-        </div> 
+
+            <div class="input-group mb-3">
+              <label class="input-group-text" for="img22">IMMAGINE</label>
+              <input type="file" id="img22" name="img22">
+              <button type="button" class="btn btn-primary" onclick="immagineConvertitapopolaText2()"> Converti </button>      
+            </div>    
+
+        <form method="POST" action="/db/updateObject" id="modObjectForm">
+     
+         <div class="mb-3">
+                <label for="img" class="form-label">IMMAGINE CONVERTITA</label>
+                <input type="text" class="form-control" id="imgC" name="img">
+        </div>
+        <div class="mb-3">
+          <label for="img" class="form-label">IMMAGINE</label>
+          <input type="text" class="form-control" id="img" name="img" placeholder="img del gioco">
+        </div>
         <div class="mb-3">
           <label for="game" class="form-label">TITOLO</label>
           <input type="text" class="form-control" id="game" name="game" placeholder="titolo del gioco">
@@ -320,12 +344,17 @@
           <label for="prezzo" class="form-label">PREZZO</label>
           <input type="text" class="form-control" id="prezzo" name="prezzo" placeholder=" ... euro">
         </div>
-        
         <div class="mb-3">
-          <label class="form-label" for="dataIndisponibilitaI">INDISPONIBILE DA </label>
-           <input type="date" class="form-control" id="dataIndisponibilitaI" name="dataIndisponibilitaI"> 
+          <label class="formGroupExampleInput" for="disponibile">DISPONIBILE</label>
+            <select class="form-control" id="disponibile" name="disponibile">
+                  <option value="true">true</option>
+                  <option value="false">false</option>
+           </select>
         </div>
-        
+        <div class="mb-3">
+          <label for="dataIndisponibilita" class="form-label">INDISPONIBILE DA</label>
+          <input type="date" class="form-control" id="dataIndisponibilita" name="dataIndisponibilita">
+        </div>
         <div class="mb-3">
           <button type="button" class="btn btn-primary" onclick="modObject()">Salva modifiche</button> 
           <form action="POST" method="/db/deleteObject">
@@ -342,6 +371,11 @@
     </div>   
   </div>
 </div>
+
+
+
+                                                 <!-- FINE MODAL -->
+
 
 
 

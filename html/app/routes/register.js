@@ -44,30 +44,6 @@ router.post("/frontendregister", function(req, res){
 );
 
 
-/*
-router.post("/frontendregister", function(req, res){
-    try{
-            
-        let newUser = new registroclienti({
-            nome: req.body.nome,
-            cognome: req.body.cognome,
-            username: req.body.username,
-            password: Bcrypt.hashSync(req.body.password, 10),
-            citta: req.body.citta,
-            via: req.body.via,
-            punti: 0       
-    });
-
-        newUser.save();
-        res.redirect('/docs/frontend');	 
-    }      
-    catch(error){
-
-        res.status(500).send(error);
-    }
-},
-);
-*/
 
 //                      REGISTRAZIONE NUOVO OGGETTO
 
@@ -76,9 +52,11 @@ const oggetto = require('../model/objectModel.js');
 
 
 router.post("/objectregister", function(req, res){
-    const idUnique = Math.floor(100000 + Math.random() * 900000);
+  
     try{
         let newObject = new oggetto({
+
+            img: req.body.img,
             game: req.body.game,
             platform: req.body.platform,
             annoUscita: req.body.annoUscita,
@@ -88,8 +66,9 @@ router.post("/objectregister", function(req, res){
             peso: req.body.peso,
             numGiocatori: req.body.numGiocatori,
             prezzo: req.body.prezzo,
-            img: req.body.img,   
-            //id: idUnique
+            disponibile: req.body.disponibile,
+            dataIndisponibilita: req.body.dataIndisponibilita
+            
     });
         newObject.save();
         res.redirect('/user/backendlogged');	
@@ -106,6 +85,7 @@ router.post("/objectregister", function(req, res){
 
 
 const noleggio = require('../model/noleggioModel.js');
+const { ObjectId } = require('mongodb');
 
 
 router.post("/noleggioregister", function(req, res){
@@ -121,7 +101,8 @@ router.post("/noleggioregister", function(req, res){
             prezzoTotale: req.body.prezzoTotale,
             stato: req.body.stato,
             commenti: req.body.commenti,
-            costoGiorno: req.body.costoGiorno
+            costoGiorno: req.body.costoGiorno,
+            idGioco: req.body.idGioco
     });
         newRent.save();
         res.redirect('/user/backendlogged');	

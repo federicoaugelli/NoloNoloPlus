@@ -4,6 +4,7 @@ const passportLocalMongoose = require('passport-local-mongoose');
 const conn = require('../../scripts/mongoose.js');
   
 const gameSchema = new Schema({   
+    img  : { type: String, required:false },
     game : { type: String, required:false, unique:false },
     platform : { type: String, required:false, unique:false },
     annoUscita : { type: String, required:false, unique:false },
@@ -13,9 +14,11 @@ const gameSchema = new Schema({
     peso  : { type: String, required:false },
     numGiocatori  : { type: String, required:false },
     prezzo  : { type: String, required:false },
-    dataIndisponibilitaI : { type: String, required:false},
-    img  : { type: String, required:false },
-    id: {type: Number, required: false, unique: false}
+    disponibile: {type: Boolean, required: false, unique: false},
+    dataIndisponibilita : { type: String, required:false}
+    //idGioco: {type: String, required: false, unique: false},
+   
+
 
 });
   
