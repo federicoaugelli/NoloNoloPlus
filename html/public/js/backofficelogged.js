@@ -323,7 +323,7 @@ var userCliente = null;
      <div class="col">
      <div class="card shadow-sm gameCard" style="text-align: center;">
        <div id="pegi" style="color: white;" class="val">PEGI ` + etaMinima + `</div>
-       <img id="image" src=`+ img +` class="val" alt="...">
+       <img id="image" src=`+ img +` class="val" alt="immagine di " `+ game + `" per " ` + platform + `>
        <div class="card-body">
          <h3 style="color: white;" class="val">` + game + `</h3>
          <h5 style="color: white;" class="val">` + platform + `</h5>
