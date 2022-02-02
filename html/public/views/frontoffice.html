@@ -119,7 +119,7 @@
             <img v-if="item.platform == 'Playstation 4' || item.platform == 'Playstation 5'" class="platform-logo playstation" src="/img/playstation-brands.svg" alt="Card image1">
             <img v-else-if="item.platform == 'Xbox One' || item.platform == 'Xbox Serie X/S'" class="platform-logo xbox" src="/img/xbox-brands.svg" alt="Card image1">
             <img v-else-if="item.platform == 'Pc'" class="platform-logo pc" src="/img/laptop-solid.svg" alt="Card image1">
-            <img class="card-img-top" :src="'/img/' + item.img" alt="Card image1">
+            <img class="card-img-top" :src=item.img alt="Card image1">
             <div class="card-body">
               <h4 class="card-title" style="color: white;">{{ item.game }}</h4>
               <!--

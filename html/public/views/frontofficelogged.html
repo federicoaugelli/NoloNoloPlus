@@ -40,7 +40,7 @@
         <div class="nav-item navbar-nav mr-auto dropstart">
           <a role="button" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" v-model="user = '<%= username %>'">Ciao <%= username %></a>
           <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#clientModal">il Mio Account</a></li>
+            <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#clientModal" v-on:click="reloadUsers()">il Mio Account</a></li>
             <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#noleggiModal">I Miei Ordini</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="/frontendlogout" aria-label="Esci dal frotoffice">Esci</a></li>
@@ -363,7 +363,7 @@
             <img v-else-if="item.platform == 'Pc'" class="platform-logo pc" src="/img/laptop-solid.svg" alt="Card image1">
 
             <img v-if="item.img == ''" class="card-img-top" src="/img/default.jpg" alt="Card image1">
-            <img v-else class="card-img-top" :src="'/img/' + item.img" alt="Card image1">
+            <img v-else class="card-img-top" :src=item.img alt="Card image1">
             <div class="card-body">
               <h4 class="card-title" style="color: white;">{{ item.game }}</h4>
               <!--
@@ -394,7 +394,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">{{ modalItem.game }} per {{ modalItem.platform }}</h5>
-          <h7 v-if="modalItem.disponibile == false" style="margin-left: 20px; color: red;">Non Disponibile</h7>
+          <h7 v-if="modalItem.disponibile == 'false'" style="margin-left: 20px; color: red;">Non Disponibile</h7>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" v-on:click="ipoteticalPrice = 0"></button>
         </div>
         <form class="needs-validation" method="POST" action="/createnoleggio">
@@ -428,8 +428,11 @@
 
             <button v-if="modalItem.disponibile" type="button" class="btn btn-primary" class="me-auto" v-on:click="calculateDate(modalItem.prezzo), checkDisponibilità(modalItem)">Verifica disponibilità</button>
 
-            <button v-if="checkData == 'ok' && modalItem.disponibile && ipoteticalPrice != 'err' && ipoteticalPrice != '' && ipoteticalPrice > 0" type="submit" class="btn btn-primary" v-on:click="createLease(), updatePoints()">Noleggia</button>
-            <button v-else-if="checkData != 'ok' || modalItem.disponibile == true && (ipoteticalPrice == 'err' || ipoteticalPrice == '' || ipoteticalPrice <= 0)" type="submit" class="btn btn-primary" disabled>Noleggia</button>
+            <button v-if="checkData == 'ok' && modalItem.disponibile == 'true' && ipoteticalPrice != 'err' && ipoteticalPrice != '' && ipoteticalPrice > 0" type="submit" class="btn btn-primary" v-on:click="createLease(), updatePoints()">Noleggia</button>
+            <!--
+            <button v-else-if="checkData != 'ok' || modalItem.disponibile == 'true' && (ipoteticalPrice == 'err' || ipoteticalPrice == '' || ipoteticalPrice <= 0)" type="submit" class="btn btn-primary" disabled>Noleggia</button>
+            -->
+            <button v-else class="btn btn-primary disabled">Noleggia</button>
           </div>
         </form>
       </div>
@@ -472,7 +475,7 @@
       },
 
       mounted () {
-        //chiamate axios al db
+        //chiamate iniziali axios al db
         axios
           .get('/db/getGames')
           .then(response => (this.items = response.data.result));
@@ -541,6 +544,13 @@
         },
       },
       methods: {
+        //nuova chiamata ai dati aggiornati
+        reloadUsers(){
+          axios
+            .get('/db/findClienti')
+            .then(response => (this.utenti = response.data.result));
+        },
+
         //Ritorna il cliente
         getCliente(){
           axios
@@ -591,7 +601,7 @@
           console.log(this.ipoteticalPrice);
         },
 
-        //funzione di controllo per la disponibilità del noleggio nelle date scelte (sia indisponiblità sia sovrapposizione)
+        //funzione di controllo per la disponibilità del noleggio nelle date scelte (sovrapposizione)
         checkDisponibilità(item){
           var noleggioItem = item;
           /*
@@ -613,22 +623,31 @@
               }
           }
           */
-          //console.log(this.id);
           for (let i = 0; i < this.userItems.length; i++){
             if(this.id == this.userItems[i].idGioco){
+              //caso inizio noleggio tra inizio e fine del titolo già noleggiato
               if(this.datediff(this.parseDate(this.userItems[i].inizioNoleggio), this.parseDate(this.startDate)) > 0 && this.datediff(this.parseDate(this.userItems[i].fineNoleggio), this.parseDate(this.startDate)) < 0){
                 this.checkData = 'occupato';
                 console.log('occupato');
                 $('#fullnol').modal('toggle');
                 break;
               }
+              //caso fine noleggio tra inizio e fine del titolo già noleggiato
               else if(this.datediff(this.parseDate(this.userItems[i].inizioNoleggio), this.parseDate(this.endDate)) > 0 && this.datediff(this.parseDate(this.userItems[i].fineNoleggio), this.parseDate(this.endDate)) < 0){
                 this.checkData = 'occupato';
                 console.log('occupato');
                 $('#fullnol').modal('toggle');
                 break;
               }
+              //caso inizio noleggio prima del noleggio titolo e fine noleggio dopo noleggio titolo
               else if(this.datediff(this.parseDate(this.userItems[i].inizioNoleggio), this.parseDate(this.startDate)) < 0 && this.datediff(this.parseDate(this.userItems[i].fineNoleggio), this.parseDate(this.endDate)) > 0){
+                this.checkData = 'occupato';
+                console.log('occupato');
+                $('#fullnol').modal('toggle');
+                break;
+              }
+              //caso inizio noleggio e fine noleggio coincidono con quelle del titolo noleggiato
+              else if(this.datediff(this.parseDate(this.userItems[i].inizioNoleggio), this.parseDate(this.startDate)) == 0 && this.datediff(this.parseDate(this.userItems[i].fineNoleggio), this.parseDate(this.endDate)) == 0){
                 this.checkData = 'occupato';
                 console.log('occupato');
                 $('#fullnol').modal('toggle');
@@ -702,9 +721,13 @@
               $('#noleggiModal').modal('hide');
               $('#modalSuccess').modal('toggle');
               setTimeout('', 2000);
-              location.reload();
+              //location.reload();
             }
           });
+
+          axios
+            .get('/db/getUserItems')
+            .then(gg => (this.userItems = gg.data.result));
         },
 
         //trigger modal per avvenuto noleggio
@@ -766,7 +789,7 @@
             jsPDF: {format: 'letter', orientation: 'portrait'}
           }
           html2pdf().set(opt).from(element).save();
-        }
+        },
       },
     });
 
