@@ -140,9 +140,9 @@
         <div class="modal-body">
           <div class="d-flex justify-content-between" v-for="item in userItems" :key="item.usernameCliente" v-if="item.usernameCliente == user" style="margin-bottom: 40px;">
             <div class="">
-              <h7 class="tagRed leaseTag" v-if="item.stato == 'terminato'">terminato</h7>
+              <h7 class="tagRed leaseTag" v-if="item.stato == 'concluso'">concluso</h7>
               <h7 class="tagWarning leaseTag" v-else-if="item.stato == 'futuro'">futuro</h7>
-              <h7 class="tagGreen leaseTag" v-else>in corso</h7>
+              <h7 class="tagGreen leaseTag" v-else>attivo</h7>
 
               <h5 class="">{{ item.titoloNoleggiato }}</h5>
               <div>dal {{ item.inizioNoleggio }} al {{ item.fineNoleggio }}</div>
@@ -152,11 +152,11 @@
               <!--<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modificaNoleggio" v-on:click="popoModal(item)">Modifica noleggio</button>-->
               <button class="btn btn-danger" v-on:click="deleteLease(item._id), decreasePoints()">Cancella noleggio</button>
             </div>
-            <div v-else-if="item.stato == 'terminato'">
+            <div v-else-if="item.stato == 'concluso'">
               <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalinvoice" v-on:click="triggerModalInvoice(item)">Visualizza Fatture</button>
             </div>
             <div v-else>
-              <button class="btn btn-success" disabled>In Corso</button>
+              <button class="btn btn-success" disabled>In corso</button>
             </div>
           </div>
         </div>
@@ -362,8 +362,7 @@
             <img v-else-if="item.platform == 'Xbox One' || item.platform == 'Xbox Serie X/S'" class="platform-logo xbox" src="/img/xbox-brands.svg" alt="Card image1">
             <img v-else-if="item.platform == 'Pc'" class="platform-logo pc" src="/img/laptop-solid.svg" alt="Card image1">
 
-            <img v-if="item.img == ''" class="card-img-top" src="/img/default.jpg" alt="Card image1">
-            <img v-else class="card-img-top" :src=item.img alt="Card image1">
+            <img class="card-img-top" :src=item.img alt="Card image1">
             <div class="card-body">
               <h4 class="card-title" style="color: white;">{{ item.game }}</h4>
               <!--

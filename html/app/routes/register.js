@@ -120,7 +120,7 @@ router.post("/createnoleggio", function(req, res){
     let yourDate = new Date().toISOString().split('T')[0];
     let state = '';
     if(yourDate == req.body.inizioNoleggio){
-        state = 'in corso';
+        state = 'attivo';
     }
     else{
         state = 'futuro';

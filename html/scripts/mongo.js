@@ -21,8 +21,9 @@ Copyright (c) 2021 by Fabio Vitali
 
 */
 
-//let fn = "/public/data/dipendenti.json"
-let fn = "/public/data/oggetti.json"
+let fn = "/public/data/dipendenti.json"
+//let fn = "/public/data/oggetti.json"
+//let fn = "/public/data/noleggi.json"
 let dbname = "site202127"
 let collection ="registrodipendenti"
 let fieldname = "persone"
@@ -72,13 +73,13 @@ exports.create = async function(credentials) {
 
 		debug.push(`Trying to remove all records in table '${dbname}'... `)
 		let cleared = await mongo.db(dbname)
-					.collection(collection2)
+					.collection(collection)
 					.deleteMany()
 		debug.push(`... ${cleared?.deletedCount || 0 } records deleted.`)
 					
 		debug.push(`Trying to add ${data.length} new records... `)
 		let added = await mongo.db(dbname)
-					.collection(collection2)
+					.collection(collection)
 		 			.insertMany(data);	
 		debug.push(`... ${added?.insertedCount || 0} records added.`)
 
@@ -244,17 +245,17 @@ exports.findClienti = async function (credentials) {
 	
 	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
   
-	let debug = [];
+	//let debug = [];
 	let data = { result: null };
 	try {
-	  debug.push(`Trying to connect to MongoDB`);
-	  console.log(debug)
-	  const mongo = new MongoClient(mongouri);
-	  await mongo.connect();
-	  let result = [];
-	  debug.push("... managed to connect to MongoDB.");
-	  //console.log(debug)
-	  await mongo
+		//debug.push(`Trying to connect to MongoDB`);
+		//console.log(debug)
+		const mongo = new MongoClient(mongouri);
+		await mongo.connect();
+		let result = [];
+		//debug.push("... managed to connect to MongoDB.");
+		//console.log(debug)
+		await mongo
 		.db(dbname)
 		.collection(collection1)
 		.find()
@@ -263,16 +264,18 @@ exports.findClienti = async function (credentials) {
 		  result.push(r);
 		});
   
-	  data.result = result;
+	  	data.result = result;
   
-	  await mongo.close();
+	  	await mongo.close();
   
-	  debug.push("Managed to close connection to MongoDB.");
-	  return data;
-	} catch (e) {
-	  return data;
+	  	//debug.push("Managed to close connection to MongoDB.");
+	  	return data;
+	} 
+
+	catch (e) {
+		return data;
 	}
-  };
+};
 
 
   
