@@ -5,7 +5,7 @@ const User = require('../app/model/clientiModel.js');
 const User2 = require('../app/model/dipendentiModel.js');
 //passport.use(strategy);
 
-/*
+
 function SessionConstructor(userId, userGroup, details) {
 
     this.userId = userId;
@@ -63,10 +63,10 @@ module.exports = function(passport) {
     });
   
 }
-*/
 
 
 
+/*
 
 passport.serializeUser((user, done) => {
     
@@ -74,15 +74,6 @@ passport.serializeUser((user, done) => {
 });
 
 
-
-/*
-passport.deserializeUser((id, done) => {
-    
-    User.findById(id).then((user) => {
-        done(null, user);
-    });
-});
-*/
 
 
 passport.deserializeUser((id, done) => {
@@ -99,23 +90,9 @@ passport.deserializeUser((id, done) => {
     });
 });
 
-
-
-
-/*
-passport.deserializeUser(function(id, done){
-    adminSchema.findById(id, function(err, user){
-      if(err) done(err);
-        if(user){
-          done(null, user);
-        } else {
-           UserSchema.findById(id, function(err, user){
-           if(err) done(err);
-           done(null, user);
-        })
-    }
- });
 */
+
+
 
 
 
@@ -178,6 +155,7 @@ passport.deserializeUser(function(id, done){
     })
  );
 
+ 
  
 passport.use(
     'local-login-manager', 

@@ -81,12 +81,10 @@ router.post("/objectregister", function(req, res){
 );
 
 
-//                      REGISTRAZIONE NUOVO NOLEGGIO
+//                      REGISTRAZIONE NUOVO NOLEGGIO BACKEND
 
 
 const noleggio = require('../model/noleggioModel.js');
-const { ObjectId } = require('mongodb');
-
 
 router.post("/noleggioregister", function(req, res){
     
@@ -114,6 +112,7 @@ router.post("/noleggioregister", function(req, res){
 },
 );
 
+//                      REGISTRAZIONE NUOVO NOLEGGIO FRONTEND
 
 router.post("/createnoleggio", function(req, res){
     console.log(req.body);

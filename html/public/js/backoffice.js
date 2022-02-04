@@ -159,7 +159,7 @@ function findClienti() {
        <div class="card-body">
          <h3 style="color: white;" class="val">` + game + `</h3>
          <h5 style="color: white;" class="val">` + platform + `</h5>
-         <button data-bs-toggle="modal" data-bs-target="#noleggia-modal" class="btn btn-primary" aria-label="bottone di crea noleggio" type="button" onclick="creaNoleggio(this); findClienti()"><i class="bi bi-pencil-square"> Noleggia</i></button>
+         <button data-bs-toggle="modal" data-bs-target="#noleggia-modal" class="btn btn-primary" aria-label="bottone di crea noleggio" type="button" onclick="creaNoleggio(this); findClienti(); vediDateDisponibilitaOggetto(this); setMaxCalendar(this)"><i class="bi bi-pencil-square"> Noleggia</i></button>
          </a>
          <br>    
          <h5 class="val" style="color: white; margin-top: 20px;">` + prezzo + ` € al giorno</h5>
@@ -178,7 +178,6 @@ function findClienti() {
  //console.log(d.result[i])
  }    
  }
-
 
 
 function searchNavbar(){
@@ -330,9 +329,96 @@ function applicaPunti(){
   else{
     data[6].value = (data[6].value - (0)).toFixed(2);
   }
-    
-
 }
 
 
+
+let dateOccupateI = [];
+let dateOccupateF = [];
+let dateOccupateTot = [];
+
+
+function vediDateDisponibilitaOggetto(e){
+
+  let current = e.parentNode.parentNode;
+
+  let game = current.getElementsByClassName("val")[2].textContent;
+  let platform = current.getElementsByClassName("val")[3].textContent;
+  let j = 0;
+  //console.log(game,platform)
+
+  $.ajax({
+    url: "/db/getNoleggi",
+    type: "GET",
+    data: {},
+    dataType: "json",
+    contentType: "application/x-www-form-urlencoded",
+    success: function (d) {
+         
+         //console.log(d.result);
+
+         for(let i in d.result){
+
+          if(d.result[i].titoloNoleggiato == game && d.result[i].piattaforma == platform){
+
+             dateOccupateI[j] = d.result[i].inizioNoleggio;
+             dateOccupateF[j] = d.result[i].fineNoleggio;
+             dateOccupateTot[j] =  "Il titolo è indisponibile da "+ dateOccupateI[j] + " a " + dateOccupateF[j] + " compresi";
+             //console.log(dateOccupateI[i],dateOccupateF[i])
+             j++;
+      
+            // var daylist = getDaysArray(new Date(dateOccupateI[i]),new Date(dateOccupateF[i]));
+                        //daylist.map((v)=>v.toISOString().slice(0,10)).join("")
+
+                        //let a = daylist.toString();
+                        //let b = a.split(" ");
+                        //c = b[1] + " " + b[2] + " "+ b[3];
+                        //alert("Il titolo non è disponibile da " + dateOccupateI[i] + " a " + dateOccupateF[i])                    
+          }
+         }
+         //alert("Il titolo non è disponibile da " + dateOccupateI.join('\n') + " a " + dateOccupateF.join('\n'))
+         alert(dateOccupateTot.join('\n'))    
+        //console.log(daylist)
+    },
+  });
+}
+
+
+
+
+function setMaxCalendar(e){
+
+  let current = e.parentNode.parentNode;
+  let game1 = current.getElementsByClassName("val")[2].textContent;
+  let platform1 = current.getElementsByClassName("val")[3].textContent;
+  let maxval = null;
+
+  $.ajax({
+    url: "/db/getGames",
+    type: "GET",
+    data: {},
+    dataType: "json",
+    contentType: "application/x-www-form-urlencoded",
+    success: function (d) {
+
+
+      for(let i in d.result){
+
+        if(d.result[i].game == game1 && d.result[i].platform == platform1){
+
+          maxval = d.result[i].dataIndisponibilita;
+        }
+      }
+
+      modal = document.getElementById("noleggia-modal");
+      let da = modal.getElementsByClassName("newval")[2];
+      let a = modal.getElementsByClassName("newval")[3];
+
+      a.setAttribute("max", maxval);
+      da.setAttribute("max", maxval);
+
+}
+
+});
+}
 
