@@ -348,16 +348,19 @@ var userCliente = null;
  }    
  }
 
-var dateOccupateI = {};
-var dateOccupateF = {};
+let dateOccupateI = [];
+let dateOccupateF = [];
 
-var c = {};
+let dateOccupateTot = [];
+
+//var c = {};
 
  function vediDateDisponibilitaOggetto(e){
 
   let current = e.parentNode.parentNode;
   let game = current.getElementsByClassName("val")[2].textContent;
   let platform = current.getElementsByClassName("val")[3].textContent;
+  let j = 0;
   //console.log(game,platform)
 
   $.ajax({
@@ -374,21 +377,24 @@ var c = {};
 
           if(d.result[i].titoloNoleggiato == game && d.result[i].piattaforma == platform){
 
-             dateOccupateI[i] = d.result[i].inizioNoleggio;
-             dateOccupateF[i] = d.result[i].fineNoleggio;
-             console.log(dateOccupateI[i],dateOccupateF[i])
-             
-             var daylist = getDaysArray(new Date(dateOccupateI[i]),new Date(dateOccupateF[i]));
-                        daylist.map((v)=>v.toISOString().slice(0,10)).join("")
+             dateOccupateI[j] = d.result[i].inizioNoleggio;
+             dateOccupateF[j] = d.result[i].fineNoleggio;
+             dateOccupateTot[j] =  "Il titolo è indisponibile da "+ dateOccupateI[j] + " a " + dateOccupateF[j] + " compresi";
+             //console.log(dateOccupateI[i],dateOccupateF[i])
+             j++;
+      
+            // var daylist = getDaysArray(new Date(dateOccupateI[i]),new Date(dateOccupateF[i]));
+                        //daylist.map((v)=>v.toISOString().slice(0,10)).join("")
 
                         //let a = daylist.toString();
                         //let b = a.split(" ");
                         //c = b[1] + " " + b[2] + " "+ b[3];
-                        alert("Il titolo non è disponibile da " + dateOccupateI[i] + " a " + dateOccupateF[i])
+                        //alert("Il titolo non è disponibile da " + dateOccupateI[i] + " a " + dateOccupateF[i])                    
           }
          }
-        
-        console.log(daylist)
+         //alert("Il titolo non è disponibile da " + dateOccupateI.join('\n') + " a " + dateOccupateF.join('\n'))
+         alert(dateOccupateTot.join('\n'))    
+        //console.log(daylist)
     },
   });
 }
@@ -439,7 +445,35 @@ function setMaxCalendar(e){
 });
 }
 
+/*
 
+function verificaDisponibilita(){
+
+  let modal = document.getElementById("noleggia-modal");
+  let a = modal.getElementsByClassName("newval")[3].value;
+  let b = modal.getElementsByClassName("newval")[4].value;
+
+  a = a.split("-");
+  b = b.split("-");
+
+  let d1 = new Date(a[2],a[1]-1,a[0]);
+  let d2 = new Date(b[2],b[1]-1,b[0]);
+
+  d1 = d1.getTime();
+  d2 = d2.getTime();
+
+  for(let i in dateOccupateTot[i]){
+
+    if(d1 ){
+
+      alert("Il prodotto è indisponibile nel periodo selezionato");
+    }
+  
+  }
+
+}
+
+*/
  
 
  function searchNavbar(){
