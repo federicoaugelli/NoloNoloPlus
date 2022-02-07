@@ -165,6 +165,11 @@ app.get('/db/getGames', async function(req, res) {
 	res.send(await mymongo.getGames(mongoCredentials))
 });
 
+
+app.get('/db/getDipendenti', async function(req, res) {
+	res.send(await mymongo.getDipendenti(mongoCredentials))
+});
+
 app.get('/db/getUserItems', async function(req, res) {
 	res.send(await mymongo.getUserItems(mongoCredentials))
 });

@@ -207,6 +207,43 @@ exports.getGames = async function (credentials) {
 	}
 };
 
+
+
+exports.getDipendenti = async function (credentials) {
+
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+
+
+	//let debug = [];
+	let data = { result: null };
+	try{
+		const mongo = new MongoClient(mongouri);
+		await mongo.connect();
+		let result = [];
+		await mongo
+		.db(dbname)
+		.collection(collection)
+		.find()
+		.sort({ username: 1 })
+		.forEach((r) => {
+			result.push(r);
+		});
+
+		data.result = result;
+
+		await mongo.close();
+		console.log(result)
+
+		return data;
+	}
+
+	catch (e) {
+		return data;
+	}
+};
+
+
+
 //get noleggi
 exports.getUserItems = async function (credentials) {
 

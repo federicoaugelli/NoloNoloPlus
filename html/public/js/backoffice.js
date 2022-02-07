@@ -19,6 +19,23 @@ function getGames() {
     },
   });
 } 
+
+
+
+function getDipendenti() {
+  $.ajax({
+    url: "/db/getDipendenti",
+    type: "GET",
+    data: '',
+    dataType: "json",
+    contentType: "application/x-www-form-urlencoded",
+    success: function (g) {
+        
+         console.log(g.result);
+    },
+  });
+} 
+ 
  
  function creaTabellaInventario(d) {
  

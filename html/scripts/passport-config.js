@@ -76,15 +76,16 @@ passport.serializeUser((user, done) => {
 
 
 
+
 passport.deserializeUser((id, done) => {
     
     User.findById(id).then((user) => {
         if(null) done(null);
         else if(user) done(null, user);
         else {
-        User2.findById(id).then((user) => {
+        User2.findById(id).then((user2) => {
             if(null) done(null);
-                done(null, user);
+                done(null, user2);
             });
         }
     });
