@@ -138,13 +138,12 @@ passport.deserializeUser((id, done) => {
                     //match password
                     bcrypt.compare(password, user.password, (err, isMatch) => {
                         if (err) throw err;
-
                         if (isMatch){
                             return done(null, user);
-                        } else {
+                        } else {                 
                             return done(null, false, { message: "password sbagliata"});
                         }
-                    });
+                   });
                 }
             })
             .catch(err => {
@@ -152,6 +151,10 @@ passport.deserializeUser((id, done) => {
             });;
     })
  );
+
+
+
+
 
  
  
@@ -181,6 +184,10 @@ passport.use(
             });;
     })
 );
+
+
+
+
 
 
 module.exports = passport;

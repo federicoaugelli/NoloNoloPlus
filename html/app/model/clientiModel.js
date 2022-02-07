@@ -19,5 +19,5 @@ userSchema.plugin(passportLocalMongoose);
 // export userschema
 const collectionName = 'registroclienti';
 
-module.exports = mongoose.model('registroClienti', userSchema, collectionName);
+module.exports = mongoose.model('registroclienti', userSchema, collectionName);
  

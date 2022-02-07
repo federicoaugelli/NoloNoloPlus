@@ -15,7 +15,7 @@ const gameSchema = new Schema({
     numGiocatori  : { type: String, required:false },
     prezzo  : { type: String, required:false },
     disponibile: {type: Boolean, required: false, unique: false},
-    dataIndisponibilita : { type: String, required:false},
+    dataIndisponibilita : { type: String, required:false}
     //idGioco: {type: String, required: false, unique: false},
    
 

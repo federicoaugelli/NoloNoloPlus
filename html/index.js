@@ -36,7 +36,8 @@ const template = require(global.rootDir + '/scripts/tpl.js') ;
 const mymongo = require(global.rootDir + '/scripts/mongo.js') ; 
 const express = require('express') ;
 const cors = require('cors');
-const path= require('path')
+const path= require('path');
+const bodyParser = require('body-parser');
 
 
 
@@ -46,21 +47,15 @@ const path= require('path')
 /*                            */
 /* ========================== */
 
-let app= express(); 
+let app = express(); 
 app.use('/js'  , express.static(global.rootDir +'/public/js'));
 app.use('/css' , express.static(global.rootDir +'/public/css'));
 app.use('/data', express.static(global.rootDir +'/public/data'));
 app.use('/docs', express.static(global.rootDir +'/public/views'));
 app.use('/img' , express.static(global.rootDir +'/public/media'));
-app.use(express.urlencoded({ extended: true , limit: "10mb"})) 
+app.use(express.urlencoded({ extended: true , limit: "10mb"}));
 app.use(cors())
-
-/*
-var bodyParser = require('body-parser');
-app.use(express.json()); 
-app.use(bodyParser.json({limit: '500mb'}));
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
-*/
+app.use(bodyParser.urlencoded({ extended: true }))
 
 // https://stackoverflow.com/questions/40459511/in-express-js-req-protocol-is-not-picking-up-https-for-my-secure-link-it-alwa
 app.enable('trust proxy');
@@ -118,6 +113,7 @@ app.get('/docs/frontend', async function(req, res) {
 });
 
 app.get('/docs/backend', async function(req, res) { 
+	
 	res.sendFile(path.join(__dirname+'/public/views/backoffice.html'));
 });
 
@@ -318,9 +314,10 @@ app.set('view engine', 'html');
 
 app.use(session({
 	secret: 'chiaveSegreta123',
-	saveUninitialized: false,
+	saveUninitialized: true,
 	resave: false,
-	cookie: { sameSite: false, maxAge: 60000000 }
+	name: 'cookie sessione',
+	cookie: { maxAge: 60000000}
 }));
 
 app.use(passport.initialize());
@@ -328,6 +325,7 @@ app.use(passport.session());
 
 app.use(loginRouter);
 app.use(registerRouter);
+app.use(userRouter);
 app.use('/user', checkUserLogin(), userRouter);
 
 

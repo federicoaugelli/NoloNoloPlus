@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
-//const passport = require('passport');
+const passport = require('passport');
 const passportConfig = require('../../scripts/passport-config');
-//const checkUserLogin = require('../middleware/check-user-login');
+const checkUserLogin = require('../middleware/check-user-login');
 
 
 //                                                                                       LOGIN BACKEND
 
 // POSSO ACCEDERE ALLA ROTTA USER/BACKENDLOGGED SOLO SE SONO AUTENTICATO
 router.get('/docs/backend', (req,res) => {
-    if(req.isAuthenticated()) return res.redirect('/user/backendlogged');
+    if(req.isAuthenticated()) res.redirect('/docs/backendlogged');
     res.render('/docs/backend');
 });
 
@@ -22,17 +22,69 @@ router.get('/user/backendlogged', function(req, res){
     */
 
 //                SE SONO AUTENTICATO VADO AL BACKENDLOGGED SENNO MI RIMANDA AL LOGIN
+
+/*
 router.post('/docs/backend', passportConfig.authenticate('local-login-dipendente', {
     successRedirect: '/user/backendlogged',
     failureRedirect: '/docs/backend'
 })); 
+*/
 
 
+router.post('/user/backendlogged', passportConfig.authenticate('local-login-dipendente'),
+  function(req, res) {
+
+    const { user: { username } = {} } = req;
+    console.log(username)
+    res.render('backofficelogged.html', {username} /*+ req.user.username*/);
+    //res.redirect("/user/backendlogged")
+  });
+
+
+/*
+router.post(
+    "/docs/backend",
+    passport.authenticate("local-login-dipendente"),
+    (req, res, next) => {
+        if (req.user) {
+            var redir = { redirect: "/user/backendlogged" };
+            return res.redirect("/user/backendlogged");
+
+        } else if (!req.user) {
+            var redir = { redirect: "/docs/backend" };
+            return res.redirect("/docs/backend");
+            
+        }
+    }
+);
+*/
+
+/*
+router.post('/docs/backend', function(req, res, next) {
+    passportConfig.authenticate('local-login-dipendente', function(err, user, info) {
+      if (err) {
+        return next(err);
+      }
+      if (!user) {
+        res.writeHead(401, {'Content-Type': 'application/json'});
+        return res.end();
+      }
+      req.logIn(user, function(err) {
+        if (err) {
+          return next(err);
+        }
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        return res.end();
+      });
+    })(req, res, next);
+  });
+*/
 
 //                            IL LOGOUT MI RIMANDA AL BACKEND
 router.get('/backendlogout', (req,res) => {
     req.logOut();
     res.redirect('/docs/backend');
+    //res.render('backoffice.html');
 })
 
 
@@ -46,7 +98,7 @@ router.get('/backendlogout', (req,res) => {
 
 //              POSSO ACCEDERE ALLA ROTTA USER/FRONTENDLOGGED SOLO SE SONO AUTENTICATO
 router.get('/docs/frontend', (req,res) => {
-    if(req.isAuthenticated()) return res.redirect('/user/frontendlogged');
+    if(req.isAuthenticated()) res.redirect('/user/frontendlogged');
     res.render('/docs/frontend');
     //console.log(req.user);
 });
@@ -86,7 +138,7 @@ router.get('/frontendlogout', (req,res) => {
 
 //              POSSO ACCEDERE ALLA ROTTA USER/DASHBOARD SOLO SE SONO AUTENTICATO
 router.get('/docs/dashboard', (req,res) => {
-    if(req.isAuthenticated()) return res.redirect('/user/dashboardlogged');
+    if(req.isAuthenticated()) res.redirect('/user/dashboardlogged');
     res.render('/docs/dashboard');
 });
 
