@@ -5,7 +5,7 @@ const User = require('../app/model/clientiModel.js');
 const User2 = require('../app/model/dipendentiModel.js');
 //passport.use(strategy);
 
-
+/*
 function SessionConstructor(userId, userGroup, details) {
 
     this.userId = userId;
@@ -64,9 +64,9 @@ module.exports = function(passport) {
   
 }
 
+*/
 
 
-/*
 
 passport.serializeUser((user, done) => {
     
@@ -89,9 +89,6 @@ passport.deserializeUser((id, done) => {
         }
     });
 });
-
-*/
-
 
 
 

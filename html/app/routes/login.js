@@ -1,14 +1,10 @@
-//const { response, request } = require('express');
 const express = require('express');
 const router = express.Router();
-const passport = require('passport');
+//const passport = require('passport');
 const passportConfig = require('../../scripts/passport-config');
-const checkUserLogin = require('../middleware/check-user-login');
-//const passportConfig2 = require('../../scripts/passport-config2');
-//const passportConfig3 = require('../../scripts/passport-config3');
+//const checkUserLogin = require('../middleware/check-user-login');
 
-//const cookieParser = require('cookie-parser');
-//app.use(cookieParser());
+
 //                                                                                       LOGIN BACKEND
 
 // POSSO ACCEDERE ALLA ROTTA USER/BACKENDLOGGED SOLO SE SONO AUTENTICATO
@@ -17,14 +13,16 @@ router.get('/docs/backend', (req,res) => {
     res.render('/docs/backend');
 });
 
+/*
 router.get('/user/backendlogged', function(req, res){
     const { user: { username } = {} } = req;
     console.log(username)
     res.render('backofficelogged', {username});
     });
+    */
 
 //                SE SONO AUTENTICATO VADO AL BACKENDLOGGED SENNO MI RIMANDA AL LOGIN
-router.post('/docs/backend', passport.authenticate('local-login-dipendente', {
+router.post('/docs/backend', passportConfig.authenticate('local-login-dipendente', {
     successRedirect: '/user/backendlogged',
     failureRedirect: '/docs/backend'
 })); 
@@ -53,17 +51,17 @@ router.get('/docs/frontend', (req,res) => {
     //console.log(req.user);
 });
 
-
+/*
 router.get('/user/frontendlogged', function(req, res){
     const { user: { username } = {} } = req;
     console.log(username)
     res.render('frontofficelogged', {username});
     });
-
+*/
 
 
 // SE SONO AUTENTICATO VADO A USER/FRONTENDLOGGED SENNO MI RIMANDA AL LOGIN
-router.post('/docs/frontend', passport.authenticate('local-login-cliente', {
+router.post('/docs/frontend', passportConfig.authenticate('local-login-cliente', {
     successRedirect: '/user/frontendlogged' , 
     failureRedirect: '/docs/frontend'
     
@@ -95,7 +93,7 @@ router.get('/docs/dashboard', (req,res) => {
 
 
 // SE SONO AUTENTICATO VADO A USER/DASHBOARD SENNO MI RIMANDA AL DASHBOARD LOGIN
-router.post('/docs/dashboard', passport.authenticate('local-login-manager', {
+router.post('/docs/dashboard', passportConfig.authenticate('local-login-manager', {
     successRedirect: '/user/dashboardlogged',
     failureRedirect: '/docs/dashboard'
 })); 
