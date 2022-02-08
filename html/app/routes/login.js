@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const passportConfig = require('../../scripts/passport-config');
-const checkUserLogin = require('../middleware/check-user-login');
+//const checkUserLogin = require('../middleware/check-user-login');
 
 
 //                                                                                       LOGIN BACKEND
@@ -13,13 +13,6 @@ router.get('/docs/backend', (req,res) => {
     res.render('/docs/backend');
 });
 
-/*
-router.get('/user/backendlogged', function(req, res){
-    const { user: { username } = {} } = req;
-    console.log(username)
-    res.render('backofficelogged', {username});
-    });
-    */
 
 //                SE SONO AUTENTICATO VADO AL BACKENDLOGGED SENNO MI RIMANDA AL LOGIN
 
@@ -27,63 +20,34 @@ router.get('/user/backendlogged', function(req, res){
 router.post('/docs/backend', passportConfig.authenticate('local-login-dipendente', {
     successRedirect: '/user/backendlogged',
     failureRedirect: '/docs/backend'
-})); 
+}, function(err, user, info){
+        if(err){
+        console.log("err :  " +  err);}
+        console.log("user :"  + user)
+        console.log("info:  "   +info)})); 
 */
 
 
-router.post('/user/backendlogged', passportConfig.authenticate('local-login-dipendente'),
-  function(req, res) {
 
-    const { user: { username } = {} } = req;
-    console.log(username)
-    res.render('backofficelogged.html', {username} /*+ req.user.username*/);
-    //res.redirect("/user/backendlogged")
-  });
-
-
-/*
-router.post(
-    "/docs/backend",
-    passport.authenticate("local-login-dipendente"),
-    (req, res, next) => {
-        if (req.user) {
-            var redir = { redirect: "/user/backendlogged" };
-            return res.redirect("/user/backendlogged");
-
-        } else if (!req.user) {
-            var redir = { redirect: "/docs/backend" };
-            return res.redirect("/docs/backend");
-            
-        }
-    }
-);
-*/
-
-/*
 router.post('/docs/backend', function(req, res, next) {
     passportConfig.authenticate('local-login-dipendente', function(err, user, info) {
-      if (err) {
-        return next(err);
-      }
-      if (!user) {
-        res.writeHead(401, {'Content-Type': 'application/json'});
-        return res.end();
-      }
+      if (err) { return next(err); }
+      // Redirect if it fails
+      if (!user) { return res.redirect(200,'/docs/backend'); }
       req.logIn(user, function(err) {
-        if (err) {
-          return next(err);
-        }
-        res.writeHead(200, {'Content-Type': 'application/json'});
-        return res.end();
+        if (err) { return next(err); }
+        // Redirect if it succeeds
+        return res.redirect(200,'/user/backendlogged');
       });
     })(req, res, next);
   });
-*/
+
+
 
 //                            IL LOGOUT MI RIMANDA AL BACKEND
 router.get('/backendlogout', (req,res) => {
     req.logOut();
-    res.redirect('/docs/backend');
+    res.redirect(200,'/docs/backend');
     //res.render('backoffice.html');
 })
 

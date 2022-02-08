@@ -55,7 +55,7 @@ app.use('/docs', express.static(global.rootDir +'/public/views'));
 app.use('/img' , express.static(global.rootDir +'/public/media'));
 app.use(express.urlencoded({ extended: true , limit: "10mb"}));
 app.use(cors())
-app.use(bodyParser.urlencoded({ extended: true }))
+//app.use(bodyParser.json());
 
 // https://stackoverflow.com/questions/40459511/in-express-js-req-protocol-is-not-picking-up-https-for-my-secure-link-it-alwa
 app.enable('trust proxy');
@@ -262,36 +262,6 @@ app.delete('/db/deleteLease', async function(req, res) {
 
 
 
-
-
-/* ========================== */
-/*                            */
-/*         MONGOOSE           */
-/*                            */
-/* ========================== */
-
-
-/*
-
-var mongoose = require('mongoose');
-
-//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
-
-
-mongoose.connect('mongodb://127.0.0.1:27017/site202127', {useNewUrlParser: true, useUnifiedTopology: true});
-//mongoose.connect(`mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`, {useNewUrlParser: true, useUnifiedTopology: true});
-
-var conn = mongoose.connection;
-conn.on('connected', function() {
-    console.log('MONGOOSE database is connected successfully');
-});
-conn.on('disconnected',function(){
-    console.log('database is disconnected successfully');
-})
-conn.on('error', console.error.bind(console, 'connection error:'));
-*/
-
-
 /* ========================== */
 /*                            */
 /*         PASSPORT           */
@@ -314,7 +284,7 @@ app.set('view engine', 'html');
 
 app.use(session({
 	secret: 'chiaveSegreta123',
-	saveUninitialized: true,
+	saveUninitialized: false,
 	resave: false,
 	name: 'cookie sessione',
 	cookie: { maxAge: 60000000}
@@ -325,7 +295,7 @@ app.use(passport.session());
 
 app.use(loginRouter);
 app.use(registerRouter);
-app.use(userRouter);
+//app.use(userRouter);
 app.use('/user', checkUserLogin(), userRouter);
 
 

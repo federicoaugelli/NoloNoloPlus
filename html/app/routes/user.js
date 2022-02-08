@@ -14,7 +14,7 @@ router.get('/backendlogged', (req, res) => {
 */
 
 
-router.get('/user/backendlogged' , (req, res) => { 
+router.get('/backendlogged' , (req, res) => { 
 
     const { user: { username } = {} } = req;
     console.log(username)
