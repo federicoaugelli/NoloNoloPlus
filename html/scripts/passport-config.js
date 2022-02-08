@@ -106,7 +106,26 @@ passport.deserializeUser(function(user, done) {
  );
 
 
-
+/*
+passport.use(new LocalStrategy(
+    function(username, password, done) {
+      Dipendenti.findOne({ username: username }, function (err, user) {
+        if (err) { return done(err); }
+        if (!user) { return done(null, false); }
+        bcrypt.compare(password, user.password, (err, isMatch) => {
+            if (err) throw err;
+            if (isMatch){
+                console.log(user)
+                return done(null, user);
+            } else {                 
+                return done(null, false, { message: "password sbagliata"});
+            }
+       });
+        return done(null, user);
+      });
+    }
+  ));
+*/
 
 
  
@@ -137,10 +156,6 @@ passport.use(
             });;
     })
 );
-
-
-
-
 
 
 module.exports = passport;

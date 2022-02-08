@@ -66,8 +66,8 @@ router.post("/objectregister", function(req, res){
             peso: req.body.peso,
             numGiocatori: req.body.numGiocatori,
             prezzo: req.body.prezzo,
-            disponibile: req.body.disponibile,
-            dataIndisponibilita: req.body.dataIndisponibilita
+            disponibile: "",
+            dataIndisponibilita: ""
             
     });
         newObject.save();

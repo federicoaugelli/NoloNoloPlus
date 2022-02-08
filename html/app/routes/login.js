@@ -16,21 +16,21 @@ router.get('/docs/backend', (req,res) => {
 
 //                SE SONO AUTENTICATO VADO AL BACKENDLOGGED SENNO MI RIMANDA AL LOGIN
 
-/*
+
 router.post('/docs/backend', passportConfig.authenticate('local-login-dipendente', {
     successRedirect: '/user/backendlogged',
     failureRedirect: '/docs/backend'
-}, function(err, user, info){
+}/*, function(err, user, info){
         if(err){
         console.log("err :  " +  err);}
         console.log("user :"  + user)
-        console.log("info:  "   +info)})); 
-*/
+        console.log("info:  "   +info)}*/)); 
 
 
+/*
 
 router.post('/docs/backend', function(req, res, next) {
-    passportConfig.authenticate('local-login-dipendente', function(err, user, info) {
+    passportConfig.authenticate(['local-login-dipendente'], function(err, user, info) {
       if (err) { return next(err); }
       // Redirect if it fails
       if (!user) { return res.redirect(200,'/docs/backend'); }
@@ -41,7 +41,7 @@ router.post('/docs/backend', function(req, res, next) {
       });
     })(req, res, next);
   });
-
+*/
 
 
 //                            IL LOGOUT MI RIMANDA AL BACKEND

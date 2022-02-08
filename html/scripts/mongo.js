@@ -80,7 +80,7 @@ exports.create = async function(credentials) {
 		debug.push(`Trying to add ${data.length} new records... `)
 		let added = await mongo.db(dbname)
 					.collection(collection)
-		 			.insertMany(data);	
+		 			.insertMany(data)	
 		debug.push(`... ${added?.insertedCount || 0} records added.`)
 
 		await mongo.close();
