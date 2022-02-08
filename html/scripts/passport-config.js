@@ -6,15 +6,10 @@ const Dipendenti = require('../app/model/dipendentiModel.js');
 
 
 
-
-
 passport.serializeUser((user, done) => {
     
     done(null, user.id);
 });
-
-
-
 
 
 passport.deserializeUser((id, done) => {
@@ -77,7 +72,6 @@ passport.deserializeUser(function(user, done) {
  );
 
 
-
  passport.use(
     'local-login-dipendente', 
     new LocalStrategy({ usernameField: "username"}, (username, password, done) =>{
@@ -107,26 +101,17 @@ passport.deserializeUser(function(user, done) {
 
 
 /*
-passport.use(new LocalStrategy(
-    function(username, password, done) {
-      Dipendenti.findOne({ username: username }, function (err, user) {
-        if (err) { return done(err); }
-        if (!user) { return done(null, false); }
-        bcrypt.compare(password, user.password, (err, isMatch) => {
-            if (err) throw err;
-            if (isMatch){
-                console.log(user)
-                return done(null, user);
-            } else {                 
-                return done(null, false, { message: "password sbagliata"});
-            }
-       });
-        return done(null, user);
-      });
-    }
-  ));
+ passport.use(
+    'local-login', 
+    new LocalStrategy((username, password, done) =>{
+        if(username === 'Elia' && password === 'elia') {
+            const user = { id: "6202960ff6064c818bd7e2c5", username: 'Elia' };
+            return done(null, user);
+        }        
+        return done(null, false);            
+    })
+);
 */
-
 
  
  

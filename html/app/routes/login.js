@@ -47,7 +47,8 @@ router.post('/docs/backend', function(req, res, next) {
 //                            IL LOGOUT MI RIMANDA AL BACKEND
 router.get('/backendlogout', (req,res) => {
     req.logOut();
-    res.redirect(200,'/docs/backend');
+    res.redirect('/docs/backend');
+    //res.redirect(200,'/docs/backend');
     //res.render('backoffice.html');
 })
 
