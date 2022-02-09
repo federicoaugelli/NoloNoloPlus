@@ -7,7 +7,7 @@
 		"inzioNoleggio": "2022-01-27",
 		"fineNoleggio": "2022-02-27",
 		"prezzoTotale": 29.99,
-		"stato": "in corso",
+		"stato": "terminato",
 		"commenti": "",
 		"costoGiorno": 0.29,
 		"idGioco": "61f5682c414ea53945e9e928"

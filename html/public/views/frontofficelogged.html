@@ -412,9 +412,9 @@
               <div style="margin-top: 40px; margin-bottom: 40px;">
                 <h4>Quando vorresti noleggiarlo?</h4>
                 <label for="startRent">Da:</label>
-                <input type="date" id="inizioNoleggio" name="inizioNoleggio" v-model="startDate">
+                <input type="date" id="inizioNoleggio" name="inizioNoleggio" :max=modalItem.dataIndisponibilita v-model="startDate">
                 <label for="finishRent">A:</label>
-                <input type="date" id="fineNoleggio" name="fineNoleggio" v-model="endDate">
+                <input type="date" id="fineNoleggio" name="fineNoleggio" :max=modalItem.dataIndisponibilita v-model="endDate">
               </div>
               <h5 v-for="item in utenti" v-if="item.username == user" v-model="points = item.punti">I tuoi punti fedeltà: {{ item.punti }}</h5>
               <!--<button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#infoPoints">come funzionano i punti fedeltà?</button>-->
@@ -531,10 +531,9 @@
               return this.searchQuery.toLowerCase().split(' ').every(v => gg.platform.toLowerCase().includes(v))
             })
           }
-          else if (this.searchQuery == 'true'){
-            let disp = true
+          else if (this.searchQuery == "true"){
             return this.items.filter((gg)=>{
-              return gg.disponibile
+              return this.searchQuery.toLowerCase().split(' ').every(v => gg.disponibile.toLowerCase().includes(v))
             })
           }
           else{
@@ -603,25 +602,7 @@
         //funzione di controllo per la disponibilità del noleggio nelle date scelte (sovrapposizione)
         checkDisponibilità(item){
           var noleggioItem = item;
-          /*
-          if(noleggioItem.dataIndisponibilitaI != '' || noleggioItem.dataIndisponibilitaF != ''){
-              if(this.datediff(this.parseDate(noleggioItem.dataIndisponibilitaI), this.parseDate(this.startDate)) > 0 && this.datediff(this.parseDate(noleggioItem.dataIndisponibilitaF), this.parseDate(this.startDate)) < 0){
-                this.checkData = 'occupato';
-                console.log('occupato');
-                $('#fullnol').modal('toggle');
-              }
-              else if(this.datediff(this.parseDate(noleggioItem.dataIndisponibilitaI), this.parseDate(this.endDate)) > 0 && this.datediff(this.parseDate(noleggioItem.dataIndisponibilitaF), this.parseDate(this.endDate)) < 0){
-                this.checkData = 'occupato';
-                console.log('occupato');
-                $('#fullnol').modal('toggle');
-              }
-              else if(this.datediff(this.parseDate(noleggioItem.dataIndisponibilitaI), this.parseDate(this.startDate)) < 0 && this.datediff(this.parseDate(noleggioItem.dataIndisponibilitaF), this.parseDate(this.endDate)) > 0){
-                this.checkData = 'occupato';
-                console.log('occupato');
-                $('#fullnol').modal('toggle');
-              }
-          }
-          */
+
           for (let i = 0; i < this.userItems.length; i++){
             if(this.id == this.userItems[i].idGioco){
               //caso inizio noleggio tra inizio e fine del titolo già noleggiato

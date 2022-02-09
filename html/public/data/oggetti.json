@@ -1,6 +1,6 @@
 [
 	{
-		"img":"nms.jpg",
+		"img":"",
 		"game": "No Man's Sky",
 		"platform": "Playstation 4",
 		"annoUscita": "2016",
@@ -9,114 +9,8 @@
 		"etaMinima": "3",
 		"peso": "10",
 		"numGiocatori": "4",
-		"prezzo": "19.99",
-		"disponibile": true,
-		"dataIndisponibilita" :""
-		
-	},
-	{
-		"img":"fifa22.jpg",
-		"game": "Fifa 22",
-		"platform": "Playstation 4",
-		"annoUscita": "2021",
-		"stato":"Usato",
-		"condizioni": "Buone",
-		"etaMinima": "3",
-		"peso": "90",
-		"numGiocatori": "1",
-		"prezzo": "12.99",
-		"disponibile": true,
-		"dataIndisponibilita" :""
-		
-	},	
-	{
-		"img":"vanguard.jpg",
-		"game": "Call Of Duty Vanguaard",
-		"platform": "Playstation 5",
-		"annoUscita": "2020",
-		"stato":"Nuovo",
-		"condizioni": "Ottime",
-		"etaMinima": "18",
-		"peso": "80",
-		"numGiocatori": "1-4",
-		"prezzo": "69.99",
-		"disponibile": false,
-		"dataIndisponibilita" :""
-		
-	},
-	{
-		"img":"vanguard.jpg",
-		"game": "Call Of Duty Vanguaard",
-		"platform": "Playstation 5",
-		"annoUscita": "2020",
-		"stato":"Usato",
-		"condizioni": "Discrete",
-		"etaMinima": "18",
-		"peso": "8000",
-		"numGiocatori": "1-4",
-		"prezzo": "29.99",
-		"disponibile": true,
-		"dataIndisponibilita" :""
-		
-	},
-	{
-		"img":"minecraft.jpg",
-		"game": "Minecraft",
-		"platform": "Xbox One",
-		"annoUscita": "2010",
-		"stato":"Usato",
-		"condizioni": "Discrete",
-		"etaMinima": "1",
-		"peso": "100",
-		"numGiocatori": "1",
-		"prezzo": "2.99",
-		"quantita": "3",
-		"disponibile": true,
-		"dataIndisponibilita" :""
-		
-	},
-	{
-		"img":"minecraft.jpg",
-		"game": "Minecraft",
-		"platform": "Xbox Serie X/S",
-		"annoUscita": "2010",
-		"stato":"Nuovo",
-		"condizioni": "Ottime",
-		"etaMinima": "1",
-		"peso": "100",
-		"numGiocatori": "1",
-		"prezzo": "9.99",
-		"disponibile": false,
-		"dataIndisponibilita" :""
-		
-	},
-	{
-		"img":"gta5.jpg",
-		"game": "Grand Theft Auto",
-		"platform": "Playstation 5",
-		"annoUscita": "2010",
-		"stato":"Usato",
-		"condizioni": "Pessime",
-		"etaMinima": "18",
-		"peso": "90",
-		"numGiocatori": "1",
-		"prezzo": "9.99",
-		"disponibile": true,
-		"dataIndisponibilita" :""
-		
-	},
-	{
-		"img":"gta5.jpg",
-		"game": "Grand Theft Auto",
-		"platform": "Pc",
-		"annoUscita": "2010",
-		"stato":"Nuovo",
-		"condizioni": "Ottime",
-		"etaMinima": "18",
-		"peso": "90",
-		"numGiocatori": "1",
-		"prezzo": "19.99",
-		"disponibile": true,
+		"prezzo": "0.99",
+		"disponibile": "true",
 		"dataIndisponibilita" :""
 		
 	}
