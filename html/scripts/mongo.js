@@ -139,41 +139,33 @@ exports.search = async function(q,credentials) {
 	}
 }
 
-/*
-exports.createObject = async function(newObject){
 
-     //const mongouri = "mongodb://127.0.0.1:27017?writeConern=majority";
-	 console.log(newObject);
-	 let debug = [];
-	 try{
+exports.deleteDipendentiCollection = async function(credentials){
 
-		debug.push("tryng to connect to MongoDB");
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+	//console.log(oldObject);
+	let debug = [];
+	try{
+
+		debug.push('trying to connect MongoDB');
 		const mongo = new MongoClient(mongouri);
 		await mongo.connect();
-		debug.push("... managed to connect to mongoDB.");
-		let added = await mongo
-		.db(dbname)
-		.collection(collection2)
-		.insertOne({
+		debug.push("Managed to close connection to MongoDB.");
+		
+		    await mongo
+		        .db(dbname)
+			    .collection(collection)
+				.deleteMany()
 
-			modello: newObject.modello,
-			marca: newObject.marca,
-			anno: parseInt(newObject.anno),
-			categoria: newObject.categoria,
-			condizioni: newObject.condizioni,
-			prezzo: parseInt(newObject.prezzo),
-			disponibilita: "",
-			img: newObject.img
-		});
-     await mongo.close();
-	
+	    await mongo.close();
+		debug.push("Managed to close connection to MongoDB.");
 	}
-	catch (e) {
-		e.debug = debug
-		return e
+	catch(e){
+
+		return e;
 	}
-}
-*/
+  };
+
 
 exports.getGames = async function (credentials) {
 

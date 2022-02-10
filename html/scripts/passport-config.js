@@ -43,7 +43,7 @@ passport.deserializeUser(function(user, done) {
 
  passport.use(
     'local-login-cliente', 
-    new LocalStrategy({ usernameField: "username" }, (username, password, done) =>{
+    new LocalStrategy({ usernameField: "username" ,passwordField: "password"}, (username, password, done) =>{
         // MATCH USER
         
         User.findOne({ username: username})
@@ -74,11 +74,12 @@ passport.deserializeUser(function(user, done) {
 
  passport.use(
     'local-login-dipendente', 
-    new LocalStrategy({ usernameField: "username"}, (username, password, done) =>{
+    new LocalStrategy({ usernameField: "username", passwordField: "password"}, (username, password, done) =>{
         // MATCH USER
         Dipendenti.findOne({ username: username })
             .then(user => {
                 if(!user){
+                    console.log("username sbagliato")
                     return done(null, false, { message: "username sbagliato"});
                 } else{ 
                     //match password

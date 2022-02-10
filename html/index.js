@@ -258,8 +258,12 @@ app.delete('/db/deleteObject', async function(req, res) {
 app.delete('/db/deleteLease', async function(req, res) {
 	let oldObject = req.body.oldObject	
 	res.send(await mymongo.deleteLease(oldObject,mongoCredentials))
-});
+}); 
 
+app.delete('/db/deleteDipendentiCollection', async function(req, res) {
+		
+	res.send(await mymongo.deleteDipendentiCollection(mongoCredentials))
+});
 
 
 /* ========================== */

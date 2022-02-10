@@ -49,6 +49,19 @@ Copyright (c) 2021 by Fabio Vitali
 				<ol class="font-monospace m-1 text-start" id="debug"> </ol>
 			</div>
 		</div>
+		<br><br><br><br>
+		<div>
+			<form action="/backendregister" method="post">
+				<input type="submit" class="btn btn-primary btn-lg btn-block" value="Carica JSON dipendenti">
+			</form>
+			</div>
+			<br><br>		
+			<div>
+			<form action="/db/deleteDipendentiCollection" method="post">
+				<button type="button" class="btn btn-primary btn-lg btn-block" onclick="deleteDipendentiCollection()">Elimina JSON dipendenti </button>
+			</form>
+			</div>
+			
 	</main>
 
 
@@ -72,9 +85,25 @@ Copyright (c) 2021 by Fabio Vitali
 						}
 						$('#debug').html(debug.join('\n'))
 					}
-				})
-			
+				})	
+		}
+
+
+		function deleteDipendentiCollection(){
+
+			$.ajax({
+
+				url: '/db/deleteDipendentiCollection',
+				type: "DELETE",
+                data: '',
+                dataType: "json",
+                contentType: "application/x-www-form-urlencoded",
+                success: function (g) {
+
+				}
+			})
 		}
 	</script>
+
   </body>
 </html>

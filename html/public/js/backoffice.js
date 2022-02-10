@@ -13,6 +13,7 @@ function getGames() {
     dataType: "json",
     contentType: "application/x-www-form-urlencoded",
     success: function (g) {
+         console.log(g)
          creaTabellaInventario(g);
          creaCardInventario(g);
          //console.log(g.result);
@@ -31,7 +32,7 @@ function getDipendenti() {
     contentType: "application/x-www-form-urlencoded",
     success: function (g) {
         
-         console.log(g.result);
+         console.log(g);
     },
   });
 } 
@@ -130,8 +131,7 @@ function visualizzaInventario() {
 
   
 function findClienti() {
-  // let cookie = getCookie("SessionCookie")
-   //let data = {cookie: cookie}
+ 
    $.ajax({
      url: "/db/findClienti",
      type: "GET",
@@ -139,6 +139,7 @@ function findClienti() {
      dataType: "json",
      contentType: "application/x-www-form-urlencoded",
      success: function (d) {
+       console.log(g)
       listClientiSelectNoleggio(d);
      },
    });

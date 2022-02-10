@@ -45,6 +45,32 @@ router.post("/frontendregister", function(req, res){
 
 
 
+//                      REGISTRAZIONE JSON DIPENDENTI 
+
+
+
+const registrodipendenti = require('../model/dipendentiModel.js');
+
+var dipendentiData = require('../../public/data/dipendenti.json');
+//var registrodipendenti = mongoose.model( 'registrodipendenti' );
+
+
+
+router.post("/backendregister", function(req, res){
+
+      //mongoose.deleteModel("registrodipendenti");
+       //mongoose.model(registrodipendenti).deleteMany();
+
+        for(var i = 0; i < dipendentiData.length; i++) {
+
+            new registrodipendenti(dipendentiData[i]).save();
+        }
+        res.redirect('/docs/create.html');
+},
+);
+
+
+
 //                      REGISTRAZIONE NUOVO OGGETTO
 
 
