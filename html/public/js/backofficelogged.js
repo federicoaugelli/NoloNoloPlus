@@ -284,6 +284,66 @@ var userCliente = null;
 
 
 
+
+function registerNoleggio(){
+
+  var formData = $("#creaNoleggioForm").serializeArray();
+
+  //console.log(formData)
+
+  if(
+    formData[0].value != " " &&
+    formData[1].value != " " &&
+    formData[2].value != " " &&
+    formData[3].value != " " &&
+    formData[4].value != " " &&
+    formData[5].value != " " &&
+    formData[6].value != " " &&
+    formData[7].value != " " &&
+    formData[8].value != " " &&
+    formData[9].value != " " &&
+    formData[10].value != " " 
+    
+  ){
+        
+    $.ajax({
+
+      url: "/db/registerNoleggio",
+      type: "POST",
+      data: { formData },
+      dataType: "json",
+      contentType: "application/x-www-form-urlencoded",
+      success: function(data){
+
+        if(data){
+
+          document.getElementById("alert-body").textContent = "Nuovo noleggio registrato con successo"
+          $("#flash-modal").modal("show");
+          $("#creaNoleggioForm").trigger("reset");
+          $("#noleggia-modal").modal("hide");
+          //console.log("Utente modificato");
+          //findClienti();
+        }
+        else{
+
+          document.getElementById("alert-body").textContent = "Errore. non è possibile registrare il noleggio"
+          $("#flash-modal").modal("show");
+          //console.log("errore");
+        }
+      }
+    });
+  }
+  else{
+
+    document.getElementById("alert-body").textContent = "Compilare tutti i campi"
+    $("#flash-modal").modal("show");
+    console.log("err")
+  }
+}
+
+
+
+
                                                                           //CHIAMATA AJAX CHE RITORNA TUTTO L'INVENTARIO
   function getGames() {
     $.ajax({
@@ -1381,6 +1441,64 @@ function delNoleggioFuturo(){
                                                                             /*          OGGETTI           */
                                                                             /*                            */
                                                                             /* ========================== */
+
+
+
+
+function registerObject(){
+
+  var formData = $("#createObjectForm").serializeArray();
+
+  //console.log(formData)
+
+  if(
+    formData[0].value != " " &&
+    formData[1].value != " " &&
+    formData[2].value != " " &&
+    formData[3].value != " " &&
+    formData[4].value != " " &&
+    formData[5].value != " " &&
+    formData[6].value != " " &&
+    formData[7].value != " " &&
+    formData[8].value != " " &&
+    formData[9].value != " " 
+    
+  ){
+        
+    $.ajax({
+
+      url: "/db/registerObject",
+      type: "POST",
+      data: { formData },
+      dataType: "json",
+      contentType: "application/x-www-form-urlencoded",
+      success: function(data){
+
+        if(data){
+
+          document.getElementById("alert-body").textContent = "Nuovo oggetto registrato con successo"
+          $("#flash-modal").modal("show");
+          $("#createObjectForm").trigger("reset");
+          $("#aggiungiOggetto").modal("hide");
+          //console.log("Utente modificato");
+          //findClienti();
+        }
+        else{
+
+          document.getElementById("alert-body").textContent = "Errore. non è possibile registrare l'oggetto"
+          $("#flash-modal").modal("show");
+          //console.log("errore");
+        }
+      }
+    });
+  }
+  else{
+
+    document.getElementById("alert-body").textContent = "Compilare tutti i campi"
+    $("#flash-modal").modal("show");
+    console.log("err")
+  }
+}
 
 
                                                                              //CREA LA TABELLA PER L'INVENTARIO

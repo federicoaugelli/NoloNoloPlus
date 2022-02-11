@@ -1,11 +1,13 @@
 var mongoose = require('mongoose');
-
+//const fs = require('fs').promises;
+//const { Mongoose } = require("mongoose")
+/*
 const credentials = {
 	user: "site202127",
 	pwd: "eer6Beir",
 	site: "mongo_site202127"
 } 
-
+*/
 
 mongoose.connect('mongodb://127.0.0.1:27017/site202127', {useNewUrlParser: true, useUnifiedTopology: true});
 //mongoose.connect(`mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`, {useNewUrlParser: true, useUnifiedTopology: true});

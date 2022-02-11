@@ -179,7 +179,7 @@
           <input type="file" id="img11" name="img">
           <button type="button" class="btn btn-primary" onclick="immagineConvertitapopolaText()"> Converti </button>      
         </div>
-          <form action="/objectregister" method="POST">
+          <form action="/db/registerNoleggio" method="POST" id="createObjectForm">
             <div class="mb-3">
               <label for="img" class="form-label">IMMAGINE CONVERTITA</label>
               <input type="text" class="form-control" id="img" name="img">
@@ -235,9 +235,8 @@
         <div class="mb-3">
           <label for="prezzo" class="form-label">PREZZO</label>
           <input type="text" class="form-control" id="prezzo" name="prezzo" placeholder=" ... euro">
-        </div>
-        
-          <input type="submit" class="btn btn-primary" value="Aggiungi oggetto"> 
+        </div>     
+        <button type="button" class="btn btn-primary" onclick="registerObject()" aria-label="registrati nuovo oggetto"> Salva </button>
         </div>
       </form>
       
@@ -542,10 +541,6 @@
               <option value="restituito">restituito</option>
             </select> 
         </div>
-    </div>   
-        </div>
-      </div>
-      <div class="modal-footer">  
         <div class="mb-3">
           <button type="button" class="btn btn-primary" onclick="modNoleggioFuturo()">Salva modifiche</button> 
           <form action="POST" method="/db/deleteNoleggioFuturo">
@@ -553,10 +548,16 @@
             </form>
         </div>
       </form> 
-    </div>  
+    </div>   
+        </div>
+      </div>
+      <div class="modal-footer">  
+        <button type="button" id="closeModal2" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#vediInventarioModal" onclick="visualizzaInventario(); getGames()"> Chiudi </button>      
+      </div>  
     </div>   
   </div>
 </div>
+
 
                                                  <!-- NAVBAR -->
 
@@ -641,7 +642,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form method="POST" action="/noleggioregister" id="modNoleggioForm">
+        <form method="POST" action="/db/registerNoleggio" id="creaNoleggioForm">
         <div class="card-body">
           <div class="mb-3">
             <label for="usernameFunzionario">DIPENDENTE : </label>  
@@ -705,7 +706,7 @@
       </div>
       <div class="modal-footer">
         <div class="mb-3">
-          <input type="submit" class="btn btn-primary" value="Crea noleggio"> 
+          <button type="button" class="btn btn-primary" onclick="registerNoleggio()" aria-label="registrati nuovo noleggio"> Crea noleggio </button>
         </div>
       </form>
       </div>

@@ -37,7 +37,8 @@ const mymongo = require(global.rootDir + '/scripts/mongo.js') ;
 const express = require('express') ;
 const cors = require('cors');
 const path= require('path');
-const bodyParser = require('body-parser');
+//const bodyParser = require('body-parser');
+
 
 
 
@@ -148,15 +149,31 @@ app.get('/db/search', async function(req, res) {
 	res.send(await mymongo.search(req.query, mongoCredentials))
 });
 
+
+app.post('/db/registerCliente', async function(req, res) {
+	let newUser = req.body.formData
+	res.send(await mymongo.registerCliente(newUser,mongoCredentials))
+});
+
+app.post('/db/registerObject', async function(req, res) {
+	let newObject = req.body.formData
+	res.send(await mymongo.registerObject(newObject,mongoCredentials))
+});
+
+app.post('/db/registerNoleggio', async function(req, res) {
+	let newNoleggio = req.body.formData
+	res.send(await mymongo.registerNoleggio(newNoleggio,mongoCredentials))
+});
+
 app.get('/db/findClienti', async function(req, res) { 
 	res.send(await mymongo.findClienti(mongoCredentials))
 });
-
+/*
 app.get('/db/getUserLogged', async function(req, res) { 
 	let usernameLogged = req.body.usernameLogged
 	res.send(await mymongo.getUserLogged(usernameLogged,mongoCredentials))
 });
-
+*/
 app.get('/db/getGames', async function(req, res) {
 	res.send(await mymongo.getGames(mongoCredentials))
 });

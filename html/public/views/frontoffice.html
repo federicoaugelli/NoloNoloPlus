@@ -31,6 +31,35 @@
 <body style="background-color: #031336;">
   <div id="app">
 
+                                                   <!-- MODAL-FLASH -->
+
+<div class="modal fade" id="flash-modal" tabindex="-1" aria-labelledby="flash-modalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="flash-modalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-primary d-flex align-items-center" role="alert">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+          </svg>
+          <div  id="alert-body">
+           
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="closeFlashModal" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+                                               <!-- FINE MODAL-FLASH -->
+
+
+
 
   <!-- The Modal -->
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="ModalLogin" aria-hidden="true">
@@ -58,7 +87,7 @@
                     </div>
                   </form>
                     <div class="sign-up-form">
-                      <form action="/frontendregister" method="POST">
+                      <form action="/db/registerCliente" method="POST" id="createUserForm">
                       <div class="group"> <label id="ariaNome" for="nome" class="label">Nome</label> <input id="nome" type="text" name="nome" class="input" placeholder="Inserisci il tuo nome" aria-describedby="ariaNome" required> </div>
                       <div class="group"> <label id="ariaCognome" for="cognome" class="label">Cognome</label> <input id="cognome" type="text" name="cognome" class="input" placeholder="Inserisci il tuo cognome" aria-describedby="ariaCognome" required> </div>
                       <div class="group"> <label id="ariaUsr" for="username" class="label">Username</label> <input id="username" type="text" name="username" class="input" placeholder="Crea il tuo Username" aria-describedby="ariaUsr" required> </div>
@@ -71,7 +100,7 @@
                           <div class="group"><label id="ariaCity" for="citta" class="label"> Citt&agrave;</label> <input id="citta" type="text" name="citta" class="input" placeholder=" Città " aria-describedby="ariaCity" required> </div>
                         </div>
                       </div>
-                      <div class="group"> <input type="submit" class="button" value="Registrati" aria-label="registrati come cliente"> </div>
+                      <div class="group"> <button type="button" class="button" onclick="registerCliente()" aria-label="registrati come cliente"> Registrati </button></div>
                       <div class="hr"></div>
                       <div class="foot"> <label for="tab-1">Already Member?</label> </div>
                       </form>

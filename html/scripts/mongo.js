@@ -37,7 +37,6 @@ const template = require(global.rootDir + '/scripts/tpl.js');
 const Bcrypt = require("bcryptjs"); 
 
 
-
      const mongouri = "mongodb://127.0.0.1:27017";
     //const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
 
@@ -53,6 +52,132 @@ MongoClient.connect(mongouri, {
 });
 
 
+//                                                              registrare un nuovo cliente
+exports.registerCliente = async function(newUser,credentials) {
+	
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+	//console.log(oldObject);
+	let debug = [];
+	try{
+
+		debug.push('trying to connect MongoDB');
+		const mongo = new MongoClient(mongouri);
+		await mongo.connect();
+		debug.push("Managed to close connection to MongoDB.");
+		
+        let doc = {
+				
+			nome: newUser[0].value,
+			cognome: newUser[1].value,
+			username: newUser[2].value,
+			password: Bcrypt.hashSync(newUser[3].value, 10),
+			citta: newUser[4].value,
+			via: newUser[4].value,
+			punti: newUser[5].value
+		};
+
+		    await mongo
+		        .db(dbname)
+			    .collection(collection1)
+				.insertOne(doc)
+
+	    await mongo.close();
+		debug.push("Managed to close connection to MongoDB.");
+	}
+	catch(e){
+
+		return e;
+	}
+};
+
+//                                                              registrare un nuovo oggetto nell'inventario
+exports.registerObject = async function(newObject,credentials) {
+	
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+	//console.log(oldObject);
+	let debug = [];
+	try{
+
+		debug.push('trying to connect MongoDB');
+		const mongo = new MongoClient(mongouri);
+		await mongo.connect();
+		debug.push("Managed to close connection to MongoDB.");
+		
+        let doc = {
+				
+			img: newObject[0].value,
+			game: newObject[1].value,
+			platform: newObject[2].value,
+			annoUscita: newObject[3].value,
+			stato: newObject[4].value,
+			condizioni: newObject[5].value,
+			etaMinima: newObject[6].value,
+			peso: newObject[7].value,
+			numGiocatori: newObject[8].value,
+			prezzo: newObject[9].value,
+			dataIndisponibilita: "",
+			disponibile: "true"
+		};
+
+		    await mongo
+		        .db(dbname)
+			    .collection(collection2)
+				.insertOne(doc)
+
+	    await mongo.close();
+		debug.push("Managed to close connection to MongoDB.");
+	}
+	catch(e){
+
+		return e;
+	}
+};
+
+
+
+//                                                              registrare un nuovo noleggio
+exports.registerNoleggio = async function(newNoleggio,credentials) {
+	
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+	//console.log(oldObject);
+	let debug = [];
+	try{
+
+		debug.push('trying to connect MongoDB');
+		const mongo = new MongoClient(mongouri);
+		await mongo.connect();
+		debug.push("Managed to close connection to MongoDB.");
+		
+        let doc = {
+						
+			usernameFunzionario:newNoleggio[0].value,
+			titoloNoleggiato:newNoleggio[1].value,
+			piattaforma: newNoleggio[2].value,
+			usernameCliente: newNoleggio[3].value,
+			inizioNoleggio: newNoleggio[4].value,
+			fineNoleggio: newNoleggio[5].value,
+			costoGiorno: newNoleggio[6].value,
+			prezzoTotale: newNoleggio[8].value,
+			stato: newNoleggio[9].value,
+			commenti: newNoleggio[10].value,
+			
+		};
+
+		    await mongo
+		        .db(dbname)
+			    .collection(collection3)
+				.insertOne(doc)
+
+	    await mongo.close();
+		debug.push("Managed to close connection to MongoDB.");
+	}
+	catch(e){
+
+		return e;
+	}
+};
+
+
 exports.create = async function(credentials) {
 	
 	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
@@ -60,7 +185,7 @@ exports.create = async function(credentials) {
 	let debug = []
 	try {
 		debug.push(`Trying to connect to MongoDB with user: '${credentials.user}' and site: '${credentials.site}' and a ${credentials.pwd.length}-character long password...`)
-		const mongo = new MongoClient(mongouri);		
+		const mongo = new MongoClient(mongouri);	
 		await mongo.connect();
 		debug.push("... managed to connect to MongoDB.")
 
