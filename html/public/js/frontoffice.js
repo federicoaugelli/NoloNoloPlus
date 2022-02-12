@@ -44,8 +44,8 @@ function registerCliente(){
           $("#flash-modal").modal("show");
           $("#createUserForm").trigger("reset");
           $("#myModal").modal("hide");
-          //console.log("Utente modificato");
-          //findClienti();
+          console.log("Utente registrato");
+          findClienti();
         }
         else{
 

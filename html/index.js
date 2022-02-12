@@ -297,7 +297,7 @@ const checkUserLogin = require('./app/middleware/check-user-login');
 //    router
 const loginRouter = require('./app/routes/login.js');
 const userRouter = require('./app/routes/user.js');
-const registerRouter = require('./app/routes/register.js');
+//const registerRouter = require('./app/routes/register.js');
 
 app.set('views', path.join(__dirname, './public/views'));
 app.engine('html', require('ejs').renderFile);
@@ -315,7 +315,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(loginRouter);
-app.use(registerRouter);
+//app.use(registerRouter);
 //app.use(userRouter);
 app.use('/user', checkUserLogin(), userRouter);
 

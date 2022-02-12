@@ -1291,7 +1291,7 @@ function getNoleggioFuturo(e){
   let usernameCliente = current.getElementsByClassName("td3")[0].textContent;
   let titoloNoleggiato = current.getElementsByClassName("td3")[1].textContent;
   let piattaforma = current.getElementsByClassName("td3")[2].textContent;
-  let usernameFunzionario= current.getElementsByClassName("td3")[3].textContent;
+  //let usernameFunzionario= current.getElementsByClassName("td3")[3].textContent;
   let inizioNoleggio = current.getElementsByClassName("td3")[4].textContent;
   let fineNoleggio = current.getElementsByClassName("td3")[5].textContent;
   let prezzoTotale = current.getElementsByClassName("td3")[6].textContent;
@@ -1380,11 +1380,9 @@ function modNoleggioFuturo(){
           $("#flash-modal").modal("show");
           $("#modNoleggioForm").trigger("reset");
           $("#modificaNoleggioFuturoModal").modal("hide");
+          $("#statoNoleggiFuturiModal").modal("show");
           console.log("Noleggio modificato");
           getNoleggi();
-         // getNoleggiAttivi();
-         // getNoleggiFuturi();
-         // getNoleggiTerminati();
         }
         else{
 
@@ -1423,12 +1421,9 @@ function delNoleggioFuturo(){
       $("#flash-modal").modal("show");
       $("#modNoleggioForm").trigger("reset");
       $("#modificaNoleggioFuturoModal").modal("hide");
-      console.log("noleggio modificato");
-      getNoleggi();
-         // getNoleggiAttivi();
-         // getNoleggiFuturi();
-         // getNoleggiTerminati();
-  
+      $("#statoNoleggiFuturiModal").modal("show");
+      console.log("noleggio eliminato");
+      getNoleggi();  
 }
 
 
@@ -1463,7 +1458,7 @@ function registerObject(){
     formData[8].value != " " &&
     formData[9].value != " "   
   ){
-        
+       
     $.ajax({
 
       url: "/db/registerObject",
@@ -1476,17 +1471,18 @@ function registerObject(){
         if(data){
 
           document.getElementById("alert-body").textContent = "Nuovo oggetto registrato con successo"
-          $("#flash-modal").modal("show");
-          $("#createObjectForm").trigger("reset");
           $("#aggiungiOggetto").modal("hide");
-          //console.log("Utente modificato");
+          $("#createObjectForm").trigger("reset");
+          //$("#vediInventarioModal").modal("show");
+          $("#flash-modal").modal("show");        
+          console.log("Titolo registrato");
           getGames();
         }
         else{
 
           document.getElementById("alert-body").textContent = "Errore. non è possibile registrare l'oggetto"
           $("#flash-modal").modal("show");
-          //console.log("errore");
+          console.log("errore");
         }
       }
     });
@@ -1611,7 +1607,7 @@ function registerObject(){
   function getObject(e){
 
     let current = e.parentNode.parentNode;
-    let img = null;//= current.getElementsByClassName("td1")[0].textContent;
+    let img = null;
     let game = current.getElementsByClassName("td1")[0].textContent;
     let platform = current.getElementsByClassName("td1")[1].textContent;
     let annoUscita = current.getElementsByClassName("td1")[2].textContent;

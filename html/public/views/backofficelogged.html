@@ -177,7 +177,9 @@
           <input type="file" id="img11" name="img">
           <button type="button" class="btn btn-primary" onclick="immagineConvertitapopolaText()"> Converti </button>      
         </div>
-          <form action="/db/registerNoleggio" method="POST" id="createObjectForm">
+
+          <form action="/db/registerObject" method="POST" id="createObjectForm">
+        
             <div class="mb-3">
               <label for="img" class="form-label">IMMAGINE CONVERTITA</label>
               <input type="text" class="form-control" id="img" name="img">
@@ -233,10 +235,12 @@
         <div class="mb-3">
           <label for="prezzo" class="form-label">PREZZO</label>
           <input type="text" class="form-control" id="prezzo" name="prezzo" placeholder=" ... euro">
-        </div>     
-        <button type="button" class="btn btn-primary" onclick="registerObject()" aria-label="registra nuovo oggetto"> Salva </button>
         </div>
-      </form>    
+        <div class="mb-3">     
+        <button type="button" class="btn btn-primary" onclick="registerObject()" aria-label="registra nuovo oggetto"> Aggiungi oggetto </button> 
+        </div>
+      </form> 
+      </div>   
       <div class="modal-footer">  
         <button type="button" id="closeModal2" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#vediInventarioModal" onclick="visualizzaInventario(); getGames()"> Chiudi </button>      
       </div>  
@@ -703,7 +707,7 @@
       </div>
       <div class="modal-footer">
         <div class="mb-3">
-          <input type="button" class="btn btn-primary" onclick="registerNoleggio()" aria-label="registrati nuovo noleggio" value="Crea noleggio">  
+          <button type="button" class="btn btn-primary" onclick="registerNoleggio()" aria-label="registrati nuovo noleggio">Crea noleggio</button>  
         </div>
       </form>
       </div>

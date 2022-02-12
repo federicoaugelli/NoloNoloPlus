@@ -56,7 +56,7 @@ MongoClient.connect(mongouri, {
 exports.registerCliente = async function(newUser,credentials) {
 	
 	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
-	//console.log(oldObject);
+	let data = { result: null };
 	let debug = [];
 	try{
 
@@ -80,9 +80,15 @@ exports.registerCliente = async function(newUser,credentials) {
 		        .db(dbname)
 			    .collection(collection1)
 				.insertOne(doc)
+				.forEach((r) => {
+					result.push(r);
+				});
+		
+				data.result = result;
 
 	    await mongo.close();
 		debug.push("Managed to close connection to MongoDB.");
+		return data;
 	}
 	catch(e){
 
@@ -94,7 +100,8 @@ exports.registerCliente = async function(newUser,credentials) {
 exports.registerObject = async function(newObject,credentials) {
 	
 	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
-	//console.log(oldObject);
+	
+	let data = { result: null };
 	let debug = [];
 	try{
 
@@ -123,9 +130,15 @@ exports.registerObject = async function(newObject,credentials) {
 		        .db(dbname)
 			    .collection(collection2)
 				.insertOne(doc)
+				.forEach((r) => {
+					result.push(r);
+				});
+		
+				data.result = result;
 
 	    await mongo.close();
 		debug.push("Managed to close connection to MongoDB.");
+		return data;
 	}
 	catch(e){
 
@@ -139,7 +152,7 @@ exports.registerObject = async function(newObject,credentials) {
 exports.registerNoleggio = async function(newNoleggio,credentials) {
 	
 	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
-	//console.log(oldObject);
+	let data = { result: null };
 	let debug = [];
 	try{
 
@@ -167,9 +180,15 @@ exports.registerNoleggio = async function(newNoleggio,credentials) {
 		        .db(dbname)
 			    .collection(collection3)
 				.insertOne(doc)
+				.forEach((r) => {
+					result.push(r);
+				});
+		
+				data.result = result;
 
 	    await mongo.close();
 		debug.push("Managed to close connection to MongoDB.");
+		return data;
 	}
 	catch(e){
 

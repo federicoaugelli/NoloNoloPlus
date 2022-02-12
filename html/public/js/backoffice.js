@@ -139,7 +139,7 @@ function findClienti() {
      dataType: "json",
      contentType: "application/x-www-form-urlencoded",
      success: function (d) {
-       console.log(g)
+       //console.log(g)
       listClientiSelectNoleggio(d);
      },
    });
