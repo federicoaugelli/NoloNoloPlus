@@ -1461,8 +1461,7 @@ function registerObject(){
     formData[6].value != " " &&
     formData[7].value != " " &&
     formData[8].value != " " &&
-    formData[9].value != " " 
-    
+    formData[9].value != " "   
   ){
         
     $.ajax({
@@ -1481,7 +1480,7 @@ function registerObject(){
           $("#createObjectForm").trigger("reset");
           $("#aggiungiOggetto").modal("hide");
           //console.log("Utente modificato");
-          //findClienti();
+          getGames();
         }
         else{
 

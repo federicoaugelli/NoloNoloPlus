@@ -279,7 +279,7 @@ exports.deleteDipendentiCollection = async function(credentials){
 		
 		    await mongo
 		        .db(dbname)
-			    .collection(collection)
+			    .collection(collection1)
 				.deleteMany()
 
 	    await mongo.close();

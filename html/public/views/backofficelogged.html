@@ -161,11 +161,9 @@
 
                                                    <!-- FINE MODAL INVENTARIO -->
 
+
+                                                   
                                                    <!-- MODAL AGGIUNGI OGGETTO-->
-
-
-
-
                                                    
 <div class="modal fade" id="aggiungiOggetto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
   <div class="modal-dialog  modal-lg" role="document">
@@ -236,10 +234,9 @@
           <label for="prezzo" class="form-label">PREZZO</label>
           <input type="text" class="form-control" id="prezzo" name="prezzo" placeholder=" ... euro">
         </div>     
-        <button type="button" class="btn btn-primary" onclick="registerObject()" aria-label="registrati nuovo oggetto"> Salva </button>
+        <button type="button" class="btn btn-primary" onclick="registerObject()" aria-label="registra nuovo oggetto"> Salva </button>
         </div>
-      </form>
-      
+      </form>    
       <div class="modal-footer">  
         <button type="button" id="closeModal2" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#vediInventarioModal" onclick="visualizzaInventario(); getGames()"> Chiudi </button>      
       </div>  
@@ -706,7 +703,7 @@
       </div>
       <div class="modal-footer">
         <div class="mb-3">
-          <button type="button" class="btn btn-primary" onclick="registerNoleggio()" aria-label="registrati nuovo noleggio"> Crea noleggio </button>
+          <input type="button" class="btn btn-primary" onclick="registerNoleggio()" aria-label="registrati nuovo noleggio" value="Crea noleggio">  
         </div>
       </form>
       </div>
