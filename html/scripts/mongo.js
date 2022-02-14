@@ -418,15 +418,15 @@ exports.findClienti = async function (credentials) {
 	
 	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
   
-	//let debug = [];
+	let debug = [];
 	let data = { result: null };
 	try {
-		//debug.push(`Trying to connect to MongoDB`);
+		debug.push(`Trying to connect to MongoDB`);
 		//console.log(debug)
 		const mongo = new MongoClient(mongouri);
 		await mongo.connect();
 		let result = [];
-		//debug.push("... managed to connect to MongoDB.");
+		debug.push("... managed to connect to MongoDB.");
 		//console.log(debug)
 		await mongo
 		.db(dbname)
@@ -441,12 +441,12 @@ exports.findClienti = async function (credentials) {
   
 	  	await mongo.close();
   
-	  	//debug.push("Managed to close connection to MongoDB.");
+	  	debug.push("Managed to close connection to MongoDB.");
 	  	return data;
 	} 
 
 	catch (e) {
-		return data;
+		return e;
 	}
 };
 

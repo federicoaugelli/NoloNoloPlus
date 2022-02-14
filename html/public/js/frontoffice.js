@@ -10,6 +10,20 @@ function showHideLoginRegister(){
   }
 }
 
+ 
+function findClienti() {
+ 
+  $.ajax({
+    url: "/db/findClienti",
+    type: "GET",
+    data: '',
+    dataType: "json",
+    contentType: "application/x-www-form-urlencoded",
+    success: function (d) {
+      //console.log(g)
+    },
+  });
+}
 
 
 

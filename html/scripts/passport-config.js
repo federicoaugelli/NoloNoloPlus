@@ -1,9 +1,14 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require("bcryptjs");
-//const User = require('../app/model/clientiModel.js');
-//const Dipendenti = require('../app/model/dipendentiModel.js');
 
+/*
+const credentials = {
+	user: "site202127",
+	pwd: "eer6Beir",
+	site: "mongo_site202127"
+}  
+*/
 
 /*
 passport.serializeUser((user, done) => {
@@ -73,8 +78,8 @@ let dbname = "site202127"
 let collection ="registrodipendenti"
 let collection1 ="registroclienti"
 const { MongoClient } = require("mongodb");
-const mongouri = "mongodb://127.0.0.1:27017";
 //const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+const mongouri = "mongodb://127.0.0.1:27017";
 
 
 passport.use(

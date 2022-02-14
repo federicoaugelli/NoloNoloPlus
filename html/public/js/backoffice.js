@@ -13,7 +13,7 @@ function getGames() {
     dataType: "json",
     contentType: "application/x-www-form-urlencoded",
     success: function (g) {
-         console.log(g)
+         //console.log(g)
          creaTabellaInventario(g);
          creaCardInventario(g);
          //console.log(g.result);
@@ -21,7 +21,7 @@ function getGames() {
   });
 } 
 
-
+/*
 
 function getDipendenti() {
   $.ajax({
@@ -36,21 +36,7 @@ function getDipendenti() {
     },
   });
 } 
-
-
-function findClienti() {
-  $.ajax({
-    url: "/db/findClienti",
-    type: "GET",
-    data: '',
-    dataType: "json",
-    contentType: "application/x-www-form-urlencoded",
-    success: function (g) {
-        
-         console.log(g);
-    },
-  });
-} 
+*/
  
  
  function creaTabellaInventario(d) {

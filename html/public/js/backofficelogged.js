@@ -17,6 +17,7 @@ function findClienti() {
        dataType: "json",
        contentType: "application/x-www-form-urlencoded",
        success: function (d) {
+         console.log(d)
         creaTabellaClienti(d);
         listClientiSelectNoleggio(d);
        },
@@ -417,7 +418,7 @@ function registerNoleggio(){
 
   let dateOccupateI = [];
   let dateOccupateF = [];
- let dateOccupateTot = [];
+  let dateOccupateTot = [];
   
   let current = e.parentNode.parentNode;
   let game = current.getElementsByClassName("val")[2].textContent;
@@ -443,32 +444,21 @@ function registerNoleggio(){
              dateOccupateF[j] = d.result[i].fineNoleggio;
              dateOccupateTot[j] =  "Il titolo è indisponibile da "+ dateOccupateI[j] + " a " + dateOccupateF[j] + " compresi";
              //console.log(dateOccupateI[i],dateOccupateF[i])
-             j++;
-      
-            // var daylist = getDaysArray(new Date(dateOccupateI[i]),new Date(dateOccupateF[i]));
-                        //daylist.map((v)=>v.toISOString().slice(0,10)).join("")
-
-                        //let a = daylist.toString();
-                        //let b = a.split(" ");
-                        //c = b[1] + " " + b[2] + " "+ b[3];
-                        //alert("Il titolo non è disponibile da " + dateOccupateI[i] + " a " + dateOccupateF[i])                    
+             j++;                  
+          }
+          else{
+            j = 0;
           }
          }
-         //alert("Il titolo non è disponibile da " + dateOccupateI.join('\n') + " a " + dateOccupateF.join('\n'))
-         alert(dateOccupateTot.join('\n'))    
-        //console.log(daylist)
+        /* if(j !== 0){
+         
+          alert(dateOccupateTot.join('\n'))    
+          //console.log(daylist)
+         }*/
     },
   });
 }
 
-/*
- var getDaysArray = function(start, end) {
-  for(var arr=[],dt=new Date(start); dt<=end; dt.setDate(dt.getDate()+1)){
-      arr.push(new Date(dt));
-  }
-  return arr;
-};
-*/
 
 
 function setMaxCalendar(e){
