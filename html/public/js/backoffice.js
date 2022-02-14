@@ -178,8 +178,8 @@ function findClienti() {
      let stato = d.result[i].stato;
      let condizioni = d.result[i].condizioni;
      let etaMinima = d.result[i].etaMinima;
-     let peso = d.result[i].peso;
-     let numGiocatori = d.result[i].numGiocatori;
+     //let peso = d.result[i].peso;
+     //let numGiocatori = d.result[i].numGiocatori;
      let prezzo = d.result[i].prezzo;
      let img = d.result[i].img;
      const div = document.createElement("div");
@@ -236,13 +236,13 @@ function searchNavbar(){
  function creaNoleggio(e){
 
   let current = e.parentNode.parentNode;
-  let etaMinima = current.getElementsByClassName("val")[0].textContent;
+  //let etaMinima = current.getElementsByClassName("val")[0].textContent;
   let game = current.getElementsByClassName("val")[2].textContent;
   let platform = current.getElementsByClassName("val")[3].textContent;
   let prezzo = current.getElementsByClassName("val")[4].textContent;
-  let annoUscita = current.getElementsByClassName("val")[5].textContent;
-  let stato = current.getElementsByClassName("val")[6].textContent;
-  let condizioni = current.getElementsByClassName("val")[7].textContent;
+  //let annoUscita = current.getElementsByClassName("val")[5].textContent;
+  //let stato = current.getElementsByClassName("val")[6].textContent;
+  //let condizioni = current.getElementsByClassName("val")[7].textContent;
   
   //console.log(game,platform)
   let modal = document.getElementById("noleggia-modal");
@@ -252,12 +252,11 @@ function searchNavbar(){
   
 
   let data = modal.getElementsByClassName("newval");
-  data[0].value = "";
   //modal.getElementsByClassName("useruser")[0].textContent = " NUOVO NOLEGGIO";
-  data[1].value =  game + ", " + platform;
+  data[0].value =  game + ", " + platform;
   
   let prezzo1 = prezzo.split(" ")[0];
-  data[4].value = prezzo1;
+  data[3].value = prezzo1;
   //console.log(prezzo1)s
   //console.log(data[1].value);
   
@@ -269,9 +268,9 @@ function searchNavbar(){
   
   for (let i in d.result) {
 
-    let idCliente = d.result[i]._id;
+    //let idCliente = d.result[i]._id;
     let username = d.result[i].username;
-    let punti = d.result[i].punti;
+    //let punti = d.result[i].punti;
 
     let option = document.createElement("OPTION");
     option.setAttribute("value", username);
@@ -309,7 +308,7 @@ function calcolaPuntiCliente(){
      
       let modal = document.getElementById("noleggia-modal");
       let data = modal.getElementsByClassName("newval");
-      data[5].value = punti;       
+      data[4].value = punti;       
     },
   });
 }
@@ -343,9 +342,9 @@ function calcolaCosto(days){
 
   let modal = document.getElementById("noleggia-modal");
   let data = modal.getElementsByClassName("newval");
-  let punti =  modal.getElementsByClassName("newval")[5].value;
+  //let punti =  modal.getElementsByClassName("newval")[4].value;
   //punti = parseFloat(punti);
-  data[6].value = (costo * days ).toFixed(2);
+  data[5].value = (costo * days ).toFixed(2);
   //console.log(costo * days)
   
 }
@@ -356,22 +355,24 @@ function applicaPunti(){
   let data = modal.getElementsByClassName("newval");
 
   if (punti != 0){
-    data[6].value = (data[6].value - (punti  / 10)).toFixed(2);
+    data[5].value = (data[5].value - (punti  / 10)).toFixed(2);
     punti = punti - punti;
   } 
   else{
-    data[6].value = (data[6].value - (0)).toFixed(2);
+    data[5].value = (data[5].value - (0)).toFixed(2);
   }
 }
 
 
 
-let dateOccupateI = [];
-let dateOccupateF = [];
-let dateOccupateTot = [];
+
 
 
 function vediDateDisponibilitaOggetto(e){
+
+  let dateOccupateI = [];
+let dateOccupateF = [];
+let dateOccupateTot = [];
 
   let current = e.parentNode.parentNode;
 
@@ -444,8 +445,8 @@ function setMaxCalendar(e){
       }
 
       modal = document.getElementById("noleggia-modal");
-      let da = modal.getElementsByClassName("newval")[2];
-      let a = modal.getElementsByClassName("newval")[3];
+      let da = modal.getElementsByClassName("newval")[1];
+      let a = modal.getElementsByClassName("newval")[2];
 
       a.setAttribute("max", maxval);
       da.setAttribute("max", maxval);
