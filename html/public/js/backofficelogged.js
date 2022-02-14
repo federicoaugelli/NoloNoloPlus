@@ -408,15 +408,17 @@ function registerNoleggio(){
  }    
  }
 
-let dateOccupateI = [];
-let dateOccupateF = [];
 
-let dateOccupateTot = [];
 
 //var c = {};
 
  function vediDateDisponibilitaOggetto(e){
 
+
+  let dateOccupateI = [];
+  let dateOccupateF = [];
+ let dateOccupateTot = [];
+  
   let current = e.parentNode.parentNode;
   let game = current.getElementsByClassName("val")[2].textContent;
   let platform = current.getElementsByClassName("val")[3].textContent;

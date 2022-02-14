@@ -36,6 +36,21 @@ function getDipendenti() {
     },
   });
 } 
+
+
+function findClienti() {
+  $.ajax({
+    url: "/db/findClienti",
+    type: "GET",
+    data: '',
+    dataType: "json",
+    contentType: "application/x-www-form-urlencoded",
+    success: function (g) {
+        
+         console.log(g);
+    },
+  });
+} 
  
  
  function creaTabellaInventario(d) {
