@@ -438,7 +438,7 @@ function registerNoleggio(){
 
          for(let i in d.result){
 
-          if(d.result[i].titoloNoleggiato == game && d.result[i].piattaforma == platform){
+          if(d.result[i].titoloNoleggiato == game && d.result[i].piattaforma == platform && (d.result[i].stato == "attivo" || d.result[i].stato == "futuro")){
 
              dateOccupateI[j] = d.result[i].inizioNoleggio;
              dateOccupateF[j] = d.result[i].fineNoleggio;
@@ -446,15 +446,13 @@ function registerNoleggio(){
              //console.log(dateOccupateI[i],dateOccupateF[i])
              j++;                  
           }
-          else{
-            j = 0;
-          }
          }
-        /* if(j !== 0){
          
+         if(j != 0)
           alert(dateOccupateTot.join('\n'))    
           //console.log(daylist)
-         }*/
+         else
+         alert("nessuna prenotazione attiva o futura") 
     },
   });
 }
