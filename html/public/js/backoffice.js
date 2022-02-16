@@ -357,8 +357,8 @@ function applicaPunti(){
 function vediDateDisponibilitaOggetto(e){
 
   let dateOccupateI = [];
-let dateOccupateF = [];
-let dateOccupateTot = [];
+  let dateOccupateF = [];
+  let dateOccupateTot = [];
 
   let current = e.parentNode.parentNode;
 
@@ -379,26 +379,21 @@ let dateOccupateTot = [];
 
          for(let i in d.result){
 
-          if(d.result[i].titoloNoleggiato == game && d.result[i].piattaforma == platform){
+          if(d.result[i].titoloNoleggiato == game && d.result[i].piattaforma == platform && (d.result[i].stato == "attivo" || d.result[i].stato == "futuro")){
+
 
              dateOccupateI[j] = d.result[i].inizioNoleggio;
              dateOccupateF[j] = d.result[i].fineNoleggio;
              dateOccupateTot[j] =  "Il titolo è indisponibile da "+ dateOccupateI[j] + " a " + dateOccupateF[j] + " compresi";
              //console.log(dateOccupateI[i],dateOccupateF[i])
-             j++;
-      
-            // var daylist = getDaysArray(new Date(dateOccupateI[i]),new Date(dateOccupateF[i]));
-                        //daylist.map((v)=>v.toISOString().slice(0,10)).join("")
-
-                        //let a = daylist.toString();
-                        //let b = a.split(" ");
-                        //c = b[1] + " " + b[2] + " "+ b[3];
-                        //alert("Il titolo non è disponibile da " + dateOccupateI[i] + " a " + dateOccupateF[i])                    
+             j++;              
           }
          }
-         //alert("Il titolo non è disponibile da " + dateOccupateI.join('\n') + " a " + dateOccupateF.join('\n'))
-         alert(dateOccupateTot.join('\n'))    
-        //console.log(daylist)
+         if(j != 0)
+          alert(dateOccupateTot.join('\n'))    
+          //console.log(daylist)
+         else
+         alert("nessuna prenotazione attiva o futura") 
     },
   });
 }

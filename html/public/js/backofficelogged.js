@@ -17,7 +17,7 @@ function findClienti() {
        dataType: "json",
        contentType: "application/x-www-form-urlencoded",
        success: function (d) {
-         console.log(d)
+         //console.log(d)
         creaTabellaClienti(d);
         listClientiSelectNoleggio(d);
        },
@@ -36,6 +36,7 @@ function getNoleggi() {
      success: function (d) {
        //console.log(d.result)
       creaTabellaNoleggi(d);
+      //verificaDisp(d);
      },
    });
 }
@@ -410,11 +411,7 @@ function registerNoleggio(){
  }
 
 
-
-//var c = {};
-
  function vediDateDisponibilitaOggetto(e){
-
 
   let dateOccupateI = [];
   let dateOccupateF = [];
@@ -495,35 +492,6 @@ function setMaxCalendar(e){
 });
 }
 
-/*
-
-function verificaDisponibilita(){
-
-  let modal = document.getElementById("noleggia-modal");
-  let a = modal.getElementsByClassName("newval")[3].value;
-  let b = modal.getElementsByClassName("newval")[4].value;
-
-  a = a.split("-");
-  b = b.split("-");
-
-  let d1 = new Date(a[2],a[1]-1,a[0]);
-  let d2 = new Date(b[2],b[1]-1,b[0]);
-
-  d1 = d1.getTime();
-  d2 = d2.getTime();
-
-  for(let i in dateOccupateTot[i]){
-
-    if(d1 ){
-
-      alert("Il prodotto è indisponibile nel periodo selezionato");
-    }
-  
-  }
-
-}
-
-*/
  
 
  function searchNavbar(){
@@ -647,12 +615,15 @@ function calcolaPuntiCliente(){
   });
 }
 
+
 function calculateDays() {
   var d1 = document.getElementById("inizioNoleggio1").value;
   var d2 = document.getElementById("fineNoleggio1").value;    
   const dateOne = new Date(d1);
   const dateTwo = new Date(d2);
-  if(dateOne <= dateTwo){
+  //const b = verificaDisp()
+
+  if(dateOne <= dateTwo && checkIsRent){
      const time = Math.abs(dateTwo - dateOne);
      const days = Math.ceil(time / (1000 * 60 * 60 * 24));
      calcolaCosto(days + 1); 
@@ -662,9 +633,63 @@ function calculateDays() {
      calcolaCosto(days);
      alert("La data di inizio del noleggio deve essere precedente alla data di fine noleggio")
   }
-  //console.log(days)
-  
+  //console.log(days)  
 }    
+
+let checkIsRent = true;
+
+function verificaDisp(){
+  
+  var d1 = document.getElementById("inizioNoleggio1").value;
+  var d2 = document.getElementById("fineNoleggio1").value;    
+  const dateOne = new Date(d1);
+  const dateTwo = new Date(d2);
+  let dataI = [];
+  let dataF = [];
+  let modal = document.getElementById("noleggia-modal");
+  let obj = modal.getElementsByClassName("newval")[1];
+  let platObj = modal.getElementsByClassName("newvl")[2];
+  let j = 0;
+
+  $.ajax({
+    url: "/db/getNoleggi",
+    type: "GET",
+    data: '',
+    dataType: "json",
+    contentType: "application/x-www-form-urlencoded",
+    success: function (d) {
+
+  for(let i in d.result){
+
+    if(d.result[i].titoloNoleggiato == obj && d.result[i].piattaforma == platObj){
+
+      dataI[j] = (d.result[i].inizioNoleggio); 
+      dataF[j] = (d.result[i].fineNoleggio);
+      j++;
+      //console.log(dataI[j], dataF[j])
+    }
+  }
+},
+});
+
+//console.log(dataI, dataF)
+ 
+  while (checkIsRent == true && j >= 0){
+  if((dataI[j] <= dateOne && dataF[j] <= dateOne) || (dataI[j] >= dateTwo && dataF[j] >= dateTwo)){
+    j--;
+  }
+  else{
+    console.log("Il prodotto è noleggiato nel periodo selezionato")
+    checkIsRent = false;
+  }
+  }
+
+
+console.log(checkIsRent)
+//return checkIsRent;
+}
+
+
 
 
 function calcolaCosto(days){
