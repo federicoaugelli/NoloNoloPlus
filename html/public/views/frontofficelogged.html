@@ -87,37 +87,37 @@
               <div class="mb-3">
                 <label for="validationDefaultFirstname" class="form-label">Nome</label>
                 <div class="input-group">
-                  <input type="text" class="form-control" id="validationDefaultFirstname" name="nome" :value="item.nome" aria-describedby="inputGroupPrepend1" required>
+                  <input type="text" class="form-control" id="validationDefaultFirstname" name="nome" :value="item.nome" aria-describedby="inputGroupPrepend1" aria-required="true" required>
                 </div>
               </div>
               <div class="mb-3">
                 <label for="validationDefaultLastname" class="form-label">Cognome</label>
                 <div class="input-group">
-                  <input type="text" class="form-control" id="validationDefaultLastname" name="cognome" :value="item.cognome" aria-describedby="inputGroupPrepend2" required>
+                  <input type="text" class="form-control" id="validationDefaultLastname" name="cognome" :value="item.cognome" aria-describedby="inputGroupPrepend2" aria-required="true" required>
                 </div>
               </div>
               <div class="mb-3">
                 <label for="usernameval" class="form-label">Username</label>
                 <div class="input-group">
-                  <input type="text" class="form-control" id="usernameval" name="username" :value="item.username" aria-describedby="inputGroupPrepend3" required>
+                  <input type="text" class="form-control" id="usernameval" name="username" :value="item.username" aria-describedby="inputGroupPrepend3" aria-required="true" required>
                 </div>
               </div>
               <div class="mb-3">
                 <label for="validationPW" class="form-label">Password</label>
                 <div class="input-group">
-                  <input type="password" class="form-control" id="validationPW" name="password" aria-describedby="inputGroupPrepend4" required>
+                  <input type="password" class="form-control" id="validationPW" name="password" aria-describedby="inputGroupPrepend4" aria-required="true" required>
                 </div>
               </div>
               <div class="mb-3">
                 <label for="validationbill" class="form-label">Città</label>
                 <div class="input-group">
-                  <input type="text" class="form-control" id="validationbill" name="citta" :value="item.citta" aria-describedby="inputGroupPrepend5" required>
+                  <input type="text" class="form-control" id="validationbill" name="citta" :value="item.citta" aria-describedby="inputGroupPrepend5" aria-required="true" required>
                 </div>
               </div>
               <div class="mb-3">
                 <label for="validationcity" class="form-label">Via</label>
                 <div class="input-group">
-                  <input type="text" class="form-control" id="validationcity" name="via" :value="item.via" aria-describedby="inputGroupPrepend6" required>
+                  <input type="text" class="form-control" id="validationcity" name="via" :value="item.via" aria-describedby="inputGroupPrepend6" aria-required="true" required>
                 </div>
               </div>
               <button type="button" class="btn btn-success" v-on:click="postUser()">conferma modifiche</button>

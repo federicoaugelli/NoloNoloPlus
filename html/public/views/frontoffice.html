@@ -80,24 +80,24 @@
                   <div class="login-space">
                     <div class="login">
                       <form action="/docs/frontend" method="POST">
-                      <div class="group"> <label id="ariaUser" for="username" class="label">Username</label> <input id="username" type="text" name="username" class="input" placeholder="Inserisci il tuo username" aria-describedby="ariaUser" required> </div>
-                      <div class="group"> <label id="ariaPwd" for="password" class="label">Password</label> <input id="password" type="password" name="password" class="input" data-type="password" placeholder="Inserisci la tua password" aria-describedby="ariaPwd" required> </div>
+                      <div class="group"> <label id="ariaUser" for="username" class="label">Username</label> <input id="username" type="text" name="username" class="input" placeholder="Inserisci il tuo username" aria-describedby="ariaUser" aria-required="true"  required > </div>
+                      <div class="group"> <label id="ariaPwd" for="password" class="label">Password</label> <input id="password" type="password" name="password" class="input" data-type="password" placeholder="Inserisci la tua password" aria-describedby="ariaPwd" aria-required="true" required> </div>
                       <div class="group"> <input type="submit" class="button" value="Accedi"> </div>
                       <div class="hr"></div>
                     </div>
                   </form>
                     <div class="sign-up-form">
                       <form action="/db/registerCliente" method="POST" id="createUserForm">
-                      <div class="group"> <label id="ariaNome" for="nome" class="label">Nome</label> <input id="nome" type="text" name="nome" class="input" placeholder="Inserisci il tuo nome" aria-describedby="ariaNome" required> </div>
-                      <div class="group"> <label id="ariaCognome" for="cognome" class="label">Cognome</label> <input id="cognome" type="text" name="cognome" class="input" placeholder="Inserisci il tuo cognome" aria-describedby="ariaCognome" required> </div>
-                      <div class="group"> <label id="ariaUsr" for="username" class="label">Username</label> <input id="username" type="text" name="username" class="input" placeholder="Crea il tuo Username" aria-describedby="ariaUsr" required> </div>
-                      <div class="group"> <label id="ariaPwd1" for="password" class="label">Password</label> <input id="password" type="password" name="password" class="input" data-type="password" placeholder="Crea nuova password" aria-describedby="ariaPwd1" required> </div>
+                      <div class="group"> <label id="ariaNome" for="nome" class="label">Nome</label> <input id="nome" type="text" name="nome" class="input" placeholder="Inserisci il tuo nome" aria-describedby="ariaNome" aria-required="true" required> </div>
+                      <div class="group"> <label id="ariaCognome" for="cognome" class="label">Cognome</label> <input id="cognome" type="text" name="cognome" class="input" placeholder="Inserisci il tuo cognome" aria-describedby="ariaCognome" aria-required="true" required> </div>
+                      <div class="group"> <label id="ariaUsr" for="username" class="label">Username</label> <input id="username" type="text" name="username" class="input" placeholder="Crea il tuo Username" aria-describedby="ariaUsr" aria-required="true" required> </div>
+                      <div class="group"> <label id="ariaPwd1" for="password" class="label">Password</label> <input id="password" type="password" name="password" class="input" data-type="password" placeholder="Crea nuova password" aria-describedby="ariaPwd1" aria-required="true" required> </div>
                       <div class="row g-3">
                         <div class="col-sm-8">
-                      <div class="group"><label id="ariaVia" for="via" class="label">Via</label> <input id="via" type="text" name="via" class="input" placeholder=" Via, Numero " aria-describedby="ariaVia" required> </div>
+                      <div class="group"><label id="ariaVia" for="via" class="label">Via</label> <input id="via" type="text" name="via" class="input" placeholder=" Via, Numero " aria-describedby="ariaVia" aria-required="true" required> </div>
                         </div>
                         <div class="col-sm-4">
-                          <div class="group"><label id="ariaCity" for="citta" class="label"> Citt&agrave;</label> <input id="citta" type="text" name="citta" class="input" placeholder=" Città " aria-describedby="ariaCity" required> </div>
+                          <div class="group"><label id="ariaCity" for="citta" class="label"> Citt&agrave;</label> <input id="citta" type="text" name="citta" class="input" placeholder=" Città " aria-describedby="ariaCity" aria-required="true"required> </div>
                         </div>
                       </div>
                       <div class="group"> <button type="button" class="button" onclick="registerCliente()" aria-label="registrati come cliente"> Registrati </button></div>
@@ -183,10 +183,10 @@
         <div class="modal-body">
           <div class="card-body">
             <label for="startRent">Da:</label>
-            <input type="date" id="startRent" name="startRent" v-model="startDate">
+            <input type="date" id="startRent" name="startRent" v-model="startDate" aria-required="true">
 
             <label for="finishRent">A:</label>
-            <input type="date" id="finishRent" name="finishRent" v-model="endDate">
+            <input type="date" id="finishRent" name="finishRent" v-model="endDate" aria-required="true">
           </div>
         </div>
         <div class="modal-footer">

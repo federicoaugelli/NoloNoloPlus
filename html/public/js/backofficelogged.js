@@ -181,6 +181,21 @@ var oldUser = null;
             $("#modificaClienteModal").modal("hide");
             //console.log("Utente modificato");
             findClienti();
+
+            var newUserCliente = formData[2].value;
+
+            $.ajax({
+
+              url: "/db/updateNoleggioDopoModificaUsername",
+              type: "POST",
+              data: { oldUser, newUserCliente },
+              dataType: "json",
+              contentType: "application/x-www-form-urlencoded",
+              success: function(data){
+
+                console.log("Noleggio modificato");
+              }});
+            
           }
           else{
 

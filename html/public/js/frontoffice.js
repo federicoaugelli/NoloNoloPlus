@@ -8,6 +8,7 @@ function showHideLoginRegister(){
   } else {
     y.style.display = "none";
   }
+
 }
 
  
