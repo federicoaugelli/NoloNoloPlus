@@ -168,12 +168,7 @@ app.post('/db/registerNoleggio', async function(req, res) {
 app.get('/db/findClienti', async function(req, res) { 
 	res.send(await mymongo.findClienti(mongoCredentials))
 });
-/*
-app.get('/db/getUserLogged', async function(req, res) { 
-	let usernameLogged = req.body.usernameLogged
-	res.send(await mymongo.getUserLogged(usernameLogged,mongoCredentials))
-});
-*/
+
 app.get('/db/getGames', async function(req, res) {
 	res.send(await mymongo.getGames(mongoCredentials))
 });

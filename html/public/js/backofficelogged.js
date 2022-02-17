@@ -152,11 +152,11 @@ var oldUser = null;
     //console.log(formData)
 
     if(
-      formData[0].value != " " &&
-      formData[1].value != " " &&
-      formData[2].value != " " &&
-      formData[3].value != " " &&
-      formData[4].value != " " 
+      formData[0].value != "" &&
+      formData[1].value != "" &&
+      formData[2].value != "" &&
+      formData[3].value != "" &&
+      formData[4].value != "" 
       
     ){
           
@@ -195,6 +195,7 @@ var oldUser = null;
 
       document.getElementById("alert-body").textContent = "Compilare tutti i campi"
       $("#flash-modal").modal("show");
+      $("#modificaClienteModal").modal("hide");
       console.log("err")
     }
   }
@@ -284,27 +285,22 @@ var userCliente = null;
                                                                             /*                            */
                                                                             /* ========================== */
 
-
-
-
 function registerNoleggio(){
 
   var formData = $("#creaNoleggioForm").serializeArray();
 
-  //console.log(formData)
-
   if(
-    formData[0].value != " " &&
-    formData[1].value != " " &&
-    formData[2].value != " " &&
-    formData[3].value != " " &&
-    formData[4].value != " " &&
-    formData[5].value != " " &&
-    formData[6].value != " " &&
-    formData[7].value != " " &&
-    formData[8].value != " " &&
-    formData[9].value != " " &&
-    formData[10].value != " " 
+    formData[0].value != "" &&
+    formData[1].value != "" &&
+    formData[2].value != "" &&
+    formData[3].value != "" &&
+    formData[4].value != "" &&
+    formData[5].value != "" &&
+    formData[6].value != "" &&
+    formData[7].value != "" &&
+    formData[8].value != "" &&
+    formData[9].value != "" &&
+    formData[10].value != "" 
     
   ){
         
@@ -338,6 +334,7 @@ function registerNoleggio(){
   else{
 
     document.getElementById("alert-body").textContent = "Compilare tutti i campi"
+    $("#noleggia-modal").modal("hide");
     $("#flash-modal").modal("show");
     console.log("err")
   }
@@ -389,7 +386,7 @@ function registerNoleggio(){
        <div class="card-body">
          <h3 style="color: white;" class="val">` + game + `</h3>
          <h5 style="color: white;" class="val">` + platform + `</h5>
-         <button data-bs-toggle="modal" data-bs-target="#noleggia-modal" class="btn btn-primary" aria-label="bottone di crea noleggio" onclick="creaNoleggio(this); findClienti(); vediDateDisponibilitaOggetto(this); setMaxCalendar(this)"><i class="bi bi-pencil-square"> Noleggia</i></button>
+         <button data-bs-toggle="modal" data-bs-target="#noleggia-modal" class="btn btn-primary" aria-label="bottone di crea noleggio" onclick="creaNoleggio(this); findClienti(); setMaxCalendar(this)"><i class="bi bi-pencil-square"> Noleggia</i></button>
          </a>
          <br>    
          <h5 class="val" style="color: white; margin-top: 20px;">` + prezzo + ` € al giorno</h5>
@@ -410,16 +407,16 @@ function registerNoleggio(){
  }    
  }
 
-
  function vediDateDisponibilitaOggetto(e){
+  
 
   let dateOccupateI = [];
   let dateOccupateF = [];
   let dateOccupateTot = [];
   
   let current = e.parentNode.parentNode;
-  let game = current.getElementsByClassName("val")[2].textContent;
-  let platform = current.getElementsByClassName("val")[3].textContent;
+  let game = current.getElementsByClassName("newval")[1].value;
+  let platform = current.getElementsByClassName("newval")[2].value;
   let j = 0;
   //console.log(game,platform)
 
@@ -548,7 +545,6 @@ function searchNavbar2(){
   user = user.split(" ")[2];
   //console.log(user)
   
-
   let data = modal.getElementsByClassName("newval");
   data[0].value = user;
   data[1].value =  game;
@@ -556,8 +552,6 @@ function searchNavbar2(){
   
   let prezzo1 = prezzo.split(" ")[0];
   data[5].value = prezzo1;
- 
-  
  }
 
  //                                     SELECT FORM CHE MOSTRA TUTTI CLIENTI A CUI ASSOCIARE UN NOLEGGIO
@@ -574,7 +568,7 @@ function searchNavbar2(){
   for (let i in d.result) {
 
     let username = d.result[i].username;
-    
+
     let option = document.createElement("OPTION");
     option.setAttribute("value", username);
     let option2 = document.createTextNode(username);
@@ -595,12 +589,9 @@ function calcolaPuntiCliente(){
     dataType: "json",
     contentType: "application/x-www-form-urlencoded",
         success: function (d) {
-
-          console.log(d)
+          //console.log(d)
           for (let i in d.result) {
-
             if(d.result[i].username == usernameCliente){
-
               punti = d.result[i].punti;
             }
           }
@@ -621,9 +612,8 @@ function calculateDays() {
   var d2 = document.getElementById("fineNoleggio1").value;    
   const dateOne = new Date(d1);
   const dateTwo = new Date(d2);
-  //const b = verificaDisp()
 
-  if(dateOne <= dateTwo && checkIsRent){
+  if(dateOne <= dateTwo){
      const time = Math.abs(dateTwo - dateOne);
      const days = Math.ceil(time / (1000 * 60 * 60 * 24));
      calcolaCosto(days + 1); 
@@ -635,60 +625,6 @@ function calculateDays() {
   }
   //console.log(days)  
 }    
-
-let checkIsRent = true;
-
-function verificaDisp(){
-  
-  var d1 = document.getElementById("inizioNoleggio1").value;
-  var d2 = document.getElementById("fineNoleggio1").value;    
-  const dateOne = new Date(d1);
-  const dateTwo = new Date(d2);
-  let dataI = [];
-  let dataF = [];
-  let modal = document.getElementById("noleggia-modal");
-  let obj = modal.getElementsByClassName("newval")[1];
-  let platObj = modal.getElementsByClassName("newvl")[2];
-  let j = 0;
-
-  $.ajax({
-    url: "/db/getNoleggi",
-    type: "GET",
-    data: '',
-    dataType: "json",
-    contentType: "application/x-www-form-urlencoded",
-    success: function (d) {
-
-  for(let i in d.result){
-
-    if(d.result[i].titoloNoleggiato == obj && d.result[i].piattaforma == platObj){
-
-      dataI[j] = (d.result[i].inizioNoleggio); 
-      dataF[j] = (d.result[i].fineNoleggio);
-      j++;
-      //console.log(dataI[j], dataF[j])
-    }
-  }
-},
-});
-
-//console.log(dataI, dataF)
- 
-  while (checkIsRent == true && j >= 0){
-  if((dataI[j] <= dateOne && dataF[j] <= dateOne) || (dataI[j] >= dateTwo && dataF[j] >= dateTwo)){
-    j--;
-  }
-  else{
-    console.log("Il prodotto è noleggiato nel periodo selezionato")
-    checkIsRent = false;
-  }
-  }
-
-
-console.log(checkIsRent)
-//return checkIsRent;
-}
-
 
 
 
@@ -721,10 +657,6 @@ function applicaPunti(){
     data[7].value = (data[7].value - (0)).toFixed(2);
   }
 }
-
-
-
-
 
 
 
@@ -786,8 +718,8 @@ commenti +
 idNoleggio +
 `</td>`;
 
-    tbody.appendChild(tr);
-    //console.log(d.result[i])
+  tbody.appendChild(tr);
+//console.log(d.result[i])
 }
 }
 
@@ -895,8 +827,8 @@ idNoleggio +
 <td class="td5"><button data-bs-toggle="modal" data-bs-target="#fattura-modal" class="btn btn-secondary" aria-label="bottone di modifica noleggio" type="button" id="btnPDF" onclick="vediFatturaNoleggiConclusi(this)">Vedi fattura</button>
 </td>`;
 
-    tbody.appendChild(tr);
-    //console.log(d.result[i])
+  tbody.appendChild(tr);
+//console.log(d.result[i])
 }
 }
 
@@ -1258,7 +1190,7 @@ commenti +
 <td class="td3">` +
 idNoleggio +
 `</td> 
-<td class="td3"><button data-bs-toggle="modal" data-bs-target="#modificaNoleggioFuturoModal" class="btn btn-secondary" aria-label="bottone di modifica noleggio" type="button" onclick="getNoleggioFuturo(this)">Modifica</button>
+<td class="td3"><button data-bs-toggle="modal" data-bs-target="#modificaNoleggioFuturoModal" class="btn btn-secondary" aria-label="bottone di modifica noleggio" type="button" onclick="getNoleggioFuturo(this); setMaxCalendar3(this)">Modifica</button>
 </td>`;
 
     tbody.appendChild(tr);
@@ -1327,9 +1259,39 @@ function getNoleggioFuturo(e){
   oldNoleggio = current.getElementsByClassName("td3")[10].textContent;
 }
 
+function setMaxCalendar3(e){
 
+  let current = e.parentNode.parentNode;
+  let game1 = current.getElementsByClassName("td3")[1].textContent;
+  let platform1 = current.getElementsByClassName("td3")[2].textContent;
+  let maxval = null;
+
+  $.ajax({
+    url: "/db/getGames",
+    type: "GET",
+    data: {},
+    dataType: "json",
+    contentType: "application/x-www-form-urlencoded",
+    success: function (d) {
+
+      for(let i in d.result){
+        if(d.result[i].game == game1 && d.result[i].platform == platform1){
+          maxval = d.result[i].dataIndisponibilita;
+        }
+      }
+
+      modal = document.getElementById("modificaNoleggioFuturoModal");
+      let da = modal.getElementsByClassName("form-control")[3];
+      let a = modal.getElementsByClassName("form-control")[4];
+
+      a.setAttribute("max", maxval);
+      da.setAttribute("max", maxval);
+
+  }});
+}
 
 function calculateDays2() {
+
   var d1 = document.getElementById("inizioNoleggio").value;
   var d2 = document.getElementById("fineNoleggio").value;    
   const dateOne = new Date(d1);
@@ -1345,7 +1307,7 @@ function calculateDays2() {
      alert("La data di inizio del noleggio deve essere precedente alla data di fine noleggio")
   }
   //console.log(days)
-  
+
 }    
 
 
@@ -1368,16 +1330,15 @@ function modNoleggioFuturo(){
   var formData = $("#modNoleggioForm").serializeArray();
 
   if(
-    formData[0].value != " " &&
-    formData[1].value != " " &&
-    formData[2].value != " " &&
-    formData[3].value != " " &&
-    formData[4].value != " " &&
-    formData[5].value != " " &&
-    formData[6].value != " " &&
-    formData[7].value != " " &&
-    formData[8].value != " " 
-    
+    formData[0].value != "" &&
+    formData[1].value != "" &&
+    formData[2].value != "" &&
+    formData[3].value != "" &&
+    formData[4].value != "" &&
+    formData[5].value != "" &&
+    formData[6].value != "" &&
+    formData[7].value != "" &&
+    formData[8].value != "" 
   ){
         
     $.ajax({
@@ -1395,7 +1356,6 @@ function modNoleggioFuturo(){
           $("#flash-modal").modal("show");
           $("#modNoleggioForm").trigger("reset");
           $("#modificaNoleggioFuturoModal").modal("hide");
-          $("#statoNoleggiFuturiModal").modal("show");
           console.log("Noleggio modificato");
           getNoleggi();
         }
@@ -1411,6 +1371,7 @@ function modNoleggioFuturo(){
   else{
 
     document.getElementById("alert-body").textContent = "Compilare tutti i campi"
+    $("#modificaNoleggioFuturoModal").modal("hide");
     $("#flash-modal").modal("show");
     console.log("err")
   }
@@ -1422,23 +1383,25 @@ function modNoleggioFuturo(){
 
 function delNoleggioFuturo(){ 
 
-      $.ajax({
-        url: "/db/deleteNoleggioFuturo",
-        type: "DELETE",
-        data: { oldNoleggio },
-        dataType: "json",
-        contentType: "application/x-www-form-urlencoded",
-        success: function(data){
-        },
-      });
+  $.ajax({
+    url: "/db/deleteNoleggioFuturo",
+    type: "DELETE",
+    data: { oldNoleggio },
+    dataType: "json",
+    contentType: "application/x-www-form-urlencoded",
+    success: function(data){
 
-      document.getElementById("alert-body").textContent = "Prenotazione rimossa con successo"
-      $("#flash-modal").modal("show");
-      $("#modNoleggioForm").trigger("reset");
-      $("#modificaNoleggioFuturoModal").modal("hide");
-      $("#statoNoleggiFuturiModal").modal("show");
-      console.log("noleggio eliminato");
-      getNoleggi();  
+    },
+  });
+
+        document.getElementById("alert-body").textContent = "Prenotazione rimossa con successo"
+        $("#flash-modal").modal("show");
+        $("#modNoleggioForm").trigger("reset");
+        $("#modificaNoleggioFuturoModal").modal("hide");
+        console.log("noleggio eliminato");
+        getNoleggi();  
+    
+  
 }
 
 
@@ -1460,7 +1423,6 @@ function registerObject(){
   var formData = $("#createObjectForm").serializeArray();
 
   //console.log(formData)
-
   if(
     formData[0].value != " " &&
     formData[1].value != " " &&
@@ -1653,7 +1615,6 @@ function registerObject(){
     
     //console.log(oldObject)
     $.ajax({
-
       url: "/db/getGames",
       type: "GET",
       data: {},
@@ -1662,18 +1623,13 @@ function registerObject(){
       success: function(d){
 
         for(let i in d.result){
-
           if(d.result[i].game == game && d.result[i].platform == platform){
-
            img = d.result[i].img
           }    
         }
         data[0].value = img;
       }
       });
-
-
-
   }
 
 
@@ -1688,23 +1644,21 @@ function registerObject(){
      //console.log(oldObject)
 
     if(
-      formData[0].value != " " &&
-      formData[1].value != " " &&
-      formData[2].value != " " &&
-      formData[3].value != " " &&
-      formData[4].value != " " &&
-      formData[5].value != " " &&
-      formData[6].value != " " && 
-      formData[7].value != " " && 
-      formData[8].value != " " &&
-      formData[9].value != " " &&
-      formData[10].value != " " &&
-      formData[11].value != " "
-      
+      formData[0].value != "" &&
+      formData[1].value != "" &&
+      formData[2].value != "" &&
+      formData[3].value != "" &&
+      formData[4].value != "" &&
+      formData[5].value != "" &&
+      formData[6].value != "" && 
+      formData[7].value != "" && 
+      formData[8].value != "" &&
+      formData[9].value != "" &&
+      formData[10].value != "" &&
+      formData[11].value != ""     
     ){
           
       $.ajax({
-
         url: "/db/updateObject",
         type: "POST",
         data: { oldObject, formData },
@@ -1720,7 +1674,6 @@ function registerObject(){
             $("#modificaOggettoModal").modal("hide");
             //console.log("Titolo modificato");
             getGames();
-
           }
           else{
 
@@ -1772,8 +1725,7 @@ function registerObject(){
 
     if(img.files[0] != undefined){
 
-      reader.readAsDataURL(img.files[0]);
-      
+      reader.readAsDataURL(img.files[0]); 
       reader.onload = function(){
       document.getElementById("img").value = reader.result;
       console.log(reader.result)
@@ -1804,8 +1756,7 @@ function registerObject(){
 
     if(img.files[0] != undefined){
 
-      reader.readAsDataURL(img.files[0]);
-      
+      reader.readAsDataURL(img.files[0]); 
       reader.onload = function(){
       document.getElementById("imgC").value = reader.result;
       console.log(reader.result)

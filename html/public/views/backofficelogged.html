@@ -266,19 +266,17 @@
           <div id="modificaOggettiBody">
             <div class="input-group mb-3">
               <label class="input-group-text" for="img22">IMMAGINE</label>
-              <input type="file" id="img22" name="img22">
+              <input type="file" id="img22" name="img22" value="">
               <button type="button" class="btn btn-primary" onclick="immagineConvertitapopolaText2()"> Converti </button>      
             </div>    
-
         <form method="POST" action="/db/updateObject" id="modObjectForm">
-     
          <div class="mb-3">
                 <label for="img" class="form-label">IMMAGINE CONVERTITA</label>
-                <input type="text" class="form-control" id="imgC" name="img">
+                <input type="text" class="form-control" id="imgC" name="img" readonly>
         </div>
         <div class="mb-3">
           <label for="game" class="form-label">TITOLO</label>
-          <input type="text" class="form-control" id="game" name="game" placeholder="titolo del gioco">
+          <input type="text" class="form-control" id="game" name="game" placeholder="titolo del gioco" readonly>
         </div>
         <div class="mb-3">
           <label class="formGroupExampleInput" for="platform">PIATTAFORMA</label>
@@ -292,7 +290,7 @@
         </div>
         <div class="mb-3">
           <label for="annoUscita" class="form-label">ANNO DI USCITA</label>
-          <input type="text" class="form-control" id="annoUscita" name="annoUscita" placeholder="anno di uscita ...">
+          <input type="text" class="form-control" id="annoUscita" name="annoUscita" placeholder="anno di uscita ..." readonly>
         </div>
         <div class="mb-3">
           <label class="formGroupExampleInput" for="stato">STATO</label>
@@ -311,15 +309,15 @@
         </div>
         <div class="mb-3">
           <label for="etaMinima" class="form-label">ET&Agrave; MINIMA</label>
-          <input type="text" class="form-control" id="etaMinima" name="etaMinima" placeholder="et&agrave; minima ...">
+          <input type="text" class="form-control" id="etaMinima" name="etaMinima" placeholder="et&agrave; minima ..." readonly>
         </div>
         <div class="mb-3">
           <label for="peso" class="form-label">PESO</label>
-          <input type="text" class="form-control" id="peso" name="peso" placeholder="GB ...">
+          <input type="text" class="form-control" id="peso" name="peso" placeholder="GB ..." readonly>
         </div>
         <div class="mb-3">
           <label for="numGiocatori" class="form-label">NUMERO GIOCATORI</label>
-          <input type="text" class="form-control" id="numGiocatori" name="numGiocatori" placeholder="numero giocatori ...">
+          <input type="text" class="form-control" id="numGiocatori" name="numGiocatori" placeholder="numero giocatori ..." readonly>
         </div>
         <div class="mb-3">
           <label for="prezzo" class="form-label">PREZZO</label>
@@ -670,7 +668,8 @@
             <input class="newval" type="date" id="inizioNoleggio1" name="inizioNoleggio">
             <label for="fineNoleggio1">A:</label>
             <input class="newval" type="date" id="fineNoleggio1" name="fineNoleggio">
-            <button type="button" class="btn btn-primary" onclick="calculateDays(); verificaDisp()">Calcola costo</button>  
+            <button type="button" class="btn btn-primary" onclick="vediDateDisponibilitaOggetto(this)">Date di indisponibilità</button> 
+            <button type="button" class="btn btn-primary" onclick="calculateDays()">Calcola costo</button>  
           </div>
           <div style="margin-top: 40px; margin-bottom: 40px;">
             <label for="costo1">TARIFFA GIORNALIERA: </label>

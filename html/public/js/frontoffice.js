@@ -31,15 +31,13 @@ function registerCliente(){
 
   var formData = $("#createUserForm").serializeArray();
 
-  //console.log(formData)
-
   if(
-    formData[0].value != " " &&
-    formData[1].value != " " &&
-    formData[2].value != " " &&
-    formData[3].value != " " &&
-    formData[4].value != " " &&
-    formData[5].value != " " 
+    formData[0].value != "" &&
+    formData[1].value != "" &&
+    formData[2].value != "" &&
+    formData[3].value != "" &&
+    formData[4].value != "" &&
+    formData[5].value != "" 
     
   ){
         
@@ -73,6 +71,7 @@ function registerCliente(){
   else{
 
     document.getElementById("alert-body").textContent = "Compilare tutti i campi"
+    $("#myModal").modal("hide");
     $("#flash-modal").modal("show");
     console.log("err")
   }
