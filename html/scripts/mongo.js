@@ -71,8 +71,8 @@ exports.registerCliente = async function(newUser,credentials) {
 			cognome: newUser[1].value,
 			username: newUser[2].value,
 			password: Bcrypt.hashSync(newUser[3].value, 10),
-			citta: newUser[4].value,
 			via: newUser[4].value,
+			citta: newUser[5].value,
 			punti: 10
 		};
 
@@ -688,7 +688,7 @@ exports.updateNoleggioFuturo = async function(oldNoleggio, newNoleggio, credenti
 	}  
   }
 
-
+/*
   exports.updateNoleggioDopoModificaUsername = async function(oldUser, newUserCliente, credentials){
 
 	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
@@ -732,7 +732,7 @@ exports.updateNoleggioFuturo = async function(oldNoleggio, newNoleggio, credenti
 		return e;
 	}  
   }
-
+*/
 
 
 

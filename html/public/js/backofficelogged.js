@@ -97,15 +97,15 @@ function visualizzaClienti() {
               
     <table border="2px" class="table table-striped table-bordered table-sm" cellspacing="2" width="100%">
     <thead>
-      <tr>
-      <th th class="th-sm" scope="col">Nome</th>
-      <th th class="th-sm" scope="col">Cognome</th>
-      <th th class="th-sm" scope="col">Username</th>
-      <th th class="th-sm" scope="col">Indirizzo di Fatturazione</th>
-      <th th class="th-sm" scope="col">Punti Fedeltà</th>
-      <th th class="th-sm" scope="col">ID cliente</th>
-      <th th class="th-sm" scope="col">Modifica</th>
-      </tr>
+    <tr class="table-dark">
+      <th class="th-sm" scope="col">Nome</th>
+      <th class="th-sm" scope="col">Cognome</th>
+      <th class="th-sm" scope="col">Username</th>
+      <th class="th-sm" scope="col">Indirizzo di Fatturazione</th>
+      <th class="th-sm" scope="col">Punti Fedeltà</th>
+      <th class="th-sm" scope="col">ID cliente</th>
+      <th class="th-sm" scope="col">Modifica</th>
+    </tr>
     </thead>
     <tbody id="anagraficaClientiBody">  
     </tbody>
@@ -700,11 +700,17 @@ function applicaPunti(){
 
   let modal = document.getElementById("noleggia-modal");
   let data = modal.getElementsByClassName("newval");
+  let a = parseFloat(data[7].value);
+  let punti = parseFloat(data[6].value);
 
-  if (punti != 0){
+  if (punti > 0 && (a - punti / 10 > 0)){
     data[7].value = (data[7].value - (punti  / 10)).toFixed(2);
     punti = punti - punti;
+    data[6].value = 0;
   } 
+  else if(a - punti / 10 < 0){
+    data[7].value = 0;
+  }
   else{
     data[7].value = (data[7].value - (0)).toFixed(2);
   }
@@ -895,19 +901,19 @@ function visualizzaNoleggiTerminati() {
             
   <table border="2px" class="table table-striped table-bordered table-sm" cellspacing="2" width="100%">
   <thead>
-    <tr>
-    <th th class="th-sm" scope="col">Cliente</th>
-    <th th class="th-sm" scope="col">Titolo</th>
-    <th th class="th-sm" scope="col">Piattaforma</th>
-    <th th class="th-sm" scope="col">Dipendente</th>
-    <th th class="th-sm" scope="col">Data inizio noleggio</th>
-    <th th class="th-sm" scope="col">Data fine noleggio</th>
-    <th th class="th-sm" scope="col">Importo</th>
-    <th th class="th-sm" scope="col">Stato noleggio</th>
-    <th th class="th-sm" scope="col">Commenti</th>
-    <th th class="th-sm" scope="col">ID Noleggio</th>
-    <th th class="th-sm" scope="col">Fattura</th>
-    </tr>
+  <tr class="table-dark">
+    <th class="th-sm" scope="col">Cliente</th>
+    <th class="th-sm" scope="col">Titolo</th>
+    <th class="th-sm" scope="col">Piattaforma</th>
+    <th class="th-sm" scope="col">Dipendente</th>
+    <th class="th-sm" scope="col">Data inizio noleggio</th>
+    <th class="th-sm" scope="col">Data fine noleggio</th>
+    <th class="th-sm" scope="col">Importo</th>
+    <th class="th-sm" scope="col">Stato noleggio</th>
+    <th class="th-sm" scope="col">Commenti</th>
+    <th class="th-sm" scope="col">ID Noleggio</th>
+    <th class="th-sm" scope="col">Fattura</th>
+  </tr>
   </thead>
   <tbody id="noleggioTerminatoBody">  
   </tbody>
@@ -1146,18 +1152,18 @@ function visualizzaNoleggiAttivi() {
             
   <table border="2px" class="table table-striped table-bordered table-sm" cellspacing="2" width="100%">
   <thead>
-    <tr>
-    <th th class="th-sm" scope="col">Cliente</th>
-    <th th class="th-sm" scope="col">Titolo</th>
-    <th th class="th-sm" scope="col">Piattaforma</th>
-    <th th class="th-sm" scope="col">Dipendente</th>
-    <th th class="th-sm" scope="col">Data inizio noleggio</th>
-    <th th class="th-sm" scope="col">Data fine noleggio</th>
-    <th th class="th-sm" scope="col">Importo totale</th>
-    <th th class="th-sm" scope="col">Stato noleggio</th>
-    <th th class="th-sm" scope="col">Commenti</th>
-    <th th class="th-sm" scope="col">ID Noleggio</th>
-    </tr>
+  <tr class="table-dark">
+    <th class="th-sm" scope="col">Cliente</th>
+    <th class="th-sm" scope="col">Titolo</th>
+    <th class="th-sm" scope="col">Piattaforma</th>
+    <th class="th-sm" scope="col">Dipendente</th>
+    <th class="th-sm" scope="col">Data inizio noleggio</th>
+    <th class="th-sm" scope="col">Data fine noleggio</th>
+    <th class="th-sm" scope="col">Importo totale</th>
+    <th class="th-sm" scope="col">Stato noleggio</th>
+    <th class="th-sm" scope="col">Commenti</th>
+    <th class="th-sm" scope="col">ID Noleggio</th>
+  </tr>
   </thead>
   <tbody id="noleggioAttiviBody">  
   </tbody>
@@ -1259,20 +1265,20 @@ function visualizzaNoleggiFuturi() {
             
   <table border="2px" class="table table-striped table-bordered table-sm" cellspacing="2" width="100%">
   <thead>
-    <tr>
-    <th th class="th-sm" scope="col">Cliente</th>
-    <th th class="th-sm" scope="col">Titolo</th>
-    <th th class="th-sm" scope="col">Piattaforma</th>
-    <th th class="th-sm" scope="col">Dipendente</th>
-    <th th class="th-sm" scope="col">Data inizio noleggio</th>
-    <th th class="th-sm" scope="col">Data fine noleggio</th>
-    <th th class="th-sm" scope="col">Importo totale</th>
-    <th th class="th-sm" scope="col">Costo/giorno</th>
-    <th th class="th-sm" scope="col">Stato noleggio</th>
-    <th th class="th-sm" scope="col">Commenti</th>
-    <th th class="th-sm" scope="col">ID Noleggio</th>
-    <th th class="th-sm" scope="col">Modifica</th>
-    </tr>
+  <tr class="table-dark">
+    <th class="th-sm" scope="col">Cliente</th>
+    <th class="th-sm" scope="col">Titolo</th>
+    <th class="th-sm" scope="col">Piattaforma</th>
+    <th class="th-sm" scope="col">Dipendente</th>
+    <th class="th-sm" scope="col">Data inizio noleggio</th>
+    <th class="th-sm" scope="col">Data fine noleggio</th>
+    <th class="th-sm" scope="col">Importo totale</th>
+    <th class="th-sm" scope="col">Costo/giorno</th>
+    <th class="th-sm" scope="col">Stato noleggio</th>
+    <th class="th-sm" scope="col">Commenti</th>
+    <th class="th-sm" scope="col">ID Noleggio</th>
+    <th class="th-sm" scope="col">Modifica</th>
+  </tr>
   </thead>
   <tbody id="noleggioFuturiBody">  
   </tbody>
@@ -1526,7 +1532,6 @@ function registerObject(){
           document.getElementById("alert-body").textContent = "Nuovo oggetto registrato con successo"
           $("#aggiungiOggetto").modal("hide");
           $("#createObjectForm").trigger("reset");
-          //$("#vediInventarioModal").modal("show");
           $("#flash-modal").modal("show");        
           console.log("Titolo registrato");
           getGames();
@@ -1654,21 +1659,21 @@ function registerObject(){
               
     <table border="1px" class="table table-striped table-bordered table-sm" cellspacing="2"  width="100%">
     <thead>
-      <tr>
-      <th th class="th-sm" scope="col">Titolo</th>
-      <th th class="th-sm" scope="col">Piattaforma</th>
-      <th th class="th-sm" scope="col">Anno di uscita</th>
-      <th th class="th-sm" scope="col">Stato</th>
-      <th th class="th-sm" scope="col">Condizioni</th>
-      <th th class="th-sm" scope="col">PEGI</th>
-      <th th class="th-sm" scope="col">Peso (GB)</th>
-      <th th class="th-sm" scope="col">N° giocatori</th>
-      <th th class="th-sm" scope="col">Prezzo ($/Giorno)</th>
-      <th th class="th-sm" scope="col">Disponibile</th>
-      <th th class="th-sm" scope="col">Indisponibile da</th>
-      <th th class="th-sm" scope="col">ID</th>
-      <th th class="th-sm" scope="col">Modifica</th>
-      </tr>
+    <tr class="table-dark">
+      <th class="th-sm" scope="col">Titolo</th>
+      <th class="th-sm" scope="col">Piattaforma</th>
+      <th class="th-sm" scope="col">Anno di uscita</th>
+      <th class="th-sm" scope="col">Stato</th>
+      <th class="th-sm" scope="col">Condizioni</th>
+      <th class="th-sm" scope="col">PEGI</th>
+      <th class="th-sm" scope="col">Peso (GB)</th>
+      <th class="th-sm" scope="col">N° giocatori</th>
+      <th class="th-sm" scope="col">Prezzo ($/Giorno)</th>
+      <th class="th-sm" scope="col">Disponibile</th>
+      <th class="th-sm" scope="col">Indisponibile da</th>
+      <th class="th-sm" scope="col">ID</th>
+      <th class="th-sm" scope="col">Modifica</th>
+    </tr>
     </thead>
     <tbody id="inventarioBody">  
     </tbody>

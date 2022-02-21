@@ -227,13 +227,13 @@ app.post('/db/updateObject', async function(req, res) {
 	let newObject = req.body.formData
 	res.send(await mymongo.updateObject(oldObject,newObject,mongoCredentials))
 });
-
+/*
 app.post('/db/updateNoleggioDopoModificaUsername', async function(req, res) {
 	let oldUser = req.body.oldUser
 	let newUserCliente = req.body.newUserCliente
 	res.send(await mymongo.updateNoleggioDopoModificaUsername(oldUser,newUserCliente,mongoCredentials))
 });
-
+*/
 app.post('/db/updateLease', async function(req, res) {
 	let oldObject = req.body.oldObject
 	let newObject = req.body.formData

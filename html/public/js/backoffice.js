@@ -251,6 +251,13 @@ function searchNavbar(){
  //                                     SELECT FORM CHE MOSTRA TUTTI CLIENTI A CUI ASSOCIARE UN NOLEGGIO
 
  function  listClientiSelectNoleggio(d){
+
+  document.getElementById("usernameCliente").options.length = 0;
+  let option = document.createElement("OPTION");
+  option.setAttribute("value", "nessun cliente selezionato");
+  let option2 = document.createTextNode("Scegli cliente ...");
+  option.appendChild(option2);
+  document.getElementById("usernameCliente").appendChild(option);
   
   for (let i in d.result) {
 
@@ -339,11 +346,19 @@ function applicaPunti(){
 
   let modal = document.getElementById("noleggia-modal");
   let data = modal.getElementsByClassName("newval");
+  let a = parseFloat(data[5].value);
+  let punti = parseFloat(data[4].value);
 
-  if (punti != 0){
+  console.log(punti,a)
+
+  if (punti > 0 && (a - punti / 10 > 0)){
     data[5].value = (data[5].value - (punti  / 10)).toFixed(2);
     punti = punti - punti;
+    data[4].value = 0;
   } 
+  else if(a - punti / 10 < 0){
+    data[5].value = 0;
+  }
   else{
     data[5].value = (data[5].value - (0)).toFixed(2);
   }
