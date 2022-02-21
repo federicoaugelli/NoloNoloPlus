@@ -230,8 +230,8 @@ app.post('/db/updateObject', async function(req, res) {
 
 app.post('/db/updateNoleggioDopoModificaUsername', async function(req, res) {
 	let oldUser = req.body.oldUser
-	let newUsername = req.body.newUserCliente
-	res.send(await mymongo.updateNoleggioDopoModificaUsername(oldUser,newUsername,mongoCredentials))
+	let newUserCliente = req.body.newUserCliente
+	res.send(await mymongo.updateNoleggioDopoModificaUsername(oldUser,newUserCliente,mongoCredentials))
 });
 
 app.post('/db/updateLease', async function(req, res) {

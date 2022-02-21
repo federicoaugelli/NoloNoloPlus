@@ -73,7 +73,7 @@ exports.registerCliente = async function(newUser,credentials) {
 			password: Bcrypt.hashSync(newUser[3].value, 10),
 			citta: newUser[4].value,
 			via: newUser[4].value,
-			punti: newUser[5].value
+			punti: 10
 		};
 
 		    await mongo
@@ -654,8 +654,7 @@ exports.updateNoleggioFuturo = async function(oldNoleggio, newNoleggio, credenti
 		let ObjectId = require('mongodb').ObjectId;
 		var myquery = {
 
-			_id: ObjectId(oldNoleggio)
-			
+			_id: ObjectId(oldNoleggio)			
 		};
 
 		var newValues = {
@@ -690,7 +689,7 @@ exports.updateNoleggioFuturo = async function(oldNoleggio, newNoleggio, credenti
   }
 
 
-  exports.updateNoleggioDopoModificaUsername = async function(oldUser, newUsername, credentials){
+  exports.updateNoleggioDopoModificaUsername = async function(oldUser, newUserCliente, credentials){
 
 	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
 
@@ -701,21 +700,22 @@ exports.updateNoleggioFuturo = async function(oldNoleggio, newNoleggio, credenti
 		const mongo = new MongoClient(mongouri);
 		await mongo.connect();
 		debug.push("Managed to close connection to MongoDB.");
+
 		var myquery = {
 
-			usernameCliente: oldUser
-			
+			usernameCliente: oldUser		
 		};
 
 		var newValues = {
+			$set:{
 
-			usernameCliente: newUsername.value
-		
+			usernameCliente: newUserCliente[2].value
+			}
 	};
 	let updated = mongo
 	                .db(dbname)
 					.collection(collection3)
-					.updateMany(myquery, newValues);
+					.updateOne(myquery, newValues);
 	
 	let updatedFlag = false
 	if(updated.result.ok > 0) {

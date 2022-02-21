@@ -145,19 +145,41 @@ var oldUser = null;
 
                                                 // MODIFICA IL SINGOLO CLIENTE
 
+//var newUserCliente = null;
+
   function modUser(){
 
     var formData = $("#modUserForm").serializeArray();
+    let modal = document.getElementById("modificaClienteModal");
+    var userCliente = modal.getElementsByClassName("form-control")[2].value;
 
-    //console.log(formData)
+    let control = 0;
+
+    $.ajax({
+
+      url: "/db/findClienti",
+      type: "GET",
+      data: {},
+      dataType: "json",
+      contentType: "application/x-www-form-urlencoded",
+      success: function(d){
+
+        for(let i in d.result){
+
+          if(userCliente == d.result[i].username && oldUser != d.result[i]._id){
+
+            control ++;
+          }
+        }
+    //console.log(control)
 
     if(
       formData[0].value != "" &&
       formData[1].value != "" &&
       formData[2].value != "" &&
       formData[3].value != "" &&
-      formData[4].value != "" 
-      
+      formData[4].value != "" &&
+      control == 0     
     ){
           
       $.ajax({
@@ -169,33 +191,33 @@ var oldUser = null;
         contentType: "application/x-www-form-urlencoded",
         success: function(data){
 
-          //console.log(oldUser)
-          //console.log(formData)
-          //console.log(data)
-
           if(data){
 
             document.getElementById("alert-body").textContent = "Utente modificato con successo"
             $("#flash-modal").modal("show");
             $("#modUserForm").trigger("reset");
             $("#modificaClienteModal").modal("hide");
-            //console.log("Utente modificato");
-            findClienti();
-
-            var newUserCliente = formData[2].value;
-
-            $.ajax({
-
-              url: "/db/updateNoleggioDopoModificaUsername",
-              type: "POST",
-              data: { oldUser, newUserCliente },
-              dataType: "json",
-              contentType: "application/x-www-form-urlencoded",
-              success: function(data){
-
-                console.log("Noleggio modificato");
-              }});
+            console.log("Utente modificato");
+            findClienti();   
             
+            //let newUserCliente = userCliente;
+/*
+              $.ajax({
+
+                url: "/db/updateNoleggioDopoModificaUsername",
+                type: "POST",
+                data: { oldUser, formData },
+                dataType: "json",
+                contentType: "application/x-www-form-urlencoded",
+                success: function(data){
+
+              
+
+                  document.getElementById("alert-body").innerText ="Utente modificato con successo nel DB"
+                      console.log(data)
+                      console.log("Noleggio modificato");
+              
+              }});*/
           }
           else{
 
@@ -206,6 +228,20 @@ var oldUser = null;
         }
       });
     }
+    else if(
+            formData[0].value != "" &&
+            formData[1].value != "" &&
+            formData[2].value != "" &&
+            formData[3].value != "" &&
+            formData[4].value != "" &&
+            control > 0   
+    ){
+
+      document.getElementById("alert-body").textContent = "Username non disponibile"
+      $("#flash-modal").modal("show");
+      $("#modificaClienteModal").modal("hide");
+      console.log("err")
+    }
     else{
 
       document.getElementById("alert-body").textContent = "Compilare tutti i campi"
@@ -213,6 +249,7 @@ var oldUser = null;
       $("#modificaClienteModal").modal("hide");
       console.log("err")
     }
+  }})
   }
 
   
@@ -612,7 +649,7 @@ function calcolaPuntiCliente(){
           }
           
       punti = parseInt(punti)
-      console.log(punti)
+      //console.log(punti)
      
       let modal = document.getElementById("noleggia-modal");
       let data = modal.getElementsByClassName("newval");
@@ -748,18 +785,18 @@ function visualizzaNoleggi() {
             
   <table border="2px" id="table-body-noleggi" class="table table-striped table-bordered table-sm" cellspacing="2" width="100%">
   <thead>
-    <tr>
-    <th th class="th-sm" scope="col">Cliente</th>
-    <th th class="th-sm" scope="col">Titolo</th>
-    <th th class="th-sm" scope="col">Piattaforma</th>
-    <th th class="th-sm" scope="col">Dipendente</th>
-    <th th class="th-sm" scope="col">Data inizio noleggio</th>
-    <th th class="th-sm" scope="col">Data fine noleggio</th>
-    <th th class="th-sm" scope="col">Importo totale</th>
-    <th th class="th-sm" scope="col">Costo/giorno</th>
-    <th th class="th-sm" scope="col">Stato noleggio</th>
-    <th th class="th-sm" scope="col">Commenti</th>
-    <th th class="th-sm" scope="col">ID Noleggio</th>
+    <tr class="table-dark">
+    <th class="th-sm" scope="col">Cliente</th>
+    <th class="th-sm" scope="col">Titolo</th>
+    <th class="th-sm" scope="col">Piattaforma</th>
+    <th class="th-sm" scope="col">Dipendente</th>
+    <th class="th-sm" scope="col">Data inizio noleggio</th>
+    <th class="th-sm" scope="col">Data fine noleggio</th>
+    <th class="th-sm" scope="col">Importo totale</th>
+    <th class="th-sm" scope="col">Costo/giorno</th>
+    <th class="th-sm" scope="col">Stato noleggio</th>
+    <th class="th-sm" scope="col">Commenti</th>
+    <th class="th-sm" scope="col">ID Noleggio</th>
     </tr>
   </thead>
   <tbody id="noleggioBody">  
@@ -1437,6 +1474,29 @@ function registerObject(){
 
   var formData = $("#createObjectForm").serializeArray();
 
+  let modal = document.getElementById("aggiungiOggetto");
+  var titolo = modal.getElementsByClassName("form-control")[1].value;
+  var piattaforma = modal.getElementsByClassName("form-control")[2].value;
+
+    let control = 0;
+
+    $.ajax({
+
+      url: "/db/getGames",
+      type: "GET",
+      data: {},
+      dataType: "json",
+      contentType: "application/x-www-form-urlencoded",
+      success: function(d){
+
+        for(let i in d.result){
+
+          if(titolo == d.result[i].game && piattaforma == d.result[i].platform){
+
+            control ++;
+          }
+        }
+
   //console.log(formData)
   if(
     formData[0].value != " " &&
@@ -1448,7 +1508,8 @@ function registerObject(){
     formData[6].value != " " &&
     formData[7].value != " " &&
     formData[8].value != " " &&
-    formData[9].value != " "   
+    formData[9].value != " " &&
+    control ==  0 
   ){
        
     $.ajax({
@@ -1479,12 +1540,34 @@ function registerObject(){
       }
     });
   }
+  else if(
+    formData[0].value != " " &&
+    formData[1].value != " " &&
+    formData[2].value != " " &&
+    formData[3].value != " " &&
+    formData[4].value != " " &&
+    formData[5].value != " " &&
+    formData[6].value != " " &&
+    formData[7].value != " " &&
+    formData[8].value != " " &&
+    formData[9].value != " " &&
+    control !=  0 
+  ){
+
+    document.getElementById("alert-body").textContent = "Titolo già presente nel Database"
+    $("#aggiungiOggetto").modal("hide");
+    $("#createObjectForm").trigger("reset");
+    $("#flash-modal").modal("show");
+    console.log("err")
+  }
   else{
 
     document.getElementById("alert-body").textContent = "Compilare tutti i campi"
     $("#flash-modal").modal("show");
     console.log("err")
   }
+  }
+})
 }
 
 
@@ -1654,8 +1737,8 @@ function registerObject(){
   function modObject(){
 
     var formData = $("#modObjectForm").serializeArray();
-
-     console.log(formData)
+    
+     //console.log(formData)
      //console.log(oldObject)
 
     if(
@@ -1669,8 +1752,7 @@ function registerObject(){
       formData[7].value != "" && 
       formData[8].value != "" &&
       formData[9].value != "" &&
-      formData[10].value != "" &&
-      formData[11].value != ""     
+      formData[10].value != "" 
     ){
           
       $.ajax({
