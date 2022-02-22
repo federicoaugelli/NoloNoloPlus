@@ -106,17 +106,17 @@ function visualizzaInventario() {
               
     <table border="1px" class="table table-striped table-bordered table-sm" cellspacing="2" width="100%" summary="titolo, id, piattaforma, anno di uscita, condizioni, età minima, peso, numero giocatori, prezzo e disponibilità">
     <thead>
-      <tr>
-      <th th abbr="titolo" class="th-sm" scope="col">Titolo</th>
-      <th th abbr="id" class="th-sm" scope="col">ID</th>
-      <th th abbr="piattaforma" class="th-sm" scope="col">Piattaforma</th>
-      <th th abbr="anno di uscita" class="th-sm" scope="col">Anno di uscita</th>
-      <th th abbr="condizioni="th-sm" scope="col">Condizioni</th>
-      <th th abbr="pegi" class="th-sm" scope="col">PEGI</th>
-      <th th abbr="peso" class="th-sm" scope="col">Peso (GB)</th>
-      <th th abbr="num giocatori" class="th-sm" scope="col">N° giocatori</th>
-      <th th abbr="euro al giorno" class="th-sm" scope="col">Prezzo ($/Giorno)</th>
-      </tr>
+    <tr class="table-dark">
+      <th abbr="titolo" class="th-sm" scope="col">Titolo</th>
+      <th abbr="id" class="th-sm" scope="col">ID</th>
+      <th abbr="piattaforma" class="th-sm" scope="col">Piattaforma</th>
+      <th abbr="anno di uscita" class="th-sm" scope="col">Anno di uscita</th>
+      <th abbr="condizioni="th-sm" scope="col">Condizioni</th>
+      <th abbr="pegi" class="th-sm" scope="col">PEGI</th>
+      <th abbr="peso" class="th-sm" scope="col">Peso (GB)</th>
+      <th abbr="num giocatori" class="th-sm" scope="col">N° giocatori</th>
+      <th abbr="euro al giorno" class="th-sm" scope="col">Prezzo ($/Giorno)</th>
+    </tr>
     </thead>
     <tbody id="inventarioBody">  
     </tbody>
@@ -351,12 +351,12 @@ function applicaPunti(){
 
   console.log(punti,a)
 
-  if (punti > 0 && (a - punti / 10 > 0)){
+  if (punti > 0 && (a - (punti / 10) > 0)){
     data[5].value = (data[5].value - (punti  / 10)).toFixed(2);
     punti = punti - punti;
     data[4].value = 0;
   } 
-  else if(a - punti / 10 < 0){
+  else if(a - (punti / 10) < 0){
     data[5].value = 0;
   }
   else{

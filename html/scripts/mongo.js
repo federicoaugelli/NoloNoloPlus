@@ -688,8 +688,8 @@ exports.updateNoleggioFuturo = async function(oldNoleggio, newNoleggio, credenti
 	}  
   }
 
-/*
-  exports.updateNoleggioDopoModificaUsername = async function(oldUser, newUserCliente, credentials){
+
+  exports.updateNoleggioDopoModificaUsername = async function(oldUsername, userCliente, credentials){
 
 	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
 
@@ -703,19 +703,19 @@ exports.updateNoleggioFuturo = async function(oldNoleggio, newNoleggio, credenti
 
 		var myquery = {
 
-			usernameCliente: oldUser		
+			usernameCliente: oldUsername		
 		};
 
 		var newValues = {
 			$set:{
 
-			usernameCliente: newUserCliente[2].value
+			usernameCliente: userCliente
 			}
 	};
 	let updated = mongo
 	                .db(dbname)
 					.collection(collection3)
-					.updateOne(myquery, newValues);
+					.updateMany(myquery, newValues);
 	
 	let updatedFlag = false
 	if(updated.result.ok > 0) {
@@ -732,7 +732,7 @@ exports.updateNoleggioFuturo = async function(oldNoleggio, newNoleggio, credenti
 		return e;
 	}  
   }
-*/
+
 
 
 
@@ -904,7 +904,7 @@ exports.updateObject = async function(oldObject, newObject, credentials){
 
 
   //modifica oggetto nel database
-  exports.updatePuntiCliente = async function(user, credentials){
+  exports.updatePuntiCliente = async function(user, puntiRimasti, credentials){
 
 	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
 
@@ -923,7 +923,7 @@ exports.updateObject = async function(oldObject, newObject, credentials){
 		var newValues = {
 			$set:{
 
-			punti: 0			
+			punti: puntiRimasti			
 		},
 	};
 	let updated = mongo

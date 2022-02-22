@@ -227,13 +227,13 @@ app.post('/db/updateObject', async function(req, res) {
 	let newObject = req.body.formData
 	res.send(await mymongo.updateObject(oldObject,newObject,mongoCredentials))
 });
-/*
+
 app.post('/db/updateNoleggioDopoModificaUsername', async function(req, res) {
-	let oldUser = req.body.oldUser
-	let newUserCliente = req.body.newUserCliente
-	res.send(await mymongo.updateNoleggioDopoModificaUsername(oldUser,newUserCliente,mongoCredentials))
+	oldUsername = req.body.oldUsername
+	userCliente = req.body.userCliente
+	res.send(await mymongo.updateNoleggioDopoModificaUsername(oldUsername,userCliente,mongoCredentials))
 });
-*/
+
 app.post('/db/updateLease', async function(req, res) {
 	let oldObject = req.body.oldObject
 	let newObject = req.body.formData
@@ -242,7 +242,8 @@ app.post('/db/updateLease', async function(req, res) {
 
 app.post('/db/updatePuntiCliente', async function(req, res) {
 	user = req.body.user
-	res.send(await mymongo.updatePuntiCliente(user,mongoCredentials))
+	puntiRimasti = req.body.puntiRimasti
+	res.send(await mymongo.updatePuntiCliente(user, puntiRimasti, mongoCredentials))
 });
 
 app.post('/db/updatePuntiClientSide', async function(req, res) {

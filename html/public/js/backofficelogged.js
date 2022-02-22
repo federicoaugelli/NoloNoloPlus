@@ -114,6 +114,7 @@ function visualizzaClienti() {
   }
 
 var oldUser = null;
+var oldUsername = null;
                                                 // RITORNA IL SINGOLO CLIENTE
 
   function getUser(e){
@@ -136,6 +137,7 @@ var oldUser = null;
     data[4].value = via;
     data[5].value = punti;
     oldUser = current.getElementsByClassName("td2")[5].textContent;
+    oldUsername = current.getElementsByClassName("td2")[2].textContent;
 
     //console.log(oldUser)
   }
@@ -145,14 +147,11 @@ var oldUser = null;
 
                                                 // MODIFICA IL SINGOLO CLIENTE
 
-//var newUserCliente = null;
-
   function modUser(){
 
     var formData = $("#modUserForm").serializeArray();
     let modal = document.getElementById("modificaClienteModal");
     var userCliente = modal.getElementsByClassName("form-control")[2].value;
-
     let control = 0;
 
     $.ajax({
@@ -165,9 +164,7 @@ var oldUser = null;
       success: function(d){
 
         for(let i in d.result){
-
           if(userCliente == d.result[i].username && oldUser != d.result[i]._id){
-
             control ++;
           }
         }
@@ -192,32 +189,26 @@ var oldUser = null;
         success: function(data){
 
           if(data){
-
+             
             document.getElementById("alert-body").textContent = "Utente modificato con successo"
             $("#flash-modal").modal("show");
             $("#modUserForm").trigger("reset");
             $("#modificaClienteModal").modal("hide");
             console.log("Utente modificato");
             findClienti();   
-            
-            //let newUserCliente = userCliente;
-/*
+                       
               $.ajax({
 
                 url: "/db/updateNoleggioDopoModificaUsername",
                 type: "POST",
-                data: { oldUser, formData },
+                data: { oldUsername, userCliente },
                 dataType: "json",
                 contentType: "application/x-www-form-urlencoded",
                 success: function(data){
 
-              
-
-                  document.getElementById("alert-body").innerText ="Utente modificato con successo nel DB"
-                      console.log(data)
                       console.log("Noleggio modificato");
               
-              }});*/
+              }});
           }
           else{
 
@@ -307,27 +298,6 @@ var userCliente = null;
       }
     });
   }
-
-
-  function  updatePuntiCliente(){
-
-     let modal = document.getElementById("noleggia-modal");
-     let user = modal.getElementsByClassName("form-control")[0].value;
-     //console.log(user)
-
-    $.ajax({
-      url: "/db/updatePuntiCliente",
-      type: "POST",
-      data: { user },
-      dataType: "json",
-      contentType: "application/x-www-form-urlencoded",
-      success: function(data){
-      },
-    });
-
-
-  }
-
 
 
                                                                             
@@ -696,6 +666,8 @@ function calcolaCosto(days){
   
 }
    
+var puntiRimasti = 0;
+
 function applicaPunti(){
 
   let modal = document.getElementById("noleggia-modal");
@@ -703,18 +675,40 @@ function applicaPunti(){
   let a = parseFloat(data[7].value);
   let punti = parseFloat(data[6].value);
 
-  if (punti > 0 && (a - punti / 10 > 0)){
+  if (punti > 0 && (a - (punti / 10) > 0)){
     data[7].value = (data[7].value - (punti  / 10)).toFixed(2);
     punti = punti - punti;
     data[6].value = 0;
   } 
-  else if(a - punti / 10 < 0){
+  else if(a - (punti / 10) < 0){
     data[7].value = 0;
+    data[6].value = punti -(10 * a);
   }
   else{
     data[7].value = (data[7].value - (0)).toFixed(2);
   }
+
+  puntiRimasti = data[6].value;
 }
+
+
+function updatePuntiCliente(){
+
+  let modal = document.getElementById("noleggia-modal");
+  let user = modal.getElementsByClassName("form-control")[0].value;
+  //console.log(user)
+
+ $.ajax({
+   url: "/db/updatePuntiCliente",
+   type: "POST",
+   data: { user, puntiRimasti},
+   dataType: "json",
+   contentType: "application/x-www-form-urlencoded",
+   success: function(data){
+   },
+ });
+}
+
 
 
 
