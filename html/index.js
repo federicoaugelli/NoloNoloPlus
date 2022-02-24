@@ -165,6 +165,11 @@ app.post('/db/registerNoleggio', async function(req, res) {
 	res.send(await mymongo.registerNoleggio(newNoleggio,mongoCredentials))
 });
 
+app.post('/db/registerNoleggioClient', async function(req, res) {
+	let newNoleggio = req.body.formData
+	res.send(await mymongo.registerNoleggioClient(newNoleggio,mongoCredentials))
+});
+
 app.get('/db/findClienti', async function(req, res) { 
 	res.send(await mymongo.findClienti(mongoCredentials))
 });

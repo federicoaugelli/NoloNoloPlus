@@ -196,6 +196,67 @@ exports.registerNoleggio = async function(newNoleggio,credentials) {
 	}
 };
 
+exports.registerNoleggioClient = async function(newNoleggio,credentials) {
+
+	let yourDate = new Date().toISOString().split('T')[0];
+    let state = '';
+    if(yourDate == req.body.inizioNoleggio){
+        state = 'in corso';
+    }
+    else{
+        state = 'futuro';
+    }
+
+    console.log(newNoleggio);
+	
+	//const mongouri = `mongodb://${credentials.user}:${credentials.pwd}@${credentials.site}?writeConcern=majority`;
+	let data = { result: null };
+	let debug = [];
+	try{
+
+		debug.push('trying to connect MongoDB');
+		const mongo = new MongoClient(mongouri);
+		await mongo.connect();
+		debug.push("Managed to close connection to MongoDB.");
+		
+        let doc = {
+						
+			usernameFunzionario: '',
+			titoloNoleggiato: newNoleggio[1].value,
+			piattaforma: newNoleggio[2].value,
+			usernameCliente: newNoleggio[0].value,
+			inizioNoleggio: newNoleggio[7].value,
+			fineNoleggio: newNoleggio[8].value,
+			costoGiorno: newNoleggio[4].value,
+			prezzoTotale: newNoleggio[3].value,
+			stato: state,
+			commenti: '',
+			idGioco: newNoleggio[6].value
+			
+		};
+
+		console.log(doc);
+
+		    await mongo
+		        .db(dbname)
+			    .collection(collection3)
+				.insertOne(doc)
+				.forEach((r) => {
+					result.push(r);
+				});
+		
+				data.result = result;
+
+	    await mongo.close();
+		debug.push("Managed to close connection to MongoDB.");
+		return data;
+	}
+	catch(e){
+
+		return e;
+	}
+};
+
 
 exports.create = async function(credentials) {
 	

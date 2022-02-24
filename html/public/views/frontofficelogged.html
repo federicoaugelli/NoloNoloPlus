@@ -38,13 +38,13 @@
           <input class="form-control me-2" type="search" placeholder="Cerca" aria-label="inserisci la tua parola chiave di ricerca" v-model="searchQuery">
         </form>
         <div class="nav-item navbar-nav mr-auto dropstart">
-          <a role="button" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" v-model="user = '<%= username %>'">Ciao <%= username %></a>
+          <a role="button" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Ciao {{ user }}</a><!--v-model="user = '<%= username %>'"-->
           <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
             <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#clientModal" v-on:click="reloadUsers()">il Mio Account</a></li>
             <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#noleggiModal">I Miei Ordini</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="/frontendlogout" aria-label="Esci dal frotoffice">Esci</a></li>
-          </ul>                 
+            <li><a class="dropdown-item" href="/frontendlogout" aria-label="Esci dal frontoffice">Esci</a></li>
+          </ul>
         </div>
       </div>
     </nav>
@@ -66,7 +66,7 @@
             <h6>Via: {{ item.via }}</h6>
             <h6>Città: {{ item.citta }}</h6>
             <h6 style="margin-bottom: 40px;" v-model="punti = item.punti">Punti fedeltà: {{ item.punti }}</h6>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modificaCliente">modifica</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modificaCliente" v-model="idUser = item._id">modifica</button>
           </div>
         </div>
       </div>
@@ -105,7 +105,7 @@
               <div class="mb-3">
                 <label for="validationPW" class="form-label">Password</label>
                 <div class="input-group">
-                  <input type="password" class="form-control" id="validationPW" name="password" aria-describedby="inputGroupPrepend4" aria-required="true" required>
+                  <input type="password" class="form-control" id="validationPW" name="password" aria-describedby="inputGroupPrepend4" aria-required="true" placeholder="inserisci la password" required>
                 </div>
               </div>
               <div class="mb-3">
@@ -396,15 +396,16 @@
           <h7 v-if="modalItem.disponibile == 'false'" style="margin-left: 20px; color: red;">Non Disponibile</h7>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" v-on:click="ipoteticalPrice = 0"></button>
         </div>
-        <form class="needs-validation" method="POST" action="/createnoleggio">
+        <form class="needs-validation" method="POST" action="/db/registerNoleggioClient" id="noleggioForm">
           <div class="modal-body">
             <div class="card-body">
               <textarea class="form-control" id="validationDefaultUsername" name="usernameCliente" hidden>{{ user }}</textarea>
               <textarea class="form-control" id="validationDefaultTitle" name="titoloNoleggiato" hidden>{{ modalItem.game }}</textarea>
               <textarea class="form-control" id="validationDefaultPlatform" name="piattaforma" hidden>{{ modalItem.platform }}</textarea>
               <textarea class="form-control" id="validationDefaultPrice" name="prezzoTotale" hidden>{{ ipoteticalPrice }}</textarea>
-              <textarea class="form-control" id="validationDefaultPrice" name="stato" hidden></textarea>
-              <textarea class="form-control" id="validationDefaultPrice" name="idGioco" v-model="id = modalItem._id" hidden>{{ modalItem._id }}</textarea>
+              <textarea class="form-control" id="validationSinglePrice" name="costoGiorno" hidden>{{ modalItem.prezzo }}</textarea>
+              <textarea class="form-control" id="validationState" name="stato" hidden></textarea>
+              <textarea class="form-control" id="validationIdGame" name="idGioco" v-model="id = modalItem._id" hidden>{{ modalItem._id }}</textarea>
               <h5>Il gioco è uscito nel {{ modalItem.annoUscita }}, è {{ modalItem.stato }} e in {{ modalItem.condizioni }} condizioni.</h5>
               <h6>Età minima: {{ modalItem.etaMinima }}</h6>
               <h6>Peso: {{ modalItem.peso }}</h6>
@@ -427,7 +428,7 @@
 
             <button v-if="modalItem.disponibile" type="button" class="btn btn-primary" class="me-auto" v-on:click="calculateDate(modalItem.prezzo), checkDisponibilità(modalItem)">Verifica disponibilità</button>
 
-            <button v-if="checkData == 'ok' && modalItem.disponibile == 'true' && ipoteticalPrice != 'err' && ipoteticalPrice != '' && ipoteticalPrice > 0" type="submit" class="btn btn-primary" v-on:click="createLease(), updatePoints()">Noleggia</button>
+            <button v-if="checkData == 'ok' && modalItem.disponibile == 'true' && ipoteticalPrice != 'err' && ipoteticalPrice != '' && ipoteticalPrice > 0" type="submit" class="btn btn-primary" v-on:click="createNoleggio()">Noleggia</button>
             <!--
             <button v-else-if="checkData != 'ok' || modalItem.disponibile == 'true' && (ipoteticalPrice == 'err' || ipoteticalPrice == '' || ipoteticalPrice <= 0)" type="submit" class="btn btn-primary" disabled>Noleggia</button>
             -->
@@ -449,6 +450,7 @@
           searchQuery: '',
           items: '',
           user: '',
+          idUser: '',
           utenti: '',
           points: '',
           userItems: '',
@@ -486,6 +488,8 @@
         axios
           .get('/db/findClienti')
           .then(response => (this.utenti = response.data.result));
+
+        this.user = '<%= username %>'
       },
 
       computed: {
@@ -648,18 +652,28 @@
         //funzione per la modifica dati dell'utente
         postUser(){
           var formData = $("#modUserForm").serializeArray();
-          console.log(formData[0]);
+          let checkSameUser = false;
+
+          for (i = 0; i < this.utenti.length; i++){
+            if (formData[2].value == this.utenti[i].username && this.idUser != this.utenti[i]._id){
+              checkSameUser = true;
+            }
+          }
+          //console.log(formData[0]);
           if(
             formData[0].value != "" &&
             formData[1].value != "" &&
-            formData[2].value != "" &&
+            formData[2].value != "" && 
             formData[3].value != "" &&
             formData[4].value != "" && 
-            formData[5].value != "" 
+            formData[5].value != "" &&
+            checkSameUser == false
       
           ){
-            console.log(formData);
+            //console.log(formData);
             const oldUser = this.oldUser
+            const oldUsername = this.user
+            const userCliente = formData[2].value
             var body = {oldUser, formData}
 
             $.ajax({
@@ -670,16 +684,71 @@
               dataType: "json",
               contentType: "application/x-www-form-urlencoded",
               success: function(data){
+
                 $('#modificaCliente').modal('hide');
                 $('#userModalSuccess').modal('toggle');
+                console.log(formData[2].value);
+                this.user = formData[2].value;
+                //delete cookie
+                document.cookie.delete("cookie sessione");
+
+                $.ajax({
+
+                  url: "/db/updateNoleggioDopoModificaUsername",
+                  type: "POST",
+                  data: { oldUsername, userCliente },
+                  dataType: "json",
+                  contentType: "application/x-www-form-urlencoded",
+                  success: function (data) {
+                    console.log('ok to update')
+                  },
+                  error: function(){
+                    console.log('error to update')
+                  }
+                });
               },
               error: function(){
                 $('#modalError').modal('toggle');
               }
             });
           }
+          else if(checkSameUser == true){
+            //trigger
+            console.log('user esistente')
+          }
           else {
             $('#emptyInput').modal('toggle');
+          }
+        },
+
+        createNoleggio(){
+          var formData = $("#noleggioForm").serializeArray();
+          console.log('log: ' + formData);
+
+          if(
+            formData[0].value != "" && //user
+            formData[1].value != "" && //titolo
+            formData[2].value != "" && //piattaf
+            formData[3].value != "" && //prezzo
+            formData[4].value != "" && //costo
+            formData[6].value != "" && //id
+            formData[7].value != "" && //inizio
+            formData[8].value != ""    //fine
+            ){
+              $.ajax({
+
+              url: "/db/registerNoleggioClient",
+              type: "POST",
+              data: { formData },
+              dataType: "json",
+              contentType: "application/x-www-form-urlencoded",
+              success: function(data){
+                console.log('noleggio riuscito');
+              },
+              error: function(){
+                $('#modalError').modal('toggle');
+              }
+            });
           }
         },
 
@@ -720,6 +789,9 @@
         updatePoints(){
           var user = this.user;
           var points = this.points;
+          if (points > 100){
+            points = 0;
+          }
             $.ajax({
               url: "/db/updatePuntiClientSide",
               type: "POST",

@@ -45,9 +45,7 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
             <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
           </svg>
-          <div  id="alert-body">
-           
-          </div>
+          <div  id="alert-body">{{ msg }}</div>
         </div>
       </div>
       <div class="modal-footer">
@@ -100,7 +98,7 @@
                           <div class="group"><label id="ariaCity" for="citta" class="label"> Citt&agrave;</label> <input id="citta" type="text" name="citta" class="input" placeholder=" Città " aria-describedby="ariaCity" aria-required="true"required> </div>
                         </div>
                       </div>
-                      <div class="group"> <button type="button" class="button" onclick="registerCliente()" aria-label="registrati come cliente"> Registrati </button></div>
+                      <div class="group"> <button type="button" class="button" v-on:click="registerCliente()" aria-label="registrati come cliente"> Registrati </button></div>
                     </form>
                       <div class="hr"></div>
                       <div class="foot"> <label for="tab-1">Already Member?</label> </div>     
@@ -217,7 +215,9 @@
           endDate: '',
           ipoteticalPrice: '',
           showModal: false,
-          show: true
+          show: true,
+          utenti: '',
+          msg: ''
         }
       },
 
@@ -225,6 +225,10 @@
         axios
           .get('/db/getGames')
           .then(response => (this.items = response.data.result));
+
+        axios
+          .get('/db/findClienti')
+          .then(response => (this.utenti = response.data.result));
       },
 
       computed: {
@@ -241,6 +245,88 @@
       },
 
       methods: {
+
+        registerCliente() {
+          var formData = $("#createUserForm").serializeArray();
+          let checkSameUser = false;
+
+          for (i = 0; i < this.utenti.length; i++){
+            if (formData[2].value == this.utenti[i].username){
+              checkSameUser = true;
+            }
+          }
+
+          console.log(checkSameUser);
+
+          if(
+            formData[0].value != "" &&
+            formData[1].value != "" &&
+            formData[2].value != "" &&
+            formData[3].value != "" &&
+            formData[4].value != "" &&
+            formData[5].value != "" &&
+            checkSameUser == false
+          ){
+
+            $.ajax({
+
+              url: "/db/registerCliente",
+              type: "POST",
+              data: { formData },
+              dataType: "json",
+              contentType: "application/x-www-form-urlencoded",
+              success: function(data){
+
+                if(data){
+
+                  this.msg = "Utente registrato con successo"
+                  $("#flash-modal").modal("show");
+                  $("#createUserForm").trigger("reset");
+                  $("#myModal").modal("hide");
+                }
+                else{
+
+                  this.msg = "Errore. non è possibile registrare l'utente"
+                  $("#flash-modal").modal("show");
+                }
+              }
+            });
+/*
+            axios({
+              method: "post",
+              url: "/db/registerCliente",
+              data: { formData },
+              dataType: "json",
+              //headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            })
+              .then(data => {
+                console.log(data);
+                //trigger alert utente registrato con successo
+                document.getElementById("alert-body").textContent = "Utente registrato con successo"
+                $("#flash-modal").modal("show");
+                $("#createUserForm").trigger("reset");
+                $("#myModal").modal("hide");
+              })
+              .catch(error => {
+                //trigger non è possibile registrare l'utente
+                document.getElementById("alert-body").textContent = "Errore. non è possibile registrare l'utente"
+                $("#flash-modal").modal("show");
+              })
+*/
+          }
+          else if(checkSameUser == true){
+            //apri modal utente già esistente
+            this.msg = "Username già esistente"
+            $("#myModal").modal("hide");
+            $("#flash-modal").modal("show");
+          }
+          else{
+            //compilare tutti i campi
+            this.msg = "Compilare tutti i campi"
+            $("#myModal").modal("hide");
+            $("#flash-modal").modal("show");
+          }
+        },
 
         //rimuove i duplicati di stessi giochi... vincolo del progetto
         removeDuplicates(){
@@ -296,7 +382,7 @@
 
   </script>
 
-
+<!--
 <script>
   // Close modal on button click
   $(document).ready(function(){      
@@ -305,7 +391,7 @@
     });
   });
   </script>
-
+-->
 </div>
 </body>
 </html>
