@@ -38,7 +38,6 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="flash-modalLabel"></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="alert alert-primary d-flex align-items-center" role="alert">
@@ -54,6 +53,7 @@
     </div>
   </div>
 </div>
+
                                                <!-- FINE MODAL-FLASH -->
 
 
@@ -280,14 +280,14 @@
                 if(data){
 
                   this.msg = "Utente registrato con successo"
-                  $("#flash-modal").modal("show");
+                  $("#flash-modal").modal("toggle");
                   $("#createUserForm").trigger("reset");
-                  $("#myModal").modal("hide");
+                  //$("#myModal").modal("hide");
                 }
                 else{
 
                   this.msg = "Errore. non è possibile registrare l'utente"
-                  $("#flash-modal").modal("show");
+                  $("#flash-modal").modal("toggle");
                 }
               }
             });
@@ -317,14 +317,14 @@
           else if(checkSameUser == true){
             //apri modal utente già esistente
             this.msg = "Username già esistente"
-            $("#myModal").modal("hide");
-            $("#flash-modal").modal("show");
+            //$("#myModal").modal("hide");
+            $("#flash-modal").modal("toggle");
           }
           else{
             //compilare tutti i campi
             this.msg = "Compilare tutti i campi"
-            $("#myModal").modal("hide");
-            $("#flash-modal").modal("show");
+            $("#flash-modal").modal("toggle");
+            //$("#myModal").modal("hide");
           }
         },
 

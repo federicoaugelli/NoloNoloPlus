@@ -428,7 +428,7 @@
 
             <button v-if="modalItem.disponibile" type="button" class="btn btn-primary" class="me-auto" v-on:click="calculateDate(modalItem.prezzo), checkDisponibilità(modalItem)">Verifica disponibilità</button>
 
-            <button v-if="checkData == 'ok' && modalItem.disponibile == 'true' && ipoteticalPrice != 'err' && ipoteticalPrice != '' && ipoteticalPrice > 0" type="submit" class="btn btn-primary" v-on:click="createNoleggio()">Noleggia</button>
+            <button v-if="checkData == 'ok' && modalItem.disponibile == 'true' && ipoteticalPrice != 'err' && ipoteticalPrice != '' && ipoteticalPrice > 0" type="button" class="btn btn-primary" v-on:click="createNoleggio()">Noleggia</button>
             <!--
             <button v-else-if="checkData != 'ok' || modalItem.disponibile == 'true' && (ipoteticalPrice == 'err' || ipoteticalPrice == '' || ipoteticalPrice <= 0)" type="submit" class="btn btn-primary" disabled>Noleggia</button>
             -->
@@ -690,7 +690,7 @@
                 console.log(formData[2].value);
                 this.user = formData[2].value;
                 //delete cookie
-                document.cookie.delete("cookie sessione");
+                //document.cookie.delete("cookie sessione");
 
                 $.ajax({
 
@@ -701,6 +701,8 @@
                   contentType: "application/x-www-form-urlencoded",
                   success: function (data) {
                     console.log('ok to update')
+                    setTimeout('', 20000);
+                    window.location = "/frontendlogout";
                   },
                   error: function(){
                     console.log('error to update')
@@ -723,7 +725,7 @@
 
         createNoleggio(){
           var formData = $("#noleggioForm").serializeArray();
-          console.log('log: ' + formData);
+          console.log(formData);
 
           if(
             formData[0].value != "" && //user
@@ -744,6 +746,9 @@
               contentType: "application/x-www-form-urlencoded",
               success: function(data){
                 console.log('noleggio riuscito');
+                $('#card-modal').modal('hide');
+                $('#nolok').modal('toggle');
+                location.reload();
               },
               error: function(){
                 $('#modalError').modal('toggle');
@@ -777,12 +782,6 @@
           axios
             .get('/db/getUserItems')
             .then(gg => (this.userItems = gg.data.result));
-        },
-
-        //trigger modal per avvenuto noleggio
-        createLease(){
-          $('#card-modal').modal('hide');
-          $('#nolok').modal('toggle');
         },
 
         //aggiorna punti dopo noleggio (di 10)

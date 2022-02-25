@@ -200,7 +200,7 @@ exports.registerNoleggioClient = async function(newNoleggio,credentials) {
 
 	let yourDate = new Date().toISOString().split('T')[0];
     let state = '';
-    if(yourDate == req.body.inizioNoleggio){
+    if(yourDate == newNoleggio[7].value){
         state = 'in corso';
     }
     else{
