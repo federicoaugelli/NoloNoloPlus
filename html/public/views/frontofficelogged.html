@@ -608,7 +608,7 @@
           var noleggioItem = item;
 
           for (let i = 0; i < this.userItems.length; i++){
-            if(this.id == this.userItems[i].idGioco){
+            if(noleggioItem.game == this.userItems[i].titoloNoleggiato && noleggioItem.platform == this.userItems[i].piattaforma){
               //caso inizio noleggio tra inizio e fine del titolo già noleggiato
               if(this.datediff(this.parseDate(this.userItems[i].inizioNoleggio), this.parseDate(this.startDate)) > 0 && this.datediff(this.parseDate(this.userItems[i].fineNoleggio), this.parseDate(this.startDate)) < 0){
                 this.checkData = 'occupato';

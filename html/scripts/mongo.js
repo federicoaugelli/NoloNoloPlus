@@ -1308,6 +1308,8 @@ exports.deleteNoleggioFuturo = async function(oldNoleggio, credentials){
 	}
   };
 
+//funzione backend per aggiornare stato dei noleggi???
+
   
   
 
