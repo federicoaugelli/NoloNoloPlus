@@ -1,2 +1,2 @@
 # NOLO NOLO PLUS
- Tech Web Project
+ Web Technology Project for my undegraduate course of computer science
